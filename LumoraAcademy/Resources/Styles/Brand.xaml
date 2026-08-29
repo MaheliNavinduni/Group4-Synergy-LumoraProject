@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Brand colours for Lumora Academy. Change a colour here and it changes everywhere. -->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- Main brand colours -->
+    <Color x:Key="BrandPrimary">#B87F52</Color>
+    <Color x:Key="BrandPrimaryDark">#8B6844</Color>
+    <Color x:Key="BrandCream">#FBEFE3</Color>
+
+    <!-- Text colours -->
+    <Color x:Key="TextHeading">#1C1917</Color>
+    <Color x:Key="TextBody">#8B7355</Color>
+    <Color x:Key="TextMuted">#6B7280</Color>
+    <Color x:Key="TextOnDark">#FFFFFF</Color>
+
+    <!-- Surfaces -->
+    <Color x:Key="PageBackground">#FFFFFF</Color>
+    <Color x:Key="CardBackground">#FFFFFF</Color>
+    <Color x:Key="CardBorder">#E7E1DA</Color>
+    <Color x:Key="FieldBorder">#D8D2CB</Color>
+    <Color x:Key="DividerLine">#EDE9E4</Color>
+
+    <!-- Reusable styles -->
+    <Style x:Key="CardStyle" TargetType="Border">
+        <Setter Property="Background" Value="{StaticResource CardBackground}" />
+        <Setter Property="Stroke" Value="{StaticResource CardBorder}" />
+        <Setter Property="StrokeThickness" Value="1" />
+        <Setter Property="Padding" Value="24" />
+        <Setter Property="StrokeShape">
+            <Setter.Value>
+                <RoundRectangle CornerRadius="12" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="CardTitleStyle" TargetType="Label">
+        <Setter Property="FontSize" Value="24" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="TextColor" Value="{StaticResource TextHeading}" />
+    </Style>
+
+    <Style x:Key="CardBodyStyle" TargetType="Label">
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="LineHeight" Value="1.5" />
+        <Setter Property="TextColor" Value="{StaticResource TextBody}" />
+    </Style>
+
+    <Style x:Key="FieldLabelStyle" TargetType="Label">
+        <Setter Property="FontSize" Value="11" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="CharacterSpacing" Value="1" />
+        <Setter Property="TextColor" Value="{StaticResource TextHeading}" />
+    </Style>
+
+    <Style x:Key="FieldBoxStyle" TargetType="Border">
+        <Setter Property="Background" Value="{StaticResource CardBackground}" />
+        <Setter Property="Stroke" Value="{StaticResource FieldBorder}" />
+        <Setter Property="StrokeThickness" Value="1" />
+        <Setter Property="Padding" Value="12,0" />
+        <Setter Property="HeightRequest" Value="42" />
+        <Setter Property="StrokeShape">
+            <Setter.Value>
+                <RoundRectangle CornerRadius="8" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="PrimaryButtonStyle" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="{StaticResource BrandPrimary}" />
+        <Setter Property="TextColor" Value="{StaticResource TextOnDark}" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="HeightRequest" Value="44" />
+        <Setter Property="CornerRadius" Value="8" />
+    </Style>
+
+</ResourceDictionary>

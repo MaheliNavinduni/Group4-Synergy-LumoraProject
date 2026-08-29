@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LumoraAcademy.Pages.HomePage"
+             Title="Home"
+             BackgroundColor="{StaticResource PageBackground}">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="0">
+
+            <!-- ===== Hero section (photo + welcome text + login button) ===== -->
+            <Grid HeightRequest="360">
+
+                <!-- Background photo. Replace campus.jpg with the real photo. -->
+                <Image Source="campus.jpg"
+                       Aspect="AspectFill" />
+
+                <!-- A brown layer over the photo, matching the brand colour.
+                     Raise Opacity for more brown, lower it for more photo. -->
+                <BoxView Color="{StaticResource BrandPrimaryDark}"
+                         Opacity="0.55" />
+
+                <!-- Text and button in the middle of the hero -->
+                <VerticalStackLayout HorizontalOptions="Center"
+                                     VerticalOptions="Center"
+                                     Spacing="14">
+
+                    <Label Text="Lumora Academy"
+                           FontSize="46"
+                           FontAttributes="Bold"
+                           TextColor="{StaticResource TextOnDark}"
+                           HorizontalOptions="Center" />
+
+                    <Label Text="Shaping futures"
+                           FontSize="20"
+                           TextColor="{StaticResource TextOnDark}"
+                           HorizontalOptions="Center" />
+
+                    <Button x:Name="LoginButton"
+                            Text="Login  →"
+                            Clicked="OnLoginButtonClicked"
+                            BackgroundColor="{StaticResource CardBackground}"
+                            TextColor="{StaticResource BrandPrimary}"
+                            FontAttributes="Bold"
+                            FontSize="15"
+                            CornerRadius="8"
+                            HeightRequest="46"
+                            WidthRequest="150"
+                            Margin="0,10,0,0"
+                            HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </Grid>
+
+            <!-- ===== Mission and Vision cards ===== -->
+            <Grid ColumnDefinitions="*,*"
+                  ColumnSpacing="24"
+                  Padding="40,36,40,40">
+
+                <!-- Mission card -->
+                <Border Grid.Column="0"
+                        Style="{StaticResource CardStyle}">
+                    <VerticalStackLayout Spacing="16">
+
+                        <!-- Round icon badge -->
+                        <Grid WidthRequest="36"
+                              HeightRequest="36"
+                              HorizontalOptions="Start">
+                            <Ellipse Fill="{StaticResource BrandCream}" />
+                            <Ellipse Stroke="{StaticResource BrandPrimary}"
+                                     StrokeThickness="1.5"
+                                     WidthRequest="16"
+                                     HeightRequest="16"
+                                     HorizontalOptions="Center"
+                                     VerticalOptions="Center" />
+                            <Ellipse Fill="{StaticResource BrandPrimary}"
+                                     WidthRequest="6"
+                                     HeightRequest="6"
+                                     HorizontalOptions="Center"
+                                     VerticalOptions="Center" />
+                        </Grid>
+
+                        <Label Text="Mission"
+                               Style="{StaticResource CardTitleStyle}" />
+
+                        <Label Style="{StaticResource CardBodyStyle}"
+                               Text="At Lumora, education goes beyond the syllabus. We create engaging learning experiences that build knowledge, confidence, creativity, critical thinking, and life skills. With personalized guidance, we help every student discover their strengths and become confident individuals ready for life beyond the classroom." />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Vision card -->
+                <Border Grid.Column="1"
+                        Style="{StaticResource CardStyle}">
+                    <VerticalStackLayout Spacing="16">
+
+                        <!-- Round icon badge -->
+                        <Grid WidthRequest="36"
+                              HeightRequest="36"
+                              HorizontalOptions="Start">
+                            <Ellipse Fill="{StaticResource BrandCream}" />
+                            <Ellipse Stroke="{StaticResource BrandPrimary}"
+                                     StrokeThickness="1.5"
+                                     WidthRequest="18"
+                                     HeightRequest="11"
+                                     HorizontalOptions="Center"
+                                     VerticalOptions="Center" />
+                            <Ellipse Fill="{StaticResource BrandPrimary}"
+                                     WidthRequest="5"
+                                     HeightRequest="5"
+                                     HorizontalOptions="Center"
+                                     VerticalOptions="Center" />
+                        </Grid>
+
+                        <Label Text="Vision"
+                               Style="{StaticResource CardTitleStyle}" />
+
+                        <Label Style="{StaticResource CardBodyStyle}"
+                               Text="To illuminate every learner's potential by creating a generation that learns beyond the syllabus, thinks beyond boundaries, and grows beyond expectations." />
+                    </VerticalStackLayout>
+                </Border>
+            </Grid>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
