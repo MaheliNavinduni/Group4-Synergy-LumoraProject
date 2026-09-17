@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- The left-hand menu shown on every Admin and Teacher page.
+     The menu items are created in SidebarView.xaml.cs based on who is logged in. -->
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LumoraAcademy.Controls.SidebarView"
+             WidthRequest="220"
+             BackgroundColor="{StaticResource CardBackground}">
+
+    <Grid RowDefinitions="Auto,*,Auto"
+          ColumnDefinitions="*,1">
+
+        <!-- Thin line on the right edge of the sidebar -->
+        <BoxView Grid.Column="1"
+                 Grid.RowSpan="3"
+                 Color="{StaticResource DividerLine}" />
+
+        <!-- User name and role -->
+        <VerticalStackLayout Grid.Row="0"
+                             Padding="20,24,20,18"
+                             Spacing="2">
+            <Label x:Name="UserNameLabel"
+                   FontSize="18"
+                   FontAttributes="Bold"
+                   TextColor="{StaticResource TextHeading}" />
+            <Label x:Name="RoleLabel"
+                   FontSize="11"
+                   TextColor="{StaticResource TextMuted}" />
+        </VerticalStackLayout>
+
+        <BoxView Grid.Row="0"
+                 VerticalOptions="End"
+                 Style="{StaticResource RowDividerStyle}" />
+
+        <!-- Menu items are added here from code -->
+        <VerticalStackLayout x:Name="MenuList"
+                             Grid.Row="1"
+                             Padding="10,12"
+                             Spacing="2" />
+
+        <!-- Log out -->
+        <Label Grid.Row="2"
+               Text="Log out"
+               FontSize="13"
+               TextColor="{StaticResource TextHeading}"
+               Padding="20,0,20,24">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnLogoutTapped" />
+            </Label.GestureRecognizers>
+        </Label>
+    </Grid>
+</ContentView>
