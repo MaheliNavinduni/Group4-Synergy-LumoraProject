@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:LumoraAcademy.Controls"
+             x:Class="LumoraAcademy.Pages.Teacher.TeacherDashboardPage"
+             Title="Teacher Dashboard"
+             BackgroundColor="{StaticResource PageBackground}">
+
+    <Grid ColumnDefinitions="220,*">
+
+        <controls:SidebarView Grid.Column="0"
+                              ActiveItem="Dashboard" />
+
+        <ScrollView Grid.Column="1">
+            <VerticalStackLayout Padding="36,32"
+                                 Spacing="22">
+
+                <!-- Page heading -->
+                <VerticalStackLayout Spacing="4">
+                    <Label Text="Welcome, Miss. Aries"
+                           Style="{StaticResource PageTitleStyle}" />
+                    <Label Text="Overview of your daily classes and academic tasks"
+                           FontSize="12"
+                           FontAttributes="Bold"
+                           TextColor="{StaticResource TextHeading}" />
+                </VerticalStackLayout>
+
+                <!-- Today's Schedule card -->
+                <Border Style="{StaticResource CardStyle}"
+                        Padding="20">
+                    <VerticalStackLayout Spacing="14">
+
+                        <Grid ColumnDefinitions="Auto,*,Auto"
+                              ColumnSpacing="8">
+                            <Label Grid.Column="0"
+                                   Text="&#xE787;"
+                                   Style="{StaticResource IconStyle}"
+                                   TextColor="{StaticResource BrandPrimary}" />
+                            <Label Grid.Column="1"
+                                   Text="Today's Schedule"
+                                   Style="{StaticResource SectionTitleStyle}"
+                                   FontSize="14" />
+                            <Label Grid.Column="2"
+                                   Text="Full Calendar"
+                                   Style="{StaticResource LinkStyle}"
+                                   FontAttributes="None">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnFullCalendarTapped" />
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </Grid>
+
+                        <!-- One row per lesson, filled from SampleData -->
+                        <VerticalStackLayout x:Name="ScheduleList"
+                                             Spacing="10">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid ColumnDefinitions="90,*"
+                                          ColumnSpacing="12">
+
+                                        <!-- Time box -->
+                                        <Border Grid.Column="0"
+                                                Background="{StaticResource TableHeaderBackground}"
+                                                Stroke="{StaticResource DividerLine}"
+                                                StrokeThickness="1"
+                                                Padding="8,6">
+                                            <Border.StrokeShape>
+                                                <RoundRectangle CornerRadius="6" />
+                                            </Border.StrokeShape>
+                                            <VerticalStackLayout Spacing="1">
+                                                <Label Text="{Binding StartTime}"
+                                                       FontSize="12"
+                                                       FontAttributes="Bold"
+                                                       TextColor="{StaticResource TextHeading}"
+                                                       HorizontalOptions="Center" />
+                                                <Label Text="{Binding EndTime}"
+                                                       FontSize="9"
+                                                       TextColor="{StaticResource TextMuted}"
+                                                       HorizontalOptions="Center" />
+                                            </VerticalStackLayout>
+                                        </Border>
+
+                                        <!-- Lesson box -->
+                                        <Border Grid.Column="1"
+                                                Background="{StaticResource CardBackground}"
+                                                Stroke="{StaticResource DividerLine}"
+                                                StrokeThickness="1"
+                                                Padding="14,8">
+                                            <Border.StrokeShape>
+                                                <RoundRectangle CornerRadius="6" />
+                                            </Border.StrokeShape>
+                                            <VerticalStackLayout Spacing="2"
+                                                                 VerticalOptions="Center">
+                                                <Label Text="{Binding Title}"
+                                                       Style="{StaticResource BodyBoldStyle}" />
+                                                <Label Text="{Binding Detail}"
+                                                       Style="{StaticResource SmallMutedStyle}"
+                                                       IsVisible="{Binding Detail, Converter={StaticResource NotEmptyConverter}}" />
+                                            </VerticalStackLayout>
+                                        </Border>
+                                    </Grid>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+
+                    </VerticalStackLayout>
+                </Border>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>
