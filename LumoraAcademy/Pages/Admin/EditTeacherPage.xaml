@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:LumoraAcademy.Controls"
+             x:Class="LumoraAcademy.Pages.Admin.EditTeacherPage"
+             Title="Edit Teacher Profile"
+             BackgroundColor="{StaticResource PageBackground}">
+
+    <Grid ColumnDefinitions="220,*">
+
+        <controls:SidebarView Grid.Column="0"
+                              ActiveItem="Teachers" />
+
+        <ScrollView Grid.Column="1">
+            <VerticalStackLayout Padding="36,32"
+                                 Spacing="20"
+                                 MaximumWidthRequest="760"
+                                 HorizontalOptions="Start">
+
+                <VerticalStackLayout Spacing="4">
+                    <Label Text="Edit Teacher Profile" Style="{StaticResource PageTitleStyle}" />
+                    <Label Text="Update information for Marcus Vance." Style="{StaticResource PageSubtitleStyle}" />
+                </VerticalStackLayout>
+
+                <!-- Personal details -->
+                <Border Style="{StaticResource CardStyle}" Padding="20">
+                    <VerticalStackLayout Spacing="14">
+                        <HorizontalStackLayout Spacing="8">
+                            <Label Text="&#xE77B;" Style="{StaticResource IconStyle}" />
+                            <Label Text="Personal Details" Style="{StaticResource SectionTitleStyle}" FontSize="13" />
+                        </HorizontalStackLayout>
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="Full Name" Style="{StaticResource SmallMutedStyle}" />
+                            <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="36" Background="{StaticResource TableHeaderBackground}">
+                                <Entry x:Name="FullNameEntry" Text="Marcus Vance" Style="{StaticResource FieldEntryStyle}" />
+                            </Border>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+
+                <Grid ColumnDefinitions="*,1.4*" ColumnSpacing="16">
+                    <!-- Professional details -->
+                    <Border Grid.Column="0" Style="{StaticResource CardStyle}" Padding="20">
+                        <VerticalStackLayout Spacing="14">
+                            <HorizontalStackLayout Spacing="8">
+                                <Label Text="&#xE8A5;" Style="{StaticResource IconStyle}" />
+                                <Label Text="Professional Details" Style="{StaticResource SectionTitleStyle}" FontSize="13" />
+                            </HorizontalStackLayout>
+                            <VerticalStackLayout Spacing="6">
+                                <Label Text="Teacher ID" Style="{StaticResource SmallMutedStyle}" />
+                                <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="36" Background="{StaticResource TableHeaderBackground}">
+                                    <Entry Text="TCH-2023-084" IsReadOnly="True" Style="{StaticResource FieldEntryStyle}" TextColor="{StaticResource TextMuted}" />
+                                </Border>
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Spacing="6">
+                                <Label Text="Total Experience (Years)" Style="{StaticResource SmallMutedStyle}" />
+                                <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="36" Background="{StaticResource TableHeaderBackground}">
+                                    <Entry x:Name="ExperienceEntry" Text="12" Keyboard="Numeric" Style="{StaticResource FieldEntryStyle}" />
+                                </Border>
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Spacing="6">
+                                <Label Text="Joining Date" Style="{StaticResource SmallMutedStyle}" />
+                                <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="36" Background="{StaticResource TableHeaderBackground}">
+                                    <DatePicker x:Name="JoiningDatePicker" Date="2018-08-15" FontSize="12" TextColor="{StaticResource TextHeading}" BackgroundColor="Transparent" VerticalOptions="Center" />
+                                </Border>
+                            </VerticalStackLayout>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <!-- Contact information -->
+                    <Border Grid.Column="1" Style="{StaticResource CardStyle}" Padding="20">
+                        <VerticalStackLayout Spacing="14">
+                            <HorizontalStackLayout Spacing="8">
+                                <Label Text="&#xE715;" Style="{StaticResource IconStyle}" />
+                                <Label Text="Contact Information" Style="{StaticResource SectionTitleStyle}" FontSize="13" />
+                            </HorizontalStackLayout>
+                            <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                                <VerticalStackLayout Grid.Column="0" Spacing="6">
+                                    <Label Text="Email Address" Style="{StaticResource SmallMutedStyle}" />
+                                    <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="36" Background="{StaticResource TableHeaderBackground}">
+                                        <Entry x:Name="EmailEntry" Text="m.vance@stedwards.edu" Keyboard="Email" Style="{StaticResource FieldEntryStyle}" />
+                                    </Border>
+                                </VerticalStackLayout>
+                                <VerticalStackLayout Grid.Column="1" Spacing="6">
+                                    <Label Text="Phone Number" Style="{StaticResource SmallMutedStyle}" />
+                                    <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="36" Background="{StaticResource TableHeaderBackground}">
+                                        <Entry x:Name="PhoneEntry" Text="+1 (555) 019-2834" Keyboard="Telephone" Style="{StaticResource FieldEntryStyle}" />
+                                    </Border>
+                                </VerticalStackLayout>
+                            </Grid>
+                            <VerticalStackLayout Spacing="6">
+                                <Label Text="Home Address" Style="{StaticResource SmallMutedStyle}" />
+                                <Border Style="{StaticResource TextAreaBoxStyle}" HeightRequest="70" Background="{StaticResource TableHeaderBackground}">
+                                    <Editor x:Name="AddressEditor" Text="412 Maplewood Drive, Apt 4B&#10;Springfield, IL 62704" Style="{StaticResource FieldEditorStyle}" />
+                                </Border>
+                            </VerticalStackLayout>
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
+
+                <HorizontalStackLayout Spacing="10" HorizontalOptions="End">
+                    <Button Text="Cancel" Style="{StaticResource OutlineButtonStyle}" Clicked="OnCancelClicked" />
+                    <Button Text="Save Changes" Style="{StaticResource PrimaryButtonStyle}" Clicked="OnSaveClicked" />
+                </HorizontalStackLayout>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>
