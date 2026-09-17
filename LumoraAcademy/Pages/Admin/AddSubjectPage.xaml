@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:LumoraAcademy.Controls"
+             x:Class="LumoraAcademy.Pages.Admin.AddSubjectPage"
+             Title="Add New Subject"
+             BackgroundColor="{StaticResource PageBackground}">
+
+    <Grid ColumnDefinitions="220,*">
+
+        <controls:SidebarView Grid.Column="0"
+                              ActiveItem="Academics" />
+
+        <ScrollView Grid.Column="1">
+            <VerticalStackLayout Padding="36,32"
+                                 Spacing="24"
+                                 MaximumWidthRequest="700"
+                                 HorizontalOptions="Start">
+
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="Academics / Subjects"
+                           Style="{StaticResource SmallMutedStyle}" />
+                    <Label Text="Add New Subject"
+                           Style="{StaticResource PageTitleStyle}" />
+                    <Label Text="Configure curriculum details and academic assignments."
+                           Style="{StaticResource PageSubtitleStyle}" />
+                </VerticalStackLayout>
+
+                <controls:StatCard Title="TOTAL SUBJECTS"
+                                   Value="10"
+                                   ValueColor="{StaticResource BrandPrimary}"
+                                   WidthRequest="640"
+                                   HorizontalOptions="Start" />
+
+                <!-- Subject information form -->
+                <VerticalStackLayout Spacing="18"
+                                     Margin="0,20,0,0">
+                    <HorizontalStackLayout Spacing="8">
+                        <Label Text="&#xE8A5;" Style="{StaticResource IconStyle}" />
+                        <Label Text="Subject Information" Style="{StaticResource SectionTitleStyle}" FontSize="14" />
+                    </HorizontalStackLayout>
+
+                    <BoxView Style="{StaticResource RowDividerStyle}" />
+
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="Subject Name" Style="{StaticResource FormLabelStyle}" FontSize="11" Margin="0" />
+                        <Border Style="{StaticResource FieldBoxStyle}" Background="{StaticResource TableHeaderBackground}" Stroke="{StaticResource TableHeaderBackground}">
+                            <Entry x:Name="SubjectNameEntry" Placeholder="e.g. Advanced Physics" Style="{StaticResource FieldEntryStyle}" />
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="Subject Code" Style="{StaticResource FormLabelStyle}" FontSize="11" Margin="0" />
+                        <Border Style="{StaticResource FieldBoxStyle}" Background="{StaticResource TableHeaderBackground}" Stroke="{StaticResource TableHeaderBackground}">
+                            <Entry x:Name="SubjectCodeEntry" Placeholder="E.G. SCI-PHY-101" Style="{StaticResource FieldEntryStyle}" />
+                        </Border>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+
+                <HorizontalStackLayout Spacing="10"
+                                       HorizontalOptions="End"
+                                       Margin="0,20,0,0">
+                    <Button Text="Cancel" Style="{StaticResource OutlineButtonStyle}" Clicked="OnCancelClicked" />
+                    <Button Text="Save Subject" Style="{StaticResource PrimaryButtonStyle}" Clicked="OnSaveClicked" />
+                </HorizontalStackLayout>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- A round avatar showing a person's initials (used instead of photos for now). -->
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LumoraAcademy.Controls.AvatarView"
+             HorizontalOptions="Start"
+             VerticalOptions="Center">
+
+    <Border x:Name="Circle"
+            WidthRequest="32"
+            HeightRequest="32"
+            Padding="0"
+            StrokeThickness="0"
+            Background="{StaticResource BrandCream}">
+        <Border.StrokeShape>
+            <RoundRectangle CornerRadius="50" />
+        </Border.StrokeShape>
+
+        <Label x:Name="InitialsLabel"
+               FontSize="11"
+               FontAttributes="Bold"
+               TextColor="{StaticResource BrandPrimaryDark}"
+               HorizontalOptions="Center"
+               VerticalOptions="Center" />
+    </Border>
+</ContentView>

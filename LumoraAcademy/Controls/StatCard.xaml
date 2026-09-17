@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- A small statistic card: a title, a big number and a note underneath.
+     Used on the dashboards, attendance, payments and teacher pages. -->
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LumoraAcademy.Controls.StatCard">
+
+    <Border x:Name="CardBorder"
+            Style="{StaticResource CardStyle}"
+            Padding="18,16">
+        <Grid ColumnDefinitions="*,Auto"
+              RowDefinitions="Auto,Auto,Auto"
+              RowSpacing="6">
+
+            <Label x:Name="TitleLabel"
+                   Grid.Row="0"
+                   Grid.Column="0"
+                   FontSize="11"
+                   FontAttributes="Bold"
+                   CharacterSpacing="0.5"
+                   TextColor="{StaticResource TextMuted}" />
+
+            <Label x:Name="IconLabel"
+                   Grid.Row="0"
+                   Grid.Column="1"
+                   Style="{StaticResource IconStyle}"
+                   TextColor="{StaticResource BrandPrimary}" />
+
+            <Label x:Name="ValueLabel"
+                   Grid.Row="1"
+                   Grid.ColumnSpan="2"
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   TextColor="{StaticResource TextHeading}" />
+
+            <Label x:Name="SubtitleLabel"
+                   Grid.Row="2"
+                   Grid.ColumnSpan="2"
+                   FontSize="11"
+                   TextColor="{StaticResource TextMuted}" />
+        </Grid>
+    </Border>
+</ContentView>

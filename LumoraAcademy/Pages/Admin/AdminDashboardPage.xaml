@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:LumoraAcademy.Controls"
+             x:Class="LumoraAcademy.Pages.Admin.AdminDashboardPage"
+             Title="Admin Dashboard"
+             BackgroundColor="{StaticResource PageBackground}">
+
+    <Grid ColumnDefinitions="220,*">
+
+        <controls:SidebarView Grid.Column="0"
+                              ActiveItem="Dashboard" />
+
+        <ScrollView Grid.Column="1">
+            <VerticalStackLayout Padding="36,32"
+                                 Spacing="22">
+
+                <VerticalStackLayout Spacing="4">
+                    <Label Text="Dashboard Overview"
+                           Style="{StaticResource PageTitleStyle}" />
+                    <Label Text="Welcome back, Administrator. Here's what's happening today."
+                           Style="{StaticResource PageSubtitleStyle}" />
+                </VerticalStackLayout>
+
+                <!-- Four statistics -->
+                <Grid ColumnDefinitions="*,*,*,*"
+                      ColumnSpacing="14">
+                    <controls:StatCard Grid.Column="0" Title="TOTAL STUDENTS" Value="2,451" Icon="&#xE716;" />
+                    <controls:StatCard Grid.Column="1" Title="ACTIVE TEACHERS" Value="142" Icon="&#xE77B;" />
+                    <controls:StatCard Grid.Column="2" Title="MONTHLY REVENUE" Value="$124k" Icon="&#xE8C7;" />
+                    <controls:StatCard Grid.Column="3" Title="PENDING PAYMENTS" Value="38" Icon="&#xE7BA;" />
+                </Grid>
+
+                <Grid ColumnDefinitions="*,250"
+                      ColumnSpacing="16">
+
+                    <!-- Performance chart -->
+                    <Border Grid.Column="0"
+                            Style="{StaticResource CardStyle}"
+                            Padding="20">
+                        <VerticalStackLayout Spacing="18">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <VerticalStackLayout Grid.Column="0" Spacing="2">
+                                    <Label Text="Student Performance Overview" Style="{StaticResource SectionTitleStyle}" FontSize="14" />
+                                    <Label Text="Average grades across departments for Fall Semester." Style="{StaticResource SmallMutedStyle}" />
+                                </VerticalStackLayout>
+                                <Border Grid.Column="1" Style="{StaticResource FieldBoxStyle}" HeightRequest="28" Padding="10,0">
+                                    <HorizontalStackLayout Spacing="6">
+                                        <Label Text="This Term" Style="{StaticResource MutedStyle}" FontSize="11" VerticalOptions="Center" />
+                                        <Label Text="&#xE70D;" Style="{StaticResource IconStyle}" FontSize="9" />
+                                    </HorizontalStackLayout>
+                                </Border>
+                            </Grid>
+
+                            <!-- Simple bar chart made from boxes -->
+                            <Grid ColumnDefinitions="*,*,*,*,*,*"
+                                  ColumnSpacing="24"
+                                  HeightRequest="170"
+                                  Padding="20,0">
+                                <BoxView Grid.Column="0" Color="{StaticResource BrandPrimary}" HeightRequest="150" VerticalOptions="End" CornerRadius="4,4,0,0" />
+                                <BoxView Grid.Column="1" Color="{StaticResource BrandPrimary}" HeightRequest="80" VerticalOptions="End" CornerRadius="4,4,0,0" />
+                                <BoxView Grid.Column="2" Color="{StaticResource BrandCream}" HeightRequest="100" VerticalOptions="End" CornerRadius="4,4,0,0" />
+                                <BoxView Grid.Column="3" Color="{StaticResource BrandCream}" HeightRequest="130" VerticalOptions="End" CornerRadius="4,4,0,0" />
+                                <BoxView Grid.Column="4" Color="{StaticResource BrandPrimary}" HeightRequest="170" VerticalOptions="End" CornerRadius="4,4,0,0" />
+                                <BoxView Grid.Column="5" Color="{StaticResource BrandPrimary}" HeightRequest="120" VerticalOptions="End" CornerRadius="4,4,0,0" />
+                            </Grid>
+                            <Grid ColumnDefinitions="*,*,*,*,*,*"
+                                  ColumnSpacing="24"
+                                  Padding="20,0">
+                                <Label Grid.Column="0" Text="Maths" Style="{StaticResource SmallMutedStyle}" HorizontalOptions="Center" />
+                                <Label Grid.Column="1" Text="Science" Style="{StaticResource SmallMutedStyle}" HorizontalOptions="Center" />
+                                <Label Grid.Column="2" Text="ICT" Style="{StaticResource SmallMutedStyle}" HorizontalOptions="Center" />
+                                <Label Grid.Column="3" Text="English" Style="{StaticResource SmallMutedStyle}" HorizontalOptions="Center" />
+                                <Label Grid.Column="4" Text="Sinhala" Style="{StaticResource SmallMutedStyle}" HorizontalOptions="Center" />
+                                <Label Grid.Column="5" Text="Tamil" Style="{StaticResource SmallMutedStyle}" HorizontalOptions="Center" />
+                            </Grid>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <!-- Right column -->
+                    <VerticalStackLayout Grid.Column="1"
+                                         Spacing="16">
+
+                        <!-- Quick actions (brown card) -->
+                        <Border Padding="18"
+                                StrokeThickness="0"
+                                Background="{StaticResource BrandPrimary}">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="12" />
+                            </Border.StrokeShape>
+                            <VerticalStackLayout Spacing="14">
+                                <Label Text="Quick Actions"
+                                       FontSize="14"
+                                       FontAttributes="Bold"
+                                       TextColor="White" />
+                                <Grid ColumnDefinitions="*,*"
+                                      ColumnSpacing="10">
+                                    <Border Grid.Column="0"
+                                            Background="{StaticResource BrandPrimaryDark}"
+                                            StrokeThickness="0"
+                                            Padding="10,12">
+                                        <Border.StrokeShape>
+                                            <RoundRectangle CornerRadius="8" />
+                                        </Border.StrokeShape>
+                                        <Border.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="OnRegisterStudentTapped" />
+                                        </Border.GestureRecognizers>
+                                        <VerticalStackLayout Spacing="6">
+                                            <Label Text="&#xE77B;" FontFamily="Segoe MDL2 Assets" FontSize="16" TextColor="White" HorizontalOptions="Center" />
+                                            <Label Text="Register Student" FontSize="10" TextColor="White" HorizontalOptions="Center" HorizontalTextAlignment="Center" />
+                                        </VerticalStackLayout>
+                                    </Border>
+                                    <Border Grid.Column="1"
+                                            Background="{StaticResource BrandPrimaryDark}"
+                                            StrokeThickness="0"
+                                            Padding="10,12">
+                                        <Border.StrokeShape>
+                                            <RoundRectangle CornerRadius="8" />
+                                        </Border.StrokeShape>
+                                        <Border.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="OnRecordPaymentTapped" />
+                                        </Border.GestureRecognizers>
+                                        <VerticalStackLayout Spacing="6">
+                                            <Label Text="&#xE8C7;" FontFamily="Segoe MDL2 Assets" FontSize="16" TextColor="White" HorizontalOptions="Center" />
+                                            <Label Text="Record Payment" FontSize="10" TextColor="White" HorizontalOptions="Center" HorizontalTextAlignment="Center" />
+                                        </VerticalStackLayout>
+                                    </Border>
+                                </Grid>
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <!-- Recent activity -->
+                        <Border Style="{StaticResource CardStyle}"
+                                Padding="18">
+                            <VerticalStackLayout Spacing="14">
+                                <Label Text="Recent Activity"
+                                       Style="{StaticResource SectionTitleStyle}"
+                                       FontSize="14" />
+                                <VerticalStackLayout x:Name="ActivityList"
+                                                     Spacing="14">
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid ColumnDefinitions="Auto,*"
+                                                  ColumnSpacing="10">
+                                                <Border Grid.Column="0"
+                                                        WidthRequest="28"
+                                                        HeightRequest="28"
+                                                        Padding="0"
+                                                        StrokeThickness="0"
+                                                        Background="{StaticResource BrandCream}"
+                                                        VerticalOptions="Start">
+                                                    <Border.StrokeShape>
+                                                        <RoundRectangle CornerRadius="14" />
+                                                    </Border.StrokeShape>
+                                                    <Label Text="{Binding IconGlyph}" Style="{StaticResource IconStyle}" FontSize="11" TextColor="{StaticResource BrandPrimary}" HorizontalOptions="Center" />
+                                                </Border>
+                                                <VerticalStackLayout Grid.Column="1" Spacing="2">
+                                                    <Label Text="{Binding Message}" Style="{StaticResource BodyStyle}" FontSize="11" />
+                                                    <Label Text="{Binding TimeAgo}" Style="{StaticResource SmallMutedStyle}" FontSize="10" />
+                                                </VerticalStackLayout>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+                                </VerticalStackLayout>
+                            </VerticalStackLayout>
+                        </Border>
+
+                    </VerticalStackLayout>
+                </Grid>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>
