@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:LumoraAcademy.Controls"
+             x:Class="LumoraAcademy.Pages.Shared.StudentDetailsPage"
+             Title="Student Details"
+             BackgroundColor="{StaticResource PageBackground}">
+
+    <Grid ColumnDefinitions="220,*">
+
+        <controls:SidebarView Grid.Column="0"
+                              ActiveItem="Students" />
+
+        <ScrollView Grid.Column="1">
+            <VerticalStackLayout Padding="36,28"
+                                 Spacing="18">
+
+                <!-- Name, ID and status -->
+                <Grid ColumnDefinitions="*,Auto">
+                    <VerticalStackLayout Grid.Column="0"
+                                         Spacing="6">
+                        <HorizontalStackLayout Spacing="10">
+                            <Label Text="Eleanor Vance"
+                                   Style="{StaticResource PageTitleStyle}"
+                                   VerticalOptions="Center" />
+                            <Border Background="{StaticResource StatusGrayBg}"
+                                    StrokeThickness="0"
+                                    Padding="8,3"
+                                    VerticalOptions="Center">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="4" />
+                                </Border.StrokeShape>
+                                <Label Text="ID: STU-2023-8941"
+                                       FontSize="10"
+                                       FontAttributes="Bold"
+                                       TextColor="{StaticResource StatusGrayText}" />
+                            </Border>
+                            <controls:StatusBadge Text="Enrolled" />
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout Spacing="5">
+                            <Label Text="&#xE81D;"
+                                   Style="{StaticResource IconStyle}"
+                                   FontSize="11" />
+                            <Label Text="District 4, Hillside High School"
+                                   Style="{StaticResource MutedStyle}"
+                                   VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+
+                    <!-- Only the Admin sees this -->
+                    <Button x:Name="PrintButton"
+                            Grid.Column="1"
+                            Text="Print Report"
+                            Style="{StaticResource SmallPrimaryButtonStyle}"
+                            IsVisible="False"
+                            VerticalOptions="Start"
+                            Clicked="OnPrintReportClicked" />
+                </Grid>
+
+                <Grid ColumnDefinitions="250,*"
+                      ColumnSpacing="16">
+
+                    <!-- ===== Profile card ===== -->
+                    <Border Grid.Column="0"
+                            Style="{StaticResource CardStyle}"
+                            Padding="20"
+                            VerticalOptions="Start">
+                        <VerticalStackLayout Spacing="16">
+                            <controls:AvatarView Initials="EV"
+                                                 Size="96"
+                                                 HorizontalOptions="Center" />
+                            <VerticalStackLayout Spacing="2">
+                                <Label Text="Eleanor Vance"
+                                       Style="{StaticResource SectionTitleStyle}"
+                                       FontSize="15"
+                                       HorizontalOptions="Center" />
+                                <Label Text="11th Grade, Section B"
+                                       Style="{StaticResource SmallMutedStyle}"
+                                       HorizontalOptions="Center" />
+                            </VerticalStackLayout>
+
+                            <BoxView Style="{StaticResource RowDividerStyle}" />
+
+                            <Label Text="PERSONAL DETAILS"
+                                   Style="{StaticResource FieldLabelStyle}"
+                                   FontSize="10"
+                                   TextColor="{StaticResource BrandPrimaryDark}" />
+                            <Grid ColumnDefinitions="*,*"
+                                  RowDefinitions="Auto,Auto"
+                                  RowSpacing="12">
+                                <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="2">
+                                    <Label Text="Date of Birth" Style="{StaticResource SmallMutedStyle}" />
+                                    <Label Text="Oct 12, 2006" Style="{StaticResource BodyStyle}" />
+                                </VerticalStackLayout>
+                                <VerticalStackLayout Grid.Row="0" Grid.Column="1" Spacing="2">
+                                    <Label Text="Gender" Style="{StaticResource SmallMutedStyle}" />
+                                    <Label Text="Female" Style="{StaticResource BodyStyle}" />
+                                </VerticalStackLayout>
+                                <VerticalStackLayout Grid.Row="1" Grid.Column="0" Spacing="2">
+                                    <Label Text="Joining Date" Style="{StaticResource SmallMutedStyle}" />
+                                    <Label Text="Aug 15, 2021" Style="{StaticResource BodyStyle}" />
+                                </VerticalStackLayout>
+                            </Grid>
+
+                            <BoxView Style="{StaticResource RowDividerStyle}" />
+
+                            <Label Text="GUARDIAN CONTACT"
+                                   Style="{StaticResource FieldLabelStyle}"
+                                   FontSize="10"
+                                   TextColor="{StaticResource BrandPrimaryDark}" />
+                            <VerticalStackLayout Spacing="6">
+                                <Label Text="Arthur Vance (Father)"
+                                       Style="{StaticResource BodyBoldStyle}" />
+                                <HorizontalStackLayout Spacing="6">
+                                    <Label Text="&#xE717;" Style="{StaticResource IconStyle}" FontSize="10" />
+                                    <Label Text="+1 (555) 019-2834" Style="{StaticResource MutedStyle}" VerticalOptions="Center" />
+                                </HorizontalStackLayout>
+                                <HorizontalStackLayout Spacing="6">
+                                    <Label Text="&#xE715;" Style="{StaticResource IconStyle}" FontSize="10" />
+                                    <Label Text="a.vance@email.com" Style="{StaticResource MutedStyle}" VerticalOptions="Center" />
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <!-- ===== Right side: stats + schedule ===== -->
+                    <VerticalStackLayout Grid.Column="1"
+                                         Spacing="16">
+
+                        <Grid ColumnDefinitions="*,*,*,*"
+                              ColumnSpacing="12">
+                            <controls:StatCard Grid.Column="0" Title="CURRENT GPA" Value="3.84" Subtitle="Top 15% of Class" Icon="&#xE9D2;" />
+                            <controls:StatCard Grid.Column="1" Title="ATTENDANCE" Value="96%" Subtitle="3 Absences YTD" Icon="&#xE787;" />
+                            <controls:StatCard Grid.Column="2" Title="ASSIGNED TEACHER" Value="Mr. Davis" Subtitle="Homeroom 11B" Icon="&#xE77B;" />
+                            <controls:StatCard Grid.Column="3" Title="CREDITS" Value="18/24" Subtitle="On track for grad" Icon="&#xE734;" />
+                        </Grid>
+
+                        <Border Style="{StaticResource CardStyle}"
+                                Padding="20">
+                            <VerticalStackLayout Spacing="14">
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <Label Grid.Column="0"
+                                           Text="Today's Schedule"
+                                           Style="{StaticResource SectionTitleStyle}"
+                                           FontSize="15" />
+                                    <Label Grid.Column="1"
+                                           Text="View Full Term"
+                                           Style="{StaticResource LinkStyle}"
+                                           TextColor="{StaticResource TextLink}" />
+                                </Grid>
+
+                                <VerticalStackLayout x:Name="ScheduleList"
+                                                     Spacing="10">
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border Background="{StaticResource TableHeaderBackground}"
+                                                    Stroke="{StaticResource DividerLine}"
+                                                    StrokeThickness="1"
+                                                    Padding="12,10">
+                                                <Border.StrokeShape>
+                                                    <RoundRectangle CornerRadius="8" />
+                                                </Border.StrokeShape>
+                                                <Grid ColumnDefinitions="52,*,Auto"
+                                                      ColumnSpacing="12">
+                                                    <Border Grid.Column="0"
+                                                            Background="{StaticResource CardBackground}"
+                                                            Stroke="{StaticResource DividerLine}"
+                                                            StrokeThickness="1"
+                                                            Padding="4">
+                                                        <Border.StrokeShape>
+                                                            <RoundRectangle CornerRadius="6" />
+                                                        </Border.StrokeShape>
+                                                        <VerticalStackLayout>
+                                                            <Label Text="{Binding StartTime}" FontSize="11" FontAttributes="Bold" TextColor="{StaticResource TextHeading}" HorizontalOptions="Center" />
+                                                            <Label Text="{Binding EndTime}" FontSize="8" TextColor="{StaticResource TextMuted}" HorizontalOptions="Center" />
+                                                        </VerticalStackLayout>
+                                                    </Border>
+                                                    <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                                                        <Label Text="{Binding Title}" Style="{StaticResource BodyBoldStyle}" />
+                                                        <HorizontalStackLayout Spacing="5">
+                                                            <Label Text="&#xE8B7;" Style="{StaticResource IconStyle}" FontSize="10" />
+                                                            <Label Text="{Binding Detail}" Style="{StaticResource SmallMutedStyle}" VerticalOptions="Center" />
+                                                        </HorizontalStackLayout>
+                                                    </VerticalStackLayout>
+                                                    <controls:StatusBadge Grid.Column="2" Text="{Binding Status}" />
+                                                </Grid>
+                                            </Border>
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+                                </VerticalStackLayout>
+                            </VerticalStackLayout>
+                        </Border>
+
+                    </VerticalStackLayout>
+                </Grid>
+
+                <!-- Additional notes -->
+                <Border Style="{StaticResource CardTightStyle}">
+                    <VerticalStackLayout>
+                        <Grid ColumnDefinitions="*,Auto,Auto"
+                              ColumnSpacing="8"
+                              Padding="16,10"
+                              BackgroundColor="{StaticResource TableHeaderBackground}">
+                            <Label Grid.Column="0" Text="Additional Notes" Style="{StaticResource MutedStyle}" VerticalOptions="Center" />
+                            <Button Grid.Column="1" Text="Prev" Style="{StaticResource SmallOutlineButtonStyle}" TextColor="{StaticResource TextLight}" />
+                            <Button Grid.Column="2" Text="Next" Style="{StaticResource SmallOutlineButtonStyle}" />
+                        </Grid>
+                        <Editor x:Name="NotesEditor"
+                                Style="{StaticResource FieldEditorStyle}"
+                                HeightRequest="120"
+                                Margin="12,8"
+                                Placeholder="" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Bottom buttons -->
+                <HorizontalStackLayout Spacing="10"
+                                       HorizontalOptions="End">
+                    <Button x:Name="ResignationButton"
+                            Text="Student Resignation"
+                            Style="{StaticResource SmallPrimaryButtonStyle}"
+                            IsVisible="False"
+                            Clicked="OnResignationClicked" />
+                    <Button Text="Go Back"
+                            Style="{StaticResource SmallPrimaryButtonStyle}"
+                            Clicked="OnGoBackClicked" />
+                </HorizontalStackLayout>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>
