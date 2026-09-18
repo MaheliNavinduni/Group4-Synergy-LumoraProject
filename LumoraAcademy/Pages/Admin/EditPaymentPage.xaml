@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:LumoraAcademy.Controls"
+             x:Class="LumoraAcademy.Pages.Admin.EditPaymentPage"
+             Title="Edit Payment Record"
+             BackgroundColor="{StaticResource PageBackground}">
+
+    <Grid ColumnDefinitions="220,*">
+
+        <controls:SidebarView Grid.Column="0"
+                              ActiveItem="Payments" />
+
+        <ScrollView Grid.Column="1">
+            <VerticalStackLayout Padding="36,32"
+                                 Spacing="20">
+
+                <Grid ColumnDefinitions="*,Auto">
+                    <VerticalStackLayout Grid.Column="0" Spacing="4">
+                        <Label Text="Edit Payment Record" Style="{StaticResource PageTitleStyle}" />
+                        <HorizontalStackLayout Spacing="5">
+                            <Label Text="&#xE77B;" Style="{StaticResource IconStyle}" FontSize="11" />
+                            <Label Text="Alice Anderson • STD-116-001" Style="{StaticResource MutedStyle}" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                    <Border Grid.Column="1" Style="{StaticResource FieldBoxStyle}" HeightRequest="26" Padding="8,0" VerticalOptions="Start">
+                        <HorizontalStackLayout Spacing="5">
+                            <Label Text="&#xE823;" Style="{StaticResource IconStyle}" FontSize="9" />
+                            <Label Text="Last edited: 2 days ago" Style="{StaticResource SmallMutedStyle}" FontSize="9" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+                    </Border>
+                </Grid>
+
+                <!-- Payment details -->
+                <Border Style="{StaticResource CardStyle}" Padding="20">
+                    <VerticalStackLayout Spacing="16">
+                        <HorizontalStackLayout Spacing="8">
+                            <Label Text="&#xE8A5;" Style="{StaticResource IconStyle}" />
+                            <Label Text="Payment Details" Style="{StaticResource SectionTitleStyle}" FontSize="13" />
+                        </HorizontalStackLayout>
+                        <BoxView Style="{StaticResource RowDividerStyle}" />
+
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="20" RowDefinitions="Auto,Auto,Auto" RowSpacing="14">
+                            <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="6">
+                                <Label Text="NAME" Style="{StaticResource FieldLabelStyle}" FontSize="10" />
+                                <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="36">
+                                    <Entry x:Name="NameEntry" Text="Alice Anderson" Style="{StaticResource FieldEntryStyle}" />
+                                </Border>
+                            </VerticalStackLayout>
+
+                            <VerticalStackLayout Grid.Row="0" Grid.Column="1" Spacing="6">
+                                <Label Text="PAYMENT STATUS" Style="{StaticResource FieldLabelStyle}" FontSize="10" />
+                                <HorizontalStackLayout Spacing="12" VerticalOptions="Center" HeightRequest="36">
+                                    <HorizontalStackLayout Spacing="3">
+                                        <RadioButton x:Name="PaidRadio" GroupName="PayStatus" IsChecked="True" Scale="0.8" />
+                                        <Label Text="Paid" Style="{StaticResource BodyStyle}" FontSize="12" VerticalOptions="Center" />
+                                    </HorizontalStackLayout>
+                                    <HorizontalStackLayout Spacing="3">
+                                        <RadioButton GroupName="PayStatus" Scale="0.8" />
+                                        <Label Text="Partial" Style="{StaticResource BodyStyle}" FontSize="12" VerticalOptions="Center" />
+                                    </HorizontalStackLayout>
+                                    <HorizontalStackLayout Spacing="3">
+                                        <RadioButton GroupName="PayStatus" Scale="0.8" />
+                                        <Label Text="Pending" Style="{StaticResource BodyStyle}" FontSize="12" VerticalOptions="Center" />
+                                    </HorizontalStackLayout>
+                                    <HorizontalStackLayout Spacing="3">
+                                        <RadioButton GroupName="PayStatus" Scale="0.8" />
+                                        <Label Text="Overdue" Style="{StaticResource BodyStyle}" FontSize="12" VerticalOptions="Center" />
+                                    </HorizontalStackLayout>
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
+
+                            <VerticalStackLayout Grid.Row="1" Grid.Column="0" Spacing="6">
+                                <Label Text="AMOUNT DUE" Style="{StaticResource FieldLabelStyle}" FontSize="10" />
+                                <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="36">
+                                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="6">
+                                        <Label Text="$" Style="{StaticResource MutedStyle}" VerticalOptions="Center" />
+                                        <Entry Grid.Column="1" x:Name="AmountDueEntry" Text="1500.00" Keyboard="Numeric" Style="{StaticResource FieldEntryStyle}" />
+                                    </Grid>
+                                </Border>
+                            </VerticalStackLayout>
+
+                            <VerticalStackLayout Grid.Row="1" Grid.Column="1" Spacing="6">
+                                <Label Text="AMOUNT PAID" Style="{StaticResource FieldLabelStyle}" FontSize="10" />
+                                <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="36">
+                                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="6">
+                                        <Label Text="$" Style="{StaticResource MutedStyle}" VerticalOptions="Center" />
+                                        <Entry Grid.Column="1" x:Name="AmountPaidEntry" Text="500.00" Keyboard="Numeric" Style="{StaticResource FieldEntryStyle}" />
+                                    </Grid>
+                                </Border>
+                            </VerticalStackLayout>
+
+                            <VerticalStackLayout Grid.Row="2" Grid.Column="0" Spacing="6">
+                                <Label Text="PAYMENT DATE" Style="{StaticResource FieldLabelStyle}" FontSize="10" />
+                                <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="36">
+                                    <DatePicker x:Name="PaymentDatePicker" Date="2023-10-24" FontSize="12" TextColor="{StaticResource TextHeading}" BackgroundColor="Transparent" VerticalOptions="Center" />
+                                </Border>
+                            </VerticalStackLayout>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <Grid ColumnDefinitions="1.6*,*" ColumnSpacing="16">
+                    <!-- Receipt management -->
+                    <Border Grid.Column="0" Style="{StaticResource CardStyle}" Padding="20">
+                        <VerticalStackLayout Spacing="14">
+                            <HorizontalStackLayout Spacing="8">
+                                <Label Text="&#xE8A5;" Style="{StaticResource IconStyle}" />
+                                <Label Text="Receipt Management" Style="{StaticResource SectionTitleStyle}" FontSize="13" />
+                            </HorizontalStackLayout>
+                            <BoxView Style="{StaticResource RowDividerStyle}" />
+                            <Grid ColumnDefinitions="*,*" ColumnSpacing="16">
+                                <VerticalStackLayout Grid.Column="0" Spacing="6">
+                                    <Label Text="UPLOAD NEW RECEIPT" Style="{StaticResource FieldLabelStyle}" FontSize="9" />
+                                    <Border Stroke="{StaticResource FieldBorder}" StrokeThickness="1" StrokeDashArray="4,3" Background="{StaticResource TableHeaderBackground}" Padding="12" HeightRequest="110">
+                                        <Border.StrokeShape>
+                                            <RoundRectangle CornerRadius="8" />
+                                        </Border.StrokeShape>
+                                        <VerticalStackLayout Spacing="4" VerticalOptions="Center">
+                                            <Label Text="&#xE898;" Style="{StaticResource IconStyle}" FontSize="18" HorizontalOptions="Center" />
+                                            <Label Text="Click to upload or drag and drop" Style="{StaticResource SmallMutedStyle}" FontSize="9" HorizontalOptions="Center" />
+                                            <Label Text="PDF, JPG, PNG (max 5MB)" Style="{StaticResource SmallMutedStyle}" FontSize="9" HorizontalOptions="Center" />
+                                        </VerticalStackLayout>
+                                    </Border>
+                                </VerticalStackLayout>
+                                <VerticalStackLayout Grid.Column="1" Spacing="6">
+                                    <Label Text="CURRENT RECEIPT" Style="{StaticResource FieldLabelStyle}" FontSize="9" />
+                                    <Border Style="{StaticResource CardStyle}" Padding="10" HeightRequest="110">
+                                        <VerticalStackLayout Spacing="6">
+                                            <BoxView Color="{StaticResource StatusGrayBg}" HeightRequest="60" CornerRadius="4" />
+                                            <Grid ColumnDefinitions="*,Auto">
+                                                <Label Text="rcpt_102423_alice.pdf" Style="{StaticResource SmallMutedStyle}" FontSize="9" />
+                                                <Label Grid.Column="1" Text="1.2 MB" Style="{StaticResource SmallMutedStyle}" FontSize="9" />
+                                            </Grid>
+                                        </VerticalStackLayout>
+                                    </Border>
+                                </VerticalStackLayout>
+                            </Grid>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <!-- Additional notes -->
+                    <Border Grid.Column="1" Style="{StaticResource CardStyle}" Padding="20">
+                        <VerticalStackLayout Spacing="14">
+                            <HorizontalStackLayout Spacing="8">
+                                <Label Text="&#xE70B;" Style="{StaticResource IconStyle}" />
+                                <Label Text="Additional Notes" Style="{StaticResource SectionTitleStyle}" FontSize="13" />
+                            </HorizontalStackLayout>
+                            <BoxView Style="{StaticResource RowDividerStyle}" />
+                            <Border Style="{StaticResource TextAreaBoxStyle}" HeightRequest="130">
+                                <Editor x:Name="NotesEditor"
+                                        Text="Parent requested extension until Nov 1st due to bank delay. Approved by Admin."
+                                        Style="{StaticResource FieldEditorStyle}" />
+                            </Border>
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
+
+                <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="10">
+                    <HorizontalStackLayout Grid.Column="0" Spacing="5" VerticalOptions="Center">
+                        <Label Text="&#xE946;" Style="{StaticResource IconStyle}" FontSize="10" />
+                        <Label Text="Unsaved changes" Style="{StaticResource SmallMutedStyle}" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                    <Button Grid.Column="1" Text="Cancel" Style="{StaticResource OutlineButtonStyle}" Clicked="OnCancelClicked" />
+                    <Button Grid.Column="2" Text="Save Changes" Style="{StaticResource PrimaryButtonStyle}" Clicked="OnSaveClicked" />
+                </Grid>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

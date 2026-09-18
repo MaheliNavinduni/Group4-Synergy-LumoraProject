@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:LumoraAcademy.Controls"
+             x:Class="LumoraAcademy.Pages.Admin.MarkAttendancePage"
+             Title="Mark Attendance"
+             BackgroundColor="{StaticResource PageBackground}">
+
+    <Grid ColumnDefinitions="220,*">
+
+        <controls:SidebarView Grid.Column="0"
+                              ActiveItem="Attendance" />
+
+        <ScrollView Grid.Column="1">
+            <VerticalStackLayout Padding="36,32"
+                                 Spacing="20">
+
+                <!-- Title and filters -->
+                <Grid ColumnDefinitions="*,Auto,Auto,Auto" ColumnSpacing="10">
+                    <Label Grid.Column="0" Text="Mark  Attendance" Style="{StaticResource PageTitleStyle}" FontSize="22" VerticalOptions="Center" />
+                    <Border Grid.Column="1" Style="{StaticResource FieldBoxStyle}" HeightRequest="32" WidthRequest="150" Padding="10,0">
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="6">
+                            <Label Text="&#xE787;" Style="{StaticResource IconStyle}" FontSize="10" />
+                            <Entry Grid.Column="1" Placeholder="Name" Style="{StaticResource FieldEntryStyle}" FontSize="11" />
+                        </Grid>
+                    </Border>
+                    <Border Grid.Column="2" Style="{StaticResource FieldBoxStyle}" HeightRequest="32" Padding="10,0">
+                        <Picker x:Name="ClassPicker" Style="{StaticResource FieldPickerStyle}" FontSize="11" />
+                    </Border>
+                    <Border Grid.Column="3" Style="{StaticResource FieldBoxStyle}" HeightRequest="32" Padding="10,0">
+                        <Picker x:Name="SubjectPicker" Style="{StaticResource FieldPickerStyle}" FontSize="11" />
+                    </Border>
+                </Grid>
+
+                <!-- Counters -->
+                <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="14">
+                    <controls:StatCard Grid.Column="0" Title="TOTAL STUDENTS" Value="42" />
+                    <controls:StatCard Grid.Column="1" Title="PRESENT" Value="38" ValueColor="{StaticResource StatusGreenText}" />
+                    <controls:StatCard Grid.Column="2" Title="ABSENT" Value="3" ValueColor="{StaticResource StatusRedText}" />
+                    <controls:StatCard Grid.Column="3" Title="LATE" Value="1" ValueColor="{StaticResource StatusYellowText}" />
+                </Grid>
+
+                <!-- Student list -->
+                <Border Style="{StaticResource CardTightStyle}">
+                    <VerticalStackLayout>
+
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10" Padding="20,12">
+                            <Border Grid.Column="0" Style="{StaticResource FieldBoxStyle}" HeightRequest="32" Padding="10,0" HorizontalOptions="Start" WidthRequest="220">
+                                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="6">
+                                    <Label Text="&#xE721;" Style="{StaticResource IconStyle}" FontSize="10" />
+                                    <Entry Grid.Column="1" Placeholder="Search students..." Style="{StaticResource FieldEntryStyle}" FontSize="11" />
+                                </Grid>
+                            </Border>
+                            <Label Grid.Column="1" Text="Mark All Present" Style="{StaticResource LinkStyle}" VerticalOptions="Center">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnMarkAllPresentTapped" />
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </Grid>
+
+                        <Grid Style="{StaticResource TableHeaderRowStyle}" ColumnDefinitions="1.6*,1*,1.6*,1.4*">
+                            <Label Grid.Column="0" Text="STUDENT" Style="{StaticResource TableHeaderStyle}" />
+                            <Label Grid.Column="1" Text="ID" Style="{StaticResource TableHeaderStyle}" />
+                            <Label Grid.Column="2" Text="STATUS" Style="{StaticResource TableHeaderStyle}" />
+                            <Label Grid.Column="3" Text="REMARKS" Style="{StaticResource TableHeaderStyle}" />
+                        </Grid>
+
+                        <VerticalStackLayout x:Name="RowList">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <VerticalStackLayout>
+                                        <Grid Style="{StaticResource TableRowStyle}" ColumnDefinitions="1.6*,1*,1.6*,1.4*">
+                                            <HorizontalStackLayout Grid.Column="0" Spacing="10">
+                                                <controls:AvatarView Initials="{Binding Initials}" Size="28" />
+                                                <Label Text="{Binding Name}" Style="{StaticResource TableCellBoldStyle}" FontSize="12" />
+                                            </HorizontalStackLayout>
+                                            <Label Grid.Column="1" Text="{Binding Id}" Style="{StaticResource TableCellMutedStyle}" />
+
+                                            <!-- Present / Absent / Late buttons -->
+                                            <HorizontalStackLayout Grid.Column="2" Spacing="4">
+                                                <Button Text="Present" Style="{StaticResource SmallOutlineButtonStyle}" HeightRequest="26" FontSize="10" Padding="8,0" Clicked="OnStatusClicked" CommandParameter="Present" />
+                                                <Button Text="Absent" Style="{StaticResource SmallOutlineButtonStyle}" HeightRequest="26" FontSize="10" Padding="8,0" Clicked="OnStatusClicked" CommandParameter="Absent" />
+                                                <Button Text="Late" Style="{StaticResource SmallOutlineButtonStyle}" HeightRequest="26" FontSize="10" Padding="8,0" Clicked="OnStatusClicked" CommandParameter="Late" />
+                                            </HorizontalStackLayout>
+
+                                            <Label Grid.Column="3" Text="{Binding Remarks}" Style="{StaticResource TableCellMutedStyle}" />
+                                        </Grid>
+                                        <BoxView Style="{StaticResource RowDividerStyle}" />
+                                    </VerticalStackLayout>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+
+                        <Label Text="Showing 4 of 42 students" Style="{StaticResource SmallMutedStyle}" Padding="20,12" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Button Text="Save Attendance"
+                        Style="{StaticResource PrimaryButtonStyle}"
+                        HorizontalOptions="Start"
+                        Clicked="OnSaveClicked" />
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>
