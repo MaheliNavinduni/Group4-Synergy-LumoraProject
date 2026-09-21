@@ -34,10 +34,10 @@
 
                 <!-- Counters -->
                 <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="14">
-                    <controls:StatCard Grid.Column="0" Title="TOTAL STUDENTS" Value="42" />
-                    <controls:StatCard Grid.Column="1" Title="PRESENT" Value="38" ValueColor="{StaticResource StatusGreenText}" />
-                    <controls:StatCard Grid.Column="2" Title="ABSENT" Value="3" ValueColor="{StaticResource StatusRedText}" />
-                    <controls:StatCard Grid.Column="3" Title="LATE" Value="1" ValueColor="{StaticResource StatusYellowText}" />
+                    <controls:StatCard x:Name="TotalCard" Grid.Column="0" Title="TOTAL STUDENTS" Value="0" />
+                    <controls:StatCard x:Name="PresentCard" Grid.Column="1" Title="PRESENT" Value="0" ValueColor="{StaticResource StatusGreenText}" />
+                    <controls:StatCard x:Name="AbsentCard" Grid.Column="2" Title="ABSENT" Value="0" ValueColor="{StaticResource StatusRedText}" />
+                    <controls:StatCard x:Name="LateCard" Grid.Column="3" Title="LATE" Value="0" ValueColor="{StaticResource StatusYellowText}" />
                 </Grid>
 
                 <!-- Student list -->
@@ -91,7 +91,7 @@
                             </BindableLayout.ItemTemplate>
                         </VerticalStackLayout>
 
-                        <Label Text="Showing 4 of 42 students" Style="{StaticResource SmallMutedStyle}" Padding="20,12" />
+                        <Label x:Name="CountLabel" Text="" Style="{StaticResource SmallMutedStyle}" Padding="20,12" />
                     </VerticalStackLayout>
                 </Border>
 

@@ -1,26 +1,66 @@
 using LumoraAcademy.Controls;
-using LumoraAcademy.Data;
 using LumoraAcademy.Models;
 using LumoraAcademy.Services;
 
 namespace LumoraAcademy.Pages.Admin;
 
+// Marks attendance for one class for today and saves it to the database.
 public partial class MarkAttendancePage : ContentPage
 {
+    private List<MarkAttendanceRow> _rows = new();
+    private List<Core.Entities.Subject> _subjects = new();
+
     public MarkAttendancePage()
     {
         InitializeComponent();
 
-        ClassPicker.ItemsSource = new List<string> { "11th Grade, Section B", "10th Grade, Section A", "9th Grade, Section C" };
-        ClassPicker.SelectedIndex = 0;
+        // Classes = the grades that have active students
+        var grades = AppData.Students.GetAll()
+            .Where(s => s.Status == "Active")
+            .Select(s => s.Grade)
+            .Distinct()
+            .OrderBy(g => g)
+            .ToList();
+        ClassPicker.ItemsSource = grades;
+        ClassPicker.SelectedIndexChanged += (s, e) => LoadStudents();
+        if (grades.Count > 0) ClassPicker.SelectedIndex = 0;
 
-        SubjectPicker.ItemsSource = new List<string> { "Mathematics", "Science", "ICT", "English", "Sinhala", "Tamil" };
-        SubjectPicker.SelectedIndex = 0;
+        _subjects = AppData.Academics.GetSubjects();
+        SubjectPicker.ItemsSource = _subjects.Select(x => x.DisplayName).ToList();
+        if (_subjects.Count > 0) SubjectPicker.SelectedIndex = 0;
 
-        BindableLayout.SetItemsSource(RowList, SampleData.MarkAttendanceRows);
-
-        // Colour the buttons to match each student's current status.
         Loaded += (s, e) => RefreshAllRows();
+    }
+
+    // Loads the students of the selected class. If attendance was already saved today, it shows those statuses.
+    private void LoadStudents()
+    {
+        string grade = ClassPicker.SelectedItem as string ?? "";
+        var students = AppData.Students.GetAll().Where(s => s.Status == "Active" && s.Grade == grade).ToList();
+        var saved = AppData.Attendance.GetForClassOnDay(grade, DateTime.Today).ToDictionary(a => a.StudentId);
+
+        _rows = students.Select(s => new MarkAttendanceRow
+        {
+            StudentDbId = s.Id,
+            Name = s.FullName,
+            Id = s.StudentId,
+            Initials = s.Initials,
+            Status = saved.TryGetValue(s.Id, out var entry) ? entry.Status : "Present",
+            Remarks = saved.TryGetValue(s.Id, out var e2) ? e2.Remarks : "",
+        }).ToList();
+
+        BindableLayout.SetItemsSource(RowList, _rows);
+        CountLabel.Text = $"Showing {_rows.Count} students";
+        RefreshAllRows();
+        UpdateCounts();
+    }
+
+    private void UpdateCounts()
+    {
+        TotalCard.Value = _rows.Count.ToString();
+        PresentCard.Value = _rows.Count(r => r.Status == "Present").ToString();
+        AbsentCard.Value = _rows.Count(r => r.Status == "Absent").ToString();
+        LateCard.Value = _rows.Count(r => r.Status == "Late").ToString();
     }
 
     // Runs when one of the Present / Absent / Late buttons is clicked.
@@ -34,22 +74,39 @@ public partial class MarkAttendancePage : ContentPage
             {
                 ColourButtons(buttons, row.Status);
             }
+            UpdateCounts();
         }
     }
 
     private void OnMarkAllPresentTapped(object sender, EventArgs e)
     {
-        foreach (var row in SampleData.MarkAttendanceRows)
+        foreach (var row in _rows)
         {
             row.Status = "Present";
         }
         RefreshAllRows();
+        UpdateCounts();
     }
 
     private async void OnSaveClicked(object sender, EventArgs e)
     {
-        // TODO: save the attendance to the database.
-        await DisplayAlert("Mark Attendance", "Attendance saved (demo only, not stored yet).", "OK");
+        if (_rows.Count == 0)
+        {
+            await DisplayAlert("Mark Attendance", "There are no students in this class.", "OK");
+            return;
+        }
+
+        string grade = ClassPicker.SelectedItem as string ?? "";
+        int? subjectId = SubjectPicker.SelectedIndex >= 0 ? _subjects[SubjectPicker.SelectedIndex].Id : null;
+
+        AppData.Attendance.MarkClass(
+            DateTime.Today,
+            grade,
+            _rows.Select(r => (r.StudentDbId, r.Status, r.Remarks)),
+            subjectId,
+            AppData.CurrentTeacherId);
+
+        await DisplayAlert("Mark Attendance", $"Attendance saved for {_rows.Count} students.", "OK");
         await AppNavigation.GoBackAsync();
     }
 
