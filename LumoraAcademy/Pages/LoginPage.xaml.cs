@@ -15,7 +15,7 @@ public partial class LoginPage : ContentPage
         string username = (UsernameEntry.Text ?? string.Empty).Trim();
         string password = PasswordEntry.Text ?? string.Empty;
 
-        // Simple checks before we do anything else.
+        // Both fields are mandatory.
         if (string.IsNullOrWhiteSpace(username))
         {
             await DisplayAlert("Login", "Please enter your username.", "OK");
@@ -28,24 +28,29 @@ public partial class LoginPage : ContentPage
             return;
         }
 
-        // TEMPORARY demo accounts so the screens can be tested without a database.
-        // TODO: replace this with a real check against the database (with hashed passwords).
-        if (username == "admin" && password == "admin123")
+        // Check the username and password against the Users table.
+        // Demo accounts: admin / admin123 and teacher / teacher123.
+        var user = AppData.Auth.Login(username, password);
+
+        if (user == null)
         {
-            AppNavigation.CurrentRole = "Admin";
-            AppNavigation.CurrentUserName = "Admin";
+            await DisplayAlert("Login", "Incorrect username or password.", "OK");
+            return;
+        }
+
+        AppNavigation.CurrentRole = user.Role;
+        AppNavigation.CurrentUserName = user.DisplayName;
+        AppData.CurrentTeacherId = user.TeacherId;
+
+        PasswordEntry.Text = "";
+
+        if (user.Role == "Admin")
+        {
             await AppNavigation.GoToAsync(new Admin.AdminDashboardPage());
-            return;
         }
-
-        if (username == "teacher" && password == "teacher123")
+        else
         {
-            AppNavigation.CurrentRole = "Teacher";
-            AppNavigation.CurrentUserName = "Miss. Aries";
             await AppNavigation.GoToAsync(new Teacher.TeacherDashboardPage());
-            return;
         }
-
-        await DisplayAlert("Login", "Incorrect username or password.", "OK");
     }
 }

@@ -25,10 +25,10 @@
                 <!-- Four statistics -->
                 <Grid ColumnDefinitions="*,*,*,*"
                       ColumnSpacing="14">
-                    <controls:StatCard Grid.Column="0" Title="TOTAL STUDENTS" Value="2,451" Icon="&#xE716;" />
-                    <controls:StatCard Grid.Column="1" Title="ACTIVE TEACHERS" Value="142" Icon="&#xE77B;" />
-                    <controls:StatCard Grid.Column="2" Title="MONTHLY REVENUE" Value="$124k" Icon="&#xE8C7;" />
-                    <controls:StatCard Grid.Column="3" Title="PENDING PAYMENTS" Value="38" Icon="&#xE7BA;" />
+                    <controls:StatCard x:Name="StudentsCard" Grid.Column="0" Title="TOTAL STUDENTS" Value="-" Icon="&#xE716;" />
+                    <controls:StatCard x:Name="TeachersCard" Grid.Column="1" Title="ACTIVE TEACHERS" Value="-" Icon="&#xE77B;" />
+                    <controls:StatCard x:Name="RevenueCard" Grid.Column="2" Title="FEES COLLECTED" Value="-" Icon="&#xE8C7;" />
+                    <controls:StatCard x:Name="PendingCard" Grid.Column="3" Title="PENDING PAYMENTS" Value="-" Icon="&#xE7BA;" />
                 </Grid>
 
                 <Grid ColumnDefinitions="*,250"
@@ -57,22 +57,22 @@
                                   ColumnSpacing="24"
                                   HeightRequest="170"
                                   Padding="20,0">
-                                <BoxView Grid.Column="0" Color="{StaticResource BrandPrimary}" HeightRequest="150" VerticalOptions="End" CornerRadius="4,4,0,0" />
-                                <BoxView Grid.Column="1" Color="{StaticResource BrandPrimary}" HeightRequest="80" VerticalOptions="End" CornerRadius="4,4,0,0" />
-                                <BoxView Grid.Column="2" Color="{StaticResource BrandCream}" HeightRequest="100" VerticalOptions="End" CornerRadius="4,4,0,0" />
-                                <BoxView Grid.Column="3" Color="{StaticResource BrandCream}" HeightRequest="130" VerticalOptions="End" CornerRadius="4,4,0,0" />
-                                <BoxView Grid.Column="4" Color="{StaticResource BrandPrimary}" HeightRequest="170" VerticalOptions="End" CornerRadius="4,4,0,0" />
-                                <BoxView Grid.Column="5" Color="{StaticResource BrandPrimary}" HeightRequest="120" VerticalOptions="End" CornerRadius="4,4,0,0" />
+                                <BoxView x:Name="Bar0" Grid.Column="0" Color="{StaticResource BrandPrimary}" HeightRequest="150" VerticalOptions="End" CornerRadius="4,4,0,0" />
+                                <BoxView x:Name="Bar1" Grid.Column="1" Color="{StaticResource BrandPrimary}" HeightRequest="80" VerticalOptions="End" CornerRadius="4,4,0,0" />
+                                <BoxView x:Name="Bar2" Grid.Column="2" Color="{StaticResource BrandCream}" HeightRequest="100" VerticalOptions="End" CornerRadius="4,4,0,0" />
+                                <BoxView x:Name="Bar3" Grid.Column="3" Color="{StaticResource BrandCream}" HeightRequest="130" VerticalOptions="End" CornerRadius="4,4,0,0" />
+                                <BoxView x:Name="Bar4" Grid.Column="4" Color="{StaticResource BrandPrimary}" HeightRequest="170" VerticalOptions="End" CornerRadius="4,4,0,0" />
+                                <BoxView x:Name="Bar5" Grid.Column="5" Color="{StaticResource BrandPrimary}" HeightRequest="120" VerticalOptions="End" CornerRadius="4,4,0,0" />
                             </Grid>
                             <Grid ColumnDefinitions="*,*,*,*,*,*"
                                   ColumnSpacing="24"
                                   Padding="20,0">
-                                <Label Grid.Column="0" Text="Maths" Style="{StaticResource SmallMutedStyle}" HorizontalOptions="Center" />
-                                <Label Grid.Column="1" Text="Science" Style="{StaticResource SmallMutedStyle}" HorizontalOptions="Center" />
-                                <Label Grid.Column="2" Text="ICT" Style="{StaticResource SmallMutedStyle}" HorizontalOptions="Center" />
-                                <Label Grid.Column="3" Text="English" Style="{StaticResource SmallMutedStyle}" HorizontalOptions="Center" />
-                                <Label Grid.Column="4" Text="Sinhala" Style="{StaticResource SmallMutedStyle}" HorizontalOptions="Center" />
-                                <Label Grid.Column="5" Text="Tamil" Style="{StaticResource SmallMutedStyle}" HorizontalOptions="Center" />
+                                <Label x:Name="BarLabel0" Grid.Column="0" Text="" Style="{StaticResource SmallMutedStyle}" HorizontalOptions="Center" />
+                                <Label x:Name="BarLabel1" Grid.Column="1" Text="" Style="{StaticResource SmallMutedStyle}" HorizontalOptions="Center" />
+                                <Label x:Name="BarLabel2" Grid.Column="2" Text="" Style="{StaticResource SmallMutedStyle}" HorizontalOptions="Center" />
+                                <Label x:Name="BarLabel3" Grid.Column="3" Text="" Style="{StaticResource SmallMutedStyle}" HorizontalOptions="Center" />
+                                <Label x:Name="BarLabel4" Grid.Column="4" Text="" Style="{StaticResource SmallMutedStyle}" HorizontalOptions="Center" />
+                                <Label x:Name="BarLabel5" Grid.Column="5" Text="" Style="{StaticResource SmallMutedStyle}" HorizontalOptions="Center" />
                             </Grid>
                         </VerticalStackLayout>
                     </Border>

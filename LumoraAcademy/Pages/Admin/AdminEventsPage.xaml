@@ -82,9 +82,9 @@
                                             <VerticalStackLayout>
                                                 <Grid Style="{StaticResource TableRowStyle}"
                                                       ColumnDefinitions="1.6*,1.5*,1.2*,0.9*,0.7*">
-                                                    <Label Grid.Column="0" Text="{Binding Name}" Style="{StaticResource TableCellBoldStyle}" FontSize="12" />
+                                                    <Label Grid.Column="0" Text="{Binding Title}" Style="{StaticResource TableCellBoldStyle}" FontSize="12" />
                                                     <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
-                                                        <Label Text="{Binding Date}" Style="{StaticResource TableCellStyle}" FontSize="12" />
+                                                        <Label Text="{Binding DateText}" Style="{StaticResource TableCellStyle}" FontSize="12" />
                                                         <Label Text="{Binding Time}" Style="{StaticResource SmallMutedStyle}" FontSize="10" />
                                                     </VerticalStackLayout>
                                                     <Label Grid.Column="2" Text="{Binding Location}" Style="{StaticResource TableCellStyle}" FontSize="12" />

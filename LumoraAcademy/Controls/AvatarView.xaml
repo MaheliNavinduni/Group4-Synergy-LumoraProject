@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<!-- A round avatar showing a person's initials (used instead of photos for now). -->
+<!-- A round avatar: shows the person's photo if one was uploaded, otherwise their initials. -->
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="LumoraAcademy.Controls.AvatarView"
@@ -16,11 +16,16 @@
             <RoundRectangle CornerRadius="50" />
         </Border.StrokeShape>
 
-        <Label x:Name="InitialsLabel"
-               FontSize="11"
-               FontAttributes="Bold"
-               TextColor="{StaticResource BrandPrimaryDark}"
-               HorizontalOptions="Center"
-               VerticalOptions="Center" />
+        <Grid>
+            <Label x:Name="InitialsLabel"
+                   FontSize="11"
+                   FontAttributes="Bold"
+                   TextColor="{StaticResource BrandPrimaryDark}"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center" />
+            <Image x:Name="Photo"
+                   Aspect="AspectFill"
+                   IsVisible="False" />
+        </Grid>
     </Border>
 </ContentView>
