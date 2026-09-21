@@ -52,10 +52,10 @@
                                                 <VerticalStackLayout Grid.Column="1"
                                                                      Spacing="3">
                                                     <HorizontalStackLayout Spacing="5">
-                                                        <Label Text="{Binding IconGlyph}"
+                                                        <Label Text="&#xE787;"
                                                                Style="{StaticResource IconStyle}"
                                                                FontSize="10" />
-                                                        <Label Text="{Binding When}"
+                                                        <Label Text="{Binding DateText}"
                                                                Style="{StaticResource SmallMutedStyle}"
                                                                TextColor="{StaticResource TextHeading}"
                                                                VerticalOptions="Center" />

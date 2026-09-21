@@ -1,4 +1,3 @@
-using LumoraAcademy.Data;
 using LumoraAcademy.Services;
 
 namespace LumoraAcademy.Pages.Teacher;
@@ -9,8 +8,14 @@ public partial class TeacherDashboardPage : ContentPage
     {
         InitializeComponent();
 
-        // Fill the schedule list with today's lessons.
-        BindableLayout.SetItemsSource(ScheduleList, SampleData.TeacherTodaySchedule);
+        WelcomeLabel.Text = $"Welcome, {AppNavigation.CurrentUserName}";
+
+        // Today's lessons for the logged-in teacher, from the timetable.
+        var lessons = AppData.CurrentTeacherId.HasValue
+            ? AppData.Schedule.GetDayForTeacher(AppData.CurrentTeacherId.Value)
+            : new List<Core.Entities.ClassSession>();
+        BindableLayout.SetItemsSource(ScheduleList, lessons);
+        NoLessonsLabel.IsVisible = lessons.Count == 0;
     }
 
     private async void OnFullCalendarTapped(object sender, EventArgs e)
