@@ -28,7 +28,7 @@
                         <Label Text="&#xE787;"
                                Style="{StaticResource IconStyle}"
                                FontSize="11" />
-                        <Label Text="Nov 1 - Nov 30"
+                        <Label x:Name="RangeLabel" Text="All dates"
                                Style="{StaticResource MutedStyle}"
                                FontSize="11"
                                VerticalOptions="Center" />
@@ -40,7 +40,7 @@
                         HeightRequest="30"
                         Padding="10,0">
                     <HorizontalStackLayout Spacing="6">
-                        <Label Text="All Classes"
+                        <Label x:Name="ClassLabel" Text="All Classes"
                                Style="{StaticResource MutedStyle}"
                                FontSize="11"
                                VerticalOptions="Center" />
@@ -55,7 +55,7 @@
                         HeightRequest="30"
                         Padding="10,0">
                     <HorizontalStackLayout Spacing="6">
-                        <Label Text="All Subjects"
+                        <Label x:Name="SubjectLabel" Text="All Subjects"
                                Style="{StaticResource MutedStyle}"
                                FontSize="11"
                                VerticalOptions="Center" />
@@ -97,9 +97,9 @@
                         <VerticalStackLayout>
                             <Grid Style="{StaticResource TableRowStyle}"
                                   ColumnDefinitions="1.3*,1.2*,1.2*,0.6*,0.7*,0.7*,0.6*,1*">
-                                <Label Grid.Column="0" Text="{Binding Date}" Style="{StaticResource TableCellStyle}" FontSize="12" TextColor="{StaticResource BrandPrimary}" />
-                                <Label Grid.Column="1" Text="{Binding Class}" Style="{StaticResource TableCellStyle}" FontSize="12" TextColor="{StaticResource BrandPrimary}" />
-                                <Label Grid.Column="2" Text="{Binding Subject}" Style="{StaticResource TableCellStyle}" FontSize="12" />
+                                <Label Grid.Column="0" Text="{Binding DateText}" Style="{StaticResource TableCellStyle}" FontSize="12" TextColor="{StaticResource BrandPrimary}" />
+                                <Label Grid.Column="1" Text="{Binding ClassName}" Style="{StaticResource TableCellStyle}" FontSize="12" TextColor="{StaticResource BrandPrimary}" />
+                                <Label Grid.Column="2" Text="{Binding SubjectName}" Style="{StaticResource TableCellStyle}" FontSize="12" />
                                 <Label Grid.Column="3" Text="{Binding Total}" Style="{StaticResource TableCellStyle}" FontSize="12" HorizontalOptions="Center" TextColor="{StaticResource BrandPrimary}" />
                                 <Label Grid.Column="4" Text="{Binding Present}" Style="{StaticResource TableCellBoldStyle}" FontSize="12" HorizontalOptions="Center" TextColor="{StaticResource StatusGreenText}" />
                                 <Label Grid.Column="5" Text="{Binding Absent}" Style="{StaticResource TableCellBoldStyle}" FontSize="12" HorizontalOptions="Center" TextColor="{StaticResource StatusRedText}" />
@@ -116,27 +116,11 @@
             <Grid ColumnDefinitions="*,Auto"
                   Padding="20,12">
                 <Label Grid.Column="0"
-                       Text="Showing 1 to 4 of 48 records"
+                       x:Name="CountLabel"
+                       Text=""
                        Style="{StaticResource SmallMutedStyle}"
                        VerticalOptions="Center" />
-                <HorizontalStackLayout Grid.Column="1"
-                                       Spacing="4">
-                    <Border Style="{StaticResource PageNumberStyle}">
-                        <Label Text="&#xE76B;" Style="{StaticResource IconStyle}" FontSize="9" HorizontalOptions="Center" />
-                    </Border>
-                    <Border Style="{StaticResource PageNumberActiveStyle}">
-                        <Label Text="1" FontSize="11" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" />
-                    </Border>
-                    <Border Style="{StaticResource PageNumberStyle}">
-                        <Label Text="2" FontSize="11" TextColor="{StaticResource TextMuted}" HorizontalOptions="Center" VerticalOptions="Center" />
-                    </Border>
-                    <Border Style="{StaticResource PageNumberStyle}">
-                        <Label Text="3" FontSize="11" TextColor="{StaticResource TextMuted}" HorizontalOptions="Center" VerticalOptions="Center" />
-                    </Border>
-                    <Border Style="{StaticResource PageNumberStyle}">
-                        <Label Text="&#xE76C;" Style="{StaticResource IconStyle}" FontSize="9" HorizontalOptions="Center" />
-                    </Border>
-                </HorizontalStackLayout>
+                <controls:PagerView x:Name="Pager" Grid.Column="1" PageChanged="OnPageChanged" />
             </Grid>
 
         </VerticalStackLayout>

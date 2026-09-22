@@ -1,34 +1,40 @@
+using LumoraAcademy.Core.Entities;
+using LumoraAcademy.Services;
 using Microsoft.Maui.Controls.Shapes;
 
 namespace LumoraAcademy.Controls;
 
 public partial class MonthCalendarView : ContentView
 {
-    // Sample events shown on the calendar (day number -> event name, colour name).
-    private static readonly Dictionary<int, (string Title, string Colour)> SampleEvents = new()
-    {
-        { 5, ("Faculty Meeting", "Blue") },
-        { 10, ("Mid-Terms Begin", "Blue") },
-        { 12, ("Conferences", "Red") },
-    };
-
-    private const int TodayDay = 11;
+    private DateTime _month = new(DateTime.Today.Year, DateTime.Today.Month, 1);
 
     public MonthCalendarView()
     {
         InitializeComponent();
         BuildDays();
+        Loaded += (s, e) => BuildDays();
     }
 
-    // Creates one cell for each day of October 2023 (which starts on a Sunday).
+    // Draws one cell per day of the month, with that day's events from the database.
     private void BuildDays()
     {
-        int daysInMonth = 31;
-        int firstDayColumn = 0;   // 0 = Sunday
+        DaysGrid.Children.Clear();
+        MonthLabel.Text = _month.ToString("MMMM yyyy");
+
+        int daysInMonth = DateTime.DaysInMonth(_month.Year, _month.Month);
+        int firstDayColumn = (int)_month.DayOfWeek;   // 0 = Sunday
+
+        // Some months need a sixth row
+        int rowsNeeded = (firstDayColumn + daysInMonth + 6) / 7;
+        while (DaysGrid.RowDefinitions.Count < rowsNeeded) DaysGrid.RowDefinitions.Add(new RowDefinition(80));
+
+        var events = AppData.Events.GetForMonth(_month.Year, _month.Month)
+            .GroupBy(e => e.Date.Day)
+            .ToDictionary(g => g.Key, g => g.ToList());
 
         var divider = SidebarView.GetColor("DividerLine");
         var heading = SidebarView.GetColor("TextHeading");
-        var brand = SidebarView.GetColor("BrandPrimary");
+        var link = SidebarView.GetColor("TextLink");
 
         for (int day = 1; day <= daysInMonth; day++)
         {
@@ -36,49 +42,40 @@ public partial class MonthCalendarView : ContentView
             int row = index / 7;
             int column = index % 7;
 
-            bool isToday = day == TodayDay;
+            bool isToday = new DateTime(_month.Year, _month.Month, day) == DateTime.Today;
 
-            var content = new VerticalStackLayout { Spacing = 4, Padding = new Thickness(6, 4) };
+            var content = new VerticalStackLayout { Spacing = 3, Padding = new Thickness(6, 4) };
 
-            var dayLabel = new Label
+            content.Children.Add(new Label
             {
                 Text = day.ToString(),
                 FontSize = 11,
                 FontAttributes = isToday ? FontAttributes.Bold : FontAttributes.None,
-                TextColor = isToday ? SidebarView.GetColor("TextLink") : heading,
-            };
-            content.Children.Add(dayLabel);
+                TextColor = isToday ? link : heading,
+            });
 
-            if (isToday)
+            if (events.TryGetValue(day, out var dayEvents))
             {
-                content.Children.Add(new Ellipse
+                foreach (var ev in dayEvents.Take(2))
                 {
-                    WidthRequest = 5,
-                    HeightRequest = 5,
-                    Fill = new SolidColorBrush(SidebarView.GetColor("TextLink")),
-                    HorizontalOptions = LayoutOptions.End,
-                });
-            }
-
-            if (SampleEvents.TryGetValue(day, out var ev))
-            {
-                content.Children.Add(new Border
-                {
-                    Background = new SolidColorBrush(SidebarView.GetColor("Status" + ev.Colour + "Bg")),
-                    StrokeThickness = 0,
-                    Padding = new Thickness(5, 2),
-                    StrokeShape = new RoundRectangle { CornerRadius = 3 },
-                    Content = new Label
+                    string colour = ColourFor(ev.Category);
+                    content.Children.Add(new Border
                     {
-                        Text = ev.Title,
-                        FontSize = 8,
-                        TextColor = SidebarView.GetColor("Status" + ev.Colour + "Text"),
-                        LineBreakMode = LineBreakMode.TailTruncation,
-                    },
-                });
+                        Background = new SolidColorBrush(SidebarView.GetColor("Status" + colour + "Bg")),
+                        StrokeThickness = 0,
+                        Padding = new Thickness(5, 2),
+                        StrokeShape = new RoundRectangle { CornerRadius = 3 },
+                        Content = new Label
+                        {
+                            Text = ev.Title,
+                            FontSize = 8,
+                            TextColor = SidebarView.GetColor("Status" + colour + "Text"),
+                            LineBreakMode = LineBreakMode.TailTruncation,
+                        },
+                    });
+                }
             }
 
-            // Each cell has a thin border on the right and bottom.
             var cell = new Border
             {
                 Stroke = divider,
@@ -91,4 +88,12 @@ public partial class MonthCalendarView : ContentView
             DaysGrid.Add(cell, column, row);
         }
     }
+
+    private static string ColourFor(string category) => category switch
+    {
+        "Holiday" => "Red",
+        "Sports" => "Green",
+        "Admin" => "Purple",
+        _ => "Blue",
+    };
 }

@@ -17,7 +17,7 @@
 
                 <!-- Page heading -->
                 <VerticalStackLayout Spacing="4">
-                    <Label Text="Welcome, Miss. Aries"
+                    <Label x:Name="WelcomeLabel" Text="Welcome"
                            Style="{StaticResource PageTitleStyle}" />
                     <Label Text="Overview of your daily classes and academic tasks"
                            FontSize="12"
@@ -50,7 +50,7 @@
                             </Label>
                         </Grid>
 
-                        <!-- One row per lesson, filled from SampleData -->
+                        <!-- One row per lesson, from the timetable in the database -->
                         <VerticalStackLayout x:Name="ScheduleList"
                                              Spacing="10">
                             <BindableLayout.ItemTemplate>
@@ -68,12 +68,12 @@
                                                 <RoundRectangle CornerRadius="6" />
                                             </Border.StrokeShape>
                                             <VerticalStackLayout Spacing="1">
-                                                <Label Text="{Binding StartTime}"
+                                                <Label Text="{Binding StartText}"
                                                        FontSize="12"
                                                        FontAttributes="Bold"
                                                        TextColor="{StaticResource TextHeading}"
                                                        HorizontalOptions="Center" />
-                                                <Label Text="{Binding EndTime}"
+                                                <Label Text="{Binding EndText}"
                                                        FontSize="9"
                                                        TextColor="{StaticResource TextMuted}"
                                                        HorizontalOptions="Center" />
@@ -91,17 +91,21 @@
                                             </Border.StrokeShape>
                                             <VerticalStackLayout Spacing="2"
                                                                  VerticalOptions="Center">
-                                                <Label Text="{Binding Title}"
+                                                <Label Text="{Binding SubjectName}"
                                                        Style="{StaticResource BodyBoldStyle}" />
                                                 <Label Text="{Binding Detail}"
-                                                       Style="{StaticResource SmallMutedStyle}"
-                                                       IsVisible="{Binding Detail, Converter={StaticResource NotEmptyConverter}}" />
+                                                       Style="{StaticResource SmallMutedStyle}" />
                                             </VerticalStackLayout>
                                         </Border>
                                     </Grid>
                                 </DataTemplate>
                             </BindableLayout.ItemTemplate>
                         </VerticalStackLayout>
+
+                        <Label x:Name="NoLessonsLabel"
+                               Text="No lessons scheduled for today."
+                               Style="{StaticResource MutedStyle}"
+                               IsVisible="False" />
 
                     </VerticalStackLayout>
                 </Border>

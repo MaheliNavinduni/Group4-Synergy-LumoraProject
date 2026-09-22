@@ -116,6 +116,7 @@ public class ActivityItem
 
 public class MarkAttendanceRow
 {
+    public int StudentDbId { get; set; }             // Students.Id in the database
     public string Name { get; set; } = "";
     public string Id { get; set; } = "";
     public string Initials { get; set; } = "";

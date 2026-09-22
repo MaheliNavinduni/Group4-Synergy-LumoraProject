@@ -21,12 +21,12 @@
                     <Grid ColumnDefinitions="Auto,*"
                           ColumnSpacing="16">
                         <controls:AvatarView Grid.Column="0"
-                                             Initials="MA"
+                                             x:Name="Avatar" Initials=""
                                              Size="52" />
                         <VerticalStackLayout Grid.Column="1"
                                              Spacing="6"
                                              VerticalOptions="Center">
-                            <Label Text="Miss.Aries"
+                            <Label x:Name="NameLabel" Text=""
                                    FontSize="18"
                                    FontAttributes="Bold"
                                    TextColor="{StaticResource TextHeading}" />
@@ -35,7 +35,7 @@
                                     <Label Text="&#xE7BE;"
                                            Style="{StaticResource IconStyle}"
                                            FontSize="11" />
-                                    <Label Text="Senior Mathematics Faculty"
+                                    <Label x:Name="DesignationLabel" Text=""
                                            Style="{StaticResource SmallMutedStyle}"
                                            VerticalOptions="Center" />
                                 </HorizontalStackLayout>
@@ -43,7 +43,7 @@
                                     <Label Text="&#xE715;"
                                            Style="{StaticResource IconStyle}"
                                            FontSize="11" />
-                                    <Label Text="Aries@eduadmin.com"
+                                    <Label x:Name="EmailLabel" Text=""
                                            Style="{StaticResource SmallMutedStyle}"
                                            VerticalOptions="Center" />
                                 </HorizontalStackLayout>
@@ -87,12 +87,12 @@
                                             <Border.StrokeShape>
                                                 <RoundRectangle CornerRadius="6" />
                                             </Border.StrokeShape>
-                                            <Label Text="{Binding IconGlyph}"
+                                            <Label Text="&#xE82D;"
                                                    Style="{StaticResource IconStyle}"
                                                    TextColor="{StaticResource BrandPrimary}"
                                                    HorizontalOptions="Center" />
                                         </Border>
-                                        <Label Text="{Binding Name}"
+                                        <Label Text="{Binding SubjectName}"
                                                Style="{StaticResource BodyBoldStyle}" />
                                         <Label Text="{Binding Code}"
                                                Style="{StaticResource SmallMutedStyle}" />
@@ -116,7 +116,7 @@
                                             <Label Text="&#xE823;"
                                                    Style="{StaticResource IconStyle}"
                                                    FontSize="11" />
-                                            <Label Text="{Binding Time}"
+                                            <Label Text="{Binding TimeRange}"
                                                    Style="{StaticResource SmallMutedStyle}"
                                                    TextColor="{StaticResource TextMuted}"
                                                    VerticalOptions="Center" />
