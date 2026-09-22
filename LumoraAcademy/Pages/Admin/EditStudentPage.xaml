@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:LumoraAcademy.Controls"
+             x:Class="LumoraAcademy.Pages.Admin.EditStudentPage"
+             Title="Edit Student"
+             BackgroundColor="{StaticResource PageBackground}">
+
+    <Grid ColumnDefinitions="220,*">
+
+        <controls:SidebarView Grid.Column="0"
+                              ActiveItem="Students" />
+
+        <ScrollView Grid.Column="1">
+            <VerticalStackLayout Padding="36,32"
+                                 Spacing="20"
+                                 MaximumWidthRequest="820"
+                                 HorizontalOptions="Start">
+
+                <VerticalStackLayout Spacing="4">
+                    <Label Text="Edit Student Profile" Style="{StaticResource PageTitleStyle}" />
+                    <Label x:Name="SubtitleLabel" Text="" Style="{StaticResource PageSubtitleStyle}" />
+                </VerticalStackLayout>
+
+                <!-- Personal details -->
+                <Border Style="{StaticResource CardStyle}">
+                    <VerticalStackLayout Spacing="14">
+                        <Label Text="Personal Details" Style="{StaticResource SectionTitleStyle}" FontSize="14" />
+                        <BoxView Style="{StaticResource RowDividerStyle}" />
+
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="16" RowDefinitions="Auto,Auto,Auto" RowSpacing="12">
+                            <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="6">
+                                <Label Text="Full Name" Style="{StaticResource FormLabelStyle}" Margin="0" />
+                                <Border Style="{StaticResource FieldBoxStyle}">
+                                    <Entry x:Name="FullNameEntry" Style="{StaticResource FieldEntryStyle}" />
+                                </Border>
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Row="0" Grid.Column="1" Spacing="6">
+                                <Label Text="Student ID" Style="{StaticResource FormLabelStyle}" Margin="0" />
+                                <Border Style="{StaticResource FieldBoxStyle}">
+                                    <Entry x:Name="StudentIdEntry" Style="{StaticResource FieldEntryStyle}" />
+                                </Border>
+                            </VerticalStackLayout>
+
+                            <VerticalStackLayout Grid.Row="1" Grid.Column="0" Spacing="6">
+                                <Label Text="Date of Birth" Style="{StaticResource FormLabelStyle}" Margin="0" />
+                                <Border Style="{StaticResource FieldBoxStyle}">
+                                    <DatePicker x:Name="DobPicker" FontSize="13" BackgroundColor="Transparent" TextColor="{StaticResource TextHeading}" VerticalOptions="Center" />
+                                </Border>
+                            </VerticalStackLayout>
+                            <Grid Grid.Row="1" Grid.Column="1" ColumnDefinitions="*,*" ColumnSpacing="12">
+                                <VerticalStackLayout Grid.Column="0" Spacing="6">
+                                    <Label Text="Gender" Style="{StaticResource FormLabelStyle}" Margin="0" />
+                                    <Border Style="{StaticResource FieldBoxStyle}">
+                                        <Picker x:Name="GenderPicker" Style="{StaticResource FieldPickerStyle}" />
+                                    </Border>
+                                </VerticalStackLayout>
+                                <VerticalStackLayout Grid.Column="1" Spacing="6">
+                                    <Label Text="Blood Group" Style="{StaticResource FormLabelStyle}" Margin="0" />
+                                    <Border Style="{StaticResource FieldBoxStyle}">
+                                        <Picker x:Name="BloodGroupPicker" Style="{StaticResource FieldPickerStyle}" />
+                                    </Border>
+                                </VerticalStackLayout>
+                            </Grid>
+
+                            <Grid Grid.Row="2" Grid.Column="0" ColumnDefinitions="*,*" ColumnSpacing="12">
+                                <VerticalStackLayout Grid.Column="0" Spacing="6">
+                                    <Label Text="Grade" Style="{StaticResource FormLabelStyle}" Margin="0" />
+                                    <Border Style="{StaticResource FieldBoxStyle}">
+                                        <Picker x:Name="GradePicker" Style="{StaticResource FieldPickerStyle}" />
+                                    </Border>
+                                </VerticalStackLayout>
+                                <VerticalStackLayout Grid.Column="1" Spacing="6">
+                                    <Label Text="Section" Style="{StaticResource FormLabelStyle}" Margin="0" />
+                                    <Border Style="{StaticResource FieldBoxStyle}">
+                                        <Entry x:Name="SectionEntry" Style="{StaticResource FieldEntryStyle}" />
+                                    </Border>
+                                </VerticalStackLayout>
+                            </Grid>
+                            <Grid Grid.Row="2" Grid.Column="1" ColumnDefinitions="*,*" ColumnSpacing="12">
+                                <VerticalStackLayout Grid.Column="0" Spacing="6">
+                                    <Label Text="Assigned Teacher" Style="{StaticResource FormLabelStyle}" Margin="0" />
+                                    <Border Style="{StaticResource FieldBoxStyle}">
+                                        <Picker x:Name="TeacherPicker" Style="{StaticResource FieldPickerStyle}" />
+                                    </Border>
+                                </VerticalStackLayout>
+                                <VerticalStackLayout Grid.Column="1" Spacing="6">
+                                    <Label Text="Status" Style="{StaticResource FormLabelStyle}" Margin="0" />
+                                    <Border Style="{StaticResource FieldBoxStyle}">
+                                        <Picker x:Name="StatusPicker" Style="{StaticResource FieldPickerStyle}" />
+                                    </Border>
+                                </VerticalStackLayout>
+                            </Grid>
+                        </Grid>
+
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="Class Day / Time" Style="{StaticResource FormLabelStyle}" Margin="0" />
+                            <Border Style="{StaticResource FieldBoxStyle}">
+                                <Entry x:Name="ClassTimeEntry" Placeholder="e.g. Mon, Wed 4:00 PM" Style="{StaticResource FieldEntryStyle}" />
+                            </Border>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Guardian details -->
+                <Border Style="{StaticResource CardStyle}">
+                    <VerticalStackLayout Spacing="14">
+                        <Label Text="Parent / Guardian Contact" Style="{StaticResource SectionTitleStyle}" FontSize="14" />
+                        <BoxView Style="{StaticResource RowDividerStyle}" />
+
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="16" RowDefinitions="Auto,Auto" RowSpacing="12">
+                            <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="6">
+                                <Label Text="Guardian Name" Style="{StaticResource FormLabelStyle}" Margin="0" />
+                                <Border Style="{StaticResource FieldBoxStyle}">
+                                    <Entry x:Name="GuardianEntry" Style="{StaticResource FieldEntryStyle}" />
+                                </Border>
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Row="0" Grid.Column="1" Spacing="6">
+                                <Label Text="Phone Number" Style="{StaticResource FormLabelStyle}" Margin="0" />
+                                <Border Style="{StaticResource FieldBoxStyle}">
+                                    <Entry x:Name="PhoneEntry" Style="{StaticResource FieldEntryStyle}" />
+                                </Border>
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Row="1" Grid.Column="0" Spacing="6">
+                                <Label Text="Email Address" Style="{StaticResource FormLabelStyle}" Margin="0" />
+                                <Border Style="{StaticResource FieldBoxStyle}">
+                                    <Entry x:Name="EmailEntry" Style="{StaticResource FieldEntryStyle}" />
+                                </Border>
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Row="1" Grid.Column="1" Spacing="6">
+                                <Label Text="Residential Address" Style="{StaticResource FormLabelStyle}" Margin="0" />
+                                <Border Style="{StaticResource FieldBoxStyle}">
+                                    <Entry x:Name="AddressEntry" Style="{StaticResource FieldEntryStyle}" />
+                                </Border>
+                            </VerticalStackLayout>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <HorizontalStackLayout Spacing="10" HorizontalOptions="End">
+                    <Button Text="Change Photo" Style="{StaticResource OutlineButtonStyle}" Clicked="OnPhotoClicked" />
+                    <Button Text="Cancel" Style="{StaticResource OutlineButtonStyle}" Clicked="OnCancelClicked" />
+                    <Button Text="Save Changes" Style="{StaticResource PrimaryButtonStyle}" Clicked="OnSaveClicked" />
+                </HorizontalStackLayout>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

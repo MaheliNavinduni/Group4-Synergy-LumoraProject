@@ -1,4 +1,4 @@
-using LumoraAcademy.Data;
+using LumoraAcademy.Core.Entities;
 using LumoraAcademy.Services;
 
 namespace LumoraAcademy.Controls;
@@ -23,48 +23,49 @@ public partial class StudentDirectoryView : ContentView
         GradePicker.ItemsSource = new List<string> { "All Grades", "9th Grade", "10th Grade", "11th Grade", "12th Grade" };
         GradePicker.SelectedIndex = 0;
 
-        BindableLayout.SetItemsSource(RowList, SampleData.Students);
+        LoadStudents();
+
+        // Reload when we come back to this page (e.g. after registering a student).
+        Loaded += (s, e) => LoadStudents();
     }
 
-    // Runs when "Apply Filters" is clicked.
-    // Keeps only the students that match the search text, grade and status boxes.
-    private void OnApplyFiltersClicked(object sender, EventArgs e)
+    // Loads the students from the database using the current filter settings.
+    private void LoadStudents()
     {
-        string search = (SearchEntry.Text ?? "").Trim().ToLower();
+        string search = SearchEntry.Text ?? "";
         string grade = GradePicker.SelectedItem as string ?? "All Grades";
 
-        // Which statuses are ticked
-        var allowedStatuses = new List<string>();
-        if (ActiveCheck.IsChecked) allowedStatuses.Add("Active");
-        if (PendingCheck.IsChecked) allowedStatuses.Add("Pending");
-        if (InactiveCheck.IsChecked) allowedStatuses.Add("Inactive");
+        var statuses = new List<string>();
+        if (ActiveCheck.IsChecked) statuses.Add("Active");
+        if (PendingCheck.IsChecked) statuses.Add("Pending");
+        if (InactiveCheck.IsChecked) { statuses.Add("Inactive"); statuses.Add("Dropout"); }
 
-        var filtered = new List<Models.Student>();
+        List<Student> students = AppData.Students.Search(search, grade, statuses);
 
-        foreach (var student in SampleData.Students)
-        {
-            bool matchesSearch = search == ""
-                || student.Name.ToLower().Contains(search)
-                || student.Id.ToLower().Contains(search)
-                || student.Email.ToLower().Contains(search);
-
-            bool matchesGrade = grade == "All Grades" || student.Grade == grade;
-
-            bool matchesStatus = allowedStatuses.Contains(student.Status);
-
-            if (matchesSearch && matchesGrade && matchesStatus)
-            {
-                filtered.Add(student);
-            }
-        }
-
-        BindableLayout.SetItemsSource(RowList, filtered);
-        CountLabel.Text = $"Showing {filtered.Count} of {SampleData.Students.Count} students";
+        // Only the rows for the current page are shown
+        BindableLayout.SetItemsSource(RowList, Pager.Page(students));
+        CountLabel.Text = Pager.RangeText("students");
+        TotalLabel.Text = AppData.Students.Count().ToString("N0");
     }
 
+    private void OnApplyFiltersClicked(object sender, EventArgs e)
+    {
+        Pager.Reset();   // a new search starts from page 1
+        LoadStudents();
+    }
+
+    private void OnPageChanged(object sender, EventArgs e)
+    {
+        LoadStudents();
+    }
+
+    // Opens the details page for the student whose row was clicked.
     private async void OnStudentRowTapped(object sender, EventArgs e)
     {
-        await AppNavigation.GoToAsync(new Pages.Shared.StudentDetailsPage());
+        if (sender is Grid row && row.BindingContext is Student student)
+        {
+            await AppNavigation.GoToAsync(new Pages.Shared.StudentDetailsPage(student.Id));
+        }
     }
 
     private async void OnAtRiskClicked(object sender, EventArgs e)

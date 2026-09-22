@@ -1,63 +1,62 @@
-using LumoraAcademy.Data;
+using LumoraAcademy.Core.Services;
 using LumoraAcademy.Services;
 
 namespace LumoraAcademy.Pages.Shared;
 
+// Epic 4, User Story 3 - identify weak-performing students.
 public partial class AtRiskStudentsPage : ContentPage
 {
     public AtRiskStudentsPage()
     {
         InitializeComponent();
 
-        ClassPicker.ItemsSource = new List<string> { "All Classes", "Grade 9", "Grade 10", "Grade 11", "Grade 12" };
+        ClassPicker.ItemsSource = new List<string> { "All Classes", "9th Grade", "10th Grade", "11th Grade", "12th Grade" };
         ClassPicker.SelectedIndex = 0;
 
-        SubjectPicker.ItemsSource = new List<string> { "All Subjects", "Mathematics", "Science", "ICT", "English", "Sinhala", "Tamil" };
+        var subjects = new List<string> { "All Subjects" };
+        subjects.AddRange(AppData.Academics.GetSubjects().Select(s => s.Name).Distinct());
+        SubjectPicker.ItemsSource = subjects;
         SubjectPicker.SelectedIndex = 0;
 
         ThresholdPicker.ItemsSource = new List<string> { "Below 60% (Failing)", "Below 70%", "Below 80%" };
         ThresholdPicker.SelectedIndex = 0;
 
-        BindableLayout.SetItemsSource(RowList, SampleData.AtRiskStudents);
+        LoadStudents();
+        Loaded += (s, e) => LoadStudents();
     }
 
-    // Runs when "Apply Filters" is clicked.
+    // Asks the backend for students below the chosen threshold.
+    private void LoadStudents()
+    {
+        string thresholdText = ThresholdPicker.SelectedItem as string ?? "Below 60% (Failing)";
+        double threshold = double.Parse(thresholdText.Replace("Below ", "").Substring(0, 2));
+
+        List<AtRiskStudent> students = AppData.Academics.GetAtRiskStudents(
+            threshold,
+            ClassPicker.SelectedItem as string,
+            SubjectPicker.SelectedItem as string);
+
+        BindableLayout.SetItemsSource(RowList, Pager.Page(students));
+        FlaggedTitle.Text = $"Flagged Students ({students.Count})";
+        CountLabel.Text = Pager.RangeText("students");
+    }
+
     private void OnApplyFiltersClicked(object sender, EventArgs e)
     {
-        string classFilter = ClassPicker.SelectedItem as string ?? "All Classes";
-        string subjectFilter = SubjectPicker.SelectedItem as string ?? "All Subjects";
-        string thresholdText = ThresholdPicker.SelectedItem as string ?? "Below 60% (Failing)";
+        Pager.Reset();
+        LoadStudents();
+    }
 
-        // "Below 60% (Failing)" -> 60
-        int threshold = int.Parse(thresholdText.Replace("Below ", "").Substring(0, 2));
-
-        var filtered = new List<Models.AtRiskStudent>();
-
-        foreach (var student in SampleData.AtRiskStudents)
-        {
-            bool matchesClass = classFilter == "All Classes" || student.Cohort.StartsWith(classFilter);
-
-            bool matchesSubject = subjectFilter == "All Subjects"
-                || student.Subject1 == subjectFilter
-                || student.Subject2 == subjectFilter;
-
-            // "54%" -> 54
-            int average = int.Parse(student.Average.Replace("%", ""));
-            bool matchesThreshold = average < threshold;
-
-            if (matchesClass && matchesSubject && matchesThreshold)
-            {
-                filtered.Add(student);
-            }
-        }
-
-        BindableLayout.SetItemsSource(RowList, filtered);
-        FlaggedTitle.Text = $"Flagged Students ({filtered.Count})";
-        CountLabel.Text = $"Showing {filtered.Count} of {SampleData.AtRiskStudents.Count} students";
+    private void OnPageChanged(object sender, EventArgs e)
+    {
+        LoadStudents();
     }
 
     private async void OnViewDetailsClicked(object sender, EventArgs e)
     {
-        await AppNavigation.GoToAsync(new StudentDetailsPage());
+        if (sender is Button button && button.BindingContext is AtRiskStudent risk)
+        {
+            await AppNavigation.GoToAsync(new StudentDetailsPage(risk.Student.Id));
+        }
     }
 }

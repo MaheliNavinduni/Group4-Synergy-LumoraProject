@@ -121,7 +121,8 @@
                         <Label Text="Total Enrollment"
                                FontSize="11"
                                TextColor="{StaticResource BrandCream}" />
-                        <Label Text="2,419"
+                        <Label x:Name="TotalLabel"
+                               Text="0"
                                FontSize="28"
                                FontAttributes="Bold"
                                TextColor="White" />
@@ -189,14 +190,14 @@
                                         </Grid.GestureRecognizers>
 
                                         <HorizontalStackLayout Grid.Column="0" Spacing="10">
-                                            <controls:AvatarView Initials="{Binding Initials}" Size="30" />
+                                            <controls:AvatarView Initials="{Binding Initials}" ImagePath="{Binding PhotoPath}" Size="30" />
                                             <VerticalStackLayout Spacing="2" VerticalOptions="Center">
-                                                <Label Text="{Binding Name}" Style="{StaticResource TableCellBoldStyle}" FontSize="12" />
+                                                <Label Text="{Binding FullName}" Style="{StaticResource TableCellBoldStyle}" FontSize="12" />
                                                 <Label Text="{Binding Email}" Style="{StaticResource SmallMutedStyle}" FontSize="10" />
                                             </VerticalStackLayout>
                                         </HorizontalStackLayout>
 
-                                        <Label Grid.Column="1" Text="{Binding Id}" Style="{StaticResource TableCellMutedStyle}" />
+                                        <Label Grid.Column="1" Text="{Binding StudentId}" Style="{StaticResource TableCellMutedStyle}" />
                                         <Label Grid.Column="2" Text="{Binding Grade}" Style="{StaticResource TableCellStyle}" FontSize="12" />
 
                                         <HorizontalStackLayout Grid.Column="3" Spacing="6">
@@ -204,9 +205,9 @@
                                                 <Border.StrokeShape>
                                                     <RoundRectangle CornerRadius="11" />
                                                 </Border.StrokeShape>
-                                                <Label Text="{Binding TeacherInitials}" FontSize="8" FontAttributes="Bold" TextColor="{StaticResource StatusBlueText}" HorizontalOptions="Center" VerticalOptions="Center" />
+                                                <Label Text="{Binding AssignedTeacherInitials}" FontSize="8" FontAttributes="Bold" TextColor="{StaticResource StatusBlueText}" HorizontalOptions="Center" VerticalOptions="Center" />
                                             </Border>
-                                            <Label Text="{Binding AssignedTeacher}" Style="{StaticResource TableCellStyle}" FontSize="12" />
+                                            <Label Text="{Binding AssignedTeacherName}" Style="{StaticResource TableCellStyle}" FontSize="12" />
                                         </HorizontalStackLayout>
 
                                         <controls:StatusBadge Grid.Column="4" Text="{Binding Status}" />
@@ -225,24 +226,7 @@
                                Text="Showing 1 to 4 of 2,419 students"
                                Style="{StaticResource SmallMutedStyle}"
                                VerticalOptions="Center" />
-                        <HorizontalStackLayout Grid.Column="1" Spacing="4">
-                            <Border Style="{StaticResource PageNumberStyle}">
-                                <Label Text="&#xE76B;" Style="{StaticResource IconStyle}" FontSize="9" HorizontalOptions="Center" />
-                            </Border>
-                            <Border Style="{StaticResource PageNumberActiveStyle}">
-                                <Label Text="1" FontSize="11" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" />
-                            </Border>
-                            <Border Style="{StaticResource PageNumberStyle}">
-                                <Label Text="2" FontSize="11" TextColor="{StaticResource TextMuted}" HorizontalOptions="Center" VerticalOptions="Center" />
-                            </Border>
-                            <Border Style="{StaticResource PageNumberStyle}">
-                                <Label Text="3" FontSize="11" TextColor="{StaticResource TextMuted}" HorizontalOptions="Center" VerticalOptions="Center" />
-                            </Border>
-                            <Label Text="..." Style="{StaticResource MutedStyle}" VerticalOptions="Center" />
-                            <Border Style="{StaticResource PageNumberStyle}">
-                                <Label Text="&#xE76C;" Style="{StaticResource IconStyle}" FontSize="9" HorizontalOptions="Center" />
-                            </Border>
-                        </HorizontalStackLayout>
+                        <controls:PagerView x:Name="Pager" Grid.Column="1" PageChanged="OnPageChanged" />
                     </Grid>
 
                 </VerticalStackLayout>
