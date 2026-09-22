@@ -20,7 +20,8 @@
                     <VerticalStackLayout Grid.Column="0"
                                          Spacing="6">
                         <HorizontalStackLayout Spacing="10">
-                            <Label Text="Eleanor Vance"
+                            <Label x:Name="TitleName"
+                                   Text=""
                                    Style="{StaticResource PageTitleStyle}"
                                    VerticalOptions="Center" />
                             <Border Background="{StaticResource StatusGrayBg}"
@@ -30,18 +31,20 @@
                                 <Border.StrokeShape>
                                     <RoundRectangle CornerRadius="4" />
                                 </Border.StrokeShape>
-                                <Label Text="ID: STU-2023-8941"
+                                <Label x:Name="IdLabel"
+                                       Text=""
                                        FontSize="10"
                                        FontAttributes="Bold"
                                        TextColor="{StaticResource StatusGrayText}" />
                             </Border>
-                            <controls:StatusBadge Text="Enrolled" />
+                            <controls:StatusBadge x:Name="StatusBadge" Text="" />
                         </HorizontalStackLayout>
                         <HorizontalStackLayout Spacing="5">
                             <Label Text="&#xE81D;"
                                    Style="{StaticResource IconStyle}"
                                    FontSize="11" />
-                            <Label Text="District 4, Hillside High School"
+                            <Label x:Name="SchoolLabel"
+                                   Text=""
                                    Style="{StaticResource MutedStyle}"
                                    VerticalOptions="Center" />
                         </HorizontalStackLayout>
@@ -66,15 +69,18 @@
                             Padding="20"
                             VerticalOptions="Start">
                         <VerticalStackLayout Spacing="16">
-                            <controls:AvatarView Initials="EV"
+                            <controls:AvatarView x:Name="Avatar"
+                                                 Initials=""
                                                  Size="96"
                                                  HorizontalOptions="Center" />
                             <VerticalStackLayout Spacing="2">
-                                <Label Text="Eleanor Vance"
+                                <Label x:Name="CardName"
+                                       Text=""
                                        Style="{StaticResource SectionTitleStyle}"
                                        FontSize="15"
                                        HorizontalOptions="Center" />
-                                <Label Text="11th Grade, Section B"
+                                <Label x:Name="GradeLabel"
+                                       Text=""
                                        Style="{StaticResource SmallMutedStyle}"
                                        HorizontalOptions="Center" />
                             </VerticalStackLayout>
@@ -90,15 +96,15 @@
                                   RowSpacing="12">
                                 <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="2">
                                     <Label Text="Date of Birth" Style="{StaticResource SmallMutedStyle}" />
-                                    <Label Text="Oct 12, 2006" Style="{StaticResource BodyStyle}" />
+                                    <Label x:Name="DobLabel" Style="{StaticResource BodyStyle}" />
                                 </VerticalStackLayout>
                                 <VerticalStackLayout Grid.Row="0" Grid.Column="1" Spacing="2">
                                     <Label Text="Gender" Style="{StaticResource SmallMutedStyle}" />
-                                    <Label Text="Female" Style="{StaticResource BodyStyle}" />
+                                    <Label x:Name="GenderLabel" Style="{StaticResource BodyStyle}" />
                                 </VerticalStackLayout>
                                 <VerticalStackLayout Grid.Row="1" Grid.Column="0" Spacing="2">
                                     <Label Text="Joining Date" Style="{StaticResource SmallMutedStyle}" />
-                                    <Label Text="Aug 15, 2021" Style="{StaticResource BodyStyle}" />
+                                    <Label x:Name="JoinedLabel" Style="{StaticResource BodyStyle}" />
                                 </VerticalStackLayout>
                             </Grid>
 
@@ -109,15 +115,16 @@
                                    FontSize="10"
                                    TextColor="{StaticResource BrandPrimaryDark}" />
                             <VerticalStackLayout Spacing="6">
-                                <Label Text="Arthur Vance (Father)"
+                                <Label x:Name="GuardianLabel"
+                                       Text=""
                                        Style="{StaticResource BodyBoldStyle}" />
                                 <HorizontalStackLayout Spacing="6">
                                     <Label Text="&#xE717;" Style="{StaticResource IconStyle}" FontSize="10" />
-                                    <Label Text="+1 (555) 019-2834" Style="{StaticResource MutedStyle}" VerticalOptions="Center" />
+                                    <Label x:Name="GuardianPhoneLabel" Style="{StaticResource MutedStyle}" VerticalOptions="Center" />
                                 </HorizontalStackLayout>
                                 <HorizontalStackLayout Spacing="6">
                                     <Label Text="&#xE715;" Style="{StaticResource IconStyle}" FontSize="10" />
-                                    <Label Text="a.vance@email.com" Style="{StaticResource MutedStyle}" VerticalOptions="Center" />
+                                    <Label x:Name="GuardianEmailLabel" Style="{StaticResource MutedStyle}" VerticalOptions="Center" />
                                 </HorizontalStackLayout>
                             </VerticalStackLayout>
                         </VerticalStackLayout>
@@ -129,10 +136,10 @@
 
                         <Grid ColumnDefinitions="*,*,*,*"
                               ColumnSpacing="12">
-                            <controls:StatCard Grid.Column="0" Title="CURRENT GPA" Value="3.84" Subtitle="Top 15% of Class" Icon="&#xE9D2;" />
-                            <controls:StatCard Grid.Column="1" Title="ATTENDANCE" Value="96%" Subtitle="3 Absences YTD" Icon="&#xE787;" />
-                            <controls:StatCard Grid.Column="2" Title="ASSIGNED TEACHER" Value="Mr. Davis" Subtitle="Homeroom 11B" Icon="&#xE77B;" />
-                            <controls:StatCard Grid.Column="3" Title="CREDITS" Value="18/24" Subtitle="On track for grad" Icon="&#xE734;" />
+                            <controls:StatCard x:Name="GpaCard" Grid.Column="0" Title="CURRENT GPA" Value="-" Subtitle="" Icon="&#xE9D2;" />
+                            <controls:StatCard x:Name="AttendanceCard" Grid.Column="1" Title="ATTENDANCE" Value="-" Subtitle="" Icon="&#xE787;" />
+                            <controls:StatCard x:Name="TeacherCard" Grid.Column="2" Title="ASSIGNED TEACHER" Value="-" Subtitle="" Icon="&#xE77B;" />
+                            <controls:StatCard x:Name="AverageCard" Grid.Column="3" Title="AVERAGE MARK" Value="-" Subtitle="" Icon="&#xE734;" />
                         </Grid>
 
                         <Border Style="{StaticResource CardStyle}"
@@ -140,11 +147,13 @@
                             <VerticalStackLayout Spacing="14">
                                 <Grid ColumnDefinitions="*,Auto">
                                     <Label Grid.Column="0"
-                                           Text="Today's Schedule"
+                                           Text="Recent Exam Results"
                                            Style="{StaticResource SectionTitleStyle}"
                                            FontSize="15" />
-                                    <Label Grid.Column="1"
-                                           Text="View Full Term"
+                                    <Label x:Name="NoResultsLabel"
+                                           Grid.Column="1"
+                                           Text="No marks recorded yet"
+                                           IsVisible="False"
                                            Style="{StaticResource LinkStyle}"
                                            TextColor="{StaticResource TextLink}" />
                                 </Grid>
@@ -171,18 +180,18 @@
                                                             <RoundRectangle CornerRadius="6" />
                                                         </Border.StrokeShape>
                                                         <VerticalStackLayout>
-                                                            <Label Text="{Binding StartTime}" FontSize="11" FontAttributes="Bold" TextColor="{StaticResource TextHeading}" HorizontalOptions="Center" />
-                                                            <Label Text="{Binding EndTime}" FontSize="8" TextColor="{StaticResource TextMuted}" HorizontalOptions="Center" />
+                                                            <Label Text="{Binding Grade}" FontSize="12" FontAttributes="Bold" TextColor="{StaticResource BrandPrimary}" HorizontalOptions="Center" />
+                                                            <Label Text="{Binding Marks, StringFormat='{0:0}%'}" FontSize="8" TextColor="{StaticResource TextMuted}" HorizontalOptions="Center" />
                                                         </VerticalStackLayout>
                                                     </Border>
                                                     <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
-                                                        <Label Text="{Binding Title}" Style="{StaticResource BodyBoldStyle}" />
+                                                        <Label Text="{Binding SubjectName}" Style="{StaticResource BodyBoldStyle}" />
                                                         <HorizontalStackLayout Spacing="5">
                                                             <Label Text="&#xE8B7;" Style="{StaticResource IconStyle}" FontSize="10" />
-                                                            <Label Text="{Binding Detail}" Style="{StaticResource SmallMutedStyle}" VerticalOptions="Center" />
+                                                            <Label Text="{Binding ExamName}" Style="{StaticResource SmallMutedStyle}" VerticalOptions="Center" />
                                                         </HorizontalStackLayout>
                                                     </VerticalStackLayout>
-                                                    <controls:StatusBadge Grid.Column="2" Text="{Binding Status}" />
+                                                    <controls:StatusBadge Grid.Column="2" Text="{Binding ExamType}" />
                                                 </Grid>
                                             </Border>
                                         </DataTemplate>
@@ -202,8 +211,7 @@
                               Padding="16,10"
                               BackgroundColor="{StaticResource TableHeaderBackground}">
                             <Label Grid.Column="0" Text="Additional Notes" Style="{StaticResource MutedStyle}" VerticalOptions="Center" />
-                            <Button Grid.Column="1" Text="Prev" Style="{StaticResource SmallOutlineButtonStyle}" TextColor="{StaticResource TextLight}" />
-                            <Button Grid.Column="2" Text="Next" Style="{StaticResource SmallOutlineButtonStyle}" />
+                            <Button Grid.Column="2" Text="Save Notes" Style="{StaticResource SmallOutlineButtonStyle}" Clicked="OnSaveNotesClicked" />
                         </Grid>
                         <Editor x:Name="NotesEditor"
                                 Style="{StaticResource FieldEditorStyle}"
@@ -216,6 +224,16 @@
                 <!-- Bottom buttons -->
                 <HorizontalStackLayout Spacing="10"
                                        HorizontalOptions="End">
+                    <Button x:Name="EditButton"
+                            Text="Edit Student"
+                            Style="{StaticResource SmallOutlineButtonStyle}"
+                            HeightRequest="34"
+                            IsVisible="False"
+                            Clicked="OnEditClicked" />
+                    <Button Text="Enter Marks"
+                            Style="{StaticResource SmallOutlineButtonStyle}"
+                            HeightRequest="34"
+                            Clicked="OnEnterMarksClicked" />
                     <Button x:Name="ResignationButton"
                             Text="Student Resignation"
                             Style="{StaticResource SmallPrimaryButtonStyle}"

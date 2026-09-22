@@ -25,7 +25,7 @@
                     <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="36" Background="{StaticResource TableHeaderBackground}" Stroke="{StaticResource TableHeaderBackground}">
                         <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
                             <Label Text="&#xE721;" Style="{StaticResource IconStyle}" FontSize="11" />
-                            <Entry Grid.Column="1" Placeholder="Enter ID or Name..." Style="{StaticResource FieldEntryStyle}" />
+                            <Entry x:Name="SearchEntry" Grid.Column="1" Placeholder="Enter ID or Name, then press Enter..." Style="{StaticResource FieldEntryStyle}" Completed="OnSearchCompleted" />
                         </Grid>
                     </Border>
                 </VerticalStackLayout>
@@ -34,15 +34,15 @@
             <!-- Selected student -->
             <Border Style="{StaticResource CardStyle}" Padding="16">
                 <Grid ColumnDefinitions="Auto,*" ColumnSpacing="14">
-                    <controls:AvatarView Initials="AS" Size="52" />
+                    <controls:AvatarView x:Name="Avatar" Initials="?" Size="52" />
                     <VerticalStackLayout Grid.Column="1" Spacing="3" VerticalOptions="Center">
-                        <Label Text="Alexander Sterling" Style="{StaticResource BodyBoldStyle}" FontSize="14" />
-                        <Label Text="Grade 11 • Class of 2025" Style="{StaticResource MutedStyle}" />
+                        <Label x:Name="NameLabel" Text="No student selected" Style="{StaticResource BodyBoldStyle}" FontSize="14" />
+                        <Label x:Name="GradeLabel" Text="Search above to select a student" Style="{StaticResource MutedStyle}" />
                         <Border Background="{StaticResource StatusYellowBg}" StrokeThickness="0" Padding="8,2" HorizontalOptions="Start">
                             <Border.StrokeShape>
                                 <RoundRectangle CornerRadius="4" />
                             </Border.StrokeShape>
-                            <Label Text="ID: SEA-23990" FontSize="9" FontAttributes="Bold" TextColor="{StaticResource StatusYellowText}" />
+                            <Label x:Name="IdLabel" Text="ID: -" FontSize="9" FontAttributes="Bold" TextColor="{StaticResource StatusYellowText}" />
                         </Border>
                     </VerticalStackLayout>
                 </Grid>
