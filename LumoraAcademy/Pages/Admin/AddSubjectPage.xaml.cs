@@ -7,6 +7,11 @@ public partial class AddSubjectPage : ContentPage
     public AddSubjectPage()
     {
         InitializeComponent();
+
+        CurriculumPicker.ItemsSource = new List<string> { "National Curriculum", "Cambridge Curriculum", "English", "Second Language Tamil", "Other" };
+        CurriculumPicker.SelectedIndex = 0;
+
+        TotalCard.Value = AppData.Academics.GetSubjects().Count.ToString();
     }
 
     private async void OnCancelClicked(object sender, EventArgs e)
@@ -22,8 +27,15 @@ public partial class AddSubjectPage : ContentPage
             return;
         }
 
-        // TODO: save the subject to the database.
-        await DisplayAlert("Add Subject", "Subject saved (demo only, not stored yet).", "OK");
-        await AppNavigation.GoBackAsync();
+        try
+        {
+            var subject = AppData.Academics.AddSubject(SubjectNameEntry.Text, SubjectCodeEntry.Text, CurriculumPicker.SelectedItem as string ?? "");
+            await DisplayAlert("Add Subject", $"{subject.DisplayName} saved.", "OK");
+            await AppNavigation.GoBackAsync();
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Add Subject", ex.Message, "OK");
+        }
     }
 }

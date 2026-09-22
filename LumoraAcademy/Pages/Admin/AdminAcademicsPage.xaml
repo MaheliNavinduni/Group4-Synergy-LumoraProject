@@ -44,13 +44,13 @@
                                 <Grid ColumnDefinitions="Auto,*"
                                       ColumnSpacing="12">
                                     <Label Grid.Column="0"
-                                           Text="{Binding IconGlyph}"
+                                           Text="&#xE82D;"
                                            Style="{StaticResource IconStyle}"
                                            TextColor="{StaticResource BrandPrimary}"
                                            VerticalOptions="Start" />
                                     <VerticalStackLayout Grid.Column="1"
                                                          Spacing="2">
-                                        <Label Text="{Binding Name}"
+                                        <Label Text="{Binding DisplayName}"
                                                Style="{StaticResource BodyBoldStyle}" />
                                         <Label Text="{Binding Curriculum}"
                                                Style="{StaticResource SmallMutedStyle}" />
