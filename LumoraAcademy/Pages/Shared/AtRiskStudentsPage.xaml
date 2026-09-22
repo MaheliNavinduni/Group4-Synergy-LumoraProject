@@ -99,10 +99,10 @@
                                               ColumnDefinitions="1.6*,1.4*,1.8*,1.2*,1.4*">
 
                                             <HorizontalStackLayout Grid.Column="0" Spacing="10">
-                                                <controls:AvatarView Initials="{Binding Initials}" Size="30" />
+                                                <controls:AvatarView Initials="{Binding Student.Initials}" Size="30" />
                                                 <VerticalStackLayout Spacing="2" VerticalOptions="Center">
-                                                    <Label Text="{Binding Name}" Style="{StaticResource TableCellBoldStyle}" FontSize="12" />
-                                                    <Label Text="{Binding Id}" Style="{StaticResource SmallMutedStyle}" FontSize="10" />
+                                                    <Label Text="{Binding Student.FullName}" Style="{StaticResource TableCellBoldStyle}" FontSize="12" />
+                                                    <Label Text="{Binding Student.StudentId}" Style="{StaticResource SmallMutedStyle}" FontSize="10" />
                                                 </VerticalStackLayout>
                                             </HorizontalStackLayout>
 
@@ -114,7 +114,7 @@
                                             </HorizontalStackLayout>
 
                                             <HorizontalStackLayout Grid.Column="3" Spacing="6">
-                                                <Label Text="{Binding Average}" Style="{StaticResource TableCellBoldStyle}" FontSize="12" TextColor="{StaticResource StatusRedText}" />
+                                                <Label Text="{Binding AverageText}" Style="{StaticResource TableCellBoldStyle}" FontSize="12" TextColor="{StaticResource StatusRedText}" />
                                                 <Label Text="&#xE9D2;" Style="{StaticResource IconStyle}" FontSize="10" TextColor="{StaticResource StatusRedText}" />
                                             </HorizontalStackLayout>
 
@@ -135,8 +135,7 @@
                               ColumnSpacing="8"
                               Padding="20,12">
                             <Label x:Name="CountLabel" Grid.Column="0" Text="Showing 1 to 3 of 12 students" Style="{StaticResource MutedStyle}" VerticalOptions="Center" />
-                            <Button Grid.Column="1" Text="Prev" Style="{StaticResource SmallOutlineButtonStyle}" TextColor="{StaticResource TextLight}" />
-                            <Button Grid.Column="2" Text="Next" Style="{StaticResource SmallOutlineButtonStyle}" />
+                            <controls:PagerView x:Name="Pager" Grid.Column="2" PageChanged="OnPageChanged" />
                         </Grid>
 
                     </VerticalStackLayout>
