@@ -30,8 +30,8 @@
                 <!-- Statistics -->
                 <Grid ColumnDefinitions="*,*,*"
                       ColumnSpacing="14">
-                    <controls:StatCard Grid.Column="0" Title="Total Teachers" Value="142" Subtitle="+3 this semester" Icon="&#xE716;" />
-                    <controls:StatCard Grid.Column="1" Title="On Leave" Value="8" Subtitle="6 Medical, 2 Sabbatical" Icon="&#xE787;" />
+                    <controls:StatCard x:Name="TotalCard" Grid.Column="0" Title="Total Teachers" Value="0" Subtitle="Active staff" Icon="&#xE716;" />
+                    <controls:StatCard x:Name="LeaveCard" Grid.Column="1" Title="On Leave" Value="0" Subtitle="Currently away" Icon="&#xE787;" />
 
                     <Border Grid.Column="2" Style="{StaticResource CardStyle}" Padding="18,16">
                         <VerticalStackLayout Spacing="8">
@@ -40,10 +40,10 @@
                                 <Label Grid.Column="1" Text="&#xE9D2;" Style="{StaticResource IconStyle}" TextColor="{StaticResource BrandPrimary}" />
                             </Grid>
                             <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" RowSpacing="6">
-                                <Label Grid.Row="0" Grid.Column="0" Text="STEM" Style="{StaticResource BodyStyle}" FontSize="12" />
-                                <Label Grid.Row="0" Grid.Column="1" Text="45%" Style="{StaticResource BodyBoldStyle}" FontSize="12" />
-                                <Label Grid.Row="1" Grid.Column="0" Text="Humanities" Style="{StaticResource BodyStyle}" FontSize="12" />
-                                <Label Grid.Row="1" Grid.Column="1" Text="35%" Style="{StaticResource BodyBoldStyle}" FontSize="12" />
+                                <Label x:Name="Dept1Name" Grid.Row="0" Grid.Column="0" Text="" Style="{StaticResource BodyStyle}" FontSize="12" />
+                                <Label x:Name="Dept1Value" Grid.Row="0" Grid.Column="1" Text="" Style="{StaticResource BodyBoldStyle}" FontSize="12" />
+                                <Label x:Name="Dept2Name" Grid.Row="1" Grid.Column="0" Text="" Style="{StaticResource BodyStyle}" FontSize="12" />
+                                <Label x:Name="Dept2Value" Grid.Row="1" Grid.Column="1" Text="" Style="{StaticResource BodyBoldStyle}" FontSize="12" />
                             </Grid>
                         </VerticalStackLayout>
                     </Border>
@@ -85,14 +85,14 @@
                                             </Grid.GestureRecognizers>
 
                                             <HorizontalStackLayout Grid.Column="0" Spacing="10">
-                                                <controls:AvatarView Initials="{Binding Initials}" Size="32" />
+                                                <controls:AvatarView Initials="{Binding Initials}" ImagePath="{Binding PhotoPath}" Size="32" />
                                                 <VerticalStackLayout Spacing="2" VerticalOptions="Center">
-                                                    <Label Text="{Binding Name}" Style="{StaticResource TableCellBoldStyle}" FontSize="12" />
-                                                    <Label Text="{Binding Subject}" Style="{StaticResource SmallMutedStyle}" FontSize="10" />
+                                                    <Label Text="{Binding FullName}" Style="{StaticResource TableCellBoldStyle}" FontSize="12" />
+                                                    <Label Text="{Binding Designation}" Style="{StaticResource SmallMutedStyle}" FontSize="10" />
                                                 </VerticalStackLayout>
                                             </HorizontalStackLayout>
 
-                                            <Label Grid.Column="1" Text="{Binding EmployeeId}" Style="{StaticResource TableCellMutedStyle}" />
+                                            <Label Grid.Column="1" Text="{Binding TeacherId}" Style="{StaticResource TableCellMutedStyle}" />
 
                                             <VerticalStackLayout Grid.Column="2" Spacing="2" VerticalOptions="Center">
                                                 <Label Text="{Binding Department}" Style="{StaticResource TableCellStyle}" FontSize="12" />
@@ -114,20 +114,8 @@
 
                         <Grid ColumnDefinitions="*,Auto"
                               Padding="20,12">
-                            <Label Grid.Column="0" Text="Showing 1 to 4 of 142 entries" Style="{StaticResource SmallMutedStyle}" VerticalOptions="Center" />
-                            <HorizontalStackLayout Grid.Column="1" Spacing="4">
-                                <Button Text="Prev" Style="{StaticResource SmallOutlineButtonStyle}" HeightRequest="26" FontSize="10" TextColor="{StaticResource TextLight}" />
-                                <Border Style="{StaticResource PageNumberActiveStyle}">
-                                    <Label Text="1" FontSize="11" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" />
-                                </Border>
-                                <Border Style="{StaticResource PageNumberStyle}">
-                                    <Label Text="2" FontSize="11" TextColor="{StaticResource TextMuted}" HorizontalOptions="Center" VerticalOptions="Center" />
-                                </Border>
-                                <Border Style="{StaticResource PageNumberStyle}">
-                                    <Label Text="3" FontSize="11" TextColor="{StaticResource TextMuted}" HorizontalOptions="Center" VerticalOptions="Center" />
-                                </Border>
-                                <Button Text="Next" Style="{StaticResource SmallOutlineButtonStyle}" HeightRequest="26" FontSize="10" />
-                            </HorizontalStackLayout>
+                            <Label x:Name="CountLabel" Grid.Column="0" Text="" Style="{StaticResource SmallMutedStyle}" VerticalOptions="Center" />
+                            <controls:PagerView x:Name="Pager" Grid.Column="1" PageChanged="OnPageChanged" />
                         </Grid>
 
                     </VerticalStackLayout>

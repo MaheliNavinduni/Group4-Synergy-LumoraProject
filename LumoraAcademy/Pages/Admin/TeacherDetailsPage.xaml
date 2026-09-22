@@ -21,15 +21,19 @@
                         <HorizontalStackLayout Spacing="6">
                             <Label Text="Teachers" Style="{StaticResource SmallMutedStyle}" />
                             <Label Text="&#xE76C;" Style="{StaticResource IconStyle}" FontSize="8" />
-                            <Label Text="Robert Chen" Style="{StaticResource SmallMutedStyle}" TextColor="{StaticResource TextHeading}" />
+                            <Label x:Name="CrumbLabel" Text="" Style="{StaticResource SmallMutedStyle}" TextColor="{StaticResource TextHeading}" />
                         </HorizontalStackLayout>
-                        <Label Text="Robert Chen" Style="{StaticResource PageTitleStyle}" />
+                        <Label x:Name="TitleLabel" Text="" Style="{StaticResource PageTitleStyle}" />
                     </VerticalStackLayout>
-                    <Button Grid.Column="1"
-                            Text="Edit Profile"
-                            Style="{StaticResource SmallPrimaryButtonStyle}"
-                            VerticalOptions="End"
-                            Clicked="OnEditProfileClicked" />
+                    <HorizontalStackLayout Grid.Column="1" Spacing="8" VerticalOptions="End">
+                        <Button Text="Manage Timetable"
+                                Style="{StaticResource SmallOutlineButtonStyle}"
+                                HeightRequest="34"
+                                Clicked="OnTimetableClicked" />
+                        <Button Text="Edit Profile"
+                                Style="{StaticResource SmallPrimaryButtonStyle}"
+                                Clicked="OnEditProfileClicked" />
+                    </HorizontalStackLayout>
                 </Grid>
 
                 <Grid ColumnDefinitions="230,*"
@@ -41,15 +45,15 @@
                             Padding="18"
                             VerticalOptions="Start">
                         <VerticalStackLayout Spacing="14">
-                            <controls:AvatarView Initials="RC" Size="90" HorizontalOptions="Center" />
+                            <controls:AvatarView x:Name="Avatar" Initials="" Size="90" HorizontalOptions="Center" />
                             <VerticalStackLayout Spacing="4">
-                                <Label Text="Robert Chen" Style="{StaticResource SectionTitleStyle}" FontSize="15" HorizontalOptions="Center" />
-                                <Label Text="Senior Mathematics" Style="{StaticResource SmallMutedStyle}" HorizontalOptions="Center" />
+                                <Label x:Name="NameLabel" Text="" Style="{StaticResource SectionTitleStyle}" FontSize="15" HorizontalOptions="Center" />
+                                <Label x:Name="DesignationLabel" Text="" Style="{StaticResource SmallMutedStyle}" HorizontalOptions="Center" />
                                 <Border Background="{StaticResource StatusGrayBg}" StrokeThickness="0" Padding="8,3" HorizontalOptions="Center">
                                     <Border.StrokeShape>
                                         <RoundRectangle CornerRadius="4" />
                                     </Border.StrokeShape>
-                                    <Label Text="ID: TCH-2048" FontSize="9" FontAttributes="Bold" TextColor="{StaticResource StatusGrayText}" />
+                                    <Label x:Name="IdLabel" Text="" FontSize="9" FontAttributes="Bold" TextColor="{StaticResource StatusGrayText}" />
                                 </Border>
                             </VerticalStackLayout>
 
@@ -59,19 +63,19 @@
                             <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" RowSpacing="10">
                                 <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="2">
                                     <Label Text="Date of Birth" Style="{StaticResource SmallMutedStyle}" FontSize="10" />
-                                    <Label Text="May 12, 1980" Style="{StaticResource BodyStyle}" FontSize="12" />
+                                    <Label x:Name="DobLabel" Style="{StaticResource BodyStyle}" FontSize="12" />
                                 </VerticalStackLayout>
                                 <VerticalStackLayout Grid.Row="0" Grid.Column="1" Spacing="2">
                                     <Label Text="Gender" Style="{StaticResource SmallMutedStyle}" FontSize="10" />
-                                    <Label Text="Male" Style="{StaticResource BodyStyle}" FontSize="12" />
+                                    <Label x:Name="GenderLabel" Style="{StaticResource BodyStyle}" FontSize="12" />
                                 </VerticalStackLayout>
                                 <VerticalStackLayout Grid.Row="1" Grid.Column="0" Spacing="2">
                                     <Label Text="Joining Date" Style="{StaticResource SmallMutedStyle}" FontSize="10" />
-                                    <Label Text="Aug 19, 2012" Style="{StaticResource BodyStyle}" FontSize="12" />
+                                    <Label x:Name="JoinedLabel" Style="{StaticResource BodyStyle}" FontSize="12" />
                                 </VerticalStackLayout>
                                 <VerticalStackLayout Grid.Row="1" Grid.Column="1" Spacing="2">
                                     <Label Text="Blood Group" Style="{StaticResource SmallMutedStyle}" FontSize="10" />
-                                    <Label Text="O+" Style="{StaticResource BodyStyle}" FontSize="12" />
+                                    <Label x:Name="BloodLabel" Style="{StaticResource BodyStyle}" FontSize="12" />
                                 </VerticalStackLayout>
                             </Grid>
 
@@ -83,21 +87,21 @@
                                     <Label Text="&#xE715;" Style="{StaticResource IconStyle}" FontSize="10" />
                                     <VerticalStackLayout Spacing="1">
                                         <Label Text="Email" Style="{StaticResource SmallMutedStyle}" FontSize="9" />
-                                        <Label Text="robert.chen@eduadmin.org" Style="{StaticResource BodyStyle}" FontSize="11" />
+                                        <Label x:Name="EmailLabel" Style="{StaticResource BodyStyle}" FontSize="11" />
                                     </VerticalStackLayout>
                                 </HorizontalStackLayout>
                                 <HorizontalStackLayout Spacing="8">
                                     <Label Text="&#xE717;" Style="{StaticResource IconStyle}" FontSize="10" />
                                     <VerticalStackLayout Spacing="1">
                                         <Label Text="Phone" Style="{StaticResource SmallMutedStyle}" FontSize="9" />
-                                        <Label Text="(555) 123-4567" Style="{StaticResource BodyStyle}" FontSize="11" />
+                                        <Label x:Name="PhoneLabel" Style="{StaticResource BodyStyle}" FontSize="11" />
                                     </VerticalStackLayout>
                                 </HorizontalStackLayout>
                                 <HorizontalStackLayout Spacing="8">
                                     <Label Text="&#xE81D;" Style="{StaticResource IconStyle}" FontSize="10" VerticalOptions="Start" />
                                     <VerticalStackLayout Spacing="1">
                                         <Label Text="Address" Style="{StaticResource SmallMutedStyle}" FontSize="9" />
-                                        <Label Text="1429 Elm Street, Springfield, IL 62704" Style="{StaticResource BodyStyle}" FontSize="11" MaximumWidthRequest="150" />
+                                        <Label x:Name="AddressLabel" Style="{StaticResource BodyStyle}" FontSize="11" MaximumWidthRequest="150" />
                                     </VerticalStackLayout>
                                 </HorizontalStackLayout>
                             </VerticalStackLayout>
@@ -108,10 +112,10 @@
                     <VerticalStackLayout Grid.Column="1" Spacing="16">
 
                         <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="12">
-                            <controls:StatCard Grid.Column="0" Title="Assigned Subjects" Value="3" Icon="&#xE8F1;" />
-                            <controls:StatCard Grid.Column="1" Title="Classes / Week" Value="24" Icon="&#xE787;" />
-                            <controls:StatCard Grid.Column="2" Title="Avg Pass Rate" Value="92%" Icon="&#xE9D2;" />
-                            <controls:StatCard Grid.Column="3" Title="Experience" Value="12 Yrs" Icon="&#xE734;" />
+                            <controls:StatCard x:Name="SubjectsCard" Grid.Column="0" Title="Subjects" Value="-" Icon="&#xE8F1;" />
+                            <controls:StatCard x:Name="StudentsCard" Grid.Column="1" Title="Assigned Students" Value="-" Icon="&#xE716;" />
+                            <controls:StatCard x:Name="PassCard" Grid.Column="2" Title="Avg Pass Rate" Value="-" Icon="&#xE9D2;" />
+                            <controls:StatCard x:Name="ExperienceCard" Grid.Column="3" Title="Experience" Value="-" Icon="&#xE734;" />
                         </Grid>
 
                         <!-- Today's schedule table -->
@@ -119,7 +123,7 @@
                             <VerticalStackLayout>
                                 <Grid ColumnDefinitions="*,Auto" Padding="18,12">
                                     <Label Text="Today's Schedule" Style="{StaticResource SectionTitleStyle}" FontSize="13" />
-                                    <Label Grid.Column="1" Text="View Full Week" Style="{StaticResource LinkStyle}" TextColor="{StaticResource TextLink}" FontAttributes="None" />
+                                    
                                 </Grid>
                                 <Grid Style="{StaticResource TableHeaderRowStyle}" ColumnDefinitions="1.4*,1.4*,1*,1*">
                                     <Label Grid.Column="0" Text="Time" Style="{StaticResource TableHeaderStyle}" />
@@ -132,10 +136,10 @@
                                         <DataTemplate>
                                             <VerticalStackLayout>
                                                 <Grid Style="{StaticResource TableRowStyle}" Padding="16,10" ColumnDefinitions="1.4*,1.4*,1*,1*">
-                                                    <Label Grid.Column="0" Text="{Binding StartTime}" Style="{StaticResource TableCellStyle}" FontSize="11" />
-                                                    <Label Grid.Column="1" Text="{Binding Title}" Style="{StaticResource TableCellBoldStyle}" FontSize="11" />
-                                                    <Label Grid.Column="2" Text="{Binding Detail}" Style="{StaticResource TableCellStyle}" FontSize="11" />
-                                                    <Label Grid.Column="3" Text="{Binding Status}" Style="{StaticResource TableCellMutedStyle}" FontSize="11" />
+                                                    <Label Grid.Column="0" Text="{Binding TimeRange}" Style="{StaticResource TableCellStyle}" FontSize="11" />
+                                                    <Label Grid.Column="1" Text="{Binding SubjectName}" Style="{StaticResource TableCellBoldStyle}" FontSize="11" />
+                                                    <Label Grid.Column="2" Text="{Binding ClassName}" Style="{StaticResource TableCellStyle}" FontSize="11" />
+                                                    <Label Grid.Column="3" Text="{Binding Room}" Style="{StaticResource TableCellMutedStyle}" FontSize="11" />
                                                 </Grid>
                                                 <BoxView Style="{StaticResource RowDividerStyle}" />
                                             </VerticalStackLayout>

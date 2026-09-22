@@ -19,7 +19,7 @@
 
                 <VerticalStackLayout Spacing="4">
                     <Label Text="Edit Teacher Profile" Style="{StaticResource PageTitleStyle}" />
-                    <Label Text="Update information for Marcus Vance." Style="{StaticResource PageSubtitleStyle}" />
+                    <Label x:Name="SubtitleLabel" Text="" Style="{StaticResource PageSubtitleStyle}" />
                 </VerticalStackLayout>
 
                 <!-- Personal details -->
@@ -32,7 +32,7 @@
                         <VerticalStackLayout Spacing="6">
                             <Label Text="Full Name" Style="{StaticResource SmallMutedStyle}" />
                             <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="36" Background="{StaticResource TableHeaderBackground}">
-                                <Entry x:Name="FullNameEntry" Text="Marcus Vance" Style="{StaticResource FieldEntryStyle}" />
+                                <Entry x:Name="FullNameEntry" Style="{StaticResource FieldEntryStyle}" />
                             </Border>
                         </VerticalStackLayout>
                     </VerticalStackLayout>
@@ -49,13 +49,13 @@
                             <VerticalStackLayout Spacing="6">
                                 <Label Text="Teacher ID" Style="{StaticResource SmallMutedStyle}" />
                                 <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="36" Background="{StaticResource TableHeaderBackground}">
-                                    <Entry Text="TCH-2023-084" IsReadOnly="True" Style="{StaticResource FieldEntryStyle}" TextColor="{StaticResource TextMuted}" />
+                                    <Entry x:Name="TeacherIdEntry" IsReadOnly="True" Style="{StaticResource FieldEntryStyle}" TextColor="{StaticResource TextMuted}" />
                                 </Border>
                             </VerticalStackLayout>
                             <VerticalStackLayout Spacing="6">
                                 <Label Text="Total Experience (Years)" Style="{StaticResource SmallMutedStyle}" />
                                 <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="36" Background="{StaticResource TableHeaderBackground}">
-                                    <Entry x:Name="ExperienceEntry" Text="12" Keyboard="Numeric" Style="{StaticResource FieldEntryStyle}" />
+                                    <Entry x:Name="ExperienceEntry" Keyboard="Numeric" Style="{StaticResource FieldEntryStyle}" />
                                 </Border>
                             </VerticalStackLayout>
                             <VerticalStackLayout Spacing="6">
@@ -78,20 +78,20 @@
                                 <VerticalStackLayout Grid.Column="0" Spacing="6">
                                     <Label Text="Email Address" Style="{StaticResource SmallMutedStyle}" />
                                     <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="36" Background="{StaticResource TableHeaderBackground}">
-                                        <Entry x:Name="EmailEntry" Text="m.vance@stedwards.edu" Keyboard="Email" Style="{StaticResource FieldEntryStyle}" />
+                                        <Entry x:Name="EmailEntry" Keyboard="Email" Style="{StaticResource FieldEntryStyle}" />
                                     </Border>
                                 </VerticalStackLayout>
                                 <VerticalStackLayout Grid.Column="1" Spacing="6">
                                     <Label Text="Phone Number" Style="{StaticResource SmallMutedStyle}" />
                                     <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="36" Background="{StaticResource TableHeaderBackground}">
-                                        <Entry x:Name="PhoneEntry" Text="+1 (555) 019-2834" Keyboard="Telephone" Style="{StaticResource FieldEntryStyle}" />
+                                        <Entry x:Name="PhoneEntry" Keyboard="Telephone" Style="{StaticResource FieldEntryStyle}" />
                                     </Border>
                                 </VerticalStackLayout>
                             </Grid>
                             <VerticalStackLayout Spacing="6">
                                 <Label Text="Home Address" Style="{StaticResource SmallMutedStyle}" />
                                 <Border Style="{StaticResource TextAreaBoxStyle}" HeightRequest="70" Background="{StaticResource TableHeaderBackground}">
-                                    <Editor x:Name="AddressEditor" Text="412 Maplewood Drive, Apt 4B&#10;Springfield, IL 62704" Style="{StaticResource FieldEditorStyle}" />
+                                    <Editor x:Name="AddressEditor" Style="{StaticResource FieldEditorStyle}" />
                                 </Border>
                             </VerticalStackLayout>
                         </VerticalStackLayout>
@@ -99,6 +99,7 @@
                 </Grid>
 
                 <HorizontalStackLayout Spacing="10" HorizontalOptions="End">
+                    <Button Text="Change Photo" Style="{StaticResource OutlineButtonStyle}" Clicked="OnPhotoClicked" />
                     <Button Text="Cancel" Style="{StaticResource OutlineButtonStyle}" Clicked="OnCancelClicked" />
                     <Button Text="Save Changes" Style="{StaticResource PrimaryButtonStyle}" Clicked="OnSaveClicked" />
                 </HorizontalStackLayout>

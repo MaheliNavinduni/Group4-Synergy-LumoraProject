@@ -30,7 +30,7 @@
                             <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="34" Padding="8,0">
                                 <Grid ColumnDefinitions="Auto,*" ColumnSpacing="6">
                                     <Label Text="&#xE721;" Style="{StaticResource IconStyle}" FontSize="11" />
-                                    <Entry Grid.Column="1" Placeholder="Search by Name or ID..." Style="{StaticResource FieldEntryStyle}" FontSize="11" />
+                                    <Entry x:Name="SearchEntry" Grid.Column="1" Placeholder="Name or ID, then press Enter..." Style="{StaticResource FieldEntryStyle}" FontSize="11" Completed="OnSearchCompleted" />
                                 </Grid>
                             </Border>
                         </VerticalStackLayout>
@@ -40,15 +40,15 @@
                         <VerticalStackLayout Spacing="12">
                             <Label Text="Selected Educator" Style="{StaticResource BodyBoldStyle}" />
                             <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
-                                <controls:AvatarView Initials="EV" Size="44" />
+                                <controls:AvatarView x:Name="Avatar" Initials="?" Size="44" />
                                 <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
-                                    <Label Text="Dr. Eleanor Vance" Style="{StaticResource BodyBoldStyle}" FontSize="12" />
-                                    <Label Text="ID: TCH-2018-492" Style="{StaticResource SmallMutedStyle}" FontSize="9" />
+                                    <Label x:Name="NameLabel" Text="No teacher selected" Style="{StaticResource BodyBoldStyle}" FontSize="12" />
+                                    <Label x:Name="IdLabel" Text="Search above" Style="{StaticResource SmallMutedStyle}" FontSize="9" />
                                 </VerticalStackLayout>
                             </Grid>
                             <HorizontalStackLayout Spacing="6">
-                                <controls:StatusBadge Text="Advanced Calculus" />
-                                <controls:StatusBadge Text="Physics II" />
+                                <controls:StatusBadge x:Name="Subject1Badge" Text="" />
+                                <controls:StatusBadge x:Name="Subject2Badge" Text="" IsVisible="False" />
                             </HorizontalStackLayout>
                             <HorizontalStackLayout Spacing="5">
                                 <Label Text="&#xE787;" Style="{StaticResource IconStyle}" FontSize="10" />

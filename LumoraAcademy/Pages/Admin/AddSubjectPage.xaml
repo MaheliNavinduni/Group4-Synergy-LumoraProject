@@ -27,7 +27,8 @@
                 </VerticalStackLayout>
 
                 <controls:StatCard Title="TOTAL SUBJECTS"
-                                   Value="10"
+                                   x:Name="TotalCard"
+                                   Value="0"
                                    ValueColor="{StaticResource BrandPrimary}"
                                    WidthRequest="640"
                                    HorizontalOptions="Start" />
@@ -53,6 +54,13 @@
                         <Label Text="Subject Code" Style="{StaticResource FormLabelStyle}" FontSize="11" Margin="0" />
                         <Border Style="{StaticResource FieldBoxStyle}" Background="{StaticResource TableHeaderBackground}" Stroke="{StaticResource TableHeaderBackground}">
                             <Entry x:Name="SubjectCodeEntry" Placeholder="E.G. SCI-PHY-101" Style="{StaticResource FieldEntryStyle}" />
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="Curriculum" Style="{StaticResource FormLabelStyle}" FontSize="11" Margin="0" />
+                        <Border Style="{StaticResource FieldBoxStyle}" Background="{StaticResource TableHeaderBackground}" Stroke="{StaticResource TableHeaderBackground}">
+                            <Picker x:Name="CurriculumPicker" Style="{StaticResource FieldPickerStyle}" />
                         </Border>
                     </VerticalStackLayout>
                 </VerticalStackLayout>

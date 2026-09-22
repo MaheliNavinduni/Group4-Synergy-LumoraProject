@@ -40,14 +40,18 @@
                                 <Border.StrokeShape>
                                     <RoundRectangle CornerRadius="8" />
                                 </Border.StrokeShape>
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnPhotoTapped" />
+                                </Border.GestureRecognizers>
                                 <VerticalStackLayout Spacing="6" VerticalOptions="Center">
-                                    <Border WidthRequest="44" HeightRequest="44" Padding="0" StrokeThickness="0" Background="{StaticResource BrandCream}" HorizontalOptions="Center">
+                                    <controls:AvatarView x:Name="PhotoPreview" Initials="" Size="56" HorizontalOptions="Center" IsVisible="False" />
+                                    <Border x:Name="PhotoIcon" WidthRequest="44" HeightRequest="44" Padding="0" StrokeThickness="0" Background="{StaticResource BrandCream}" HorizontalOptions="Center">
                                         <Border.StrokeShape>
                                             <RoundRectangle CornerRadius="22" />
                                         </Border.StrokeShape>
                                         <Label Text="&#xE722;" Style="{StaticResource IconStyle}" FontSize="18" TextColor="{StaticResource BrandPrimary}" HorizontalOptions="Center" />
                                     </Border>
-                                    <Label Text="Upload Photo" Style="{StaticResource BodyBoldStyle}" FontSize="11" HorizontalOptions="Center" />
+                                    <Label x:Name="PhotoLabel" Text="Upload Photo" Style="{StaticResource BodyBoldStyle}" FontSize="11" HorizontalOptions="Center" />
                                     <Label Text="JPG, PNG up to 2MB" Style="{StaticResource SmallMutedStyle}" FontSize="9" HorizontalOptions="Center" />
                                 </VerticalStackLayout>
                             </Border>
