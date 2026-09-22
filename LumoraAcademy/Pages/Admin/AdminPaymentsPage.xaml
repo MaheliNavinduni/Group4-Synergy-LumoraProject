@@ -30,10 +30,10 @@
                 <!-- Four statistics -->
                 <Grid ColumnDefinitions="*,*,*,*"
                       ColumnSpacing="14">
-                    <controls:StatCard Grid.Column="0" Title="Total Expected" Value="$124,500" Subtitle="Current Month" Icon="&#xE8C7;" />
-                    <controls:StatCard Grid.Column="1" Title="Collected (Paid)" Value="$98,200" Subtitle="79% of total" Icon="&#xE73E;" />
-                    <controls:StatCard Grid.Column="2" Title="Pending" Value="$21,000" Subtitle="112 students" Icon="&#xE823;" />
-                    <controls:StatCard Grid.Column="3" Title="Overdue / At Risk" Value="$5,300" Subtitle="Action Required" Icon="&#xE7BA;" />
+                    <controls:StatCard x:Name="ExpectedCard" Grid.Column="0" Title="Total Expected" Value="-" Subtitle="All fee records" Icon="&#xE8C7;" />
+                    <controls:StatCard x:Name="CollectedCard" Grid.Column="1" Title="Collected (Paid)" Value="-" Subtitle="" Icon="&#xE73E;" />
+                    <controls:StatCard x:Name="PendingCard" Grid.Column="2" Title="Pending" Value="-" Subtitle="" Icon="&#xE823;" />
+                    <controls:StatCard x:Name="OverdueCard" Grid.Column="3" Title="Overdue / At Risk" Value="-" Subtitle="Action Required" Icon="&#xE7BA;" />
                 </Grid>
 
                 <!-- Student accounts table -->
@@ -61,15 +61,15 @@
                                         <Grid Style="{StaticResource TableRowStyle}"
                                               ColumnDefinitions="1.6*,1*,1.3*,1.2*,1.3*,0.8*">
                                             <VerticalStackLayout Grid.Column="0" Spacing="2" VerticalOptions="Center">
-                                                <Label Text="{Binding Name}" Style="{StaticResource TableCellBoldStyle}" FontSize="12" />
-                                                <Label Text="{Binding Id}" Style="{StaticResource SmallMutedStyle}" FontSize="10" />
+                                                <Label Text="{Binding StudentName}" Style="{StaticResource TableCellBoldStyle}" FontSize="12" />
+                                                <Label Text="{Binding StudentCode}" Style="{StaticResource SmallMutedStyle}" FontSize="10" />
                                             </VerticalStackLayout>
-                                            <Label Grid.Column="1" Text="{Binding MonthlyFee}" Style="{StaticResource TableCellStyle}" FontSize="12" />
-                                            <Label Grid.Column="2" Text="{Binding Outstanding}" Style="{StaticResource TableCellBoldStyle}" FontSize="12" />
-                                            <Label Grid.Column="3" Text="{Binding LastPaid}" Style="{StaticResource TableCellStyle}" FontSize="12" />
+                                            <Label Grid.Column="1" Text="{Binding AmountDue, StringFormat='${0:N2}'}" Style="{StaticResource TableCellStyle}" FontSize="12" />
+                                            <Label Grid.Column="2" Text="{Binding Outstanding, StringFormat='${0:N2}'}" Style="{StaticResource TableCellBoldStyle}" FontSize="12" />
+                                            <Label Grid.Column="3" Text="{Binding PaymentDate, StringFormat='{0:MMM dd, yyyy}', TargetNullValue='-'}" Style="{StaticResource TableCellStyle}" FontSize="12" />
                                             <controls:StatusBadge Grid.Column="4" Text="{Binding Status}" />
                                             <Label Grid.Column="5"
-                                                   Text="{Binding Action}"
+                                                   Text="Edit"
                                                    Style="{StaticResource TableCellBoldStyle}"
                                                    FontSize="12"
                                                    HorizontalOptions="End">
@@ -86,20 +86,8 @@
 
                         <Grid ColumnDefinitions="*,Auto"
                               Padding="20,12">
-                            <Label Grid.Column="0" Text="Showing 1 to 4 of 1,234 entries" Style="{StaticResource SmallMutedStyle}" VerticalOptions="Center" />
-                            <HorizontalStackLayout Grid.Column="1" Spacing="4">
-                                <Button Text="Prev" Style="{StaticResource SmallOutlineButtonStyle}" HeightRequest="26" FontSize="10" TextColor="{StaticResource TextLight}" />
-                                <Border Style="{StaticResource PageNumberActiveStyle}">
-                                    <Label Text="1" FontSize="11" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" />
-                                </Border>
-                                <Border Style="{StaticResource PageNumberStyle}">
-                                    <Label Text="2" FontSize="11" TextColor="{StaticResource TextMuted}" HorizontalOptions="Center" VerticalOptions="Center" />
-                                </Border>
-                                <Border Style="{StaticResource PageNumberStyle}">
-                                    <Label Text="3" FontSize="11" TextColor="{StaticResource TextMuted}" HorizontalOptions="Center" VerticalOptions="Center" />
-                                </Border>
-                                <Button Text="Next" Style="{StaticResource SmallOutlineButtonStyle}" HeightRequest="26" FontSize="10" />
-                            </HorizontalStackLayout>
+                            <Label x:Name="CountLabel" Grid.Column="0" Text="" Style="{StaticResource SmallMutedStyle}" VerticalOptions="Center" />
+                            <controls:PagerView x:Name="Pager" Grid.Column="1" PageChanged="OnPageChanged" />
                         </Grid>
 
                     </VerticalStackLayout>

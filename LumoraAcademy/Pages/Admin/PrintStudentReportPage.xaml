@@ -31,8 +31,8 @@
                         <VerticalStackLayout Grid.Column="2" Spacing="2" HorizontalOptions="End">
                             <Label Text="ACADEMIC PROGRESS" FontSize="12" FontAttributes="Bold" CharacterSpacing="1" TextColor="{StaticResource BrandPrimary}" HorizontalTextAlignment="End" />
                             <Label Text="REPORT" FontSize="12" FontAttributes="Bold" CharacterSpacing="1" TextColor="{StaticResource BrandPrimary}" HorizontalTextAlignment="End" />
-                            <Label Text="Academic Year: 2023-2024" Style="{StaticResource SmallMutedStyle}" FontSize="9" HorizontalTextAlignment="End" />
-                            <Label Text="Term: Fall Semester" Style="{StaticResource SmallMutedStyle}" FontSize="9" HorizontalTextAlignment="End" />
+                            <Label x:Name="YearLabel" Text="" Style="{StaticResource SmallMutedStyle}" FontSize="9" HorizontalTextAlignment="End" />
+                            <Label x:Name="TermLabel" Text="" Style="{StaticResource SmallMutedStyle}" FontSize="9" HorizontalTextAlignment="End" />
                         </VerticalStackLayout>
                     </Grid>
 
@@ -47,19 +47,19 @@
                             <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" RowSpacing="14">
                                 <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="3">
                                     <Label Text="STUDENT NAME" Style="{StaticResource FieldLabelStyle}" FontSize="8" TextColor="{StaticResource TextMuted}" />
-                                    <Label Text="Alexander J. Sterling" Style="{StaticResource BodyBoldStyle}" />
+                                    <Label x:Name="NameLabel" Style="{StaticResource BodyBoldStyle}" />
                                 </VerticalStackLayout>
                                 <VerticalStackLayout Grid.Row="0" Grid.Column="1" Spacing="3">
                                     <Label Text="STUDENT ID" Style="{StaticResource FieldLabelStyle}" FontSize="8" TextColor="{StaticResource TextMuted}" />
-                                    <Label Text="SEA-24-0891" Style="{StaticResource BodyStyle}" />
+                                    <Label x:Name="IdLabel" Style="{StaticResource BodyStyle}" />
                                 </VerticalStackLayout>
                                 <VerticalStackLayout Grid.Row="1" Grid.Column="0" Spacing="3">
                                     <Label Text="GRADE LEVEL" Style="{StaticResource FieldLabelStyle}" FontSize="8" TextColor="{StaticResource TextMuted}" />
-                                    <Label Text="10th Grade (Sophomore)" Style="{StaticResource BodyStyle}" />
+                                    <Label x:Name="GradeLabel" Style="{StaticResource BodyStyle}" />
                                 </VerticalStackLayout>
                             </Grid>
                         </Border>
-                        <controls:AvatarView Grid.Column="1" Initials="AS" Size="80" VerticalOptions="Start" />
+                        <controls:AvatarView x:Name="Avatar" Grid.Column="1" Initials="" Size="80" VerticalOptions="Start" />
                     </Grid>
 
                     <!-- Academic performance table -->
@@ -109,7 +109,7 @@
                                     </Border.StrokeShape>
                                     <VerticalStackLayout Spacing="2">
                                         <Label Text="CUMULATIVE GPA" Style="{StaticResource FieldLabelStyle}" FontSize="8" TextColor="{StaticResource TextMuted}" HorizontalOptions="Center" />
-                                        <Label Text="3.85" FontSize="18" FontAttributes="Bold" TextColor="{StaticResource TextHeading}" HorizontalOptions="Center" />
+                                        <Label x:Name="GpaLabel" Text="-" FontSize="18" FontAttributes="Bold" TextColor="{StaticResource TextHeading}" HorizontalOptions="Center" />
                                     </VerticalStackLayout>
                                 </Border>
                                 <Border Grid.Row="0" Grid.Column="1" Background="{StaticResource TableHeaderBackground}" Stroke="{StaticResource DividerLine}" Padding="12">
@@ -118,7 +118,7 @@
                                     </Border.StrokeShape>
                                     <VerticalStackLayout Spacing="2">
                                         <Label Text="TOTAL SCORE %" Style="{StaticResource FieldLabelStyle}" FontSize="8" TextColor="{StaticResource TextMuted}" HorizontalOptions="Center" />
-                                        <Label Text="91.2%" FontSize="18" FontAttributes="Bold" TextColor="{StaticResource TextHeading}" HorizontalOptions="Center" />
+                                        <Label x:Name="TotalLabel" Text="-" FontSize="18" FontAttributes="Bold" TextColor="{StaticResource TextHeading}" HorizontalOptions="Center" />
                                     </VerticalStackLayout>
                                 </Border>
                                 <Border Grid.Row="1" Grid.ColumnSpan="2" Background="{StaticResource TableHeaderBackground}" Stroke="{StaticResource DividerLine}" Padding="12">
@@ -129,7 +129,7 @@
                                         <Label Text="ATTENDANCE RECORD" Style="{StaticResource FieldLabelStyle}" FontSize="8" TextColor="{StaticResource TextMuted}" VerticalOptions="Center" />
                                         <VerticalStackLayout Grid.Column="1" Spacing="1">
                                             <Label Text="Days Present:" Style="{StaticResource BodyBoldStyle}" FontSize="11" HorizontalOptions="End" />
-                                            <Label Text="88/90" Style="{StaticResource BodyBoldStyle}" FontSize="11" HorizontalOptions="End" />
+                                            <Label x:Name="AttendanceLabel" Text="-" Style="{StaticResource BodyBoldStyle}" FontSize="11" HorizontalOptions="End" />
                                         </VerticalStackLayout>
                                     </Grid>
                                 </Border>
@@ -144,10 +144,10 @@
                                     <RoundRectangle CornerRadius="6" />
                                 </Border.StrokeShape>
                                 <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="16" HeightRequest="70" Padding="20,0">
-                                    <BoxView Grid.Column="0" Color="{StaticResource BrandPrimaryDark}" HeightRequest="45" WidthRequest="18" VerticalOptions="End" HorizontalOptions="Center" />
-                                    <BoxView Grid.Column="1" Color="{StaticResource BrandBrownDeep}" HeightRequest="60" WidthRequest="18" VerticalOptions="End" HorizontalOptions="Center" />
-                                    <BoxView Grid.Column="2" Color="#F2C94C" HeightRequest="70" WidthRequest="18" VerticalOptions="End" HorizontalOptions="Center" />
-                                    <BoxView Grid.Column="3" Color="{StaticResource DividerLine}" HeightRequest="12" WidthRequest="18" VerticalOptions="End" HorizontalOptions="Center" />
+                                    <BoxView x:Name="Bar1" Grid.Column="0" Color="{StaticResource BrandPrimaryDark}" HeightRequest="45" WidthRequest="18" VerticalOptions="End" HorizontalOptions="Center" />
+                                    <BoxView x:Name="Bar2" Grid.Column="1" Color="{StaticResource BrandBrownDeep}" HeightRequest="60" WidthRequest="18" VerticalOptions="End" HorizontalOptions="Center" />
+                                    <BoxView x:Name="Bar3" Grid.Column="2" Color="#F2C94C" HeightRequest="70" WidthRequest="18" VerticalOptions="End" HorizontalOptions="Center" />
+                                    <BoxView x:Name="Bar4" Grid.Column="3" Color="{StaticResource DividerLine}" HeightRequest="12" WidthRequest="18" VerticalOptions="End" HorizontalOptions="Center" />
                                 </Grid>
                             </Border>
                         </VerticalStackLayout>

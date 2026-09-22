@@ -20,13 +20,13 @@
                         <Label Text="Edit Payment Record" Style="{StaticResource PageTitleStyle}" />
                         <HorizontalStackLayout Spacing="5">
                             <Label Text="&#xE77B;" Style="{StaticResource IconStyle}" FontSize="11" />
-                            <Label Text="Alice Anderson • STD-116-001" Style="{StaticResource MutedStyle}" VerticalOptions="Center" />
+                            <Label x:Name="SubtitleLabel" Text="" Style="{StaticResource MutedStyle}" VerticalOptions="Center" />
                         </HorizontalStackLayout>
                     </VerticalStackLayout>
                     <Border Grid.Column="1" Style="{StaticResource FieldBoxStyle}" HeightRequest="26" Padding="8,0" VerticalOptions="Start">
                         <HorizontalStackLayout Spacing="5">
                             <Label Text="&#xE823;" Style="{StaticResource IconStyle}" FontSize="9" />
-                            <Label Text="Last edited: 2 days ago" Style="{StaticResource SmallMutedStyle}" FontSize="9" VerticalOptions="Center" />
+                            <Label x:Name="MonthLabel" Text="" Style="{StaticResource SmallMutedStyle}" FontSize="9" VerticalOptions="Center" />
                         </HorizontalStackLayout>
                     </Border>
                 </Grid>
@@ -44,29 +44,18 @@
                             <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="6">
                                 <Label Text="NAME" Style="{StaticResource FieldLabelStyle}" FontSize="10" />
                                 <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="36">
-                                    <Entry x:Name="NameEntry" Text="Alice Anderson" Style="{StaticResource FieldEntryStyle}" />
+                                    <Entry x:Name="NameEntry" IsReadOnly="True" Style="{StaticResource FieldEntryStyle}" TextColor="{StaticResource TextMuted}" />
                                 </Border>
                             </VerticalStackLayout>
 
                             <VerticalStackLayout Grid.Row="0" Grid.Column="1" Spacing="6">
-                                <Label Text="PAYMENT STATUS" Style="{StaticResource FieldLabelStyle}" FontSize="10" />
+                                <Label Text="PAYMENT STATUS (calculated)" Style="{StaticResource FieldLabelStyle}" FontSize="10" />
                                 <HorizontalStackLayout Spacing="12" VerticalOptions="Center" HeightRequest="36">
-                                    <HorizontalStackLayout Spacing="3">
-                                        <RadioButton x:Name="PaidRadio" GroupName="PayStatus" IsChecked="True" Scale="0.8" />
-                                        <Label Text="Paid" Style="{StaticResource BodyStyle}" FontSize="12" VerticalOptions="Center" />
-                                    </HorizontalStackLayout>
-                                    <HorizontalStackLayout Spacing="3">
-                                        <RadioButton GroupName="PayStatus" Scale="0.8" />
-                                        <Label Text="Partial" Style="{StaticResource BodyStyle}" FontSize="12" VerticalOptions="Center" />
-                                    </HorizontalStackLayout>
-                                    <HorizontalStackLayout Spacing="3">
-                                        <RadioButton GroupName="PayStatus" Scale="0.8" />
-                                        <Label Text="Pending" Style="{StaticResource BodyStyle}" FontSize="12" VerticalOptions="Center" />
-                                    </HorizontalStackLayout>
-                                    <HorizontalStackLayout Spacing="3">
-                                        <RadioButton GroupName="PayStatus" Scale="0.8" />
-                                        <Label Text="Overdue" Style="{StaticResource BodyStyle}" FontSize="12" VerticalOptions="Center" />
-                                    </HorizontalStackLayout>
+                                    <controls:StatusBadge x:Name="StatusBadge" Text="" />
+                                    <Label Text="Extension:" Style="{StaticResource BodyStyle}" FontSize="12" VerticalOptions="Center" />
+                                    <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="32" WidthRequest="130" Padding="8,0">
+                                        <Picker x:Name="ExtensionPicker" Style="{StaticResource FieldPickerStyle}" FontSize="12" />
+                                    </Border>
                                 </HorizontalStackLayout>
                             </VerticalStackLayout>
 
@@ -75,7 +64,7 @@
                                 <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="36">
                                     <Grid ColumnDefinitions="Auto,*" ColumnSpacing="6">
                                         <Label Text="$" Style="{StaticResource MutedStyle}" VerticalOptions="Center" />
-                                        <Entry Grid.Column="1" x:Name="AmountDueEntry" Text="1500.00" Keyboard="Numeric" Style="{StaticResource FieldEntryStyle}" />
+                                        <Entry Grid.Column="1" x:Name="AmountDueEntry" Keyboard="Numeric" Style="{StaticResource FieldEntryStyle}" />
                                     </Grid>
                                 </Border>
                             </VerticalStackLayout>
@@ -85,7 +74,7 @@
                                 <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="36">
                                     <Grid ColumnDefinitions="Auto,*" ColumnSpacing="6">
                                         <Label Text="$" Style="{StaticResource MutedStyle}" VerticalOptions="Center" />
-                                        <Entry Grid.Column="1" x:Name="AmountPaidEntry" Text="500.00" Keyboard="Numeric" Style="{StaticResource FieldEntryStyle}" />
+                                        <Entry Grid.Column="1" x:Name="AmountPaidEntry" Keyboard="Numeric" Style="{StaticResource FieldEntryStyle}" />
                                     </Grid>
                                 </Border>
                             </VerticalStackLayout>
@@ -93,7 +82,7 @@
                             <VerticalStackLayout Grid.Row="2" Grid.Column="0" Spacing="6">
                                 <Label Text="PAYMENT DATE" Style="{StaticResource FieldLabelStyle}" FontSize="10" />
                                 <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="36">
-                                    <DatePicker x:Name="PaymentDatePicker" Date="2023-10-24" FontSize="12" TextColor="{StaticResource TextHeading}" BackgroundColor="Transparent" VerticalOptions="Center" />
+                                    <DatePicker x:Name="PaymentDatePicker" FontSize="12" TextColor="{StaticResource TextHeading}" BackgroundColor="Transparent" VerticalOptions="Center" />
                                 </Border>
                             </VerticalStackLayout>
                         </Grid>
@@ -129,7 +118,7 @@
                                         <VerticalStackLayout Spacing="6">
                                             <BoxView Color="{StaticResource StatusGrayBg}" HeightRequest="60" CornerRadius="4" />
                                             <Grid ColumnDefinitions="*,Auto">
-                                                <Label Text="rcpt_102423_alice.pdf" Style="{StaticResource SmallMutedStyle}" FontSize="9" />
+                                                <Label x:Name="ReceiptLabel" Text="No receipt uploaded" Style="{StaticResource SmallMutedStyle}" FontSize="9" />
                                                 <Label Grid.Column="1" Text="1.2 MB" Style="{StaticResource SmallMutedStyle}" FontSize="9" />
                                             </Grid>
                                         </VerticalStackLayout>
@@ -149,7 +138,6 @@
                             <BoxView Style="{StaticResource RowDividerStyle}" />
                             <Border Style="{StaticResource TextAreaBoxStyle}" HeightRequest="130">
                                 <Editor x:Name="NotesEditor"
-                                        Text="Parent requested extension until Nov 1st due to bank delay. Approved by Admin."
                                         Style="{StaticResource FieldEditorStyle}" />
                             </Border>
                         </VerticalStackLayout>
@@ -159,7 +147,7 @@
                 <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="10">
                     <HorizontalStackLayout Grid.Column="0" Spacing="5" VerticalOptions="Center">
                         <Label Text="&#xE946;" Style="{StaticResource IconStyle}" FontSize="10" />
-                        <Label Text="Unsaved changes" Style="{StaticResource SmallMutedStyle}" VerticalOptions="Center" />
+                        <Label x:Name="DirtyLabel" Text="" Style="{StaticResource SmallMutedStyle}" VerticalOptions="Center" />
                     </HorizontalStackLayout>
                     <Button Grid.Column="1" Text="Cancel" Style="{StaticResource OutlineButtonStyle}" Clicked="OnCancelClicked" />
                     <Button Grid.Column="2" Text="Save Changes" Style="{StaticResource PrimaryButtonStyle}" Clicked="OnSaveClicked" />
