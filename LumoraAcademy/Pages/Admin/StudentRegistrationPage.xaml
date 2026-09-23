@@ -35,28 +35,31 @@
                             <VerticalStackLayout Grid.Column="0" Spacing="14">
                                 <Grid ColumnDefinitions="110,*">
                                     <Label Text="Full Name" Style="{StaticResource FormLabelStyle}" FontSize="11" Margin="0" VerticalOptions="Center" />
-                                    <Border Grid.Column="1" Style="{StaticResource FieldBoxStyle}" HeightRequest="36">
+                                    <Border Grid.Column="1" Style="{StaticResource FieldBoxStyle}" HeightRequest="40">
                                         <Entry x:Name="FullNameEntry" Placeholder="Enter student's full name" Style="{StaticResource FieldEntryStyle}" />
                                     </Border>
                                 </Grid>
                                 <Grid ColumnDefinitions="110,*">
                                     <Label Text="Date of Birth" Style="{StaticResource FormLabelStyle}" FontSize="11" Margin="0" VerticalOptions="Center" />
-                                    <Border Grid.Column="1" Style="{StaticResource FieldBoxStyle}" HeightRequest="36" HorizontalOptions="Start" WidthRequest="160">
-                                        <DatePicker x:Name="DobPicker" FontSize="12" TextColor="{StaticResource TextHeading}" BackgroundColor="Transparent" VerticalOptions="Center" />
-                                    </Border>
+                                    <controls:DateField x:Name="DobPicker"
+                                                        Grid.Column="1"
+                                                        BoxHeight="40"
+                                                        FontSize="12"
+                                                        WidthRequest="160"
+                                                        HorizontalOptions="Start" />
                                 </Grid>
                                 <Grid ColumnDefinitions="*,*" ColumnSpacing="16">
                                     <VerticalStackLayout Grid.Column="0" Spacing="6">
                                         <Label Text="Blood Group" Style="{StaticResource FormLabelStyle}" FontSize="11" Margin="0" />
-                                        <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="36">
-                                            <Picker x:Name="BloodGroupPicker" Title="Select Blood Group" Style="{StaticResource FieldPickerStyle}" />
-                                        </Border>
+                                        <controls:DropDownField x:Name="BloodGroupPicker"
+                                                                Title="Select Blood Group"
+                                                                BoxHeight="40" />
                                     </VerticalStackLayout>
                                     <VerticalStackLayout Grid.Column="1" Spacing="6">
                                         <Label Text="Gender" Style="{StaticResource FormLabelStyle}" FontSize="11" Margin="0" />
-                                        <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="36">
-                                            <Picker x:Name="GenderPicker" Title="Select Gender" Style="{StaticResource FieldPickerStyle}" />
-                                        </Border>
+                                        <controls:DropDownField x:Name="GenderPicker"
+                                                                Title="Select Gender"
+                                                                BoxHeight="40" />
                                     </VerticalStackLayout>
                                 </Grid>
                             </VerticalStackLayout>
@@ -97,19 +100,19 @@
                         <Grid ColumnDefinitions="*,*" ColumnSpacing="16" RowDefinitions="Auto,Auto" RowSpacing="14">
                             <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="6">
                                 <Label Text="Parent/Guardian Name" Style="{StaticResource FormLabelStyle}" FontSize="11" Margin="0" />
-                                <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="36">
+                                <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="40">
                                     <Entry x:Name="GuardianEntry" Placeholder="Primary contact name" Style="{StaticResource FieldEntryStyle}" />
                                 </Border>
                             </VerticalStackLayout>
                             <VerticalStackLayout Grid.Row="0" Grid.Column="1" Spacing="6">
                                 <Label Text="Phone Number" Style="{StaticResource FormLabelStyle}" FontSize="11" Margin="0" />
-                                <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="36">
+                                <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="40">
                                     <Entry x:Name="PhoneEntry" Placeholder="+1 (555) 000-0000" Keyboard="Telephone" Style="{StaticResource FieldEntryStyle}" />
                                 </Border>
                             </VerticalStackLayout>
                             <VerticalStackLayout Grid.Row="1" Grid.Column="0" Spacing="6">
                                 <Label Text="Email Address" Style="{StaticResource FormLabelStyle}" FontSize="11" Margin="0" />
-                                <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="36">
+                                <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="40">
                                     <Entry x:Name="EmailEntry" Placeholder="contact@example.com" Keyboard="Email" Style="{StaticResource FieldEntryStyle}" />
                                 </Border>
                             </VerticalStackLayout>
@@ -135,19 +138,21 @@
                         <Grid ColumnDefinitions="*,*" ColumnSpacing="16" RowDefinitions="Auto,Auto" RowSpacing="14">
                             <Grid Grid.Row="0" Grid.Column="0" ColumnDefinitions="Auto,*" ColumnSpacing="10">
                                 <Label Text="Enrollment Date" Style="{StaticResource FormLabelStyle}" FontSize="11" Margin="0" VerticalOptions="Center" />
-                                <Border Grid.Column="1" Style="{StaticResource FieldBoxStyle}" HeightRequest="36">
-                                    <DatePicker x:Name="EnrollmentDatePicker" FontSize="12" TextColor="{StaticResource TextHeading}" BackgroundColor="Transparent" VerticalOptions="Center" />
-                                </Border>
+                                <controls:DateField x:Name="EnrollmentDatePicker"
+                                                    Grid.Column="1"
+                                                    BoxHeight="40"
+                                                    FontSize="12" />
                             </Grid>
                             <Grid Grid.Row="0" Grid.Column="1" ColumnDefinitions="Auto,*" ColumnSpacing="10">
                                 <Label Text="Grade/Class Selection" Style="{StaticResource FormLabelStyle}" FontSize="11" Margin="0" VerticalOptions="Center" />
-                                <Border Grid.Column="1" Style="{StaticResource FieldBoxStyle}" HeightRequest="36">
-                                    <Picker x:Name="GradePicker" Title="Select Grade" Style="{StaticResource FieldPickerStyle}" />
-                                </Border>
+                                <controls:DropDownField x:Name="GradePicker"
+                                                        Grid.Column="1"
+                                                        Title="Select Grade"
+                                                        BoxHeight="40" />
                             </Grid>
                             <Grid Grid.Row="1" Grid.Column="0" ColumnDefinitions="Auto,*" ColumnSpacing="10">
                                 <Label Text="Previous School Attended" Style="{StaticResource FormLabelStyle}" FontSize="11" Margin="0" VerticalOptions="Center" />
-                                <Border Grid.Column="1" Style="{StaticResource FieldBoxStyle}" HeightRequest="36">
+                                <Border Grid.Column="1" Style="{StaticResource FieldBoxStyle}" HeightRequest="40">
                                     <Entry x:Name="PreviousSchoolEntry" Placeholder="Name of previous institution" Style="{StaticResource FieldEntryStyle}" />
                                 </Border>
                             </Grid>

@@ -25,11 +25,9 @@
 
                     <VerticalStackLayout Grid.Column="1" Spacing="6" WidthRequest="180">
                         <Label Text="Month" Style="{StaticResource FormLabelStyle}" Margin="0" />
-                        <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="38">
-                            <Picker x:Name="MonthPicker"
-                                    Style="{StaticResource FieldPickerStyle}"
-                                    SelectedIndexChanged="OnMonthChanged" />
-                        </Border>
+                        <controls:DropDownField x:Name="MonthPicker"
+                                SelectedIndexChanged="OnMonthChanged"
+                                                BoxHeight="40" />
                     </VerticalStackLayout>
                 </Grid>
 

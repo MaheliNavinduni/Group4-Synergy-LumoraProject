@@ -29,21 +29,15 @@
                       ColumnSpacing="16">
                     <VerticalStackLayout Grid.Column="0" Spacing="6">
                         <Label Text="Class / Grade" Style="{StaticResource FormLabelStyle}" Margin="0" />
-                        <Border Style="{StaticResource FieldBoxStyle}">
-                            <Picker x:Name="ClassPicker" Style="{StaticResource FieldPickerStyle}" />
-                        </Border>
+                        <controls:DropDownField x:Name="ClassPicker" />
                     </VerticalStackLayout>
                     <VerticalStackLayout Grid.Column="1" Spacing="6">
                         <Label Text="Subject Area" Style="{StaticResource FormLabelStyle}" Margin="0" />
-                        <Border Style="{StaticResource FieldBoxStyle}">
-                            <Picker x:Name="SubjectPicker" Style="{StaticResource FieldPickerStyle}" />
-                        </Border>
+                        <controls:DropDownField x:Name="SubjectPicker" />
                     </VerticalStackLayout>
                     <VerticalStackLayout Grid.Column="2" Spacing="6">
                         <Label Text="Performance Threshold" Style="{StaticResource FormLabelStyle}" Margin="0" />
-                        <Border Style="{StaticResource FieldBoxStyle}">
-                            <Picker x:Name="ThresholdPicker" Style="{StaticResource FieldPickerStyle}" />
-                        </Border>
+                        <controls:DropDownField x:Name="ThresholdPicker" />
                     </VerticalStackLayout>
                     <Button Grid.Column="3"
                             Text="Apply Filters"

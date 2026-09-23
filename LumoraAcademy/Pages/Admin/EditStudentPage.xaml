@@ -44,31 +44,24 @@
 
                             <VerticalStackLayout Grid.Row="1" Grid.Column="0" Spacing="6">
                                 <Label Text="Date of Birth" Style="{StaticResource FormLabelStyle}" Margin="0" />
-                                <Border Style="{StaticResource FieldBoxStyle}">
-                                    <DatePicker x:Name="DobPicker" FontSize="13" BackgroundColor="Transparent" TextColor="{StaticResource TextHeading}" VerticalOptions="Center" />
-                                </Border>
+                                <controls:DateField x:Name="DobPicker"
+                                                    FontSize="13" />
                             </VerticalStackLayout>
                             <Grid Grid.Row="1" Grid.Column="1" ColumnDefinitions="*,*" ColumnSpacing="12">
                                 <VerticalStackLayout Grid.Column="0" Spacing="6">
                                     <Label Text="Gender" Style="{StaticResource FormLabelStyle}" Margin="0" />
-                                    <Border Style="{StaticResource FieldBoxStyle}">
-                                        <Picker x:Name="GenderPicker" Style="{StaticResource FieldPickerStyle}" />
-                                    </Border>
+                                    <controls:DropDownField x:Name="GenderPicker" />
                                 </VerticalStackLayout>
                                 <VerticalStackLayout Grid.Column="1" Spacing="6">
                                     <Label Text="Blood Group" Style="{StaticResource FormLabelStyle}" Margin="0" />
-                                    <Border Style="{StaticResource FieldBoxStyle}">
-                                        <Picker x:Name="BloodGroupPicker" Style="{StaticResource FieldPickerStyle}" />
-                                    </Border>
+                                    <controls:DropDownField x:Name="BloodGroupPicker" />
                                 </VerticalStackLayout>
                             </Grid>
 
                             <Grid Grid.Row="2" Grid.Column="0" ColumnDefinitions="*,*" ColumnSpacing="12">
                                 <VerticalStackLayout Grid.Column="0" Spacing="6">
                                     <Label Text="Grade" Style="{StaticResource FormLabelStyle}" Margin="0" />
-                                    <Border Style="{StaticResource FieldBoxStyle}">
-                                        <Picker x:Name="GradePicker" Style="{StaticResource FieldPickerStyle}" />
-                                    </Border>
+                                    <controls:DropDownField x:Name="GradePicker" />
                                 </VerticalStackLayout>
                                 <VerticalStackLayout Grid.Column="1" Spacing="6">
                                     <Label Text="Section" Style="{StaticResource FormLabelStyle}" Margin="0" />
@@ -80,15 +73,11 @@
                             <Grid Grid.Row="2" Grid.Column="1" ColumnDefinitions="*,*" ColumnSpacing="12">
                                 <VerticalStackLayout Grid.Column="0" Spacing="6">
                                     <Label Text="Assigned Teacher" Style="{StaticResource FormLabelStyle}" Margin="0" />
-                                    <Border Style="{StaticResource FieldBoxStyle}">
-                                        <Picker x:Name="TeacherPicker" Style="{StaticResource FieldPickerStyle}" />
-                                    </Border>
+                                    <controls:DropDownField x:Name="TeacherPicker" />
                                 </VerticalStackLayout>
                                 <VerticalStackLayout Grid.Column="1" Spacing="6">
                                     <Label Text="Status" Style="{StaticResource FormLabelStyle}" Margin="0" />
-                                    <Border Style="{StaticResource FieldBoxStyle}">
-                                        <Picker x:Name="StatusPicker" Style="{StaticResource FieldPickerStyle}" />
-                                    </Border>
+                                    <controls:DropDownField x:Name="StatusPicker" />
                                 </VerticalStackLayout>
                             </Grid>
                         </Grid>

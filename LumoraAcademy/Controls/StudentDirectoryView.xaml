@@ -53,7 +53,7 @@
                                    FontSize="11"
                                    Margin="0" />
                             <Border Style="{StaticResource FieldBoxStyle}"
-                                    HeightRequest="34"
+                                    HeightRequest="40"
                                     Padding="8,0">
                                 <Grid ColumnDefinitions="Auto,*"
                                       ColumnSpacing="6">
@@ -74,13 +74,9 @@
                                    Style="{StaticResource FormLabelStyle}"
                                    FontSize="11"
                                    Margin="0" />
-                            <Border Style="{StaticResource FieldBoxStyle}"
-                                    HeightRequest="34"
-                                    Padding="8,0">
-                                <Picker x:Name="GradePicker"
-                                        Style="{StaticResource FieldPickerStyle}"
-                                        FontSize="11" />
-                            </Border>
+                            <controls:DropDownField x:Name="GradePicker"
+                                                    BoxHeight="40"
+                                                    FontSize="11" />
                         </VerticalStackLayout>
 
                         <VerticalStackLayout Spacing="6">

@@ -27,7 +27,7 @@
                     <Border Style="{StaticResource CardStyle}" Padding="16">
                         <VerticalStackLayout Spacing="10">
                             <Label Text="Find Teacher" Style="{StaticResource BodyBoldStyle}" />
-                            <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="34" Padding="8,0">
+                            <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="40" Padding="8,0">
                                 <Grid ColumnDefinitions="Auto,*" ColumnSpacing="6">
                                     <Label Text="&#xE721;" Style="{StaticResource IconStyle}" FontSize="11" />
                                     <Entry x:Name="SearchEntry" Grid.Column="1" Placeholder="Name or ID, then press Enter..." Style="{StaticResource FieldEntryStyle}" FontSize="11" Completed="OnSearchCompleted" />
@@ -65,15 +65,15 @@
                     <Grid ColumnDefinitions="*,*" ColumnSpacing="16">
                         <VerticalStackLayout Grid.Column="0" Spacing="6">
                             <Label Text="Last Working Day" Style="{StaticResource FormLabelStyle}" FontSize="11" Margin="0" />
-                            <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="36">
-                                <DatePicker x:Name="LastDayPicker" FontSize="12" TextColor="{StaticResource TextHeading}" BackgroundColor="Transparent" VerticalOptions="Center" />
-                            </Border>
+                            <controls:DateField x:Name="LastDayPicker"
+                                                BoxHeight="40"
+                                                FontSize="12" />
                         </VerticalStackLayout>
                         <VerticalStackLayout Grid.Column="1" Spacing="6">
                             <Label Text="Reason for Leaving" Style="{StaticResource FormLabelStyle}" FontSize="11" Margin="0" />
-                            <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="36">
-                                <Picker x:Name="ReasonPicker" Title="Select a reason..." Style="{StaticResource FieldPickerStyle}" />
-                            </Border>
+                            <controls:DropDownField x:Name="ReasonPicker"
+                                                    Title="Select a reason..."
+                                                    BoxHeight="40" />
                         </VerticalStackLayout>
                     </Grid>
 

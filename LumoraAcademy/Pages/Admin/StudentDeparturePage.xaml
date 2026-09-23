@@ -22,7 +22,7 @@
                 <VerticalStackLayout Spacing="10">
                     <Label Text="Find Student" Style="{StaticResource BodyBoldStyle}" FontSize="14" />
                     <Label Text="Search by Student ID or Name to begin the departure process." Style="{StaticResource SmallMutedStyle}" />
-                    <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="36" Background="{StaticResource TableHeaderBackground}" Stroke="{StaticResource TableHeaderBackground}">
+                    <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="40" Background="{StaticResource TableHeaderBackground}" Stroke="{StaticResource TableHeaderBackground}">
                         <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
                             <Label Text="&#xE721;" Style="{StaticResource IconStyle}" FontSize="11" />
                             <Entry x:Name="SearchEntry" Grid.Column="1" Placeholder="Enter ID or Name, then press Enter..." Style="{StaticResource FieldEntryStyle}" Completed="OnSearchCompleted" />
@@ -60,18 +60,18 @@
                                 <Label Text="&#xE787;" Style="{StaticResource IconStyle}" FontSize="10" />
                                 <Label Text="Effective Departure Date" Style="{StaticResource FormLabelStyle}" FontSize="11" Margin="0" />
                             </HorizontalStackLayout>
-                            <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="36">
-                                <DatePicker x:Name="DepartureDatePicker" FontSize="12" TextColor="{StaticResource TextHeading}" BackgroundColor="Transparent" VerticalOptions="Center" />
-                            </Border>
+                            <controls:DateField x:Name="DepartureDatePicker"
+                                                BoxHeight="40"
+                                                FontSize="12" />
                         </VerticalStackLayout>
                         <VerticalStackLayout Grid.Column="1" Spacing="6">
                             <HorizontalStackLayout Spacing="5">
                                 <Label Text="&#xE946;" Style="{StaticResource IconStyle}" FontSize="10" />
                                 <Label Text="Reason for Resignation" Style="{StaticResource FormLabelStyle}" FontSize="11" Margin="0" />
                             </HorizontalStackLayout>
-                            <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="36">
-                                <Picker x:Name="ReasonPicker" Title="Select a reason..." Style="{StaticResource FieldPickerStyle}" />
-                            </Border>
+                            <controls:DropDownField x:Name="ReasonPicker"
+                                                    Title="Select a reason..."
+                                                    BoxHeight="40" />
                         </VerticalStackLayout>
                     </Grid>
 

@@ -32,15 +32,11 @@
                         <Grid ColumnDefinitions="*,*,*" ColumnSpacing="14" RowDefinitions="Auto,Auto" RowSpacing="12">
                             <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="6">
                                 <Label Text="Subject" Style="{StaticResource FormLabelStyle}" Margin="0" />
-                                <Border Style="{StaticResource FieldBoxStyle}">
-                                    <Picker x:Name="SubjectPicker" Style="{StaticResource FieldPickerStyle}" />
-                                </Border>
+                                <controls:DropDownField x:Name="SubjectPicker" />
                             </VerticalStackLayout>
                             <VerticalStackLayout Grid.Row="0" Grid.Column="1" Spacing="6">
                                 <Label Text="Exam Type" Style="{StaticResource FormLabelStyle}" Margin="0" />
-                                <Border Style="{StaticResource FieldBoxStyle}">
-                                    <Picker x:Name="ExamTypePicker" Style="{StaticResource FieldPickerStyle}" />
-                                </Border>
+                                <controls:DropDownField x:Name="ExamTypePicker" />
                             </VerticalStackLayout>
                             <VerticalStackLayout Grid.Row="0" Grid.Column="2" Spacing="6">
                                 <Label Text="Exam Name" Style="{StaticResource FormLabelStyle}" Margin="0" />
@@ -77,9 +73,7 @@
                         <Grid ColumnDefinitions="*,*,*" ColumnSpacing="14">
                             <VerticalStackLayout Grid.Column="0" Spacing="6">
                                 <Label Text="Subject" Style="{StaticResource FormLabelStyle}" Margin="0" />
-                                <Border Style="{StaticResource FieldBoxStyle}">
-                                    <Picker x:Name="CambridgeSubjectPicker" Style="{StaticResource FieldPickerStyle}" />
-                                </Border>
+                                <controls:DropDownField x:Name="CambridgeSubjectPicker" />
                             </VerticalStackLayout>
                             <VerticalStackLayout Grid.Column="1" Spacing="6">
                                 <Label Text="Examination" Style="{StaticResource FormLabelStyle}" Margin="0" />
