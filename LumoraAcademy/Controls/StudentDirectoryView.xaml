@@ -14,7 +14,7 @@
                                  Spacing="4">
                 <Label Text="Student Directory"
                        Style="{StaticResource PageTitleStyle}" />
-                <Label Text="Manage and view all enrolled students across the district."
+                <Label Text="Search, filter and open the record of any student at the institute."
                        Style="{StaticResource PageSubtitleStyle}" />
             </VerticalStackLayout>
 
@@ -27,7 +27,7 @@
                     Clicked="OnRegisterClicked" />
         </Grid>
 
-        <Grid ColumnDefinitions="200,*"
+        <Grid ColumnDefinitions="220,*"
               ColumnSpacing="20">
 
             <!-- ===== Left column: filters ===== -->
@@ -38,15 +38,26 @@
                         Padding="16">
                     <VerticalStackLayout Spacing="14">
 
-                        <HorizontalStackLayout Spacing="6">
-                            <Label Text="&#xE71C;"
+                        <Grid ColumnDefinitions="Auto,*,Auto"
+                              ColumnSpacing="6">
+                            <Label Grid.Column="0"
+                                   Text="&#xE71C;"
                                    Style="{StaticResource IconStyle}"
                                    FontSize="12" />
-                            <Label Text="Filters"
+                            <Label Grid.Column="1"
+                                   Text="Filters"
                                    Style="{StaticResource SectionTitleStyle}"
                                    FontSize="14" />
-                        </HorizontalStackLayout>
+                            <Button Grid.Column="2"
+                                    Text="Clear"
+                                    Style="{StaticResource GhostButtonStyle}"
+                                    FontSize="11"
+                                    HeightRequest="24"
+                                    Padding="6,0"
+                                    Clicked="OnClearFiltersClicked" />
+                        </Grid>
 
+                        <!-- Search: the list updates as the user types -->
                         <VerticalStackLayout Spacing="6">
                             <Label Text="Search Student"
                                    Style="{StaticResource FormLabelStyle}"
@@ -55,16 +66,28 @@
                             <Border Style="{StaticResource FieldBoxStyle}"
                                     HeightRequest="40"
                                     Padding="8,0">
-                                <Grid ColumnDefinitions="Auto,*"
+                                <Grid ColumnDefinitions="Auto,*,Auto"
                                       ColumnSpacing="6">
-                                    <Label Text="&#xE721;"
+                                    <Label Grid.Column="0"
+                                           Text="&#xE721;"
                                            Style="{StaticResource IconStyle}"
                                            FontSize="11" />
                                     <Entry x:Name="SearchEntry"
                                            Grid.Column="1"
-                                           Placeholder="ID or Name..."
+                                           Placeholder="ID or name..."
                                            Style="{StaticResource FieldEntryStyle}"
-                                           FontSize="11" />
+                                           FontSize="11"
+                                           TextChanged="OnSearchTextChanged" />
+                                    <Label x:Name="ClearSearchIcon"
+                                           Grid.Column="2"
+                                           Text="&#xE711;"
+                                           Style="{StaticResource IconStyle}"
+                                           FontSize="10"
+                                           IsVisible="False">
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="OnClearSearchTapped" />
+                                        </Label.GestureRecognizers>
+                                    </Label>
                                 </Grid>
                             </Border>
                         </VerticalStackLayout>
@@ -75,34 +98,45 @@
                                    FontSize="11"
                                    Margin="0" />
                             <controls:DropDownField x:Name="GradePicker"
+                                                    Title="All Grades"
                                                     BoxHeight="40"
-                                                    FontSize="11" />
+                                                    FontSize="11"
+                                                    SelectedIndexChanged="OnFilterChanged" />
                         </VerticalStackLayout>
 
-                        <VerticalStackLayout Spacing="6">
+                        <!-- Only one status can be chosen at a time -->
+                        <VerticalStackLayout Spacing="4">
                             <Label Text="Enrollment Status"
                                    Style="{StaticResource FormLabelStyle}"
                                    FontSize="11"
-                                   Margin="0" />
-                            <HorizontalStackLayout Spacing="6">
-                                <CheckBox x:Name="ActiveCheck" IsChecked="True" Color="{StaticResource BrandPrimary}" Scale="0.8" />
-                                <Label Text="Active" Style="{StaticResource MutedStyle}" VerticalOptions="Center" />
-                            </HorizontalStackLayout>
-                            <HorizontalStackLayout Spacing="6">
-                                <CheckBox x:Name="PendingCheck" Color="{StaticResource BrandPrimary}" Scale="0.8" />
-                                <Label Text="Pending" Style="{StaticResource MutedStyle}" VerticalOptions="Center" />
-                            </HorizontalStackLayout>
-                            <HorizontalStackLayout Spacing="6">
-                                <CheckBox x:Name="InactiveCheck" Color="{StaticResource BrandPrimary}" Scale="0.8" />
-                                <Label Text="Inactive / Dropout" Style="{StaticResource MutedStyle}" VerticalOptions="Center" />
-                            </HorizontalStackLayout>
-                        </VerticalStackLayout>
+                                   Margin="0,0,0,2" />
 
-                        <Button Text="Apply Filters"
-                                Style="{StaticResource OutlineButtonStyle}"
-                                FontAttributes="Bold"
-                                HeightRequest="36"
-                                Clicked="OnApplyFiltersClicked" />
+                            <RadioButton x:Name="AllStatusRadio"
+                                         Content="All students"
+                                         GroupName="EnrollmentStatus"
+                                         IsChecked="True"
+                                         FontSize="12"
+                                         TextColor="{StaticResource TextHeading}"
+                                         CheckedChanged="OnStatusChanged" />
+                            <RadioButton x:Name="ActiveRadio"
+                                         Content="Active"
+                                         GroupName="EnrollmentStatus"
+                                         FontSize="12"
+                                         TextColor="{StaticResource TextHeading}"
+                                         CheckedChanged="OnStatusChanged" />
+                            <RadioButton x:Name="PendingRadio"
+                                         Content="Pending"
+                                         GroupName="EnrollmentStatus"
+                                         FontSize="12"
+                                         TextColor="{StaticResource TextHeading}"
+                                         CheckedChanged="OnStatusChanged" />
+                            <RadioButton x:Name="InactiveRadio"
+                                         Content="Inactive / Dropout"
+                                         GroupName="EnrollmentStatus"
+                                         FontSize="12"
+                                         TextColor="{StaticResource TextHeading}"
+                                         CheckedChanged="OnStatusChanged" />
+                        </VerticalStackLayout>
                     </VerticalStackLayout>
                 </Border>
 
@@ -122,23 +156,16 @@
                                FontSize="28"
                                FontAttributes="Bold"
                                TextColor="White" />
-                        <HorizontalStackLayout Spacing="4">
-                            <Label Text="&#xE9D2;"
-                                   FontFamily="Segoe MDL2 Assets"
-                                   FontSize="10"
-                                   TextColor="{StaticResource BrandCream}"
-                                   VerticalOptions="Center" />
-                            <Label Text="+3.2% vs last year"
-                                   FontSize="10"
-                                   TextColor="{StaticResource BrandCream}" />
-                        </HorizontalStackLayout>
+                        <Label x:Name="ActiveCountLabel"
+                               Text=""
+                               FontSize="10"
+                               TextColor="{StaticResource BrandCream}" />
                     </VerticalStackLayout>
                 </Border>
 
                 <Button Text="At-Risk Students"
                         Style="{StaticResource PrimaryButtonStyle}"
                         HeightRequest="40"
-                        HorizontalOptions="Start"
                         Clicked="OnAtRiskClicked" />
             </VerticalStackLayout>
 
@@ -149,29 +176,35 @@
                 <VerticalStackLayout>
 
                     <Grid ColumnDefinitions="*,Auto,Auto"
-                          ColumnSpacing="14"
+                          ColumnSpacing="10"
                           Padding="20,14">
-                        <Label Grid.Column="0"
-                               Text="Student Records"
-                               Style="{StaticResource SectionTitleStyle}"
-                               FontSize="14"
-                               VerticalOptions="Center" />
-                        <Label Grid.Column="1"
-                               Text="&#xE896;"
-                               Style="{StaticResource IconStyle}" />
-                        <Label Grid.Column="2"
-                               Text="&#xE749;"
-                               Style="{StaticResource IconStyle}" />
+                        <VerticalStackLayout Grid.Column="0" Spacing="2">
+                            <Label Text="Student Records"
+                                   Style="{StaticResource SectionTitleStyle}"
+                                   FontSize="14" />
+                            <Label x:Name="FilterSummaryLabel"
+                                   Text=""
+                                   Style="{StaticResource SmallMutedStyle}" />
+                        </VerticalStackLayout>
+
+                        <Button Grid.Column="1"
+                                Text="Export CSV"
+                                Style="{StaticResource SmallOutlineButtonStyle}"
+                                Clicked="OnExportClicked" />
+                        <Button Grid.Column="2"
+                                Text="Refresh"
+                                Style="{StaticResource SmallOutlineButtonStyle}"
+                                Clicked="OnRefreshClicked" />
                     </Grid>
 
                     <!-- Header -->
                     <Grid Style="{StaticResource TableHeaderRowStyle}"
                           ColumnDefinitions="2*,1*,1*,1.3*,0.9*">
-                        <Label Grid.Column="0" Text="Student" Style="{StaticResource TableHeaderStyle}" />
+                        <Label Grid.Column="0" Text="STUDENT" Style="{StaticResource TableHeaderStyle}" />
                         <Label Grid.Column="1" Text="ID" Style="{StaticResource TableHeaderStyle}" />
-                        <Label Grid.Column="2" Text="Grade" Style="{StaticResource TableHeaderStyle}" />
-                        <Label Grid.Column="3" Text="Assigned Teacher" Style="{StaticResource TableHeaderStyle}" />
-                        <Label Grid.Column="4" Text="Status" Style="{StaticResource TableHeaderStyle}" />
+                        <Label Grid.Column="2" Text="GRADE" Style="{StaticResource TableHeaderStyle}" />
+                        <Label Grid.Column="3" Text="ASSIGNED TEACHER" Style="{StaticResource TableHeaderStyle}" />
+                        <Label Grid.Column="4" Text="STATUS" Style="{StaticResource TableHeaderStyle}" />
                     </Grid>
 
                     <!-- Rows -->
@@ -180,9 +213,12 @@
                             <DataTemplate>
                                 <VerticalStackLayout>
                                     <Grid Style="{StaticResource TableRowStyle}"
-                                          ColumnDefinitions="2*,1*,1*,1.3*,0.9*">
+                                          ColumnDefinitions="2*,1*,1*,1.3*,0.9*"
+                                          BackgroundColor="Transparent">
                                         <Grid.GestureRecognizers>
                                             <TapGestureRecognizer Tapped="OnStudentRowTapped" />
+                                            <PointerGestureRecognizer PointerEntered="OnRowPointerEntered"
+                                                                      PointerExited="OnRowPointerExited" />
                                         </Grid.GestureRecognizers>
 
                                         <HorizontalStackLayout Grid.Column="0" Spacing="10">
@@ -214,12 +250,29 @@
                         </BindableLayout.ItemTemplate>
                     </VerticalStackLayout>
 
+                    <!-- Shown when the filters match nobody -->
+                    <VerticalStackLayout x:Name="EmptyPanel"
+                                         Spacing="6"
+                                         Padding="20,32"
+                                         IsVisible="False">
+                        <Label Text="&#xE721;"
+                               Style="{StaticResource IconStyle}"
+                               FontSize="26"
+                               HorizontalOptions="Center" />
+                        <Label Text="No students match these filters."
+                               Style="{StaticResource BodyBoldStyle}"
+                               HorizontalOptions="Center" />
+                        <Label Text="Try a different name, grade or status."
+                               Style="{StaticResource SmallMutedStyle}"
+                               HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+
                     <!-- Footer -->
                     <Grid ColumnDefinitions="*,Auto"
                           Padding="20,12">
                         <Label x:Name="CountLabel"
                                Grid.Column="0"
-                               Text="Showing 1 to 4 of 2,419 students"
+                               Text=""
                                Style="{StaticResource SmallMutedStyle}"
                                VerticalOptions="Center" />
                         <controls:PagerView x:Name="Pager" Grid.Column="1" PageChanged="OnPageChanged" />
