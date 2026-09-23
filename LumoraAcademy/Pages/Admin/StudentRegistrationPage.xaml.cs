@@ -1,4 +1,5 @@
 using LumoraAcademy.Core.Entities;
+using LumoraAcademy.Core.Services;
 using LumoraAcademy.Services;
 
 namespace LumoraAcademy.Pages.Admin;
@@ -17,8 +18,12 @@ public partial class StudentRegistrationPage : ContentPage
         GradePicker.ItemsSource = new List<string> { "6th Grade", "7th Grade", "8th Grade", "9th Grade", "10th Grade", "11th Grade", "12th Grade", "13th Grade" };
 
         DobPicker.Date = DateTime.Today.AddYears(-12);
+        DobPicker.MaximumDate = DateTime.Today;
+
         EnrollmentDatePicker.Date = DateTime.Today;
     }
+
+    // ---------- Photo ----------
 
     // Lets the admin choose a JPG/PNG from the computer.
     private async void OnPhotoTapped(object sender, EventArgs e)
@@ -30,8 +35,20 @@ public partial class StudentRegistrationPage : ContentPage
         PhotoPreview.ImagePath = path;
         PhotoPreview.IsVisible = true;
         PhotoIcon.IsVisible = false;
-        PhotoLabel.Text = "Change Photo";
+        PhotoLabel.Text = "Click to change the photo";
+        RemovePhotoButton.IsVisible = true;
     }
+
+    private void OnRemovePhotoClicked(object sender, EventArgs e)
+    {
+        _photoPath = "";
+        PhotoPreview.IsVisible = false;
+        PhotoIcon.IsVisible = true;
+        PhotoLabel.Text = "Click to upload a photo";
+        RemovePhotoButton.IsVisible = false;
+    }
+
+    // ---------- Saving ----------
 
     private async void OnCancelClicked(object sender, EventArgs e)
     {
@@ -40,32 +57,32 @@ public partial class StudentRegistrationPage : ContentPage
 
     private async void OnSaveClicked(object sender, EventArgs e)
     {
-        // Mandatory fields
-        if (string.IsNullOrWhiteSpace(FullNameEntry.Text))
-        {
-            await DisplayAlert("Student Registration", "Please enter the student's full name.", "OK");
-            return;
-        }
-        if (GradePicker.SelectedIndex < 0)
-        {
-            await DisplayAlert("Student Registration", "Please select the grade / class.", "OK");
-            return;
-        }
-        if (string.IsNullOrWhiteSpace(GuardianEntry.Text) || string.IsNullOrWhiteSpace(PhoneEntry.Text))
-        {
-            await DisplayAlert("Student Registration", "Please enter the parent/guardian name and phone number.", "OK");
-            return;
-        }
+        // Every rule lives in Validation, so all the forms behave the same way.
+        string problem = Validation.FirstProblem(
+            Validation.Name(FullNameEntry.Text, "Full name"),
+            Validation.DateOfBirth(DobPicker.Date),
+            Validation.Email(StudentEmailEntry.Text, required: false),
+            Validation.Name(GuardianEntry.Text, "Parent / guardian name"),
+            Validation.Phone(PhoneEntry.Text),
+            Validation.Email(EmailEntry.Text, required: false),
+            Validation.Address(AddressEditor.Text),
+            GradePicker.SelectedIndex < 0 ? "Please select the grade." : "",
+            Validation.NotInFuture(EnrollmentDatePicker.Date, "Enrollment date"));
+
+        if (ShowProblem(problem)) return;
 
         var student = new Student
         {
             FullName = FullNameEntry.Text.Trim(),
             DateOfBirth = DobPicker.Date,
-            BloodGroup = BloodGroupPicker.SelectedItem as string ?? "",
-            Gender = GenderPicker.SelectedItem as string ?? "",
-            Grade = (string)GradePicker.SelectedItem,
+            BloodGroup = BloodGroupPicker.SelectedItem ?? "",
+            Gender = GenderPicker.SelectedItem ?? "",
+            Email = (StudentEmailEntry.Text ?? "").Trim(),
+            School = (SchoolEntry.Text ?? "").Trim(),
+            Grade = GradePicker.SelectedItem!,
+            Section = (SectionEntry.Text ?? "").Trim().ToUpperInvariant(),
             GuardianName = GuardianEntry.Text.Trim(),
-            GuardianPhone = PhoneEntry.Text.Trim(),
+            GuardianPhone = Validation.CleanPhone(PhoneEntry.Text),
             GuardianEmail = (EmailEntry.Text ?? "").Trim(),
             Address = (AddressEditor.Text ?? "").Trim(),
             JoiningDate = EnrollmentDatePicker.Date,
@@ -82,7 +99,19 @@ public partial class StudentRegistrationPage : ContentPage
         }
         catch (Exception ex)
         {
-            await DisplayAlert("Student Registration", ex.Message, "OK");
+            ShowProblem(ex.Message);
         }
+    }
+
+    // Shows the message in the red bar at the top of the form.
+    // Returns true when there was a problem, so the caller can stop.
+    private bool ShowProblem(string message)
+    {
+        bool hasProblem = !string.IsNullOrEmpty(message);
+
+        ErrorLabel.Text = message;
+        ErrorBox.IsVisible = hasProblem;
+
+        return hasProblem;
     }
 }

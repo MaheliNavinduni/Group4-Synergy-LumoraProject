@@ -4,7 +4,7 @@
              xmlns:controls="clr-namespace:LumoraAcademy.Controls"
              x:Class="LumoraAcademy.Pages.Admin.StudentRegistrationPage"
              Title="Student Registration"
-             BackgroundColor="{StaticResource PageBackground}">
+             BackgroundColor="{StaticResource ContentBackground}">
 
     <Grid ColumnDefinitions="220,*">
 
@@ -12,158 +12,258 @@
                               ActiveItem="Students" />
 
         <ScrollView Grid.Column="1">
-            <VerticalStackLayout Padding="36,32"
-                                 Spacing="20"
-                                 MaximumWidthRequest="760"
-                                 HorizontalOptions="Start">
+            <VerticalStackLayout Padding="36,28"
+                                 Spacing="18"
+                                 HorizontalOptions="Fill"
+                                 MaximumWidthRequest="1280">
 
-                <VerticalStackLayout Spacing="4">
-                    <Label Text="Student Registration" Style="{StaticResource PageTitleStyle}" />
-                    <Label Text="Enter details to enroll a new student into the academy system." Style="{StaticResource PageSubtitleStyle}" />
-                </VerticalStackLayout>
+                <!-- Heading, with the actions kept in sight at the top -->
+                <Grid ColumnDefinitions="*,Auto,Auto"
+                      ColumnSpacing="10">
+                    <VerticalStackLayout Grid.Column="0" Spacing="4">
+                        <Label Text="Student Registration" Style="{StaticResource PageTitleStyle}" />
+                        <Label Text="Fields marked with * must be filled in. The student ID is created automatically."
+                               Style="{StaticResource PageSubtitleStyle}" />
+                    </VerticalStackLayout>
 
-                <!-- 1. Personal Information -->
-                <Border Style="{StaticResource CardStyle}" Padding="20">
-                    <VerticalStackLayout Spacing="16">
-                        <HorizontalStackLayout Spacing="8">
-                            <Label Text="&#xE77B;" Style="{StaticResource IconStyle}" />
-                            <Label Text="1. Personal Information" Style="{StaticResource SectionTitleStyle}" FontSize="13" />
-                        </HorizontalStackLayout>
-                        <BoxView Style="{StaticResource RowDividerStyle}" />
+                    <Button Grid.Column="1"
+                            Text="Cancel"
+                            Style="{StaticResource OutlineButtonStyle}"
+                            VerticalOptions="Center"
+                            Clicked="OnCancelClicked" />
+                    <Button Grid.Column="2"
+                            Text="Save Registration"
+                            Style="{StaticResource PrimaryButtonStyle}"
+                            VerticalOptions="Center"
+                            Clicked="OnSaveClicked" />
+                </Grid>
 
-                        <Grid ColumnDefinitions="*,170" ColumnSpacing="20">
-                            <VerticalStackLayout Grid.Column="0" Spacing="14">
-                                <Grid ColumnDefinitions="110,*">
-                                    <Label Text="Full Name" Style="{StaticResource FormLabelStyle}" FontSize="11" Margin="0" VerticalOptions="Center" />
-                                    <Border Grid.Column="1" Style="{StaticResource FieldBoxStyle}" HeightRequest="40">
-                                        <Entry x:Name="FullNameEntry" Placeholder="Enter student's full name" Style="{StaticResource FieldEntryStyle}" />
-                                    </Border>
-                                </Grid>
-                                <Grid ColumnDefinitions="110,*">
-                                    <Label Text="Date of Birth" Style="{StaticResource FormLabelStyle}" FontSize="11" Margin="0" VerticalOptions="Center" />
-                                    <controls:DateField x:Name="DobPicker"
-                                                        Grid.Column="1"
-                                                        BoxHeight="40"
-                                                        FontSize="12"
-                                                        WidthRequest="160"
-                                                        HorizontalOptions="Start" />
-                                </Grid>
-                                <Grid ColumnDefinitions="*,*" ColumnSpacing="16">
-                                    <VerticalStackLayout Grid.Column="0" Spacing="6">
-                                        <Label Text="Blood Group" Style="{StaticResource FormLabelStyle}" FontSize="11" Margin="0" />
-                                        <controls:DropDownField x:Name="BloodGroupPicker"
-                                                                Title="Select Blood Group"
-                                                                BoxHeight="40" />
+                <!-- Shown when something the user typed is not accepted -->
+                <Border x:Name="ErrorBox" Style="{StaticResource ErrorBoxStyle}">
+                    <HorizontalStackLayout Spacing="8">
+                        <Label Text="&#xE783;" Style="{StaticResource IconStyle}" TextColor="{StaticResource StatusRedText}" />
+                        <Label x:Name="ErrorLabel" Style="{StaticResource ErrorTextStyle}" />
+                    </HorizontalStackLayout>
+                </Border>
+
+                <Grid ColumnDefinitions="*,300"
+                      ColumnSpacing="20">
+
+                    <!-- ===== Left: the form ===== -->
+                    <VerticalStackLayout Grid.Column="0" Spacing="18">
+
+                        <!-- 1. Personal Information -->
+                        <Border Style="{StaticResource CardStyle}" Padding="20">
+                            <VerticalStackLayout Spacing="16">
+                                <HorizontalStackLayout Spacing="8">
+                                    <Label Text="&#xE77B;" Style="{StaticResource IconStyle}" TextColor="{StaticResource BrandPrimary}" />
+                                    <Label Text="1. Personal Information" Style="{StaticResource SectionTitleStyle}" FontSize="14" />
+                                </HorizontalStackLayout>
+                                <BoxView Style="{StaticResource RowDividerStyle}" />
+
+                                <Grid ColumnDefinitions="*,*" ColumnSpacing="18" RowDefinitions="Auto,Auto,Auto" RowSpacing="14">
+
+                                    <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="6">
+                                        <HorizontalStackLayout Spacing="3">
+                                            <Label Text="Full Name" Style="{StaticResource FormLabelStyle}" Margin="0" />
+                                            <Label Style="{StaticResource RequiredMarkStyle}" />
+                                        </HorizontalStackLayout>
+                                        <Border Style="{StaticResource FieldBoxStyle}">
+                                            <Entry x:Name="FullNameEntry" Placeholder="Enter the student's full name" Style="{StaticResource FieldEntryStyle}" />
+                                        </Border>
                                     </VerticalStackLayout>
-                                    <VerticalStackLayout Grid.Column="1" Spacing="6">
-                                        <Label Text="Gender" Style="{StaticResource FormLabelStyle}" FontSize="11" Margin="0" />
-                                        <controls:DropDownField x:Name="GenderPicker"
-                                                                Title="Select Gender"
-                                                                BoxHeight="40" />
+
+                                    <VerticalStackLayout Grid.Row="0" Grid.Column="1" Spacing="6">
+                                        <HorizontalStackLayout Spacing="3">
+                                            <Label Text="Date of Birth" Style="{StaticResource FormLabelStyle}" Margin="0" />
+                                            <Label Style="{StaticResource RequiredMarkStyle}" />
+                                        </HorizontalStackLayout>
+                                        <controls:DateField x:Name="DobPicker" />
+                                        <Label Text="Type it as 25/09/2010, or use the calendar icon."
+                                               Style="{StaticResource SmallMutedStyle}" />
+                                    </VerticalStackLayout>
+
+                                    <VerticalStackLayout Grid.Row="1" Grid.Column="0" Spacing="6">
+                                        <Label Text="Gender" Style="{StaticResource FormLabelStyle}" Margin="0" />
+                                        <controls:DropDownField x:Name="GenderPicker" Title="Select gender" />
+                                    </VerticalStackLayout>
+
+                                    <VerticalStackLayout Grid.Row="1" Grid.Column="1" Spacing="6">
+                                        <Label Text="Blood Group" Style="{StaticResource FormLabelStyle}" Margin="0" />
+                                        <controls:DropDownField x:Name="BloodGroupPicker" Title="Select blood group" />
+                                    </VerticalStackLayout>
+
+                                    <VerticalStackLayout Grid.Row="2" Grid.Column="0" Spacing="6">
+                                        <Label Text="Student Email" Style="{StaticResource FormLabelStyle}" Margin="0" />
+                                        <Border Style="{StaticResource FieldBoxStyle}">
+                                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
+                                                <Label Text="&#xE715;" Style="{StaticResource IconStyle}" FontSize="11" />
+                                                <Entry x:Name="StudentEmailEntry" Grid.Column="1" Placeholder="Optional" Keyboard="Email" Style="{StaticResource FieldEntryStyle}" />
+                                            </Grid>
+                                        </Border>
+                                    </VerticalStackLayout>
+
+                                    <VerticalStackLayout Grid.Row="2" Grid.Column="1" Spacing="6">
+                                        <Label Text="Current School" Style="{StaticResource FormLabelStyle}" Margin="0" />
+                                        <Border Style="{StaticResource FieldBoxStyle}">
+                                            <Entry x:Name="SchoolEntry" Placeholder="The school the student attends" Style="{StaticResource FieldEntryStyle}" />
+                                        </Border>
                                     </VerticalStackLayout>
                                 </Grid>
                             </VerticalStackLayout>
+                        </Border>
 
-                            <!-- Photo upload box -->
-                            <Border Grid.Column="1"
-                                    Stroke="{StaticResource FieldBorder}"
-                                    StrokeThickness="1"
-                                    StrokeDashArray="4,3"
-                                    Background="{StaticResource TableHeaderBackground}"
-                                    Padding="12">
-                                <Border.StrokeShape>
-                                    <RoundRectangle CornerRadius="8" />
-                                </Border.StrokeShape>
-                                <Border.GestureRecognizers>
-                                    <TapGestureRecognizer Tapped="OnPhotoTapped" />
-                                </Border.GestureRecognizers>
-                                <VerticalStackLayout Spacing="6" VerticalOptions="Center">
-                                    <controls:AvatarView x:Name="PhotoPreview" Initials="" Size="56" HorizontalOptions="Center" IsVisible="False" />
-                                    <Label x:Name="PhotoIcon" Text="&#xE722;" Style="{StaticResource IconStyle}" FontSize="22" HorizontalOptions="Center" />
-                                    <Label x:Name="PhotoLabel" Text="Upload Profile Photo" Style="{StaticResource BodyBoldStyle}" FontSize="11" HorizontalOptions="Center" />
-                                    <Label Text="JPG, PNG up to 2MB" Style="{StaticResource SmallMutedStyle}" FontSize="9" HorizontalOptions="Center" />
-                                </VerticalStackLayout>
-                            </Border>
-                        </Grid>
+                        <!-- 2. Parent / Guardian contact -->
+                        <Border Style="{StaticResource CardStyle}" Padding="20">
+                            <VerticalStackLayout Spacing="16">
+                                <HorizontalStackLayout Spacing="8">
+                                    <Label Text="&#xE717;" Style="{StaticResource IconStyle}" TextColor="{StaticResource BrandPrimary}" />
+                                    <Label Text="2. Parent / Guardian Contact" Style="{StaticResource SectionTitleStyle}" FontSize="14" />
+                                </HorizontalStackLayout>
+                                <BoxView Style="{StaticResource RowDividerStyle}" />
+
+                                <Grid ColumnDefinitions="*,*" ColumnSpacing="18" RowDefinitions="Auto,Auto" RowSpacing="14">
+
+                                    <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="6">
+                                        <HorizontalStackLayout Spacing="3">
+                                            <Label Text="Parent / Guardian Name" Style="{StaticResource FormLabelStyle}" Margin="0" />
+                                            <Label Style="{StaticResource RequiredMarkStyle}" />
+                                        </HorizontalStackLayout>
+                                        <Border Style="{StaticResource FieldBoxStyle}">
+                                            <Entry x:Name="GuardianEntry" Placeholder="Primary contact name" Style="{StaticResource FieldEntryStyle}" />
+                                        </Border>
+                                    </VerticalStackLayout>
+
+                                    <VerticalStackLayout Grid.Row="0" Grid.Column="1" Spacing="6">
+                                        <HorizontalStackLayout Spacing="3">
+                                            <Label Text="Phone Number" Style="{StaticResource FormLabelStyle}" Margin="0" />
+                                            <Label Style="{StaticResource RequiredMarkStyle}" />
+                                        </HorizontalStackLayout>
+                                        <Border Style="{StaticResource FieldBoxStyle}">
+                                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
+                                                <Label Text="&#xE717;" Style="{StaticResource IconStyle}" FontSize="11" />
+                                                <Entry x:Name="PhoneEntry" Grid.Column="1" Placeholder="0771234567" Keyboard="Telephone" MaxLength="15" Style="{StaticResource FieldEntryStyle}" />
+                                            </Grid>
+                                        </Border>
+                                    </VerticalStackLayout>
+
+                                    <VerticalStackLayout Grid.Row="1" Grid.Column="0" Spacing="6">
+                                        <Label Text="Guardian Email" Style="{StaticResource FormLabelStyle}" Margin="0" />
+                                        <Border Style="{StaticResource FieldBoxStyle}">
+                                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
+                                                <Label Text="&#xE715;" Style="{StaticResource IconStyle}" FontSize="11" />
+                                                <Entry x:Name="EmailEntry" Grid.Column="1" Placeholder="contact@example.com" Keyboard="Email" Style="{StaticResource FieldEntryStyle}" />
+                                            </Grid>
+                                        </Border>
+                                    </VerticalStackLayout>
+
+                                    <VerticalStackLayout Grid.Row="1" Grid.Column="1" Spacing="6">
+                                        <HorizontalStackLayout Spacing="3">
+                                            <Label Text="Home Address" Style="{StaticResource FormLabelStyle}" Margin="0" />
+                                            <Label Style="{StaticResource RequiredMarkStyle}" />
+                                        </HorizontalStackLayout>
+                                        <Border Style="{StaticResource TextAreaBoxStyle}" HeightRequest="88">
+                                            <Editor x:Name="AddressEditor" Placeholder="45 Galle Road, Colombo 03" Style="{StaticResource FieldEditorStyle}" />
+                                        </Border>
+                                    </VerticalStackLayout>
+                                </Grid>
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <!-- 3. Academic Details -->
+                        <Border Style="{StaticResource CardStyle}" Padding="20">
+                            <VerticalStackLayout Spacing="16">
+                                <HorizontalStackLayout Spacing="8">
+                                    <Label Text="&#xE7BE;" Style="{StaticResource IconStyle}" TextColor="{StaticResource BrandPrimary}" />
+                                    <Label Text="3. Academic Details" Style="{StaticResource SectionTitleStyle}" FontSize="14" />
+                                </HorizontalStackLayout>
+                                <BoxView Style="{StaticResource RowDividerStyle}" />
+
+                                <Grid ColumnDefinitions="*,*" ColumnSpacing="18" RowDefinitions="Auto,Auto" RowSpacing="14">
+
+                                    <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="6">
+                                        <HorizontalStackLayout Spacing="3">
+                                            <Label Text="Grade" Style="{StaticResource FormLabelStyle}" Margin="0" />
+                                            <Label Style="{StaticResource RequiredMarkStyle}" />
+                                        </HorizontalStackLayout>
+                                        <controls:DropDownField x:Name="GradePicker" Title="Select grade" />
+                                    </VerticalStackLayout>
+
+                                    <VerticalStackLayout Grid.Row="0" Grid.Column="1" Spacing="6">
+                                        <HorizontalStackLayout Spacing="3">
+                                            <Label Text="Enrollment Date" Style="{StaticResource FormLabelStyle}" Margin="0" />
+                                            <Label Style="{StaticResource RequiredMarkStyle}" />
+                                        </HorizontalStackLayout>
+                                        <controls:DateField x:Name="EnrollmentDatePicker" />
+                                    </VerticalStackLayout>
+
+                                    <VerticalStackLayout Grid.Row="1" Grid.Column="0" Spacing="6">
+                                        <Label Text="Section" Style="{StaticResource FormLabelStyle}" Margin="0" />
+                                        <Border Style="{StaticResource FieldBoxStyle}">
+                                            <Entry x:Name="SectionEntry" Placeholder="For example A" MaxLength="4" Style="{StaticResource FieldEntryStyle}" />
+                                        </Border>
+                                    </VerticalStackLayout>
+
+                                    <VerticalStackLayout Grid.Row="1" Grid.Column="1" Spacing="6">
+                                        <Label Text="Previous School Attended" Style="{StaticResource FormLabelStyle}" Margin="0" />
+                                        <Border Style="{StaticResource FieldBoxStyle}">
+                                            <Entry x:Name="PreviousSchoolEntry" Placeholder="Name of previous institution" Style="{StaticResource FieldEntryStyle}" />
+                                        </Border>
+                                    </VerticalStackLayout>
+                                </Grid>
+                            </VerticalStackLayout>
+                        </Border>
                     </VerticalStackLayout>
-                </Border>
 
-                <!-- 2. Contact Details -->
-                <Border Style="{StaticResource CardStyle}" Padding="20">
-                    <VerticalStackLayout Spacing="16">
-                        <HorizontalStackLayout Spacing="8">
-                            <Label Text="&#xE717;" Style="{StaticResource IconStyle}" />
-                            <Label Text="2. Contact Details" Style="{StaticResource SectionTitleStyle}" FontSize="13" />
-                        </HorizontalStackLayout>
-                        <BoxView Style="{StaticResource RowDividerStyle}" />
+                    <!-- ===== Right: photo and notes ===== -->
+                    <VerticalStackLayout Grid.Column="1" Spacing="18">
 
-                        <Grid ColumnDefinitions="*,*" ColumnSpacing="16" RowDefinitions="Auto,Auto" RowSpacing="14">
-                            <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="6">
-                                <Label Text="Parent/Guardian Name" Style="{StaticResource FormLabelStyle}" FontSize="11" Margin="0" />
-                                <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="40">
-                                    <Entry x:Name="GuardianEntry" Placeholder="Primary contact name" Style="{StaticResource FieldEntryStyle}" />
+                        <Border Style="{StaticResource CardStyle}" Padding="20">
+                            <VerticalStackLayout Spacing="12">
+                                <Label Text="Profile Photo" Style="{StaticResource SectionTitleStyle}" FontSize="14" />
+
+                                <Border Stroke="{StaticResource FieldBorder}"
+                                        StrokeThickness="1"
+                                        StrokeDashArray="4,3"
+                                        Background="{StaticResource TableHeaderBackground}"
+                                        Padding="16"
+                                        HeightRequest="180">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="10" />
+                                    </Border.StrokeShape>
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnPhotoTapped" />
+                                    </Border.GestureRecognizers>
+                                    <VerticalStackLayout Spacing="8" VerticalOptions="Center">
+                                        <controls:AvatarView x:Name="PhotoPreview" Initials="" Size="84" HorizontalOptions="Center" IsVisible="False" />
+                                        <Label x:Name="PhotoIcon" Text="&#xE722;" Style="{StaticResource IconStyle}" FontSize="30" TextColor="{StaticResource BrandPrimary}" HorizontalOptions="Center" />
+                                        <Label x:Name="PhotoLabel" Text="Click to upload a photo" Style="{StaticResource BodyBoldStyle}" FontSize="12" HorizontalOptions="Center" />
+                                        <Label Text="JPG or PNG, up to 2 MB" Style="{StaticResource SmallMutedStyle}" HorizontalOptions="Center" />
+                                    </VerticalStackLayout>
                                 </Border>
+
+                                <Button x:Name="RemovePhotoButton"
+                                        Text="Remove photo"
+                                        Style="{StaticResource SmallOutlineButtonStyle}"
+                                        IsVisible="False"
+                                        Clicked="OnRemovePhotoClicked" />
                             </VerticalStackLayout>
-                            <VerticalStackLayout Grid.Row="0" Grid.Column="1" Spacing="6">
-                                <Label Text="Phone Number" Style="{StaticResource FormLabelStyle}" FontSize="11" Margin="0" />
-                                <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="40">
-                                    <Entry x:Name="PhoneEntry" Placeholder="+1 (555) 000-0000" Keyboard="Telephone" Style="{StaticResource FieldEntryStyle}" />
-                                </Border>
+                        </Border>
+
+                        <Border Style="{StaticResource HintCardStyle}">
+                            <VerticalStackLayout Spacing="10">
+                                <HorizontalStackLayout Spacing="8">
+                                    <Label Text="&#xE946;" Style="{StaticResource IconStyle}" TextColor="{StaticResource BrandBrownDeep}" />
+                                    <Label Text="Before you save" Style="{StaticResource BodyBoldStyle}" />
+                                </HorizontalStackLayout>
+
+                                <Label Text="The student ID is created for you, for example STU-2026-0042." Style="{StaticResource MutedStyle}" />
+                                <Label Text="A phone number must be 10 digits and start with 0." Style="{StaticResource MutedStyle}" />
+                                <Label Text="The student is saved as Active. Classes and fees are added afterwards from the Academics page." Style="{StaticResource MutedStyle}" />
                             </VerticalStackLayout>
-                            <VerticalStackLayout Grid.Row="1" Grid.Column="0" Spacing="6">
-                                <Label Text="Email Address" Style="{StaticResource FormLabelStyle}" FontSize="11" Margin="0" />
-                                <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="40">
-                                    <Entry x:Name="EmailEntry" Placeholder="contact@example.com" Keyboard="Email" Style="{StaticResource FieldEntryStyle}" />
-                                </Border>
-                            </VerticalStackLayout>
-                            <VerticalStackLayout Grid.Row="1" Grid.Column="1" Spacing="6">
-                                <Label Text="Residential Address" Style="{StaticResource FormLabelStyle}" FontSize="11" Margin="0" />
-                                <Border Style="{StaticResource TextAreaBoxStyle}" HeightRequest="70">
-                                    <Editor x:Name="AddressEditor" Placeholder="Full street address, city, zip code" Style="{StaticResource FieldEditorStyle}" />
-                                </Border>
-                            </VerticalStackLayout>
-                        </Grid>
+                        </Border>
                     </VerticalStackLayout>
-                </Border>
-
-                <!-- 3. Academic Details -->
-                <Border Style="{StaticResource CardStyle}" Padding="20">
-                    <VerticalStackLayout Spacing="16">
-                        <HorizontalStackLayout Spacing="8">
-                            <Label Text="&#xE7BE;" Style="{StaticResource IconStyle}" />
-                            <Label Text="3. Academic Details" Style="{StaticResource SectionTitleStyle}" FontSize="13" />
-                        </HorizontalStackLayout>
-                        <BoxView Style="{StaticResource RowDividerStyle}" />
-
-                        <Grid ColumnDefinitions="*,*" ColumnSpacing="16" RowDefinitions="Auto,Auto" RowSpacing="14">
-                            <Grid Grid.Row="0" Grid.Column="0" ColumnDefinitions="Auto,*" ColumnSpacing="10">
-                                <Label Text="Enrollment Date" Style="{StaticResource FormLabelStyle}" FontSize="11" Margin="0" VerticalOptions="Center" />
-                                <controls:DateField x:Name="EnrollmentDatePicker"
-                                                    Grid.Column="1"
-                                                    BoxHeight="40"
-                                                    FontSize="12" />
-                            </Grid>
-                            <Grid Grid.Row="0" Grid.Column="1" ColumnDefinitions="Auto,*" ColumnSpacing="10">
-                                <Label Text="Grade/Class Selection" Style="{StaticResource FormLabelStyle}" FontSize="11" Margin="0" VerticalOptions="Center" />
-                                <controls:DropDownField x:Name="GradePicker"
-                                                        Grid.Column="1"
-                                                        Title="Select Grade"
-                                                        BoxHeight="40" />
-                            </Grid>
-                            <Grid Grid.Row="1" Grid.Column="0" ColumnDefinitions="Auto,*" ColumnSpacing="10">
-                                <Label Text="Previous School Attended" Style="{StaticResource FormLabelStyle}" FontSize="11" Margin="0" VerticalOptions="Center" />
-                                <Border Grid.Column="1" Style="{StaticResource FieldBoxStyle}" HeightRequest="40">
-                                    <Entry x:Name="PreviousSchoolEntry" Placeholder="Name of previous institution" Style="{StaticResource FieldEntryStyle}" />
-                                </Border>
-                            </Grid>
-                        </Grid>
-                    </VerticalStackLayout>
-                </Border>
-
-                <HorizontalStackLayout Spacing="10" HorizontalOptions="End">
-                    <Button Text="Cancel" Style="{StaticResource OutlineButtonStyle}" Clicked="OnCancelClicked" />
-                    <Button Text="Save Registration" Style="{StaticResource PrimaryButtonStyle}" Clicked="OnSaveClicked" />
-                </HorizontalStackLayout>
+                </Grid>
 
             </VerticalStackLayout>
         </ScrollView>
