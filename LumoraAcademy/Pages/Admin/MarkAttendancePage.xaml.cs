@@ -38,6 +38,11 @@ public partial class MarkAttendancePage : ContentPage
         NoClassesLabel.IsVisible = sessions.Count == 0;
     }
 
+    private async void OnHistoryClicked(object sender, EventArgs e)
+    {
+        await AppNavigation.GoToAsync(new AdminAttendancePage());
+    }
+
     private void OnDateSelected(object sender, DateChangedEventArgs e)
     {
         ShowClassList();

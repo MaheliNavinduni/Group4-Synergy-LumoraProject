@@ -16,7 +16,7 @@
                                  Spacing="20">
 
                 <!-- Heading and date -->
-                <Grid ColumnDefinitions="*,Auto"
+                <Grid ColumnDefinitions="*,Auto,Auto"
                       ColumnSpacing="16">
                     <VerticalStackLayout Grid.Column="0" Spacing="4">
                         <Label Text="Mark Attendance" Style="{StaticResource PageTitleStyle}" />
@@ -24,7 +24,14 @@
                                Style="{StaticResource PageSubtitleStyle}" />
                     </VerticalStackLayout>
 
-                    <VerticalStackLayout Grid.Column="1" Spacing="6" WidthRequest="180">
+                    <Button Grid.Column="1"
+                            Text="View History"
+                            Style="{StaticResource SmallOutlineButtonStyle}"
+                            VerticalOptions="End"
+                            Margin="0,0,12,0"
+                            Clicked="OnHistoryClicked" />
+
+                    <VerticalStackLayout Grid.Column="2" Spacing="6" WidthRequest="180">
                         <Label Text="Date" Style="{StaticResource FormLabelStyle}" Margin="0" />
                         <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="38">
                             <DatePicker x:Name="DayPicker"

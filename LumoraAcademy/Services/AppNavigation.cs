@@ -47,7 +47,7 @@ public static class AppNavigation
                 "Teachers" => new Pages.Admin.AdminTeachersPage(),
                 "Payments" => new Pages.Admin.AdminPaymentsPage(),
                 "Academics" => new Pages.Admin.AdminAcademicsPage(),
-                "Attendance" => new Pages.Admin.AdminAttendancePage(),
+                "Attendance" => new Pages.Admin.MarkAttendancePage(),
                 "Upcoming Events" => new Pages.Admin.AdminEventsPage(),
                 _ => null
             };

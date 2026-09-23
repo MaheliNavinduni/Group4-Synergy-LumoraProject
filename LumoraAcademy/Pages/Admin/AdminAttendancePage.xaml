@@ -45,7 +45,7 @@
 
                 <controls:AttendanceTableView />
 
-                <Button Text="Mark Attendance"
+                <Button Text="Go to Mark Attendance"
                         Style="{StaticResource PrimaryButtonStyle}"
                         Clicked="OnMarkAttendanceClicked" />
 
