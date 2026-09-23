@@ -1,3 +1,4 @@
+using LumoraAcademy.Core.Services;
 using LumoraAcademy.Services;
 
 namespace LumoraAcademy.Pages.Admin;
@@ -21,9 +22,14 @@ public partial class AddSubjectPage : ContentPage
 
     private async void OnSaveClicked(object sender, EventArgs e)
     {
-        if (string.IsNullOrWhiteSpace(SubjectNameEntry.Text) || string.IsNullOrWhiteSpace(SubjectCodeEntry.Text))
+        string problem = Validation.FirstProblem(
+            Validation.Required(SubjectNameEntry.Text, "Subject name"),
+            Validation.Required(SubjectCodeEntry.Text, "Subject code"),
+            CurriculumPicker.SelectedIndex < 0 ? "Please select the curriculum." : "");
+
+        if (problem != "")
         {
-            await DisplayAlert("Add Subject", "Please enter both the subject name and code.", "OK");
+            await DisplayAlert("Add Subject", problem, "OK");
             return;
         }
 

@@ -1,4 +1,5 @@
 using LumoraAcademy.Core.Entities;
+using LumoraAcademy.Core.Services;
 using LumoraAcademy.Services;
 
 namespace LumoraAcademy.Pages.Admin;
@@ -46,16 +47,19 @@ public partial class ClassesPage : ContentPage
 
     private async void OnAddClassClicked(object sender, EventArgs e)
     {
-        if (SubjectPicker.SelectedIndex < 0 || TeacherPicker.SelectedIndex < 0 || GradePicker.SelectedIndex < 0)
+        string problem = Validation.FirstProblem(
+            SubjectPicker.SelectedIndex < 0 ? "Please choose the subject." : "",
+            GradePicker.SelectedIndex < 0 ? "Please choose the grade." : "",
+            TeacherPicker.SelectedIndex < 0 ? "Please choose the teacher." : "",
+            Validation.Money(FeeEntry.Text, "Monthly fee", 1, 100000));
+
+        if (problem != "")
         {
-            await DisplayAlert("Add Class", "Please choose the subject, grade and teacher.", "OK");
+            await DisplayAlert("Add Class", problem, "OK");
             return;
         }
-        if (!decimal.TryParse(FeeEntry.Text, out decimal fee))
-        {
-            await DisplayAlert("Add Class", "Please enter the monthly fee as a number.", "OK");
-            return;
-        }
+
+        decimal fee = decimal.Parse(FeeEntry.Text!.Trim());
 
         var group = new ClassGroup
         {
@@ -132,6 +136,17 @@ public partial class ClassesPage : ContentPage
     private async void OnAddSessionClicked(object sender, EventArgs e)
     {
         if (_managing == null) return;
+
+        if (DayPicker.SelectedIndex < 0)
+        {
+            await DisplayAlert("Weekly Times", "Please choose the day of the week.", "OK");
+            return;
+        }
+        if (EndPicker.Time <= StartPicker.Time)
+        {
+            await DisplayAlert("Weekly Times", "The finish time must be after the start time.", "OK");
+            return;
+        }
 
         var session = new ClassSession
         {

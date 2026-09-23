@@ -193,9 +193,7 @@
                         <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
                             <VerticalStackLayout Grid.Column="0" Spacing="4">
                                 <Label Text="Date" Style="{StaticResource SmallMutedStyle}" />
-                                <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="40" Padding="6,0">
-                                    <Entry x:Name="EditDateEntry" Style="{StaticResource FieldEntryStyle}" FontSize="11" />
-                                </Border>
+                                <controls:DateField x:Name="EditDatePicker" BoxHeight="40" FontSize="11" />
                             </VerticalStackLayout>
                             <VerticalStackLayout Grid.Column="1" Spacing="4">
                                 <Label Text="Time" Style="{StaticResource SmallMutedStyle}" />
@@ -208,9 +206,7 @@
                         <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
                             <VerticalStackLayout Grid.Column="0" Spacing="4">
                                 <Label Text="Category" Style="{StaticResource SmallMutedStyle}" />
-                                <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="40" Padding="6,0">
-                                    <Entry x:Name="EditCategoryEntry" Style="{StaticResource FieldEntryStyle}" FontSize="11" />
-                                </Border>
+                                <controls:DropDownField x:Name="EditCategoryPicker" Title="Select category" BoxHeight="40" FontSize="11" />
                             </VerticalStackLayout>
                             <VerticalStackLayout Grid.Column="1" Spacing="4">
                                 <Label Text="Location" Style="{StaticResource SmallMutedStyle}" />

@@ -1,4 +1,5 @@
 using LumoraAcademy.Core.Entities;
+using LumoraAcademy.Core.Services;
 using LumoraAcademy.Services;
 
 namespace LumoraAcademy.Pages.Admin;
@@ -44,17 +45,28 @@ public partial class EditTeacherPage : ContentPage
 
     private async void OnSaveClicked(object sender, EventArgs e)
     {
-        if (!int.TryParse(ExperienceEntry.Text, out int years) || years < 0)
+        string problem = Validation.FirstProblem(
+            Validation.Name(FullNameEntry.Text, "Full name"),
+            Validation.Required(TeacherIdEntry.Text, "Teacher ID"),
+            Validation.WholeNumber(ExperienceEntry.Text, "Years of experience", 0, 60),
+            Validation.NotInFuture(JoiningDatePicker.Date, "Date of joining"),
+            Validation.Email(EmailEntry.Text),
+            Validation.Phone(PhoneEntry.Text),
+            Validation.Address(AddressEditor.Text));
+
+        if (problem != "")
         {
-            await DisplayAlert("Edit Teacher", "Please enter the years of experience as a whole number.", "OK");
+            await DisplayAlert("Edit Teacher", problem, "OK");
             return;
         }
+
+        int.TryParse(ExperienceEntry.Text, out int years);
 
         _teacher.FullName = (FullNameEntry.Text ?? "").Trim();
         _teacher.YearsOfExperience = years;
         _teacher.JoiningDate = JoiningDatePicker.Date;
         _teacher.Email = (EmailEntry.Text ?? "").Trim();
-        _teacher.Phone = (PhoneEntry.Text ?? "").Trim();
+        _teacher.Phone = Validation.CleanPhone(PhoneEntry.Text);
         _teacher.Address = (AddressEditor.Text ?? "").Trim();
 
         try
