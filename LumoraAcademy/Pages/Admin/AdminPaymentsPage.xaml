@@ -131,8 +131,8 @@
                                                 <controls:StatusBadge Grid.Column="4" Text="{Binding Status}" />
 
                                                 <HorizontalStackLayout Grid.Column="5" Spacing="6" HorizontalOptions="End">
-                                                    <Button Text="Mark Paid" Style="{StaticResource SmallPrimaryButtonStyle}" HeightRequest="28" FontSize="10" Padding="10,0" Clicked="OnMarkPaidClicked" />
-                                                    <Button Text="Undo" Style="{StaticResource SmallOutlineButtonStyle}" HeightRequest="28" FontSize="10" Padding="10,0" Clicked="OnUndoClicked" />
+                                                    <Button Text="Mark Paid" Style="{StaticResource SmallPrimaryButtonStyle}" HeightRequest="28" FontSize="10" Padding="10,0" IsVisible="{Binding IsPaid, Converter={StaticResource InverseBool}}" Clicked="OnMarkPaidClicked" />
+                                                    <Button Text="Undo" Style="{StaticResource SmallOutlineButtonStyle}" HeightRequest="28" FontSize="10" Padding="10,0" IsVisible="{Binding IsPaid}" Clicked="OnUndoClicked" />
                                                     <Button Text="..." Style="{StaticResource SmallOutlineButtonStyle}" HeightRequest="28" FontSize="10" Padding="8,0" Clicked="OnMoreClicked" />
                                                 </HorizontalStackLayout>
                                             </Grid>
