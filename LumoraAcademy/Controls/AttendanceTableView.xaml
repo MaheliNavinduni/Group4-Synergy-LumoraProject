@@ -79,15 +79,16 @@
 
             <!-- Table header -->
             <Grid Style="{StaticResource TableHeaderRowStyle}"
-                  ColumnDefinitions="1.3*,1.2*,1.2*,0.6*,0.7*,0.7*,0.6*,1*">
+                  ColumnDefinitions="1.3*,1.3*,1.1*,0.7*,0.7*,0.7*,0.6*,0.7*,1*">
                 <Label Grid.Column="0" Text="Date" Style="{StaticResource TableHeaderStyle}" />
                 <Label Grid.Column="1" Text="Class" Style="{StaticResource TableHeaderStyle}" />
                 <Label Grid.Column="2" Text="Subject" Style="{StaticResource TableHeaderStyle}" />
-                <Label Grid.Column="3" Text="Total" Style="{StaticResource TableHeaderStyle}" HorizontalOptions="Center" />
+                <Label Grid.Column="3" Text="Enrolled" Style="{StaticResource TableHeaderStyle}" HorizontalOptions="Center" />
                 <Label Grid.Column="4" Text="Present" Style="{StaticResource TableHeaderStyle}" HorizontalOptions="Center" />
                 <Label Grid.Column="5" Text="Absent" Style="{StaticResource TableHeaderStyle}" HorizontalOptions="Center" />
                 <Label Grid.Column="6" Text="Late" Style="{StaticResource TableHeaderStyle}" HorizontalOptions="Center" />
-                <Label Grid.Column="7" Text="Status" Style="{StaticResource TableHeaderStyle}" HorizontalOptions="Center" />
+                <Label Grid.Column="7" Text="Not rec." Style="{StaticResource TableHeaderStyle}" HorizontalOptions="Center" />
+                <Label Grid.Column="8" Text="Status" Style="{StaticResource TableHeaderStyle}" HorizontalOptions="Center" />
             </Grid>
 
             <!-- Table rows -->
@@ -96,15 +97,16 @@
                     <DataTemplate>
                         <VerticalStackLayout>
                             <Grid Style="{StaticResource TableRowStyle}"
-                                  ColumnDefinitions="1.3*,1.2*,1.2*,0.6*,0.7*,0.7*,0.6*,1*">
+                                  ColumnDefinitions="1.3*,1.3*,1.1*,0.7*,0.7*,0.7*,0.6*,0.7*,1*">
                                 <Label Grid.Column="0" Text="{Binding DateText}" Style="{StaticResource TableCellStyle}" FontSize="12" TextColor="{StaticResource BrandPrimary}" />
                                 <Label Grid.Column="1" Text="{Binding ClassName}" Style="{StaticResource TableCellStyle}" FontSize="12" TextColor="{StaticResource BrandPrimary}" />
                                 <Label Grid.Column="2" Text="{Binding SubjectName}" Style="{StaticResource TableCellStyle}" FontSize="12" />
-                                <Label Grid.Column="3" Text="{Binding Total}" Style="{StaticResource TableCellStyle}" FontSize="12" HorizontalOptions="Center" TextColor="{StaticResource BrandPrimary}" />
+                                <Label Grid.Column="3" Text="{Binding Enrolled}" Style="{StaticResource TableCellStyle}" FontSize="12" HorizontalOptions="Center" TextColor="{StaticResource BrandPrimary}" />
                                 <Label Grid.Column="4" Text="{Binding Present}" Style="{StaticResource TableCellBoldStyle}" FontSize="12" HorizontalOptions="Center" TextColor="{StaticResource StatusGreenText}" />
                                 <Label Grid.Column="5" Text="{Binding Absent}" Style="{StaticResource TableCellBoldStyle}" FontSize="12" HorizontalOptions="Center" TextColor="{StaticResource StatusRedText}" />
                                 <Label Grid.Column="6" Text="{Binding Late}" Style="{StaticResource TableCellStyle}" FontSize="12" HorizontalOptions="Center" TextColor="{StaticResource StatusYellowText}" />
-                                <controls:StatusBadge Grid.Column="7" Text="{Binding Status}" HorizontalOptions="Center" />
+                                <Label Grid.Column="7" Text="{Binding NotRecorded}" Style="{StaticResource TableCellStyle}" FontSize="12" HorizontalOptions="Center" TextColor="{StaticResource TextLight}" />
+                                <controls:StatusBadge Grid.Column="8" Text="{Binding Status}" HorizontalOptions="Center" />
                             </Grid>
                             <BoxView Style="{StaticResource RowDividerStyle}" />
                         </VerticalStackLayout>

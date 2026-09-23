@@ -28,12 +28,12 @@
                     <controls:StatCard x:Name="RateCard" Grid.Column="0"
                                        Title="Average Attendance Rate"
                                        Value="94.2%"
-                                       Subtitle="+1.2% vs last month"
+                                       Subtitle="Of the students marked"
                                        Icon="&#xE9D2;" />
                     <controls:StatCard x:Name="DaysCard" Grid.Column="1"
                                        Title="Total Days Logged"
                                        Value="142"
-                                       Subtitle="Academic Year 2023-2024"
+                                       Subtitle=""
                                        Icon="&#xE787;" />
                     <controls:StatCard x:Name="PerfectCard" Grid.Column="2"
                                        Title="Perfect Attendance Days"
