@@ -59,6 +59,43 @@ public partial class TeacherDetailsPage : ContentPage
             .Select(g => new Models.AssignedClass { Grade = g.Key, Subject = teacher.Subjects, Students = $"{g.Count()} Students" })
             .ToList();
         BindableLayout.SetItemsSource(ClassList, classes);
+
+        LoadSubjectChart(teacher);
+    }
+
+    // Draws one bar per subject this teacher teaches, using the real average
+    // mark for that subject. Subjects with no marks yet are left out.
+    private void LoadSubjectChart(Teacher teacher)
+    {
+        var averages = AppData.Reports.AverageBySubject();
+
+        var mine = teacher.Subjects
+            .Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+            .Where(name => averages.ContainsKey(name))
+            .Select(name => new SubjectBar
+            {
+                Subject = name,
+                Average = averages[name],
+            })
+            .OrderByDescending(b => b.Average)
+            .ToList();
+
+        BindableLayout.SetItemsSource(SubjectChart, mine);
+
+        SubjectChart.IsVisible = mine.Count > 0;
+        NoMarksLabel.IsVisible = mine.Count == 0;
+    }
+
+    // One bar of the Subject Performance chart.
+    private class SubjectBar
+    {
+        public string Subject { get; set; } = "";
+        public double Average { get; set; }
+
+        // The bar is drawn out of 160 pixels, so 100% fills the whole track.
+        public double BarWidth => Math.Max(4, Math.Round(160 * Average / 100));
+
+        public string AverageText => Average.ToString("0") + "%";
     }
 
     private async void OnTimetableClicked(object sender, EventArgs e)

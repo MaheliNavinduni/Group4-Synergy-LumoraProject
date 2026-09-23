@@ -176,23 +176,61 @@
                             <!-- Subject performance chart -->
                             <Border Grid.Column="1" Style="{StaticResource CardTightStyle}">
                                 <VerticalStackLayout>
-                                    <Grid ColumnDefinitions="*,Auto" Padding="18,12">
+                                    <Grid Padding="18,12">
                                         <Label Text="Subject Performance" Style="{StaticResource SectionTitleStyle}" FontSize="13" />
-                                        <Label Grid.Column="1" Text="&#xE712;" Style="{StaticResource IconStyle}" />
                                     </Grid>
                                     <BoxView Style="{StaticResource RowDividerStyle}" />
-                                    <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="14" HeightRequest="130" Padding="24,16,24,4">
-                                        <BoxView Grid.Column="0" Color="{StaticResource BrandPrimary}" HeightRequest="110" VerticalOptions="End" CornerRadius="3,3,0,0" />
-                                        <BoxView Grid.Column="1" Color="{StaticResource BrandPrimary}" HeightRequest="80" VerticalOptions="End" CornerRadius="3,3,0,0" />
-                                        <BoxView Grid.Column="2" Color="{StaticResource BrandPrimary}" HeightRequest="95" VerticalOptions="End" CornerRadius="3,3,0,0" />
-                                        <BoxView Grid.Column="3" Color="{StaticResource BrandPrimary}" HeightRequest="70" VerticalOptions="End" CornerRadius="3,3,0,0" />
-                                    </Grid>
-                                    <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="14" Padding="24,0,24,14">
-                                        <Label Grid.Column="0" Text="Calculus" Style="{StaticResource SmallMutedStyle}" FontSize="9" HorizontalOptions="Center" />
-                                        <Label Grid.Column="1" Text="Stats" Style="{StaticResource SmallMutedStyle}" FontSize="9" HorizontalOptions="Center" />
-                                        <Label Grid.Column="2" Text="Geometry" Style="{StaticResource SmallMutedStyle}" FontSize="9" HorizontalOptions="Center" />
-                                        <Label Grid.Column="3" Text="Algebra" Style="{StaticResource SmallMutedStyle}" FontSize="9" HorizontalOptions="Center" />
-                                    </Grid>
+
+                                    <!-- One bar per subject, built from the marks in the database -->
+                                    <VerticalStackLayout x:Name="SubjectChart"
+                                                         Spacing="10"
+                                                         Padding="20,16">
+                                        <BindableLayout.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid ColumnDefinitions="90,*,44" ColumnSpacing="10">
+                                                    <Label Grid.Column="0"
+                                                           Text="{Binding Subject}"
+                                                           Style="{StaticResource MutedStyle}"
+                                                           LineBreakMode="TailTruncation"
+                                                           VerticalOptions="Center" />
+
+                                                    <Border Grid.Column="1"
+                                                            HeightRequest="10"
+                                                            Padding="0"
+                                                            StrokeThickness="0"
+                                                            Background="{StaticResource DividerLine}"
+                                                            VerticalOptions="Center">
+                                                        <Border.StrokeShape>
+                                                            <RoundRectangle CornerRadius="5" />
+                                                        </Border.StrokeShape>
+                                                        <Border WidthRequest="{Binding BarWidth}"
+                                                                HeightRequest="10"
+                                                                Padding="0"
+                                                                StrokeThickness="0"
+                                                                Background="{StaticResource BrandPrimary}"
+                                                                HorizontalOptions="Start">
+                                                            <Border.StrokeShape>
+                                                                <RoundRectangle CornerRadius="5" />
+                                                            </Border.StrokeShape>
+                                                        </Border>
+                                                    </Border>
+
+                                                    <Label Grid.Column="2"
+                                                           Text="{Binding AverageText}"
+                                                           Style="{StaticResource BodyBoldStyle}"
+                                                           FontSize="12"
+                                                           HorizontalOptions="End"
+                                                           VerticalOptions="Center" />
+                                                </Grid>
+                                            </DataTemplate>
+                                        </BindableLayout.ItemTemplate>
+                                    </VerticalStackLayout>
+
+                                    <Label x:Name="NoMarksLabel"
+                                           Text="No marks have been entered for this teacher's subjects yet."
+                                           Style="{StaticResource MutedStyle}"
+                                           Padding="20,16"
+                                           IsVisible="False" />
                                 </VerticalStackLayout>
                             </Border>
                         </Grid>
