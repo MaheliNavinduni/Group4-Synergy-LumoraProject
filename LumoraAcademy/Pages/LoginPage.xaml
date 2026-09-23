@@ -111,12 +111,14 @@
 
                         <Entry x:Name="UsernameEntry"
                                Grid.Column="1"
-                               Placeholder="user@district.edu"
+                               Placeholder="Enter your username"
                                FontSize="14"
                                BackgroundColor="Transparent"
                                TextColor="{StaticResource TextHeading}"
                                PlaceholderColor="{StaticResource TextMuted}"
-                               VerticalOptions="Center" />
+                               VerticalOptions="Center"
+                               TextChanged="OnTypingChanged"
+                               Completed="OnUsernameCompleted" />
                     </Grid>
                 </Border>
 
@@ -127,7 +129,7 @@
 
                 <Border Style="{StaticResource FieldBoxStyle}"
                         Margin="0,6,0,0">
-                    <Grid ColumnDefinitions="20,*"
+                    <Grid ColumnDefinitions="20,*,Auto"
                           ColumnSpacing="8">
 
                         <!-- Small padlock icon -->
@@ -167,8 +169,28 @@
                                BackgroundColor="Transparent"
                                TextColor="{StaticResource TextHeading}"
                                PlaceholderColor="{StaticResource TextMuted}"
-                               VerticalOptions="Center" />
+                               VerticalOptions="Center"
+                               TextChanged="OnTypingChanged"
+                               Completed="OnLoginClicked" />
+
+                        <Label x:Name="ShowPasswordIcon"
+                               Grid.Column="2"
+                               Text="&#xE7B3;"
+                               Style="{StaticResource IconStyle}"
+                               FontSize="14">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnTogglePasswordTapped" />
+                            </Label.GestureRecognizers>
+                        </Label>
                     </Grid>
+                </Border>
+
+                <!-- Shown when the username or password is not accepted -->
+                <Border x:Name="ErrorBox" Style="{StaticResource ErrorBoxStyle}" Margin="0,12,0,0">
+                    <HorizontalStackLayout Spacing="8">
+                        <Label Text="&#xE783;" Style="{StaticResource IconStyle}" TextColor="{StaticResource StatusRedText}" />
+                        <Label x:Name="ErrorLabel" Style="{StaticResource ErrorTextStyle}" />
+                    </HorizontalStackLayout>
                 </Border>
 
                 <!-- ===== Login button ===== -->

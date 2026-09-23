@@ -110,13 +110,4 @@ public partial class AdminTeachersPage : ContentPage
         }
     }
 
-    private void OnRowPointerEntered(object sender, PointerEventArgs e)
-    {
-        if (sender is Grid row) row.BackgroundColor = Controls.SidebarView.GetColor("RowHover");
-    }
-
-    private void OnRowPointerExited(object sender, PointerEventArgs e)
-    {
-        if (sender is Grid row) row.BackgroundColor = Colors.Transparent;
-    }
 }

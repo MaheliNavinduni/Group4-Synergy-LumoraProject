@@ -98,11 +98,10 @@
                                     <VerticalStackLayout>
                                         <Grid Style="{StaticResource TableRowStyle}"
                                               ColumnDefinitions="1.7*,1*,1.6*,1.8*,0.9*"
-                                              BackgroundColor="Transparent">
+                                              BackgroundColor="Transparent"
+                                              controls:RowHover.Enabled="True">
                                             <Grid.GestureRecognizers>
                                                 <TapGestureRecognizer Tapped="OnTeacherRowTapped" />
-                                                <PointerGestureRecognizer PointerEntered="OnRowPointerEntered"
-                                                                          PointerExited="OnRowPointerExited" />
                                             </Grid.GestureRecognizers>
 
                                             <HorizontalStackLayout Grid.Column="0" Spacing="10">
