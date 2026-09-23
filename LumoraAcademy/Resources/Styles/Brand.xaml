@@ -4,45 +4,88 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
-    <!-- ===== Main brand colours ===== -->
+    <!-- ===== The Lumora brown scale =====
+         Every colour in the system comes from this one scale, so the whole
+         app looks like one product. Brown900 is the darkest, Brown50 the
+         lightest. The numbers work like paint shades: bigger = darker. -->
+    <Color x:Key="Brown900">#3E2B1C</Color>
+    <Color x:Key="Brown800">#4F3726</Color>
+    <Color x:Key="Brown700">#63472F</Color>
+    <Color x:Key="Brown600">#7C5A3A</Color>
+    <Color x:Key="Brown500">#9C7048</Color>
+    <Color x:Key="Brown400">#B87F52</Color>
+    <Color x:Key="Brown300">#CFA075</Color>
+    <Color x:Key="Brown200">#E2C4A3</Color>
+    <Color x:Key="Brown100">#F0DFCB</Color>
+    <Color x:Key="Brown50">#FBEFE3</Color>
+
+    <!-- The warm yellow from the logo, used sparingly as a highlight -->
+    <Color x:Key="AccentGold">#E8B44A</Color>
+    <Color x:Key="AccentGoldSoft">#FBE6BC</Color>
+
+    <!-- ===== Main brand colours (names used all over the app) ===== -->
     <Color x:Key="BrandPrimary">#B87F52</Color>
     <Color x:Key="BrandPrimaryDark">#8B6844</Color>
     <Color x:Key="BrandCream">#FBEFE3</Color>
-    <Color x:Key="BrandBrownDeep">#6B4E31</Color>
+    <Color x:Key="BrandBrownDeep">#63472F</Color>
+
+    <!-- ===== Chart colours =====
+         Five brown shades that sit well next to each other, for bar charts
+         and for the coloured statistic cards. -->
+    <Color x:Key="Chart1">#4F3726</Color>
+    <Color x:Key="Chart2">#7C5A3A</Color>
+    <Color x:Key="Chart3">#B87F52</Color>
+    <Color x:Key="Chart4">#CFA075</Color>
+    <Color x:Key="Chart5">#E2C4A3</Color>
+    <Color x:Key="ChartTrack">#F0DFCB</Color>
+
+    <!-- ===== The side menu ===== -->
+    <Color x:Key="SidebarBackground">#4F3726</Color>
+    <Color x:Key="SidebarBackgroundDeep">#3E2B1C</Color>
+    <Color x:Key="SidebarText">#EADCCB</Color>
+    <Color x:Key="SidebarTextDim">#BFA88F</Color>
+    <Color x:Key="SidebarDivider">#63472F</Color>
+    <Color x:Key="SidebarHover">#63472F</Color>
 
     <!-- ===== Text colours ===== -->
-    <Color x:Key="TextHeading">#1C1917</Color>
-    <Color x:Key="TextBody">#8B7355</Color>
-    <Color x:Key="TextMuted">#6B7280</Color>
-    <Color x:Key="TextLight">#9CA3AF</Color>
+    <Color x:Key="TextHeading">#2B1F16</Color>
+    <Color x:Key="TextBody">#6B5544</Color>
+    <Color x:Key="TextMuted">#7A6A5B</Color>
+    <Color x:Key="TextLight">#A1907F</Color>
     <Color x:Key="TextOnDark">#FFFFFF</Color>
-    <Color x:Key="TextLink">#1D4ED8</Color>
+    <Color x:Key="TextLink">#7C5A3A</Color>
 
     <!-- ===== Surfaces ===== -->
     <Color x:Key="PageBackground">#FFFFFF</Color>
-    <Color x:Key="ContentBackground">#FAFAF9</Color>
+    <Color x:Key="ContentBackground">#FAF6F1</Color>
     <Color x:Key="CardBackground">#FFFFFF</Color>
-    <Color x:Key="CardBorder">#E7E1DA</Color>
-    <Color x:Key="FieldBorder">#D8D2CB</Color>
-    <Color x:Key="DividerLine">#EDE9E4</Color>
-    <Color x:Key="TableHeaderBackground">#F9FAFB</Color>
-    <Color x:Key="RowHover">#FDF8F3</Color>
 
-    <!-- ===== Status colours (badge background / badge text) ===== -->
-    <Color x:Key="StatusGreenBg">#DCFCE7</Color>
-    <Color x:Key="StatusGreenText">#166534</Color>
-    <Color x:Key="StatusRedBg">#FEE2E2</Color>
-    <Color x:Key="StatusRedText">#991B1B</Color>
-    <Color x:Key="StatusYellowBg">#FEF9C3</Color>
-    <Color x:Key="StatusYellowText">#854D0E</Color>
-    <Color x:Key="StatusBlueBg">#DBEAFE</Color>
-    <Color x:Key="StatusBlueText">#1E40AF</Color>
-    <Color x:Key="StatusGrayBg">#F3F4F6</Color>
-    <Color x:Key="StatusGrayText">#374151</Color>
-    <Color x:Key="StatusOrangeBg">#FFEDD5</Color>
-    <Color x:Key="StatusOrangeText">#9A3412</Color>
-    <Color x:Key="StatusPurpleBg">#EDE9FE</Color>
-    <Color x:Key="StatusPurpleText">#5B21B6</Color>
+    <!-- Borders are deliberately strong enough to see at a glance -->
+    <Color x:Key="CardBorder">#DFD2C3</Color>
+    <Color x:Key="FieldBorder">#C8B8A5</Color>
+    <Color x:Key="DividerLine">#E7DCD0</Color>
+
+    <Color x:Key="TableHeaderBackground">#F6F0E9</Color>
+    <Color x:Key="RowHover">#FBF3EA</Color>
+
+    <!-- ===== Status colours (badge background / badge text) =====
+         Green, red and amber keep their usual meaning, but every one of them
+         is warmed slightly so the badges sit comfortably in a brown system.
+         Blue and grey have been replaced by tan and stone for the same reason. -->
+    <Color x:Key="StatusGreenBg">#E2F0DC</Color>
+    <Color x:Key="StatusGreenText">#2F5D2B</Color>
+    <Color x:Key="StatusRedBg">#F8DFD8</Color>
+    <Color x:Key="StatusRedText">#8C3A28</Color>
+    <Color x:Key="StatusYellowBg">#FBE6BC</Color>
+    <Color x:Key="StatusYellowText">#7A5411</Color>
+    <Color x:Key="StatusBlueBg">#F0DFCB</Color>
+    <Color x:Key="StatusBlueText">#63472F</Color>
+    <Color x:Key="StatusGrayBg">#F1EAE2</Color>
+    <Color x:Key="StatusGrayText">#5C4A3B</Color>
+    <Color x:Key="StatusOrangeBg">#FAE0C4</Color>
+    <Color x:Key="StatusOrangeText">#8A4B1B</Color>
+    <Color x:Key="StatusPurpleBg">#EDE0E6</Color>
+    <Color x:Key="StatusPurpleText">#6B3A55</Color>
 
     <!-- ===== Cards ===== -->
     <Style x:Key="CardStyle" TargetType="Border">
@@ -53,6 +96,15 @@
         <Setter Property="StrokeShape">
             <Setter.Value>
                 <RoundRectangle CornerRadius="12" />
+            </Setter.Value>
+        </Setter>
+        <!-- A soft shadow lifts the card off the page, so the edge is easy to see -->
+        <Setter Property="Shadow">
+            <Setter.Value>
+                <Shadow Brush="{StaticResource Brown900}"
+                        Offset="0,2"
+                        Radius="10"
+                        Opacity="0.06" />
             </Setter.Value>
         </Setter>
     </Style>

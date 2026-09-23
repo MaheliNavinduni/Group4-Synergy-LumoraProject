@@ -144,10 +144,10 @@
                                     <RoundRectangle CornerRadius="6" />
                                 </Border.StrokeShape>
                                 <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="16" HeightRequest="70" Padding="20,0">
-                                    <BoxView x:Name="Bar1" Grid.Column="0" Color="{StaticResource BrandPrimaryDark}" HeightRequest="45" WidthRequest="18" VerticalOptions="End" HorizontalOptions="Center" />
-                                    <BoxView x:Name="Bar2" Grid.Column="1" Color="{StaticResource BrandBrownDeep}" HeightRequest="60" WidthRequest="18" VerticalOptions="End" HorizontalOptions="Center" />
-                                    <BoxView x:Name="Bar3" Grid.Column="2" Color="#F2C94C" HeightRequest="70" WidthRequest="18" VerticalOptions="End" HorizontalOptions="Center" />
-                                    <BoxView x:Name="Bar4" Grid.Column="3" Color="{StaticResource DividerLine}" HeightRequest="12" WidthRequest="18" VerticalOptions="End" HorizontalOptions="Center" />
+                                    <BoxView x:Name="Bar1" Grid.Column="0" Color="{StaticResource Chart1}" HeightRequest="45" WidthRequest="18" VerticalOptions="End" HorizontalOptions="Center" />
+                                    <BoxView x:Name="Bar2" Grid.Column="1" Color="{StaticResource Chart2}" HeightRequest="60" WidthRequest="18" VerticalOptions="End" HorizontalOptions="Center" />
+                                    <BoxView x:Name="Bar3" Grid.Column="2" Color="{StaticResource Chart3}" HeightRequest="70" WidthRequest="18" VerticalOptions="End" HorizontalOptions="Center" />
+                                    <BoxView x:Name="Bar4" Grid.Column="3" Color="{StaticResource Chart4}" HeightRequest="12" WidthRequest="18" VerticalOptions="End" HorizontalOptions="Center" />
                                 </Grid>
                             </Border>
                         </VerticalStackLayout>

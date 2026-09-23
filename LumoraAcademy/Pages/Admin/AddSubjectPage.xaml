@@ -31,7 +31,8 @@
                                    Value="0"
                                    ValueColor="{StaticResource BrandPrimary}"
                                    WidthRequest="640"
-                                   HorizontalOptions="Start" />
+                                   HorizontalOptions="Start"
+                                       Accent="1" />
 
                 <!-- Subject information form -->
                 <VerticalStackLayout Spacing="18"

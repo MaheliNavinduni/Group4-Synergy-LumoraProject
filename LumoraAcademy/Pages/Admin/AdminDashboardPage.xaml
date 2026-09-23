@@ -25,10 +25,14 @@
                 <!-- Four statistics -->
                 <Grid ColumnDefinitions="*,*,*,*"
                       ColumnSpacing="14">
-                    <controls:StatCard x:Name="StudentsCard" Grid.Column="0" Title="TOTAL STUDENTS" Value="-" Icon="&#xE716;" />
-                    <controls:StatCard x:Name="TeachersCard" Grid.Column="1" Title="ACTIVE TEACHERS" Value="-" Icon="&#xE77B;" />
-                    <controls:StatCard x:Name="RevenueCard" Grid.Column="2" Title="FEES COLLECTED" Value="-" Icon="&#xE8C7;" />
-                    <controls:StatCard x:Name="PendingCard" Grid.Column="3" Title="PENDING PAYMENTS" Value="-" Icon="&#xE7BA;" />
+                    <controls:StatCard x:Name="StudentsCard" Grid.Column="0" Title="TOTAL STUDENTS" Value="-" Icon="&#xE716;"
+                                       Accent="1" />
+                    <controls:StatCard x:Name="TeachersCard" Grid.Column="1" Title="ACTIVE TEACHERS" Value="-" Icon="&#xE77B;"
+                                       Accent="2" />
+                    <controls:StatCard x:Name="RevenueCard" Grid.Column="2" Title="FEES COLLECTED" Value="-" Icon="&#xE8C7;"
+                                       Accent="3" />
+                    <controls:StatCard x:Name="PendingCard" Grid.Column="3" Title="PENDING PAYMENTS" Value="-" Icon="&#xE7BA;"
+                                       Accent="4" />
                 </Grid>
 
                 <Grid ColumnDefinitions="*,250"
@@ -39,30 +43,23 @@
                             Style="{StaticResource CardStyle}"
                             Padding="20">
                         <VerticalStackLayout Spacing="18">
-                            <Grid ColumnDefinitions="*,Auto">
-                                <VerticalStackLayout Grid.Column="0" Spacing="2">
-                                    <Label Text="Student Performance Overview" Style="{StaticResource SectionTitleStyle}" FontSize="14" />
-                                    <Label Text="Average grades across departments for Fall Semester." Style="{StaticResource SmallMutedStyle}" />
-                                </VerticalStackLayout>
-                                <Border Grid.Column="1" Style="{StaticResource FieldBoxStyle}" HeightRequest="40" Padding="10,0">
-                                    <HorizontalStackLayout Spacing="6">
-                                        <Label Text="This Term" Style="{StaticResource MutedStyle}" FontSize="11" VerticalOptions="Center" />
-                                        <Label Text="&#xE70D;" Style="{StaticResource IconStyle}" FontSize="9" />
-                                    </HorizontalStackLayout>
-                                </Border>
-                            </Grid>
+                            <VerticalStackLayout Spacing="2">
+                                <Label Text="Student Performance Overview" Style="{StaticResource SectionTitleStyle}" FontSize="14" />
+                                <Label Text="Average mark in each subject, from every result entered so far."
+                                       Style="{StaticResource SmallMutedStyle}" />
+                            </VerticalStackLayout>
 
                             <!-- Simple bar chart made from boxes -->
                             <Grid ColumnDefinitions="*,*,*,*,*,*"
                                   ColumnSpacing="24"
                                   HeightRequest="170"
                                   Padding="20,0">
-                                <BoxView x:Name="Bar0" Grid.Column="0" Color="{StaticResource BrandPrimary}" HeightRequest="150" VerticalOptions="End" CornerRadius="4,4,0,0" />
-                                <BoxView x:Name="Bar1" Grid.Column="1" Color="{StaticResource BrandPrimary}" HeightRequest="80" VerticalOptions="End" CornerRadius="4,4,0,0" />
-                                <BoxView x:Name="Bar2" Grid.Column="2" Color="{StaticResource BrandCream}" HeightRequest="100" VerticalOptions="End" CornerRadius="4,4,0,0" />
-                                <BoxView x:Name="Bar3" Grid.Column="3" Color="{StaticResource BrandCream}" HeightRequest="130" VerticalOptions="End" CornerRadius="4,4,0,0" />
-                                <BoxView x:Name="Bar4" Grid.Column="4" Color="{StaticResource BrandPrimary}" HeightRequest="170" VerticalOptions="End" CornerRadius="4,4,0,0" />
-                                <BoxView x:Name="Bar5" Grid.Column="5" Color="{StaticResource BrandPrimary}" HeightRequest="120" VerticalOptions="End" CornerRadius="4,4,0,0" />
+                                <BoxView x:Name="Bar0" Grid.Column="0" Color="{StaticResource Chart1}" HeightRequest="150" VerticalOptions="End" CornerRadius="4,4,0,0" />
+                                <BoxView x:Name="Bar1" Grid.Column="1" Color="{StaticResource Chart2}" HeightRequest="80" VerticalOptions="End" CornerRadius="4,4,0,0" />
+                                <BoxView x:Name="Bar2" Grid.Column="2" Color="{StaticResource Chart3}" HeightRequest="100" VerticalOptions="End" CornerRadius="4,4,0,0" />
+                                <BoxView x:Name="Bar3" Grid.Column="3" Color="{StaticResource Chart4}" HeightRequest="130" VerticalOptions="End" CornerRadius="4,4,0,0" />
+                                <BoxView x:Name="Bar4" Grid.Column="4" Color="{StaticResource Chart5}" HeightRequest="170" VerticalOptions="End" CornerRadius="4,4,0,0" />
+                                <BoxView x:Name="Bar5" Grid.Column="5" Color="{StaticResource Chart2}" HeightRequest="120" VerticalOptions="End" CornerRadius="4,4,0,0" />
                             </Grid>
                             <Grid ColumnDefinitions="*,*,*,*,*,*"
                                   ColumnSpacing="24"

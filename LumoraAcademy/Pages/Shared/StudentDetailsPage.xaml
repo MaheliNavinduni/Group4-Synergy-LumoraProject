@@ -136,10 +136,14 @@
 
                         <Grid ColumnDefinitions="*,*,*,*"
                               ColumnSpacing="12">
-                            <controls:StatCard x:Name="GpaCard" Grid.Column="0" Title="CURRENT GPA" Value="-" Subtitle="" Icon="&#xE9D2;" />
-                            <controls:StatCard x:Name="AttendanceCard" Grid.Column="1" Title="ATTENDANCE" Value="-" Subtitle="" Icon="&#xE787;" />
-                            <controls:StatCard x:Name="TeacherCard" Grid.Column="2" Title="CLASSES" Value="-" Subtitle="" Icon="&#xE8F1;" />
-                            <controls:StatCard x:Name="FeesCard" Grid.Column="3" Title="FEES" Value="-" Subtitle="" Icon="&#xE8C7;" />
+                            <controls:StatCard x:Name="GpaCard" Grid.Column="0" Title="CURRENT GPA" Value="-" Subtitle="" Icon="&#xE9D2;"
+                                       Accent="1" />
+                            <controls:StatCard x:Name="AttendanceCard" Grid.Column="1" Title="ATTENDANCE" Value="-" Subtitle="" Icon="&#xE787;"
+                                       Accent="2" />
+                            <controls:StatCard x:Name="TeacherCard" Grid.Column="2" Title="CLASSES" Value="-" Subtitle="" Icon="&#xE8F1;"
+                                       Accent="3" />
+                            <controls:StatCard x:Name="FeesCard" Grid.Column="3" Title="FEES" Value="-" Subtitle="" Icon="&#xE8C7;"
+                                       Accent="4" />
                         </Grid>
 
                         <Border Style="{StaticResource CardStyle}"

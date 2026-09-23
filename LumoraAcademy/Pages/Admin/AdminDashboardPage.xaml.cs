@@ -22,7 +22,7 @@ public partial class AdminDashboardPage : ContentPage
         TeachersCard.Value = AppData.Teachers.Count().ToString();
 
         var summary = AppData.Payments.GetSummary();
-        RevenueCard.Value = summary.Collected.ToString("$#,##0");
+        RevenueCard.Value = "Rs. " + summary.Collected.ToString("N0");
         PendingCard.Value = summary.UnpaidCount.ToString();
 
         // Average mark per subject, drawn as bars (170px = 100%).

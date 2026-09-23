@@ -30,8 +30,10 @@
                 <!-- Statistics -->
                 <Grid ColumnDefinitions="*,*,*"
                       ColumnSpacing="14">
-                    <controls:StatCard x:Name="TotalCard" Grid.Column="0" Title="Total Teachers" Value="0" Subtitle="Active staff" Icon="&#xE716;" />
-                    <controls:StatCard x:Name="LeaveCard" Grid.Column="1" Title="On Leave" Value="0" Subtitle="Currently away" Icon="&#xE787;" />
+                    <controls:StatCard x:Name="TotalCard" Grid.Column="0" Title="Total Teachers" Value="0" Subtitle="Active staff" Icon="&#xE716;"
+                                       Accent="1" />
+                    <controls:StatCard x:Name="LeaveCard" Grid.Column="1" Title="On Leave" Value="0" Subtitle="Currently away" Icon="&#xE787;"
+                                       Accent="2" />
 
                     <Border Grid.Column="2" Style="{StaticResource CardStyle}" Padding="18,16">
                         <VerticalStackLayout Spacing="8">

@@ -29,18 +29,21 @@
                                        Title="Average Attendance Rate"
                                        Value="94.2%"
                                        Subtitle="Of the students marked"
-                                       Icon="&#xE9D2;" />
+                                       Icon="&#xE9D2;"
+                                       Accent="1" />
                     <controls:StatCard x:Name="DaysCard" Grid.Column="1"
                                        Title="Total Days Logged"
                                        Value="142"
                                        Subtitle=""
-                                       Icon="&#xE787;" />
+                                       Icon="&#xE787;"
+                                       Accent="2" />
                     <controls:StatCard x:Name="PerfectCard" Grid.Column="2"
                                        Title="Perfect Attendance Days"
                                        Value="12"
                                        Subtitle="Longest streak this term"
                                        Icon="&#xE734;"
-                                       IsDark="True" />
+                                       IsDark="True"
+                                       Accent="3" />
                 </Grid>
 
                 <controls:AttendanceTableView />
