@@ -10,10 +10,10 @@ public partial class TeacherDashboardPage : ContentPage
 
         WelcomeLabel.Text = $"Welcome, {AppNavigation.CurrentUserName}";
 
-        // Today's lessons for the logged-in teacher, from the timetable.
-        var lessons = AppData.CurrentTeacherId.HasValue
-            ? AppData.Schedule.GetDayForTeacher(AppData.CurrentTeacherId.Value)
-            : new List<Core.Entities.ClassSession>();
+        // Today's lessons for the logged-in teacher, taken from the class timetable.
+        var lessons = AppData.Classes.GetSessionsForDay(DateTime.Today)
+            .Where(s => s.ClassGroup != null && s.ClassGroup.TeacherId == AppData.CurrentTeacherId)
+            .ToList();
         BindableLayout.SetItemsSource(ScheduleList, lessons);
         NoLessonsLabel.IsVisible = lessons.Count == 0;
     }

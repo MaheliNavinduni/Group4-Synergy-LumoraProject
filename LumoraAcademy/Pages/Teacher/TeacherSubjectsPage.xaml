@@ -92,9 +92,9 @@
                                                    TextColor="{StaticResource BrandPrimary}"
                                                    HorizontalOptions="Center" />
                                         </Border>
-                                        <Label Text="{Binding SubjectName}"
+                                        <Label Text="{Binding Name}"
                                                Style="{StaticResource BodyBoldStyle}" />
-                                        <Label Text="{Binding Code}"
+                                        <Label Text="{Binding RoomText}"
                                                Style="{StaticResource SmallMutedStyle}" />
                                     </VerticalStackLayout>
 
@@ -125,7 +125,7 @@
                                             <Label Text="&#xE716;"
                                                    Style="{StaticResource IconStyle}"
                                                    FontSize="11" />
-                                            <Label Text="{Binding Students}"
+                                            <Label Text="{Binding StudentCountText}"
                                                    Style="{StaticResource SmallMutedStyle}"
                                                    TextColor="{StaticResource TextMuted}"
                                                    VerticalOptions="Center" />

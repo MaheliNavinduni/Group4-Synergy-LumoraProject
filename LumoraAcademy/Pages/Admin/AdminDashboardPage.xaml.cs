@@ -23,7 +23,7 @@ public partial class AdminDashboardPage : ContentPage
 
         var summary = AppData.Payments.GetSummary();
         RevenueCard.Value = summary.Collected.ToString("$#,##0");
-        PendingCard.Value = summary.PendingCount.ToString();
+        PendingCard.Value = summary.UnpaidCount.ToString();
 
         // Average mark per subject, drawn as bars (170px = 100%).
         var averages = AppData.Reports.AverageBySubject().OrderBy(a => a.Key).ToList();
