@@ -19,7 +19,7 @@ public class Backend
     public AcademicService Academics { get; }
     public AttendanceService Attendance { get; }
     public EventService Events { get; }
-    public ScheduleService Schedule { get; }
+    public ClassService Classes { get; }
     public ReportService Reports { get; }
 
     public Backend(string databasePath, bool seedDemoData = true)
@@ -31,14 +31,15 @@ public class Backend
             DemoDataSeeder.SeedIfEmpty(Database);
         }
 
+        Classes = new ClassService(Database);
         Auth = new AuthService(Database);
         Students = new StudentService(Database);
         Teachers = new TeacherService(Database, Auth);
-        Payments = new PaymentService(Database);
+        Payments = new PaymentService(Database, Classes);
         Academics = new AcademicService(Database);
-        Attendance = new AttendanceService(Database);
+        Attendance = new AttendanceService(Database, Classes);
         Events = new EventService(Database);
-        Schedule = new ScheduleService(Database);
+
         Reports = new ReportService(Database, Academics, Attendance, Payments);
     }
 }

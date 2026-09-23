@@ -2,7 +2,8 @@ using SQLite;
 
 namespace LumoraAcademy.Core.Entities;
 
-// One lesson in the weekly timetable, e.g. "Mathematics, Grade 10, Monday 08:00-09:30, Room 204".
+// One weekly time slot of a class, e.g. "Science - Grade 10, Monday 08:00-09:30".
+// The subject, teacher and room come from the ClassGroup.
 [Table("ClassSessions")]
 public class ClassSession
 {
@@ -10,22 +11,34 @@ public class ClassSession
     public int Id { get; set; }
 
     [Indexed]
-    public int TeacherId { get; set; }                // Teachers.Id
+    public int ClassGroupId { get; set; }             // ClassGroups.Id
 
-    public int? SubjectId { get; set; }               // Subjects.Id
-    public string ClassName { get; set; } = "";       // e.g. "10th Grade" (matches Student.Grade)
-    public int DayOfWeek { get; set; }                // 0 = Sunday ... 6 = Saturday (same as System.DayOfWeek)
+    public int DayOfWeek { get; set; }                // 0 = Sunday ... 6 = Saturday
     public TimeSpan StartTime { get; set; }
     public TimeSpan EndTime { get; set; }
-    public string Room { get; set; } = "";
 
     // ---- Helpers for the screens (not stored) ----
 
     [Ignore]
-    public string SubjectName { get; set; } = "";
+    public ClassGroup? ClassGroup { get; set; }
 
     [Ignore]
-    public string TeacherName { get; set; } = "";
+    public string SubjectName => ClassGroup?.SubjectName ?? "";
+
+    [Ignore]
+    public string TeacherName => ClassGroup?.TeacherName ?? "";
+
+    [Ignore]
+    public string Grade => ClassGroup?.Grade ?? "";
+
+    [Ignore]
+    public string Room => ClassGroup?.Room ?? "";
+
+    [Ignore]
+    public int StudentCount => ClassGroup?.StudentCount ?? 0;
+
+    [Ignore]
+    public string ClassName => ClassGroup?.Name ?? "";
 
     [Ignore]
     public string DayName => ((DayOfWeek)DayOfWeek).ToString();
@@ -42,8 +55,16 @@ public class ClassSession
     [Ignore]
     public string TimeRange => $"{StartText} - {EndText}";
 
+    // "10th Grade • Room 302"
     [Ignore]
-    public string Detail => string.IsNullOrWhiteSpace(Room) ? ClassName : $"{ClassName} • Room {Room}";
+    public string Detail => string.IsNullOrWhiteSpace(Room) ? Grade : $"{Grade} • Room {Room}";
+
+    // Set by the attendance screen: has this class already been marked today?
+    [Ignore]
+    public bool IsMarked { get; set; }
+
+    [Ignore]
+    public string MarkedText => IsMarked ? "Marked" : "Not marked";
 
     public static string FormatTime(TimeSpan t) => DateTime.Today.Add(t).ToString("hh:mm tt");
 }

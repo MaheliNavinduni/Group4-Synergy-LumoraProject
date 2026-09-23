@@ -85,38 +85,65 @@ public static class DemoDataSeeder
         // ---------- Progress notes ----------
         c.Insert(new ProgressNote { StudentId = emma.Id, TeacherId = aries.Id, Note = "Recommend extra Mathematics class on Saturdays.", RecommendExtraClass = true, CreatedOn = DateTime.Now.AddDays(-7) });
 
-        // ---------- Payments ----------
-        var thisMonth = DateTime.Now.ToString("yyyy-MM");
-        c.Insert(new Payment { StudentId = emmaT.Id, Month = thisMonth, AmountDue = 450, AmountPaid = 450, DueDate = new DateTime(2023, 10, 15), PaymentDate = new DateTime(2023, 10, 12) });
-        c.Insert(new Payment { StudentId = liam.Id, Month = thisMonth, AmountDue = 450, AmountPaid = 0, DueDate = DateTime.Today.AddDays(10) });
-        c.Insert(new Payment { StudentId = sophia.Id, Month = thisMonth, AmountDue = 1650, AmountPaid = 0, DueDate = DateTime.Today.AddDays(-20), ExtensionUntil = DateTime.Today.AddMonths(1), Remarks = "Parent requested extension until next month due to bank delay. Approved by Admin." });
-        c.Insert(new Payment { StudentId = noah.Id, Month = "2023-01", AmountDue = 1350, AmountPaid = 0, DueDate = new DateTime(2023, 1, 31), PaymentDate = new DateTime(2023, 1, 15) });
-        c.Insert(new Payment { StudentId = eleanor.Id, Month = thisMonth, AmountDue = 450, AmountPaid = 450, DueDate = DateTime.Today.AddDays(5), PaymentDate = DateTime.Today.AddDays(-2) });
+        // ---------- Classes, timetable and enrolments ----------
+        // A class = subject + grade + teacher + monthly fee. Students enrol in classes.
+        var scienceG10 = NewClass(c, science.Id, aries.Id, "10th Grade", "302", 2500);
+        var sinhalaG10 = NewClass(c, sinhala.Id, aries.Id, "10th Grade", "210", 2000);
+        var ictG11 = NewClass(c, ict.Id, aries.Id, "11th Grade", "305", 2500);
+        var mathsG11 = NewClass(c, maths.Id, lopez.Id, "11th Grade", "304", 3000);
+        var mathsG12 = NewClass(c, mathsCam.Id, chen.Id, "12th Grade", "304", 3500);
+        var englishG9 = NewClass(c, english.Id, smith.Id, "9th Grade", "201", 2000);
 
-        // ---------- Attendance ----------
-        var g10a = new[] { emma, mia, alexander, aarav };
-        var g11b = new[] { eleanor, james, emmaT, liam };
-        AddAttendanceDay(c, DateTime.Today.AddDays(-1), "Grade 10 - A", maths.Id, g10a, absent: 0, late: 1);
-        AddAttendanceDay(c, DateTime.Today.AddDays(-1), "Grade 11 - B", science.Id, g11b, absent: 2, late: 1);
-        AddAttendanceDay(c, DateTime.Today.AddDays(-2), "Grade 10 - A", english.Id, g10a, absent: 0, late: 0);
-        AddAttendanceDay(c, DateTime.Today.AddDays(-2), "Grade 11 - B", maths.Id, g11b, absent: 1, late: 0);
-
-        // ---------- Timetable ----------
-        // Miss. Aries: Science with 10th Grade (Mon/Wed/Fri), ICT with 11th Grade (Tue/Thu), Sinhala with 10th Grade (Mon/Wed/Fri)
+        // Weekly time slots
         foreach (int day in new[] { 1, 3, 5 })
         {
-            c.Insert(new ClassSession { TeacherId = aries.Id, SubjectId = science.Id, ClassName = "10th Grade", DayOfWeek = day, StartTime = new TimeSpan(8, 0, 0), EndTime = new TimeSpan(9, 30, 0), Room = "302" });
-            c.Insert(new ClassSession { TeacherId = aries.Id, SubjectId = sinhala.Id, ClassName = "10th Grade", DayOfWeek = day, StartTime = new TimeSpan(13, 0, 0), EndTime = new TimeSpan(14, 0, 0), Room = "210" });
+            AddSession(c, scienceG10, day, 8, 0, 9, 30);
+            AddSession(c, sinhalaG10, day, 13, 0, 14, 0);
         }
         foreach (int day in new[] { 2, 4 })
         {
-            c.Insert(new ClassSession { TeacherId = aries.Id, SubjectId = ict.Id, ClassName = "11th Grade", DayOfWeek = day, StartTime = new TimeSpan(10, 0, 0), EndTime = new TimeSpan(11, 30, 0), Room = "305" });
+            AddSession(c, ictG11, day, 10, 0, 11, 30);
         }
-        // Robert Chen and Elena Lopez
-        c.Insert(new ClassSession { TeacherId = chen.Id, SubjectId = mathsCam.Id, ClassName = "12th Grade", DayOfWeek = 1, StartTime = new TimeSpan(8, 0, 0), EndTime = new TimeSpan(9, 30, 0), Room = "304" });
-        c.Insert(new ClassSession { TeacherId = chen.Id, SubjectId = mathsCam.Id, ClassName = "11th Grade", DayOfWeek = 1, StartTime = new TimeSpan(9, 45, 0), EndTime = new TimeSpan(11, 15, 0), Room = "304" });
-        c.Insert(new ClassSession { TeacherId = chen.Id, SubjectId = maths.Id, ClassName = "10th Grade", DayOfWeek = 1, StartTime = new TimeSpan(14, 0, 0), EndTime = new TimeSpan(15, 30, 0), Room = "212" });
-        c.Insert(new ClassSession { TeacherId = lopez.Id, SubjectId = maths.Id, ClassName = "11th Grade", DayOfWeek = 3, StartTime = new TimeSpan(9, 30, 0), EndTime = new TimeSpan(11, 0, 0), Room = "305" });
+        AddSession(c, mathsG11, 1, 9, 45, 11, 15);
+        AddSession(c, mathsG11, 3, 9, 45, 11, 15);
+        AddSession(c, mathsG12, 2, 8, 0, 9, 30);
+        AddSession(c, englishG9, 6, 9, 0, 10, 30);
+
+        // Who is in which class
+        Enrol(c, scienceG10, emma, mia, alexander, aarav);
+        Enrol(c, sinhalaG10, emma, alexander, aarav);
+        Enrol(c, ictG11, eleanor, james, marcus, emmaT);
+        Enrol(c, mathsG11, eleanor, james, emmaT, liam);
+        Enrol(c, mathsG12, sophia, tyrell);
+        Enrol(c, englishG9, emily);
+
+        // ---------- Fee register (cash payments at the office) ----------
+        var thisMonth = DateTime.Today.ToString("yyyy-MM");
+        var lastMonth = DateTime.Today.AddMonths(-1).ToString("yyyy-MM");
+
+        // Last month: everyone paid except Noah, who left owing money
+        AddFee(c, lastMonth, scienceG10, 2500, DateTime.Today.AddDays(-25), emma, mia, alexander, aarav);
+        AddFee(c, lastMonth, ictG11, 2500, DateTime.Today.AddDays(-25), eleanor, james, marcus, emmaT);
+
+        // This month: some paid, some not
+        AddFee(c, thisMonth, scienceG10, 2500, DateTime.Today.AddDays(-3), emma, alexander);
+        AddFee(c, thisMonth, scienceG10, 2500, null, mia, aarav);
+        AddFee(c, thisMonth, ictG11, 2500, DateTime.Today.AddDays(-2), eleanor, emmaT);
+        AddFee(c, thisMonth, ictG11, 2500, null, james, marcus);
+        AddFee(c, thisMonth, mathsG11, 3000, null, eleanor, james, emmaT, liam);
+        AddFee(c, thisMonth, mathsG12, 3500, null, sophia, tyrell);
+
+        // One student with an approved extension (FR-06)
+        var sophiaFee = c.Table<Payment>().First(x => x.StudentId == sophia.Id && x.Month == thisMonth);
+        sophiaFee.ExtensionUntil = DateTime.Today.AddMonths(1);
+        sophiaFee.Remarks = "Parent requested an extension until next month. Approved by Admin.";
+        c.Update(sophiaFee);
+
+        // ---------- Attendance (marked in the office) ----------
+        MarkDay(c, DateTime.Today.AddDays(-2), scienceG10, new[] { emma, mia, alexander, aarav }, absent: 0, late: 1);
+        MarkDay(c, DateTime.Today.AddDays(-2), ictG11, new[] { eleanor, james, marcus, emmaT }, absent: 1, late: 0);
+        MarkDay(c, DateTime.Today.AddDays(-4), scienceG10, new[] { emma, mia, alexander, aarav }, absent: 0, late: 0);
+        MarkDay(c, DateTime.Today.AddDays(-4), mathsG11, new[] { eleanor, james, emmaT, liam }, absent: 2, late: 1);
 
         // ---------- Events ----------
         c.InsertAll(new[]
@@ -138,13 +165,73 @@ public static class DemoDataSeeder
         c.Insert(new ExamResult { StudentId = studentId, SubjectId = subjectId, ExamType = "Term", ExamName = "Term 2 2026", Marks = term, Grade = ExamResult.GradeFor(term), Remarks = remarks, RecordedOn = DateTime.Now.AddDays(-5), RecordedByTeacherId = teacherId });
     }
 
-    // Marks a whole class for one day: the first `absent` students absent, the next `late` late, the rest present.
-    private static void AddAttendanceDay(SQLite.SQLiteConnection c, DateTime date, string className, int subjectId, Student[] students, int absent, int late)
+    // ---------- Small helpers used above ----------
+
+    private static ClassGroup NewClass(SQLite.SQLiteConnection c, int subjectId, int teacherId, string grade, string room, decimal fee)
+    {
+        var group = new ClassGroup { SubjectId = subjectId, TeacherId = teacherId, Grade = grade, Room = room, MonthlyFee = fee, IsActive = true };
+        c.Insert(group);
+        return group;
+    }
+
+    private static void AddSession(SQLite.SQLiteConnection c, ClassGroup group, int day, int startHour, int startMinute, int endHour, int endMinute)
+    {
+        c.Insert(new ClassSession
+        {
+            ClassGroupId = group.Id,
+            DayOfWeek = day,
+            StartTime = new TimeSpan(startHour, startMinute, 0),
+            EndTime = new TimeSpan(endHour, endMinute, 0),
+        });
+    }
+
+    private static void Enrol(SQLite.SQLiteConnection c, ClassGroup group, params Student[] students)
+    {
+        foreach (var s in students)
+        {
+            c.Insert(new Enrollment { StudentId = s.Id, ClassGroupId = group.Id, EnrolledOn = DateTime.Today.AddMonths(-3), IsActive = true });
+        }
+    }
+
+    // Adds one month's fee for each student. paidOn = null means they have not paid yet.
+    private static void AddFee(SQLite.SQLiteConnection c, string month, ClassGroup group, decimal amount, DateTime? paidOn, params Student[] students)
+    {
+        DateTime due = DateTime.TryParse(month + "-01", out var first) ? first.AddDays(9) : DateTime.Today;
+
+        foreach (var s in students)
+        {
+            c.Insert(new Payment
+            {
+                StudentId = s.Id,
+                ClassGroupId = group.Id,
+                Month = month,
+                AmountDue = amount,
+                AmountPaid = paidOn.HasValue ? amount : 0,
+                DueDate = due,
+                PaymentDate = paidOn,
+                ReceiptNumber = paidOn.HasValue ? $"RCP-{month.Replace("-", "")}-{s.Id:0000}" : "",
+            });
+        }
+    }
+
+    // Marks a class for one day: the first students absent, the next late, the rest present.
+    private static void MarkDay(SQLite.SQLiteConnection c, DateTime date, ClassGroup group, Student[] students, int absent, int late)
     {
         for (int i = 0; i < students.Length; i++)
         {
-            string status = i < absent ? "Absent" : i < absent + late ? "Late" : "Present";
-            c.Insert(new AttendanceEntry { StudentId = students[i].Id, Date = date.Date, ClassName = className, SubjectId = subjectId, Status = status });
+            string status = i < absent ? AttendanceEntry.Absent
+                          : i < absent + late ? AttendanceEntry.Late
+                          : AttendanceEntry.Present;
+
+            c.Insert(new AttendanceEntry
+            {
+                StudentId = students[i].Id,
+                ClassGroupId = group.Id,
+                Date = date.Date,
+                Status = status,
+                MarkedOn = date.Date,
+            });
         }
     }
+
 }
