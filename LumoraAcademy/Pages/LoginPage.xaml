@@ -3,9 +3,28 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="LumoraAcademy.Pages.LoginPage"
              Title="Login"
-             BackgroundColor="{StaticResource BrandPrimaryDark}">
+             BackgroundColor="{StaticResource Brown800}">
 
     <Grid>
+        <!-- The same warm brown backdrop as the home page -->
+        <Border StrokeThickness="0" Padding="0">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="{StaticResource Brown800}" Offset="0.0" />
+                    <GradientStop Color="{StaticResource Brown600}" Offset="0.6" />
+                    <GradientStop Color="{StaticResource Brown400}" Offset="1.0" />
+                </LinearGradientBrush>
+            </Border.Background>
+        </Border>
+
+        <Ellipse Fill="{StaticResource AccentGold}"
+                 Opacity="0.10"
+                 WidthRequest="300"
+                 HeightRequest="300"
+                 HorizontalOptions="End"
+                 VerticalOptions="Start"
+                 Margin="0,-110,-90,0" />
+
         <!-- The white login card, centred on the brown background -->
         <Border WidthRequest="400"
                 Padding="28,26"
@@ -20,48 +39,21 @@
 
             <VerticalStackLayout Spacing="0">
 
-                <!-- Graduation cap badge -->
-                <Border WidthRequest="34"
-                        HeightRequest="34"
-                        Padding="0"
-                        HorizontalOptions="Center"
-                        Background="{StaticResource BrandCream}"
-                        StrokeThickness="0">
-                    <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="8" />
-                    </Border.StrokeShape>
+                <!-- The institute logo -->
+                <Image Source="lumora_mark.png"
+                       WidthRequest="76"
+                       HeightRequest="76"
+                       HorizontalOptions="Center" />
 
-                    <Grid WidthRequest="20"
-                          HeightRequest="16"
-                          HorizontalOptions="Center"
-                          VerticalOptions="Center">
-                        <!-- Top of the cap -->
-                        <Polygon Points="0,5 10,0 20,5 10,10"
-                                 Fill="{StaticResource BrandPrimary}"
-                                 VerticalOptions="Start" />
-                        <!-- Base of the cap -->
-                        <Border WidthRequest="10"
-                                HeightRequest="5"
-                                Margin="0,0,0,1"
-                                HorizontalOptions="Center"
-                                VerticalOptions="End"
-                                Background="{StaticResource BrandPrimary}"
-                                StrokeThickness="0">
-                            <Border.StrokeShape>
-                                <RoundRectangle CornerRadius="0,0,3,3" />
-                            </Border.StrokeShape>
-                        </Border>
-                    </Grid>
-                </Border>
-
-                <Label Text="Lumora Academy"
-                       FontSize="19"
+                <Label Text="LUMORA"
+                       FontSize="20"
                        FontAttributes="Bold"
-                       TextColor="{StaticResource TextHeading}"
+                       CharacterSpacing="4"
+                       TextColor="{StaticResource Brown700}"
                        HorizontalOptions="Center"
                        Margin="0,12,0,0" />
 
-                <Label Text="Login Access"
+                <Label Text="Staff sign in"
                        FontSize="12"
                        TextColor="{StaticResource TextMuted}"
                        HorizontalOptions="Center"
@@ -80,6 +72,9 @@
                 <!-- ===== Username ===== -->
                 <Label Text="USERNAME"
                        Style="{StaticResource FieldLabelStyle}" />
+                <Label Text="The username the office gave you, for example admin or k.fernando"
+                       Style="{StaticResource SmallMutedStyle}"
+                       Margin="0,3,0,0" />
 
                 <Border Style="{StaticResource FieldBoxStyle}"
                         Margin="0,6,0,0">
@@ -111,7 +106,7 @@
 
                         <Entry x:Name="UsernameEntry"
                                Grid.Column="1"
-                               Placeholder="Enter your username"
+                               Placeholder="admin  or  k.fernando"
                                FontSize="14"
                                BackgroundColor="Transparent"
                                TextColor="{StaticResource TextHeading}"
