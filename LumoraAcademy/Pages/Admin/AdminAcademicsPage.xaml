@@ -15,17 +15,21 @@
             <VerticalStackLayout Padding="36,32"
                                  Spacing="20">
 
-                <Grid ColumnDefinitions="*,Auto,Auto"
+                <Grid ColumnDefinitions="*,Auto,Auto,Auto"
                       ColumnSpacing="10">
                     <Label Grid.Column="0"
                            Text="Subject Management"
                            Style="{StaticResource PageTitleStyle}"
                            VerticalOptions="Center" />
                     <Button Grid.Column="1"
+                            Text="Manage Classes"
+                            Style="{StaticResource SmallOutlineButtonStyle}"
+                            Clicked="OnClassesClicked" />
+                    <Button Grid.Column="2"
                             Text="+ Add New Subject"
                             Style="{StaticResource SmallPrimaryButtonStyle}"
                             Clicked="OnAddSubjectClicked" />
-                    <Button Grid.Column="2"
+                    <Button Grid.Column="3"
                             Text="Go Back"
                             Style="{StaticResource SmallPrimaryButtonStyle}"
                             BackgroundColor="{StaticResource BrandPrimaryDark}"
