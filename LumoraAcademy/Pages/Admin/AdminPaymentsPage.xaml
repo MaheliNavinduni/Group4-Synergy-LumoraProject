@@ -13,70 +13,67 @@
 
         <ScrollView Grid.Column="1">
             <VerticalStackLayout Padding="36,32"
-                                 Spacing="22">
+                                 Spacing="20">
 
-                <Grid ColumnDefinitions="*,Auto">
+                <!-- Heading and month -->
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="16">
                     <VerticalStackLayout Grid.Column="0" Spacing="4">
-                        <Label Text="Payment Tracking" Style="{StaticResource PageTitleStyle}" />
-                        <Label Text="Overview of student fee statuses for current academic term." Style="{StaticResource PageSubtitleStyle}" />
+                        <Label Text="Fee Register" Style="{StaticResource PageTitleStyle}" />
+                        <Label Text="Cash fees taken at the office. Choose a class, then tick the students who have paid."
+                               Style="{StaticResource PageSubtitleStyle}" />
                     </VerticalStackLayout>
-                    <Button Grid.Column="1"
-                            Text="Edit Payment"
-                            Style="{StaticResource SmallPrimaryButtonStyle}"
-                            VerticalOptions="Start"
-                            Clicked="OnEditPaymentClicked" />
+
+                    <VerticalStackLayout Grid.Column="1" Spacing="6" WidthRequest="180">
+                        <Label Text="Month" Style="{StaticResource FormLabelStyle}" Margin="0" />
+                        <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="38">
+                            <Picker x:Name="MonthPicker"
+                                    Style="{StaticResource FieldPickerStyle}"
+                                    SelectedIndexChanged="OnMonthChanged" />
+                        </Border>
+                    </VerticalStackLayout>
                 </Grid>
 
-                <!-- Four statistics -->
-                <Grid ColumnDefinitions="*,*,*,*"
-                      ColumnSpacing="14">
-                    <controls:StatCard x:Name="ExpectedCard" Grid.Column="0" Title="Total Expected" Value="-" Subtitle="All fee records" Icon="&#xE8C7;" />
-                    <controls:StatCard x:Name="CollectedCard" Grid.Column="1" Title="Collected (Paid)" Value="-" Subtitle="" Icon="&#xE73E;" />
-                    <controls:StatCard x:Name="PendingCard" Grid.Column="2" Title="Pending" Value="-" Subtitle="" Icon="&#xE823;" />
-                    <controls:StatCard x:Name="OverdueCard" Grid.Column="3" Title="Overdue / At Risk" Value="-" Subtitle="Action Required" Icon="&#xE7BA;" />
+                <!-- Totals for the month -->
+                <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="14">
+                    <controls:StatCard x:Name="ExpectedCard" Grid.Column="0" Title="TOTAL EXPECTED" Value="-" Subtitle="This month" Icon="&#xE8C7;" />
+                    <controls:StatCard x:Name="CollectedCard" Grid.Column="1" Title="COLLECTED" Value="-" Subtitle="" Icon="&#xE73E;" />
+                    <controls:StatCard x:Name="OutstandingCard" Grid.Column="2" Title="OUTSTANDING" Value="-" Subtitle="" Icon="&#xE823;" />
+                    <controls:StatCard x:Name="OverdueCard" Grid.Column="3" Title="OVERDUE" Value="-" Subtitle="Action required" Icon="&#xE7BA;" />
                 </Grid>
 
-                <!-- Student accounts table -->
-                <Border Style="{StaticResource CardTightStyle}">
+                <!-- ===== Step 1: pick a class ===== -->
+                <Border x:Name="ClassListCard" Style="{StaticResource CardTightStyle}">
                     <VerticalStackLayout>
-
                         <Grid Padding="20,14">
-                            <Label Text="Student Accounts" Style="{StaticResource SectionTitleStyle}" FontSize="14" />
+                            <Label Text="Classes" Style="{StaticResource SectionTitleStyle}" FontSize="14" />
                         </Grid>
 
                         <Grid Style="{StaticResource TableHeaderRowStyle}"
-                              ColumnDefinitions="1.6*,1*,1.3*,1.2*,1.3*,0.8*">
-                            <Label Grid.Column="0" Text="Student Name / ID" Style="{StaticResource TableHeaderStyle}" />
-                            <Label Grid.Column="1" Text="Monthly Fee" Style="{StaticResource TableHeaderStyle}" />
-                            <Label Grid.Column="2" Text="Outstanding Balance" Style="{StaticResource TableHeaderStyle}" />
-                            <Label Grid.Column="3" Text="Last Paid Date" Style="{StaticResource TableHeaderStyle}" />
-                            <Label Grid.Column="4" Text="Status" Style="{StaticResource TableHeaderStyle}" />
-                            <Label Grid.Column="5" Text="Actions" Style="{StaticResource TableHeaderStyle}" HorizontalOptions="End" />
+                              ColumnDefinitions="1.8*,1.4*,1*,1*,1*,1.1*">
+                            <Label Grid.Column="0" Text="CLASS" Style="{StaticResource TableHeaderStyle}" />
+                            <Label Grid.Column="1" Text="TEACHER" Style="{StaticResource TableHeaderStyle}" />
+                            <Label Grid.Column="2" Text="MONTHLY FEE" Style="{StaticResource TableHeaderStyle}" />
+                            <Label Grid.Column="3" Text="STUDENTS" Style="{StaticResource TableHeaderStyle}" HorizontalOptions="Center" />
+                            <Label Grid.Column="4" Text="PAID" Style="{StaticResource TableHeaderStyle}" HorizontalOptions="Center" />
+                            <Label Grid.Column="5" Text="COLLECTED" Style="{StaticResource TableHeaderStyle}" />
                         </Grid>
 
-                        <VerticalStackLayout x:Name="RowList">
+                        <VerticalStackLayout x:Name="ClassList">
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate>
                                     <VerticalStackLayout>
                                         <Grid Style="{StaticResource TableRowStyle}"
-                                              ColumnDefinitions="1.6*,1*,1.3*,1.2*,1.3*,0.8*">
-                                            <VerticalStackLayout Grid.Column="0" Spacing="2" VerticalOptions="Center">
-                                                <Label Text="{Binding StudentName}" Style="{StaticResource TableCellBoldStyle}" FontSize="12" />
-                                                <Label Text="{Binding StudentCode}" Style="{StaticResource SmallMutedStyle}" FontSize="10" />
-                                            </VerticalStackLayout>
-                                            <Label Grid.Column="1" Text="{Binding AmountDue, StringFormat='${0:N2}'}" Style="{StaticResource TableCellStyle}" FontSize="12" />
-                                            <Label Grid.Column="2" Text="{Binding Outstanding, StringFormat='${0:N2}'}" Style="{StaticResource TableCellBoldStyle}" FontSize="12" />
-                                            <Label Grid.Column="3" Text="{Binding PaymentDate, StringFormat='{0:MMM dd, yyyy}', TargetNullValue='-'}" Style="{StaticResource TableCellStyle}" FontSize="12" />
-                                            <controls:StatusBadge Grid.Column="4" Text="{Binding Status}" />
-                                            <Label Grid.Column="5"
-                                                   Text="Edit"
-                                                   Style="{StaticResource TableCellBoldStyle}"
-                                                   FontSize="12"
-                                                   HorizontalOptions="End">
-                                                <Label.GestureRecognizers>
-                                                    <TapGestureRecognizer Tapped="OnRowActionTapped" />
-                                                </Label.GestureRecognizers>
-                                            </Label>
+                                              ColumnDefinitions="1.8*,1.4*,1*,1*,1*,1.1*">
+                                            <Grid.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="OnClassTapped" />
+                                            </Grid.GestureRecognizers>
+
+                                            <Label Grid.Column="0" Text="{Binding ClassName}" Style="{StaticResource TableCellBoldStyle}" FontSize="12" />
+                                            <Label Grid.Column="1" Text="{Binding TeacherName}" Style="{StaticResource TableCellStyle}" FontSize="12" />
+                                            <Label Grid.Column="2" Text="{Binding FeeText}" Style="{StaticResource TableCellStyle}" FontSize="12" />
+                                            <Label Grid.Column="3" Text="{Binding StudentCount}" Style="{StaticResource TableCellStyle}" FontSize="12" HorizontalOptions="Center" />
+                                            <Label Grid.Column="4" Text="{Binding PaidText}" Style="{StaticResource TableCellBoldStyle}" FontSize="12" HorizontalOptions="Center" />
+                                            <Label Grid.Column="5" Text="{Binding CollectedText}" Style="{StaticResource TableCellStyle}" FontSize="12" />
                                         </Grid>
                                         <BoxView Style="{StaticResource RowDividerStyle}" />
                                     </VerticalStackLayout>
@@ -84,14 +81,80 @@
                             </BindableLayout.ItemTemplate>
                         </VerticalStackLayout>
 
-                        <Grid ColumnDefinitions="*,Auto"
-                              Padding="20,12">
-                            <Label x:Name="CountLabel" Grid.Column="0" Text="" Style="{StaticResource SmallMutedStyle}" VerticalOptions="Center" />
-                            <controls:PagerView x:Name="Pager" Grid.Column="1" PageChanged="OnPageChanged" />
-                        </Grid>
-
+                        <Label x:Name="NoClassesLabel"
+                               Text="No classes yet. Add them from Academics."
+                               Style="{StaticResource MutedStyle}"
+                               Padding="20,16"
+                               IsVisible="False" />
                     </VerticalStackLayout>
                 </Border>
+
+                <!-- ===== Step 2: the register for that class ===== -->
+                <VerticalStackLayout x:Name="RegisterSection" Spacing="16" IsVisible="False">
+
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                        <VerticalStackLayout Grid.Column="0" Spacing="2">
+                            <Label x:Name="RegisterTitle" Style="{StaticResource SectionTitleStyle}" FontSize="16" />
+                            <Label x:Name="RegisterSubtitle" Style="{StaticResource SmallMutedStyle}" />
+                        </VerticalStackLayout>
+                        <Button Grid.Column="1"
+                                Text="Back to classes"
+                                Style="{StaticResource SmallOutlineButtonStyle}"
+                                VerticalOptions="Start"
+                                Clicked="OnBackToClassesClicked" />
+                    </Grid>
+
+                    <Border Style="{StaticResource CardTightStyle}">
+                        <VerticalStackLayout>
+
+                            <Grid Style="{StaticResource TableHeaderRowStyle}"
+                                  ColumnDefinitions="2*,1.2*,1*,1.2*,1.1*,1.6*">
+                                <Label Grid.Column="0" Text="STUDENT" Style="{StaticResource TableHeaderStyle}" />
+                                <Label Grid.Column="1" Text="ID" Style="{StaticResource TableHeaderStyle}" />
+                                <Label Grid.Column="2" Text="FEE" Style="{StaticResource TableHeaderStyle}" />
+                                <Label Grid.Column="3" Text="PAID ON" Style="{StaticResource TableHeaderStyle}" />
+                                <Label Grid.Column="4" Text="STATUS" Style="{StaticResource TableHeaderStyle}" />
+                                <Label Grid.Column="5" Text="" Style="{StaticResource TableHeaderStyle}" HorizontalOptions="End" />
+                            </Grid>
+
+                            <VerticalStackLayout x:Name="RowList">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate>
+                                        <VerticalStackLayout>
+                                            <Grid Style="{StaticResource TableRowStyle}"
+                                                  ColumnDefinitions="2*,1.2*,1*,1.2*,1.1*,1.6*">
+
+                                                <Label Grid.Column="0" Text="{Binding StudentName}" Style="{StaticResource TableCellBoldStyle}" FontSize="12" />
+                                                <Label Grid.Column="1" Text="{Binding StudentCode}" Style="{StaticResource TableCellMutedStyle}" />
+                                                <Label Grid.Column="2" Text="{Binding AmountDue, StringFormat='{0:N2}'}" Style="{StaticResource TableCellStyle}" FontSize="12" />
+                                                <Label Grid.Column="3" Text="{Binding PaidDateText}" Style="{StaticResource TableCellStyle}" FontSize="12" />
+                                                <controls:StatusBadge Grid.Column="4" Text="{Binding Status}" />
+
+                                                <HorizontalStackLayout Grid.Column="5" Spacing="6" HorizontalOptions="End">
+                                                    <Button Text="Mark Paid" Style="{StaticResource SmallPrimaryButtonStyle}" HeightRequest="28" FontSize="10" Padding="10,0" Clicked="OnMarkPaidClicked" />
+                                                    <Button Text="Undo" Style="{StaticResource SmallOutlineButtonStyle}" HeightRequest="28" FontSize="10" Padding="10,0" Clicked="OnUndoClicked" />
+                                                    <Button Text="..." Style="{StaticResource SmallOutlineButtonStyle}" HeightRequest="28" FontSize="10" Padding="8,0" Clicked="OnMoreClicked" />
+                                                </HorizontalStackLayout>
+                                            </Grid>
+                                            <BoxView Style="{StaticResource RowDividerStyle}" />
+                                        </VerticalStackLayout>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </VerticalStackLayout>
+
+                            <Label x:Name="NoStudentsLabel"
+                                   Text="No students are enrolled in this class yet."
+                                   Style="{StaticResource MutedStyle}"
+                                   Padding="20,16"
+                                   IsVisible="False" />
+
+                            <Grid ColumnDefinitions="*,Auto" Padding="20,12">
+                                <Label x:Name="CountLabel" Grid.Column="0" Style="{StaticResource SmallMutedStyle}" VerticalOptions="Center" />
+                                <controls:PagerView x:Name="Pager" Grid.Column="1" PageChanged="OnPageChanged" />
+                            </Grid>
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
 
             </VerticalStackLayout>
         </ScrollView>
