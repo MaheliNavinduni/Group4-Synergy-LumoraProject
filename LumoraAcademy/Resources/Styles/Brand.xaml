@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!-- Brand colours and shared styles for Lumora Academy.
+<!-- Brand colours and shared styles for Lumora Educational Institute.
      Change a colour here and it changes everywhere. -->
 <ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">

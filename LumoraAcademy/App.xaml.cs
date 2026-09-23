@@ -24,7 +24,7 @@ public partial class App : Application
         var window = base.CreateWindow(activationState);
 
         // A comfortable default size for the desktop window.
-        window.Title = "Lumora Academy";
+        window.Title = "Lumora Educational Institute";
         window.Width = 1100;
         window.Height = 760;
 
