@@ -4,7 +4,7 @@
              xmlns:controls="clr-namespace:LumoraAcademy.Controls"
              x:Class="LumoraAcademy.Pages.Admin.MarkAttendancePage"
              Title="Mark Attendance"
-             BackgroundColor="{StaticResource PageBackground}">
+             BackgroundColor="{StaticResource ContentBackground}">
 
     <Grid ColumnDefinitions="220,*">
 

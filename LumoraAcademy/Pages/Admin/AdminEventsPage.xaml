@@ -4,7 +4,7 @@
              xmlns:controls="clr-namespace:LumoraAcademy.Controls"
              x:Class="LumoraAcademy.Pages.Admin.AdminEventsPage"
              Title="Event Management"
-             BackgroundColor="{StaticResource PageBackground}">
+             BackgroundColor="{StaticResource ContentBackground}">
 
     <Grid ColumnDefinitions="220,*">
 

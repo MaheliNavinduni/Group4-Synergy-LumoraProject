@@ -14,7 +14,7 @@
 
             <Grid ColumnDefinitions="*,Auto">
                 <Label Text="Process Student Departure" FontSize="15" FontAttributes="Bold" TextColor="{StaticResource BrandPrimary}" VerticalOptions="Center" />
-                <Button Grid.Column="1" Text="Go Back" Style="{StaticResource SmallPrimaryButtonStyle}" BackgroundColor="{StaticResource BrandPrimaryDark}" HeightRequest="28" Clicked="OnCancelClicked" />
+                <Button Grid.Column="1" Text="Go Back" Style="{StaticResource SmallPrimaryButtonStyle}" HeightRequest="28" Clicked="OnCancelClicked" />
             </Grid>
 
             <!-- Find student -->

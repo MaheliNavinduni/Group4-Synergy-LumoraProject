@@ -4,7 +4,7 @@
              xmlns:controls="clr-namespace:LumoraAcademy.Controls"
              x:Class="LumoraAcademy.Pages.Admin.AdminAcademicsPage"
              Title="Academics"
-             BackgroundColor="{StaticResource PageBackground}">
+             BackgroundColor="{StaticResource ContentBackground}">
 
     <Grid ColumnDefinitions="220,*">
 
@@ -32,7 +32,7 @@
                     <Button Grid.Column="3"
                             Text="Go Back"
                             Style="{StaticResource SmallPrimaryButtonStyle}"
-                            BackgroundColor="{StaticResource BrandPrimaryDark}"
+                           
                             Clicked="OnGoBackClicked" />
                 </Grid>
 

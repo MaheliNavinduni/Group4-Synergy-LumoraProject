@@ -4,7 +4,7 @@
              xmlns:controls="clr-namespace:LumoraAcademy.Controls"
              x:Class="LumoraAcademy.Pages.Admin.AdminDashboardPage"
              Title="Admin Dashboard"
-             BackgroundColor="{StaticResource PageBackground}">
+             BackgroundColor="{StaticResource ContentBackground}">
 
     <Grid ColumnDefinitions="220,*">
 
@@ -159,6 +159,11 @@
                                         </DataTemplate>
                                     </BindableLayout.ItemTemplate>
                                 </VerticalStackLayout>
+
+                                <Label x:Name="NoActivityLabel"
+                                       Text="Nothing has happened yet. Register a student or take a fee to see it here."
+                                       Style="{StaticResource MutedStyle}"
+                                       IsVisible="False" />
                             </VerticalStackLayout>
                         </Border>
 

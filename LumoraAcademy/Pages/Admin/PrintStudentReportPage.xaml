@@ -19,14 +19,10 @@
 
                     <!-- Report header -->
                     <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
-                        <Border Grid.Column="0" WidthRequest="46" HeightRequest="46" Padding="0" Stroke="{StaticResource DividerLine}" StrokeThickness="1" Background="{StaticResource CardBackground}">
-                            <Border.StrokeShape>
-                                <RoundRectangle CornerRadius="23" />
-                            </Border.StrokeShape>
-                        </Border>
+                        <Image Grid.Column="0" Source="lumora_mark.png" WidthRequest="46" HeightRequest="46" />
                         <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
-                            <Label Text="Lumora Academy" FontSize="18" FontAttributes="Bold" TextColor="{StaticResource BrandPrimaryDark}" />
-                            <Label Text="Excellence in Education since 1924" Style="{StaticResource SmallMutedStyle}" FontAttributes="Italic" />
+                            <Label Text="Lumora Educational Institute" FontSize="18" FontAttributes="Bold" TextColor="{StaticResource Brown700}" />
+                            <Label Text="Shaping Futures" Style="{StaticResource SmallMutedStyle}" FontAttributes="Italic" />
                         </VerticalStackLayout>
                         <VerticalStackLayout Grid.Column="2" Spacing="2" HorizontalOptions="End">
                             <Label Text="ACADEMIC PROGRESS" FontSize="12" FontAttributes="Bold" CharacterSpacing="1" TextColor="{StaticResource BrandPrimary}" HorizontalTextAlignment="End" />
@@ -179,7 +175,7 @@
             </Border>
 
             <HorizontalStackLayout Spacing="10" HorizontalOptions="End">
-                <Button Text="Go Back" Style="{StaticResource SmallPrimaryButtonStyle}" BackgroundColor="{StaticResource BrandPrimaryDark}" Clicked="OnGoBackClicked" />
+                <Button Text="Go Back" Style="{StaticResource SmallPrimaryButtonStyle}" Clicked="OnGoBackClicked" />
                 <Button Text="Print Report" Style="{StaticResource SmallPrimaryButtonStyle}" Clicked="OnPrintClicked" />
             </HorizontalStackLayout>
 
