@@ -116,6 +116,29 @@ public partial class SidebarView : ContentView
         };
         border.GestureRecognizers.Add(tap);
 
+        // Hover effect: the item the mouse is over lights up, so the menu
+        // feels like something you can click rather than a list of words.
+        if (!isActive)
+        {
+            var hover = new PointerGestureRecognizer();
+
+            hover.PointerEntered += (s, e) =>
+            {
+                border.Background = GetColor("RowHover");
+                icon.TextColor = brandPrimary;
+                text.TextColor = brandPrimary;
+            };
+
+            hover.PointerExited += (s, e) =>
+            {
+                border.Background = Colors.Transparent;
+                icon.TextColor = textHeading;
+                text.TextColor = textHeading;
+            };
+
+            border.GestureRecognizers.Add(hover);
+        }
+
         MenuList.Children.Add(border);
     }
 

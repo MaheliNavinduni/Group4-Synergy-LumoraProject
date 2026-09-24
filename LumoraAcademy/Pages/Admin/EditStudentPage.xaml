@@ -14,8 +14,8 @@
         <ScrollView Grid.Column="1">
             <VerticalStackLayout Padding="36,32"
                                  Spacing="20"
-                                 MaximumWidthRequest="820"
-                                 HorizontalOptions="Start">
+                                 MaximumWidthRequest="1200"
+                                 HorizontalOptions="Fill">
 
                 <VerticalStackLayout Spacing="4">
                     <Label Text="Edit Student Profile" Style="{StaticResource PageTitleStyle}" />

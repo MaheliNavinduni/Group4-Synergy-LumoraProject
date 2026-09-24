@@ -37,14 +37,17 @@
                 </Grid>
 
                 <!-- One card per subject -->
-                <VerticalStackLayout x:Name="SubjectList"
-                                     Spacing="10"
-                                     MaximumWidthRequest="620"
-                                     HorizontalOptions="Start">
+                <FlexLayout x:Name="SubjectList"
+                            Wrap="Wrap"
+                            Direction="Row"
+                            JustifyContent="Start"
+                            AlignItems="Start">
                     <BindableLayout.ItemTemplate>
                         <DataTemplate>
                             <Border Style="{StaticResource CardStyle}"
-                                    Padding="16,12">
+                                    Padding="16,12"
+                                    WidthRequest="300"
+                                    Margin="0,0,12,12">
                                 <Grid ColumnDefinitions="Auto,*"
                                       ColumnSpacing="12">
                                     <Label Grid.Column="0"
@@ -63,7 +66,7 @@
                             </Border>
                         </DataTemplate>
                     </BindableLayout.ItemTemplate>
-                </VerticalStackLayout>
+                </FlexLayout>
 
             </VerticalStackLayout>
         </ScrollView>

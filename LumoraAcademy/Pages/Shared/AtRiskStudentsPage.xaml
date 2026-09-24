@@ -29,15 +29,18 @@
                       ColumnSpacing="16">
                     <VerticalStackLayout Grid.Column="0" Spacing="6">
                         <Label Text="Class / Grade" Style="{StaticResource FormLabelStyle}" Margin="0" />
-                        <controls:DropDownField x:Name="ClassPicker" />
+                        <controls:DropDownField x:Name="ClassPicker"
+                                            SelectedIndexChanged="OnApplyFiltersClicked" />
                     </VerticalStackLayout>
                     <VerticalStackLayout Grid.Column="1" Spacing="6">
                         <Label Text="Subject Area" Style="{StaticResource FormLabelStyle}" Margin="0" />
-                        <controls:DropDownField x:Name="SubjectPicker" />
+                        <controls:DropDownField x:Name="SubjectPicker"
+                                            SelectedIndexChanged="OnApplyFiltersClicked" />
                     </VerticalStackLayout>
                     <VerticalStackLayout Grid.Column="2" Spacing="6">
                         <Label Text="Performance Threshold" Style="{StaticResource FormLabelStyle}" Margin="0" />
-                        <controls:DropDownField x:Name="ThresholdPicker" />
+                        <controls:DropDownField x:Name="ThresholdPicker"
+                                            SelectedIndexChanged="OnApplyFiltersClicked" />
                     </VerticalStackLayout>
                     <Button Grid.Column="3"
                             Text="Apply Filters"

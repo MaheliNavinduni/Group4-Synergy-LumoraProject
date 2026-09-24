@@ -38,16 +38,18 @@ public partial class EnterMarksPage : ContentPage
 
     private async void OnSaveMarkClicked(object sender, EventArgs e)
     {
-        if (SubjectPicker.SelectedIndex < 0)
+        string problem = Validation.FirstProblem(
+            SubjectPicker.SelectedIndex < 0 ? "Please select a subject." : "",
+            ExamTypePicker.SelectedIndex < 0 ? "Please select the exam type." : "",
+            Validation.Marks(MarksEntry.Text));
+
+        if (problem != "")
         {
-            await DisplayAlert("Enter Marks", "Please select a subject.", "OK");
+            await DisplayAlert("Enter Marks", problem, "OK");
             return;
         }
-        if (!double.TryParse(MarksEntry.Text, out double marks))
-        {
-            await DisplayAlert("Enter Marks", "Please enter the marks as a number between 0 and 100.", "OK");
-            return;
-        }
+
+        double marks = double.Parse(MarksEntry.Text!.Trim());
 
         try
         {
@@ -73,9 +75,14 @@ public partial class EnterMarksPage : ContentPage
 
     private async void OnSaveCambridgeClicked(object sender, EventArgs e)
     {
-        if (CambridgeSubjectPicker.SelectedIndex < 0)
+        string problem = Validation.FirstProblem(
+            CambridgeSubjectPicker.SelectedIndex < 0 ? "Please select a subject." : "",
+            Validation.Required(CambridgeExamEntry.Text, "Exam name"),
+            Validation.Required(CambridgeGradeEntry.Text, "Grade"));
+
+        if (problem != "")
         {
-            await DisplayAlert("Cambridge Result", "Please select a subject.", "OK");
+            await DisplayAlert("Cambridge Result", problem, "OK");
             return;
         }
 

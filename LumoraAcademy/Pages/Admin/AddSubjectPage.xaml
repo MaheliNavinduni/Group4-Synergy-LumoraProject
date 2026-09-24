@@ -14,8 +14,8 @@
         <ScrollView Grid.Column="1">
             <VerticalStackLayout Padding="36,32"
                                  Spacing="24"
-                                 MaximumWidthRequest="700"
-                                 HorizontalOptions="Start">
+                                 MaximumWidthRequest="1100"
+                                 HorizontalOptions="Fill">
 
                 <VerticalStackLayout Spacing="6">
                     <Label Text="Academics / Subjects"

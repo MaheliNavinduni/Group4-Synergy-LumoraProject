@@ -61,7 +61,8 @@
                                 <DataTemplate>
                                     <VerticalStackLayout>
                                         <Grid Style="{StaticResource TableRowStyle}"
-                                              ColumnDefinitions="1.8*,1.4*,1*,1*,1*,1.1*">
+                                              ColumnDefinitions="1.8*,1.4*,1*,1*,1*,1.1*"
+                                              controls:RowHover.Enabled="True">
                                             <Grid.GestureRecognizers>
                                                 <TapGestureRecognizer Tapped="OnClassTapped" />
                                             </Grid.GestureRecognizers>

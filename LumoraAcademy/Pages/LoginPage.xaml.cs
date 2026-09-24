@@ -9,7 +9,26 @@ public partial class LoginPage : ContentPage
         InitializeComponent();
     }
 
-    // Runs when the user clicks the "Login" button.
+    // Pressing Enter in the username box moves down to the password box.
+    private void OnUsernameCompleted(object sender, EventArgs e)
+    {
+        PasswordEntry.Focus();
+    }
+
+    // Hides the old error message as soon as the user starts correcting it.
+    private void OnTypingChanged(object sender, TextChangedEventArgs e)
+    {
+        ErrorBox.IsVisible = false;
+    }
+
+    // Lets the user check what they typed if the login keeps failing.
+    private void OnTogglePasswordTapped(object sender, EventArgs e)
+    {
+        PasswordEntry.IsPassword = !PasswordEntry.IsPassword;
+        ShowPasswordIcon.Text = PasswordEntry.IsPassword ? "" : "";
+    }
+
+    // Runs when the user clicks "Login", or presses Enter in the password box.
     private async void OnLoginClicked(object sender, EventArgs e)
     {
         string username = (UsernameEntry.Text ?? string.Empty).Trim();
@@ -18,39 +37,62 @@ public partial class LoginPage : ContentPage
         // Both fields are mandatory.
         if (string.IsNullOrWhiteSpace(username))
         {
-            await DisplayAlert("Login", "Please enter your username.", "OK");
+            ShowError("Please enter your username.");
+            UsernameEntry.Focus();
             return;
         }
 
         if (string.IsNullOrWhiteSpace(password))
         {
-            await DisplayAlert("Login", "Please enter your password.", "OK");
+            ShowError("Please enter your password.");
+            PasswordEntry.Focus();
             return;
         }
 
-        // Check the username and password against the Users table.
-        // Demo accounts: admin / admin123 and teacher / teacher123.
-        var user = AppData.Auth.Login(username, password);
+        // The button is turned off while we check, so it cannot be clicked twice.
+        SubmitButton.IsEnabled = false;
+        SubmitButton.Text = "Signing in...";
 
-        if (user == null)
+        try
         {
-            await DisplayAlert("Login", "Incorrect username or password.", "OK");
-            return;
+            // Check the username and password against the Users table.
+            // Demo accounts: admin / admin123 and teacher / teacher123.
+            var user = AppData.Auth.Login(username, password);
+
+            if (user == null)
+            {
+                ShowError("Incorrect username or password.");
+                PasswordEntry.Text = "";
+                PasswordEntry.Focus();
+                return;
+            }
+
+            AppNavigation.CurrentRole = user.Role;
+            AppNavigation.CurrentUserName = user.DisplayName;
+            AppData.CurrentTeacherId = user.TeacherId;
+
+            PasswordEntry.Text = "";
+            ErrorBox.IsVisible = false;
+
+            if (user.Role == "Admin")
+            {
+                await AppNavigation.GoToAsync(new Admin.AdminDashboardPage());
+            }
+            else
+            {
+                await AppNavigation.GoToAsync(new Teacher.TeacherDashboardPage());
+            }
         }
-
-        AppNavigation.CurrentRole = user.Role;
-        AppNavigation.CurrentUserName = user.DisplayName;
-        AppData.CurrentTeacherId = user.TeacherId;
-
-        PasswordEntry.Text = "";
-
-        if (user.Role == "Admin")
+        finally
         {
-            await AppNavigation.GoToAsync(new Admin.AdminDashboardPage());
+            SubmitButton.IsEnabled = true;
+            SubmitButton.Text = "Login";
         }
-        else
-        {
-            await AppNavigation.GoToAsync(new Teacher.TeacherDashboardPage());
-        }
+    }
+
+    private void ShowError(string message)
+    {
+        ErrorLabel.Text = message;
+        ErrorBox.IsVisible = true;
     }
 }

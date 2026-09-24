@@ -1,4 +1,5 @@
 using LumoraAcademy.Core.Entities;
+using LumoraAcademy.Core.Services;
 using LumoraAcademy.Services;
 
 namespace LumoraAcademy.Pages.Admin;
@@ -36,9 +37,10 @@ public partial class AdminEventsPage : ContentPage
         {
             _editing = ev;
             EditTitleEntry.Text = ev.Title;
-            EditDateEntry.Text = ev.Date.ToString("yyyy-MM-dd");
+            EditDatePicker.Date = ev.Date;
             EditTimeEntry.Text = ev.Time;
-            EditCategoryEntry.Text = ev.Category;
+            EditCategoryPicker.ItemsSource = new List<string> { "Academic", "Admin", "Holiday", "Sports" };
+            EditCategoryPicker.SelectedItem = ev.Category;
             EditLocationEntry.Text = ev.Location;
             EditDescriptionEditor.Text = ev.Description;
             StaffRadio.IsChecked = ev.Visibility != "Admin Only";
@@ -69,16 +71,21 @@ public partial class AdminEventsPage : ContentPage
     {
         if (_editing == null) return;
 
-        if (!DateTime.TryParse(EditDateEntry.Text, out DateTime date))
+        string problem = Validation.FirstProblem(
+            Validation.Required(EditTitleEntry.Text, "Event title"),
+            EditCategoryPicker.SelectedIndex < 0 ? "Please select the category." : "",
+            Validation.Required(EditLocationEntry.Text, "Location"));
+
+        if (problem != "")
         {
-            await DisplayAlert("Edit Event", "Please enter the date as yyyy-mm-dd.", "OK");
+            await DisplayAlert("Edit Event", problem, "OK");
             return;
         }
 
         _editing.Title = (EditTitleEntry.Text ?? "").Trim();
-        _editing.Date = date;
+        _editing.Date = EditDatePicker.Date;
         _editing.Time = (EditTimeEntry.Text ?? "").Trim();
-        _editing.Category = (EditCategoryEntry.Text ?? "").Trim();
+        _editing.Category = EditCategoryPicker.SelectedItem ?? "Academic";
         _editing.Location = (EditLocationEntry.Text ?? "").Trim();
         _editing.Description = (EditDescriptionEditor.Text ?? "").Trim();
         _editing.Visibility = StaffRadio.IsChecked ? "Staff" : "Admin Only";
@@ -98,9 +105,15 @@ public partial class AdminEventsPage : ContentPage
 
     private async void OnCreateEventClicked(object sender, EventArgs e)
     {
-        if (string.IsNullOrWhiteSpace(NewTitleEntry.Text))
+        string problem = Validation.FirstProblem(
+            Validation.Required(NewTitleEntry.Text, "Event title"),
+            NewCategoryPicker.SelectedIndex < 0 ? "Please select the category." : "",
+            Validation.Required(NewLocationEntry.Text, "Location"),
+            Validation.NotInPast(NewDatePicker.Date, "Event date"));
+
+        if (problem != "")
         {
-            await DisplayAlert("Create Event", "Please enter an event title.", "OK");
+            await DisplayAlert("Create Event", problem, "OK");
             return;
         }
 

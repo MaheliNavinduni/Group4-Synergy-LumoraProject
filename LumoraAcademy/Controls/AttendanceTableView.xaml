@@ -10,7 +10,7 @@
         <VerticalStackLayout>
 
             <!-- Card header with filters -->
-            <Grid ColumnDefinitions="*,Auto,Auto,Auto,Auto"
+            <Grid ColumnDefinitions="*,180,160,Auto,Auto"
                   ColumnSpacing="8"
                   Padding="20,14">
                 <Label Grid.Column="0"
@@ -20,61 +20,30 @@
                        TextColor="{StaticResource BrandPrimary}"
                        VerticalOptions="Center" />
 
-                <Border Grid.Column="1"
-                        Style="{StaticResource FieldBoxStyle}"
-                        HeightRequest="40"
-                        Padding="10,0">
-                    <HorizontalStackLayout Spacing="6">
-                        <Label Text="&#xE787;"
-                               Style="{StaticResource IconStyle}"
-                               FontSize="11" />
-                        <Label x:Name="RangeLabel" Text="All dates"
-                               Style="{StaticResource MutedStyle}"
-                               FontSize="11"
-                               VerticalOptions="Center" />
-                    </HorizontalStackLayout>
-                </Border>
+                <controls:DropDownField x:Name="ClassPicker"
+                                        Grid.Column="1"
+                                        Title="All classes"
+                                        BoxHeight="40"
+                                        FontSize="11"
+                                        SelectedIndexChanged="OnFilterChanged" />
 
-                <Border Grid.Column="2"
-                        Style="{StaticResource FieldBoxStyle}"
-                        HeightRequest="40"
-                        Padding="10,0">
-                    <HorizontalStackLayout Spacing="6">
-                        <Label x:Name="ClassLabel" Text="All Classes"
-                               Style="{StaticResource MutedStyle}"
-                               FontSize="11"
-                               VerticalOptions="Center" />
-                        <Label Text="&#xE70D;"
-                               Style="{StaticResource IconStyle}"
-                               FontSize="9" />
-                    </HorizontalStackLayout>
-                </Border>
+                <controls:DropDownField x:Name="MonthPicker"
+                                        Grid.Column="2"
+                                        Title="All dates"
+                                        BoxHeight="40"
+                                        FontSize="11"
+                                        SelectedIndexChanged="OnFilterChanged" />
 
-                <Border Grid.Column="3"
-                        Style="{StaticResource FieldBoxStyle}"
-                        HeightRequest="40"
-                        Padding="10,0">
-                    <HorizontalStackLayout Spacing="6">
-                        <Label x:Name="SubjectLabel" Text="All Subjects"
-                               Style="{StaticResource MutedStyle}"
-                               FontSize="11"
-                               VerticalOptions="Center" />
-                        <Label Text="&#xE70D;"
-                               Style="{StaticResource IconStyle}"
-                               FontSize="9" />
-                    </HorizontalStackLayout>
-                </Border>
+                <Label x:Name="RangeLabel"
+                       Grid.Column="3"
+                       Text=""
+                       Style="{StaticResource SmallMutedStyle}"
+                       VerticalOptions="Center" />
 
-                <Border Grid.Column="4"
-                        Style="{StaticResource FieldBoxStyle}"
-                        HeightRequest="40"
-                        WidthRequest="30"
-                        Padding="0">
-                    <Label Text="&#xE71C;"
-                           Style="{StaticResource IconStyle}"
-                           FontSize="11"
-                           HorizontalOptions="Center" />
-                </Border>
+                <Button Grid.Column="4"
+                        Text="Clear"
+                        Style="{StaticResource SmallOutlineButtonStyle}"
+                        Clicked="OnClearClicked" />
             </Grid>
 
             <!-- Table header -->

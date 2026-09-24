@@ -1,4 +1,5 @@
 using LumoraAcademy.Core.Entities;
+using LumoraAcademy.Core.Services;
 using LumoraAcademy.Services;
 
 namespace LumoraAcademy.Pages.Admin;
@@ -72,9 +73,13 @@ public partial class TeacherResignationPage : ContentPage
             await DisplayAlert("Teacher Resignation", "Please search for and select a teacher first.", "OK");
             return;
         }
-        if (ReasonPicker.SelectedIndex < 0)
+        string problem = Validation.FirstProblem(
+            ReasonPicker.SelectedIndex < 0 ? "Please select a reason for leaving." : "",
+            Validation.NotInPast(LastDayPicker.Date, "Last working day"));
+
+        if (problem != "")
         {
-            await DisplayAlert("Teacher Resignation", "Please select a reason for leaving.", "OK");
+            await DisplayAlert("Teacher Resignation", problem, "OK");
             return;
         }
         if (!KeysCheck.IsChecked || !GradesCheck.IsChecked || !AssetsCheck.IsChecked || !PayCheck.IsChecked)
