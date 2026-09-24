@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:LumoraAcademy.Controls"
+             x:Class="LumoraAcademy.Pages.Admin.AdminTeachersPage"
+             Title="Teachers"
+             BackgroundColor="{StaticResource PageBackground}">
+
+    <Grid ColumnDefinitions="220,*">
+
+        <controls:SidebarView Grid.Column="0"
+                              ActiveItem="Teachers" />
+
+        <ScrollView Grid.Column="1">
+            <VerticalStackLayout Padding="36,32"
+                                 Spacing="22">
+
+                <Grid ColumnDefinitions="*,Auto">
+                    <VerticalStackLayout Grid.Column="0" Spacing="4">
+                        <Label Text="Teacher Management" Style="{StaticResource PageTitleStyle}" />
+                        <Label Text="Manage staff directory, assignments, and statuses." Style="{StaticResource PageSubtitleStyle}" />
+                    </VerticalStackLayout>
+                    <Button Grid.Column="1"
+                            Text="Register New Teacher"
+                            Style="{StaticResource SmallPrimaryButtonStyle}"
+                            VerticalOptions="Start"
+                            Clicked="OnRegisterTeacherClicked" />
+                </Grid>
+
+                <!-- Statistics -->
+                <Grid ColumnDefinitions="*,*,*"
+                      ColumnSpacing="14">
+                    <controls:StatCard x:Name="TotalCard" Grid.Column="0" Title="Total Teachers" Value="0" Subtitle="Active staff" Icon="&#xE716;" />
+                    <controls:StatCard x:Name="LeaveCard" Grid.Column="1" Title="On Leave" Value="0" Subtitle="Currently away" Icon="&#xE787;" />
+
+                    <Border Grid.Column="2" Style="{StaticResource CardStyle}" Padding="18,16">
+                        <VerticalStackLayout Spacing="8">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <Label Text="Department Dist." FontSize="11" FontAttributes="Bold" TextColor="{StaticResource TextMuted}" />
+                                <Label Grid.Column="1" Text="&#xE9D2;" Style="{StaticResource IconStyle}" TextColor="{StaticResource BrandPrimary}" />
+                            </Grid>
+                            <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" RowSpacing="6">
+                                <Label x:Name="Dept1Name" Grid.Row="0" Grid.Column="0" Text="" Style="{StaticResource BodyStyle}" FontSize="12" />
+                                <Label x:Name="Dept1Value" Grid.Row="0" Grid.Column="1" Text="" Style="{StaticResource BodyBoldStyle}" FontSize="12" />
+                                <Label x:Name="Dept2Name" Grid.Row="1" Grid.Column="0" Text="" Style="{StaticResource BodyStyle}" FontSize="12" />
+                                <Label x:Name="Dept2Value" Grid.Row="1" Grid.Column="1" Text="" Style="{StaticResource BodyBoldStyle}" FontSize="12" />
+                            </Grid>
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
+
+                <!-- Directory table -->
+                <Border Style="{StaticResource CardTightStyle}">
+                    <VerticalStackLayout>
+
+                        <Grid ColumnDefinitions="*,Auto,Auto"
+                              ColumnSpacing="8"
+                              Padding="20,14">
+                            <Label Grid.Column="0" Text="Directory" Style="{StaticResource SectionTitleStyle}" FontSize="14" VerticalOptions="Center" />
+                            <Border Grid.Column="1" Style="{StaticResource FieldBoxStyle}" HeightRequest="40" WidthRequest="28" Padding="0">
+                                <Label Text="&#xE8FD;" Style="{StaticResource IconStyle}" FontSize="11" HorizontalOptions="Center" />
+                            </Border>
+                            <Border Grid.Column="2" Style="{StaticResource FieldBoxStyle}" HeightRequest="40" WidthRequest="28" Padding="0" Background="{StaticResource StatusBlueBg}" Stroke="{StaticResource StatusBlueBg}">
+                                <Label Text="&#xE80A;" Style="{StaticResource IconStyle}" FontSize="11" TextColor="{StaticResource StatusBlueText}" HorizontalOptions="Center" />
+                            </Border>
+                        </Grid>
+
+                        <Grid Style="{StaticResource TableHeaderRowStyle}"
+                              ColumnDefinitions="1.7*,1*,1.6*,1.8*,0.9*">
+                            <Label Grid.Column="0" Text="TEACHER" Style="{StaticResource TableHeaderStyle}" />
+                            <Label Grid.Column="1" Text="EMPLOYEE ID" Style="{StaticResource TableHeaderStyle}" />
+                            <Label Grid.Column="2" Text="DEPARTMENT &amp; SUBJECTS" Style="{StaticResource TableHeaderStyle}" />
+                            <Label Grid.Column="3" Text="CONTACT INFO" Style="{StaticResource TableHeaderStyle}" />
+                            <Label Grid.Column="4" Text="STATUS" Style="{StaticResource TableHeaderStyle}" />
+                        </Grid>
+
+                        <VerticalStackLayout x:Name="RowList">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <VerticalStackLayout>
+                                        <Grid Style="{StaticResource TableRowStyle}"
+                                              ColumnDefinitions="1.7*,1*,1.6*,1.8*,0.9*">
+                                            <Grid.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="OnTeacherRowTapped" />
+                                            </Grid.GestureRecognizers>
+
+                                            <HorizontalStackLayout Grid.Column="0" Spacing="10">
+                                                <controls:AvatarView Initials="{Binding Initials}" ImagePath="{Binding PhotoPath}" Size="32" />
+                                                <VerticalStackLayout Spacing="2" VerticalOptions="Center">
+                                                    <Label Text="{Binding FullName}" Style="{StaticResource TableCellBoldStyle}" FontSize="12" />
+                                                    <Label Text="{Binding Designation}" Style="{StaticResource SmallMutedStyle}" FontSize="10" />
+                                                </VerticalStackLayout>
+                                            </HorizontalStackLayout>
+
+                                            <Label Grid.Column="1" Text="{Binding TeacherId}" Style="{StaticResource TableCellMutedStyle}" />
+
+                                            <VerticalStackLayout Grid.Column="2" Spacing="2" VerticalOptions="Center">
+                                                <Label Text="{Binding Department}" Style="{StaticResource TableCellStyle}" FontSize="12" />
+                                                <Label Text="{Binding Subjects}" Style="{StaticResource SmallMutedStyle}" FontSize="10" />
+                                            </VerticalStackLayout>
+
+                                            <VerticalStackLayout Grid.Column="3" Spacing="2" VerticalOptions="Center">
+                                                <Label Text="{Binding Email}" Style="{StaticResource TableCellStyle}" FontSize="11" />
+                                                <Label Text="{Binding Phone}" Style="{StaticResource SmallMutedStyle}" FontSize="10" />
+                                            </VerticalStackLayout>
+
+                                            <controls:StatusBadge Grid.Column="4" Text="{Binding Status}" />
+                                        </Grid>
+                                        <BoxView Style="{StaticResource RowDividerStyle}" />
+                                    </VerticalStackLayout>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+
+                        <Grid ColumnDefinitions="*,Auto"
+                              Padding="20,12">
+                            <Label x:Name="CountLabel" Grid.Column="0" Text="" Style="{StaticResource SmallMutedStyle}" VerticalOptions="Center" />
+                            <controls:PagerView x:Name="Pager" Grid.Column="1" PageChanged="OnPageChanged" />
+                        </Grid>
+
+                    </VerticalStackLayout>
+                </Border>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

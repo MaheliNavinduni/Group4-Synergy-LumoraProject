@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:LumoraAcademy.Controls"
+             x:Class="LumoraAcademy.Pages.Admin.AdminAttendancePage"
+             Title="Attendance"
+             BackgroundColor="{StaticResource PageBackground}">
+
+    <Grid ColumnDefinitions="220,*">
+
+        <controls:SidebarView Grid.Column="0"
+                              ActiveItem="Attendance" />
+
+        <ScrollView Grid.Column="1">
+            <VerticalStackLayout Padding="36,32"
+                                 Spacing="22">
+
+                <VerticalStackLayout Spacing="4">
+                    <Label Text="Attendance History"
+                           Style="{StaticResource PageTitleStyle}" />
+                    <Label Text="Comprehensive overview of historical attendance records."
+                           Style="{StaticResource PageSubtitleStyle}" />
+                </VerticalStackLayout>
+
+                <!-- Three statistics -->
+                <Grid ColumnDefinitions="*,*,*"
+                      ColumnSpacing="14">
+                    <controls:StatCard x:Name="RateCard" Grid.Column="0"
+                                       Title="Average Attendance Rate"
+                                       Value="94.2%"
+                                       Subtitle="Of the students marked"
+                                       Icon="&#xE9D2;" />
+                    <controls:StatCard x:Name="DaysCard" Grid.Column="1"
+                                       Title="Total Days Logged"
+                                       Value="142"
+                                       Subtitle=""
+                                       Icon="&#xE787;" />
+                    <controls:StatCard x:Name="PerfectCard" Grid.Column="2"
+                                       Title="Perfect Attendance Days"
+                                       Value="12"
+                                       Subtitle="Longest streak this term"
+                                       Icon="&#xE734;"
+                                       IsDark="True" />
+                </Grid>
+
+                <controls:AttendanceTableView />
+
+                <Button Text="Go to Mark Attendance"
+                        Style="{StaticResource PrimaryButtonStyle}"
+                        Clicked="OnMarkAttendanceClicked" />
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

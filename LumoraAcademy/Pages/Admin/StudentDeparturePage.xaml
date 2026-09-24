@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:LumoraAcademy.Controls"
+             x:Class="LumoraAcademy.Pages.Admin.StudentDeparturePage"
+             Title="Process Student Departure"
+             BackgroundColor="{StaticResource ContentBackground}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="40,30"
+                             Spacing="16"
+                             MaximumWidthRequest="720"
+                             HorizontalOptions="Center">
+
+            <Grid ColumnDefinitions="*,Auto">
+                <Label Text="Process Student Departure" FontSize="15" FontAttributes="Bold" TextColor="{StaticResource BrandPrimary}" VerticalOptions="Center" />
+                <Button Grid.Column="1" Text="Go Back" Style="{StaticResource SmallPrimaryButtonStyle}" BackgroundColor="{StaticResource BrandPrimaryDark}" HeightRequest="28" Clicked="OnCancelClicked" />
+            </Grid>
+
+            <!-- Find student -->
+            <Border Style="{StaticResource CardStyle}" Padding="20">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Find Student" Style="{StaticResource BodyBoldStyle}" FontSize="14" />
+                    <Label Text="Search by Student ID or Name to begin the departure process." Style="{StaticResource SmallMutedStyle}" />
+                    <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="40" Background="{StaticResource TableHeaderBackground}" Stroke="{StaticResource TableHeaderBackground}">
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
+                            <Label Text="&#xE721;" Style="{StaticResource IconStyle}" FontSize="11" />
+                            <Entry x:Name="SearchEntry" Grid.Column="1" Placeholder="Enter ID or Name, then press Enter..." Style="{StaticResource FieldEntryStyle}" Completed="OnSearchCompleted" />
+                        </Grid>
+                    </Border>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Selected student -->
+            <Border Style="{StaticResource CardStyle}" Padding="16">
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="14">
+                    <controls:AvatarView x:Name="Avatar" Initials="?" Size="52" />
+                    <VerticalStackLayout Grid.Column="1" Spacing="3" VerticalOptions="Center">
+                        <Label x:Name="NameLabel" Text="No student selected" Style="{StaticResource BodyBoldStyle}" FontSize="14" />
+                        <Label x:Name="GradeLabel" Text="Search above to select a student" Style="{StaticResource MutedStyle}" />
+                        <Border Background="{StaticResource StatusYellowBg}" StrokeThickness="0" Padding="8,2" HorizontalOptions="Start">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="4" />
+                            </Border.StrokeShape>
+                            <Label x:Name="IdLabel" Text="ID: -" FontSize="9" FontAttributes="Bold" TextColor="{StaticResource StatusYellowText}" />
+                        </Border>
+                    </VerticalStackLayout>
+                </Grid>
+            </Border>
+
+            <!-- Departure details -->
+            <Border Style="{StaticResource CardStyle}" Padding="20">
+                <VerticalStackLayout Spacing="16">
+                    <Label Text="Departure Details" Style="{StaticResource BodyBoldStyle}" FontSize="14" />
+                    <BoxView Style="{StaticResource RowDividerStyle}" />
+
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="16">
+                        <VerticalStackLayout Grid.Column="0" Spacing="6">
+                            <HorizontalStackLayout Spacing="5">
+                                <Label Text="&#xE787;" Style="{StaticResource IconStyle}" FontSize="10" />
+                                <Label Text="Effective Departure Date" Style="{StaticResource FormLabelStyle}" FontSize="11" Margin="0" />
+                            </HorizontalStackLayout>
+                            <controls:DateField x:Name="DepartureDatePicker"
+                                                BoxHeight="40"
+                                                FontSize="12" />
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Column="1" Spacing="6">
+                            <HorizontalStackLayout Spacing="5">
+                                <Label Text="&#xE946;" Style="{StaticResource IconStyle}" FontSize="10" />
+                                <Label Text="Reason for Resignation" Style="{StaticResource FormLabelStyle}" FontSize="11" Margin="0" />
+                            </HorizontalStackLayout>
+                            <controls:DropDownField x:Name="ReasonPicker"
+                                                    Title="Select a reason..."
+                                                    BoxHeight="40" />
+                        </VerticalStackLayout>
+                    </Grid>
+
+                    <VerticalStackLayout Spacing="6">
+                        <HorizontalStackLayout Spacing="5">
+                            <Label Text="&#xE70B;" Style="{StaticResource IconStyle}" FontSize="10" />
+                            <Label Text="Additional Notes" Style="{StaticResource FormLabelStyle}" FontSize="11" Margin="0" />
+                        </HorizontalStackLayout>
+                        <Border Style="{StaticResource TextAreaBoxStyle}" HeightRequest="80">
+                            <Editor x:Name="NotesEditor" Placeholder="Enter any additional details regarding the departure..." Style="{StaticResource FieldEditorStyle}" />
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <BoxView Style="{StaticResource RowDividerStyle}" />
+
+                    <HorizontalStackLayout Spacing="10" HorizontalOptions="End">
+                        <Button Text="Cancel" Style="{StaticResource GhostButtonStyle}" Clicked="OnCancelClicked" />
+                        <Button Text="Confirm Resignation" Style="{StaticResource PrimaryButtonStyle}" Clicked="OnConfirmClicked" />
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

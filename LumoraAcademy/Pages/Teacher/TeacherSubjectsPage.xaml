@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:LumoraAcademy.Controls"
+             x:Class="LumoraAcademy.Pages.Teacher.TeacherSubjectsPage"
+             Title="My Subjects"
+             BackgroundColor="{StaticResource PageBackground}">
+
+    <Grid ColumnDefinitions="220,*">
+
+        <controls:SidebarView Grid.Column="0"
+                              ActiveItem="My Subjects" />
+
+        <ScrollView Grid.Column="1">
+            <VerticalStackLayout Padding="36,32"
+                                 Spacing="24">
+
+                <!-- Teacher profile card -->
+                <Border Style="{StaticResource CardStyle}"
+                        Padding="20">
+                    <Grid ColumnDefinitions="Auto,*"
+                          ColumnSpacing="16">
+                        <controls:AvatarView Grid.Column="0"
+                                             x:Name="Avatar" Initials=""
+                                             Size="52" />
+                        <VerticalStackLayout Grid.Column="1"
+                                             Spacing="6"
+                                             VerticalOptions="Center">
+                            <Label x:Name="NameLabel" Text=""
+                                   FontSize="18"
+                                   FontAttributes="Bold"
+                                   TextColor="{StaticResource TextHeading}" />
+                            <HorizontalStackLayout Spacing="16">
+                                <HorizontalStackLayout Spacing="6">
+                                    <Label Text="&#xE7BE;"
+                                           Style="{StaticResource IconStyle}"
+                                           FontSize="11" />
+                                    <Label x:Name="DesignationLabel" Text=""
+                                           Style="{StaticResource SmallMutedStyle}"
+                                           VerticalOptions="Center" />
+                                </HorizontalStackLayout>
+                                <HorizontalStackLayout Spacing="6">
+                                    <Label Text="&#xE715;"
+                                           Style="{StaticResource IconStyle}"
+                                           FontSize="11" />
+                                    <Label x:Name="EmailLabel" Text=""
+                                           Style="{StaticResource SmallMutedStyle}"
+                                           VerticalOptions="Center" />
+                                </HorizontalStackLayout>
+                            </HorizontalStackLayout>
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+
+                <!-- Heading -->
+                <VerticalStackLayout Spacing="2">
+                    <Label Text="My Subjects"
+                           Style="{StaticResource SectionTitleStyle}"
+                           FontSize="18" />
+                    <Label Text="Current term teaching assignments"
+                           Style="{StaticResource SmallMutedStyle}" />
+                </VerticalStackLayout>
+
+                <!-- Subject cards, three per row -->
+                <FlexLayout x:Name="SubjectList"
+                            Wrap="Wrap"
+                            Direction="Row"
+                            JustifyContent="Start"
+                            AlignItems="Start">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <Border Style="{StaticResource CardStyle}"
+                                    Padding="0"
+                                    WidthRequest="215"
+                                    Margin="0,0,16,16">
+                                <VerticalStackLayout>
+
+                                    <!-- Top part: icon, name, code -->
+                                    <VerticalStackLayout Padding="16,16,16,12"
+                                                         Spacing="8">
+                                        <Border WidthRequest="30"
+                                                HeightRequest="30"
+                                                Padding="0"
+                                                StrokeThickness="0"
+                                                Background="{StaticResource BrandCream}"
+                                                HorizontalOptions="Start">
+                                            <Border.StrokeShape>
+                                                <RoundRectangle CornerRadius="6" />
+                                            </Border.StrokeShape>
+                                            <Label Text="&#xE82D;"
+                                                   Style="{StaticResource IconStyle}"
+                                                   TextColor="{StaticResource BrandPrimary}"
+                                                   HorizontalOptions="Center" />
+                                        </Border>
+                                        <Label Text="{Binding Name}"
+                                               Style="{StaticResource BodyBoldStyle}" />
+                                        <Label Text="{Binding RoomText}"
+                                               Style="{StaticResource SmallMutedStyle}" />
+                                    </VerticalStackLayout>
+
+                                    <BoxView Style="{StaticResource RowDividerStyle}" />
+
+                                    <!-- Bottom part: days, time, students -->
+                                    <VerticalStackLayout Padding="16,12,16,16"
+                                                         Spacing="6">
+                                        <HorizontalStackLayout Spacing="8">
+                                            <Label Text="&#xE787;"
+                                                   Style="{StaticResource IconStyle}"
+                                                   FontSize="11" />
+                                            <Label Text="{Binding Days}"
+                                                   Style="{StaticResource SmallMutedStyle}"
+                                                   TextColor="{StaticResource TextMuted}"
+                                                   VerticalOptions="Center" />
+                                        </HorizontalStackLayout>
+                                        <HorizontalStackLayout Spacing="8">
+                                            <Label Text="&#xE823;"
+                                                   Style="{StaticResource IconStyle}"
+                                                   FontSize="11" />
+                                            <Label Text="{Binding TimeRange}"
+                                                   Style="{StaticResource SmallMutedStyle}"
+                                                   TextColor="{StaticResource TextMuted}"
+                                                   VerticalOptions="Center" />
+                                        </HorizontalStackLayout>
+                                        <HorizontalStackLayout Spacing="8">
+                                            <Label Text="&#xE716;"
+                                                   Style="{StaticResource IconStyle}"
+                                                   FontSize="11" />
+                                            <Label Text="{Binding StudentCountText}"
+                                                   Style="{StaticResource SmallMutedStyle}"
+                                                   TextColor="{StaticResource TextMuted}"
+                                                   VerticalOptions="Center" />
+                                        </HorizontalStackLayout>
+                                    </VerticalStackLayout>
+
+                                </VerticalStackLayout>
+                            </Border>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </FlexLayout>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

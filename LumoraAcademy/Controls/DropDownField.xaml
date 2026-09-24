@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- A drop-down box with a clear arrow on the right so the user can see
+     straight away that it can be opened. Tapping it shows the list of choices. -->
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LumoraAcademy.Controls.DropDownField">
+
+    <Border x:Name="Box"
+            Style="{StaticResource FieldBoxStyle}"
+            Padding="12,0">
+        <Border.GestureRecognizers>
+            <TapGestureRecognizer Tapped="OnTapped" />
+            <PointerGestureRecognizer PointerEntered="OnPointerEntered"
+                                      PointerExited="OnPointerExited" />
+        </Border.GestureRecognizers>
+
+        <Grid ColumnDefinitions="*,Auto"
+              ColumnSpacing="8">
+
+            <Label x:Name="ValueLabel"
+                   Grid.Column="0"
+                   Text="Select"
+                   FontSize="13"
+                   TextColor="{StaticResource TextLight}"
+                   LineBreakMode="TailTruncation"
+                   VerticalOptions="Center" />
+
+            <!-- The arrow. Segoe MDL2 Assets E70D is a chevron pointing down. -->
+            <Label x:Name="Arrow"
+                   Grid.Column="1"
+                   Text="&#xE70D;"
+                   FontFamily="Segoe MDL2 Assets"
+                   FontSize="10"
+                   TextColor="{StaticResource TextMuted}"
+                   VerticalOptions="Center" />
+        </Grid>
+    </Border>
+</ContentView>

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:LumoraAcademy.Controls"
+             x:Class="LumoraAcademy.Pages.Admin.TeacherResignationPage"
+             Title="Process Teacher Resignation"
+             BackgroundColor="{StaticResource ContentBackground}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="40,30"
+                             Spacing="20"
+                             MaximumWidthRequest="820"
+                             HorizontalOptions="Center">
+
+            <!-- Header bar -->
+            <Border Style="{StaticResource CardStyle}" Padding="24,18">
+                <VerticalStackLayout Spacing="4">
+                    <Label Text="Process Teacher Resignation" FontSize="18" FontAttributes="Bold" TextColor="{StaticResource BrandPrimary}" />
+                    <Label Text="Securely process offboarding and finalize documentation." Style="{StaticResource PageSubtitleStyle}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Grid ColumnDefinitions="240,*" ColumnSpacing="20">
+
+                <!-- Left column -->
+                <VerticalStackLayout Grid.Column="0" Spacing="16">
+                    <Border Style="{StaticResource CardStyle}" Padding="16">
+                        <VerticalStackLayout Spacing="10">
+                            <Label Text="Find Teacher" Style="{StaticResource BodyBoldStyle}" />
+                            <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="40" Padding="8,0">
+                                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="6">
+                                    <Label Text="&#xE721;" Style="{StaticResource IconStyle}" FontSize="11" />
+                                    <Entry x:Name="SearchEntry" Grid.Column="1" Placeholder="Name or ID, then press Enter..." Style="{StaticResource FieldEntryStyle}" FontSize="11" Completed="OnSearchCompleted" />
+                                </Grid>
+                            </Border>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <Border Style="{StaticResource CardStyle}" Padding="16">
+                        <VerticalStackLayout Spacing="12">
+                            <Label Text="Selected Educator" Style="{StaticResource BodyBoldStyle}" />
+                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                                <controls:AvatarView x:Name="Avatar" Initials="?" Size="44" />
+                                <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                                    <Label x:Name="NameLabel" Text="No teacher selected" Style="{StaticResource BodyBoldStyle}" FontSize="12" />
+                                    <Label x:Name="IdLabel" Text="Search above" Style="{StaticResource SmallMutedStyle}" FontSize="9" />
+                                </VerticalStackLayout>
+                            </Grid>
+                            <HorizontalStackLayout Spacing="6">
+                                <controls:StatusBadge x:Name="Subject1Badge" Text="" />
+                                <controls:StatusBadge x:Name="Subject2Badge" Text="" IsVisible="False" />
+                            </HorizontalStackLayout>
+                            <HorizontalStackLayout Spacing="5">
+                                <Label Text="&#xE787;" Style="{StaticResource IconStyle}" FontSize="10" />
+                                <Label Text="Joined: Aug 2018" Style="{StaticResource SmallMutedStyle}" VerticalOptions="Center" />
+                            </HorizontalStackLayout>
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- Right column -->
+                <VerticalStackLayout Grid.Column="1" Spacing="18">
+                    <Label Text="Resignation Details" Style="{StaticResource SectionTitleStyle}" FontSize="14" />
+
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="16">
+                        <VerticalStackLayout Grid.Column="0" Spacing="6">
+                            <Label Text="Last Working Day" Style="{StaticResource FormLabelStyle}" FontSize="11" Margin="0" />
+                            <controls:DateField x:Name="LastDayPicker"
+                                                BoxHeight="40"
+                                                FontSize="12" />
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Column="1" Spacing="6">
+                            <Label Text="Reason for Leaving" Style="{StaticResource FormLabelStyle}" FontSize="11" Margin="0" />
+                            <controls:DropDownField x:Name="ReasonPicker"
+                                                    Title="Select a reason..."
+                                                    BoxHeight="40" />
+                        </VerticalStackLayout>
+                    </Grid>
+
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="Additional Notes (Optional)" Style="{StaticResource FormLabelStyle}" FontSize="11" Margin="0" />
+                        <Border Style="{StaticResource TextAreaBoxStyle}" HeightRequest="80">
+                            <Editor x:Name="NotesEditor" Placeholder="Enter any specific details regarding the resignation..." Style="{StaticResource FieldEditorStyle}" />
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <HorizontalStackLayout Spacing="8">
+                        <Label Text="&#xE9D5;" Style="{StaticResource IconStyle}" />
+                        <Label Text="Handover Checklist" Style="{StaticResource SectionTitleStyle}" FontSize="13" />
+                    </HorizontalStackLayout>
+
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="12" RowDefinitions="Auto,Auto" RowSpacing="8">
+                        <Border Grid.Row="0" Grid.Column="0" Style="{StaticResource CardStyle}" Padding="10,6">
+                            <HorizontalStackLayout Spacing="4">
+                                <CheckBox x:Name="KeysCheck" Color="{StaticResource BrandPrimary}" Scale="0.8" />
+                                <Label Text="Return Keys &amp; ID Badge" Style="{StaticResource BodyStyle}" FontSize="12" VerticalOptions="Center" />
+                            </HorizontalStackLayout>
+                        </Border>
+                        <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource CardStyle}" Padding="10,6">
+                            <HorizontalStackLayout Spacing="4">
+                                <CheckBox x:Name="GradesCheck" Color="{StaticResource BrandPrimary}" Scale="0.8" />
+                                <Label Text="Grade Entry Complete" Style="{StaticResource BodyStyle}" FontSize="12" VerticalOptions="Center" />
+                            </HorizontalStackLayout>
+                        </Border>
+                        <Border Grid.Row="1" Grid.Column="0" Style="{StaticResource CardStyle}" Padding="10,6">
+                            <HorizontalStackLayout Spacing="4">
+                                <CheckBox x:Name="AssetsCheck" Color="{StaticResource BrandPrimary}" Scale="0.8" />
+                                <Label Text="Return IT Assets (Laptop)" Style="{StaticResource BodyStyle}" FontSize="12" VerticalOptions="Center" />
+                            </HorizontalStackLayout>
+                        </Border>
+                        <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource CardStyle}" Padding="10,6">
+                            <HorizontalStackLayout Spacing="4">
+                                <CheckBox x:Name="PayCheck" Color="{StaticResource BrandPrimary}" Scale="0.8" />
+                                <Label Text="Final Pay Clearance" Style="{StaticResource BodyStyle}" FontSize="12" VerticalOptions="Center" />
+                            </HorizontalStackLayout>
+                        </Border>
+                    </Grid>
+
+                    <HorizontalStackLayout Spacing="10" HorizontalOptions="End" Margin="0,10,0,0">
+                        <Button Text="Cancel" Style="{StaticResource GhostButtonStyle}" Clicked="OnCancelClicked" />
+                        <Button Text="Process Resignation" Style="{StaticResource PrimaryButtonStyle}" Clicked="OnProcessClicked" />
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Grid>
+
+            <Button Text="Go Back"
+                    Style="{StaticResource SmallPrimaryButtonStyle}"
+                    BackgroundColor="{StaticResource BrandPrimaryDark}"
+                    HorizontalOptions="End"
+                    Clicked="OnCancelClicked" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

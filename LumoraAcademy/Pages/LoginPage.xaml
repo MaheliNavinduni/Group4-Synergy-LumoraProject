@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LumoraAcademy.Pages.LoginPage"
+             Title="Login"
+             BackgroundColor="{StaticResource BrandPrimaryDark}">
+
+    <Grid>
+        <!-- The white login card, centred on the brown background -->
+        <Border WidthRequest="400"
+                Padding="28,26"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Background="{StaticResource CardBackground}"
+                Stroke="{StaticResource CardBorder}"
+                StrokeThickness="1">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="14" />
+            </Border.StrokeShape>
+
+            <VerticalStackLayout Spacing="0">
+
+                <!-- Graduation cap badge -->
+                <Border WidthRequest="34"
+                        HeightRequest="34"
+                        Padding="0"
+                        HorizontalOptions="Center"
+                        Background="{StaticResource BrandCream}"
+                        StrokeThickness="0">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="8" />
+                    </Border.StrokeShape>
+
+                    <Grid WidthRequest="20"
+                          HeightRequest="16"
+                          HorizontalOptions="Center"
+                          VerticalOptions="Center">
+                        <!-- Top of the cap -->
+                        <Polygon Points="0,5 10,0 20,5 10,10"
+                                 Fill="{StaticResource BrandPrimary}"
+                                 VerticalOptions="Start" />
+                        <!-- Base of the cap -->
+                        <Border WidthRequest="10"
+                                HeightRequest="5"
+                                Margin="0,0,0,1"
+                                HorizontalOptions="Center"
+                                VerticalOptions="End"
+                                Background="{StaticResource BrandPrimary}"
+                                StrokeThickness="0">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="0,0,3,3" />
+                            </Border.StrokeShape>
+                        </Border>
+                    </Grid>
+                </Border>
+
+                <Label Text="Lumora Academy"
+                       FontSize="19"
+                       FontAttributes="Bold"
+                       TextColor="{StaticResource TextHeading}"
+                       HorizontalOptions="Center"
+                       Margin="0,12,0,0" />
+
+                <Label Text="Login Access"
+                       FontSize="12"
+                       TextColor="{StaticResource TextMuted}"
+                       HorizontalOptions="Center"
+                       Margin="0,4,0,0" />
+
+                <!-- Thin divider line under the header -->
+                <Border HeightRequest="6"
+                        Margin="0,20,0,18"
+                        Background="{StaticResource DividerLine}"
+                        StrokeThickness="0">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="3" />
+                    </Border.StrokeShape>
+                </Border>
+
+                <!-- ===== Username ===== -->
+                <Label Text="USERNAME"
+                       Style="{StaticResource FieldLabelStyle}" />
+
+                <Border Style="{StaticResource FieldBoxStyle}"
+                        Margin="0,6,0,0">
+                    <Grid ColumnDefinitions="20,*"
+                          ColumnSpacing="8">
+
+                        <!-- Small person icon -->
+                        <Grid Grid.Column="0"
+                              WidthRequest="14"
+                              HeightRequest="14"
+                              HorizontalOptions="Center"
+                              VerticalOptions="Center">
+                            <Ellipse Fill="{StaticResource BrandPrimary}"
+                                     WidthRequest="6"
+                                     HeightRequest="6"
+                                     HorizontalOptions="Center"
+                                     VerticalOptions="Start" />
+                            <Border WidthRequest="12"
+                                    HeightRequest="6"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="End"
+                                    Background="{StaticResource BrandPrimary}"
+                                    StrokeThickness="0">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="6,6,0,0" />
+                                </Border.StrokeShape>
+                            </Border>
+                        </Grid>
+
+                        <Entry x:Name="UsernameEntry"
+                               Grid.Column="1"
+                               Placeholder="user@district.edu"
+                               FontSize="14"
+                               BackgroundColor="Transparent"
+                               TextColor="{StaticResource TextHeading}"
+                               PlaceholderColor="{StaticResource TextMuted}"
+                               VerticalOptions="Center" />
+                    </Grid>
+                </Border>
+
+                <!-- ===== Password ===== -->
+                <Label Text="PASSWORD"
+                       Style="{StaticResource FieldLabelStyle}"
+                       Margin="0,16,0,0" />
+
+                <Border Style="{StaticResource FieldBoxStyle}"
+                        Margin="0,6,0,0">
+                    <Grid ColumnDefinitions="20,*"
+                          ColumnSpacing="8">
+
+                        <!-- Small padlock icon -->
+                        <Grid Grid.Column="0"
+                              WidthRequest="14"
+                              HeightRequest="14"
+                              HorizontalOptions="Center"
+                              VerticalOptions="Center">
+                            <Border WidthRequest="8"
+                                    HeightRequest="8"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Start"
+                                    Background="Transparent"
+                                    Stroke="{StaticResource BrandPrimary}"
+                                    StrokeThickness="1.5">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="4,4,0,0" />
+                                </Border.StrokeShape>
+                            </Border>
+                            <Border WidthRequest="12"
+                                    HeightRequest="7"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="End"
+                                    Background="{StaticResource BrandPrimary}"
+                                    StrokeThickness="0">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="2" />
+                                </Border.StrokeShape>
+                            </Border>
+                        </Grid>
+
+                        <Entry x:Name="PasswordEntry"
+                               Grid.Column="1"
+                               IsPassword="True"
+                               Placeholder="Password"
+                               FontSize="14"
+                               BackgroundColor="Transparent"
+                               TextColor="{StaticResource TextHeading}"
+                               PlaceholderColor="{StaticResource TextMuted}"
+                               VerticalOptions="Center" />
+                    </Grid>
+                </Border>
+
+                <!-- ===== Login button ===== -->
+                <Button x:Name="SubmitButton"
+                        Text="Login"
+                        Clicked="OnLoginClicked"
+                        Style="{StaticResource PrimaryButtonStyle}"
+                        Margin="0,26,0,0" />
+
+            </VerticalStackLayout>
+        </Border>
+    </Grid>
+</ContentPage>

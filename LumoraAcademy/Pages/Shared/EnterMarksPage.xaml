@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:LumoraAcademy.Controls"
+             x:Class="LumoraAcademy.Pages.Shared.EnterMarksPage"
+             Title="Enter Marks"
+             BackgroundColor="{StaticResource PageBackground}">
+
+    <Grid ColumnDefinitions="220,*">
+
+        <controls:SidebarView Grid.Column="0"
+                              ActiveItem="Students" />
+
+        <ScrollView Grid.Column="1">
+            <VerticalStackLayout Padding="36,32"
+                                 Spacing="20"
+                                 MaximumWidthRequest="860"
+                                 HorizontalOptions="Start">
+
+                <VerticalStackLayout Spacing="4">
+                    <Label Text="Enter Examination Marks" Style="{StaticResource PageTitleStyle}" />
+                    <Label x:Name="SubtitleLabel" Text="" Style="{StaticResource PageSubtitleStyle}" />
+                </VerticalStackLayout>
+
+                <!-- Internal exams: monthly, term, year-end -->
+                <Border Style="{StaticResource CardStyle}">
+                    <VerticalStackLayout Spacing="14">
+                        <Label Text="Record Internal Exam Mark" Style="{StaticResource SectionTitleStyle}" FontSize="14" />
+                        <Label Text="Monthly test, term exam or year-end exam. Marks are out of 100 and the grade is worked out automatically." Style="{StaticResource SmallMutedStyle}" />
+                        <BoxView Style="{StaticResource RowDividerStyle}" />
+
+                        <Grid ColumnDefinitions="*,*,*" ColumnSpacing="14" RowDefinitions="Auto,Auto" RowSpacing="12">
+                            <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="6">
+                                <Label Text="Subject" Style="{StaticResource FormLabelStyle}" Margin="0" />
+                                <controls:DropDownField x:Name="SubjectPicker" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Row="0" Grid.Column="1" Spacing="6">
+                                <Label Text="Exam Type" Style="{StaticResource FormLabelStyle}" Margin="0" />
+                                <controls:DropDownField x:Name="ExamTypePicker" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Row="0" Grid.Column="2" Spacing="6">
+                                <Label Text="Exam Name" Style="{StaticResource FormLabelStyle}" Margin="0" />
+                                <Border Style="{StaticResource FieldBoxStyle}">
+                                    <Entry x:Name="ExamNameEntry" Placeholder="e.g. September 2026" Style="{StaticResource FieldEntryStyle}" />
+                                </Border>
+                            </VerticalStackLayout>
+
+                            <VerticalStackLayout Grid.Row="1" Grid.Column="0" Spacing="6">
+                                <Label Text="Marks (0 - 100)" Style="{StaticResource FormLabelStyle}" Margin="0" />
+                                <Border Style="{StaticResource FieldBoxStyle}">
+                                    <Entry x:Name="MarksEntry" Keyboard="Numeric" Placeholder="e.g. 85" Style="{StaticResource FieldEntryStyle}" />
+                                </Border>
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Spacing="6">
+                                <Label Text="Teacher Remarks (optional)" Style="{StaticResource FormLabelStyle}" Margin="0" />
+                                <Border Style="{StaticResource FieldBoxStyle}">
+                                    <Entry x:Name="RemarksEntry" Placeholder="e.g. Excellent analytical skills." Style="{StaticResource FieldEntryStyle}" />
+                                </Border>
+                            </VerticalStackLayout>
+                        </Grid>
+
+                        <Button Text="Save Mark" Style="{StaticResource PrimaryButtonStyle}" HorizontalOptions="End" Clicked="OnSaveMarkClicked" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Cambridge / external results -->
+                <Border Style="{StaticResource CardStyle}">
+                    <VerticalStackLayout Spacing="14">
+                        <Label Text="Record Cambridge (External) Result" Style="{StaticResource SectionTitleStyle}" FontSize="14" />
+                        <Label Text="Results issued by the exam board, e.g. IGCSE. Enter the grade exactly as given (A*, A, B ...)." Style="{StaticResource SmallMutedStyle}" />
+                        <BoxView Style="{StaticResource RowDividerStyle}" />
+
+                        <Grid ColumnDefinitions="*,*,*" ColumnSpacing="14">
+                            <VerticalStackLayout Grid.Column="0" Spacing="6">
+                                <Label Text="Subject" Style="{StaticResource FormLabelStyle}" Margin="0" />
+                                <controls:DropDownField x:Name="CambridgeSubjectPicker" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Column="1" Spacing="6">
+                                <Label Text="Examination" Style="{StaticResource FormLabelStyle}" Margin="0" />
+                                <Border Style="{StaticResource FieldBoxStyle}">
+                                    <Entry x:Name="CambridgeExamEntry" Placeholder="e.g. IGCSE May 2026" Style="{StaticResource FieldEntryStyle}" />
+                                </Border>
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Column="2" Spacing="6">
+                                <Label Text="Grade" Style="{StaticResource FormLabelStyle}" Margin="0" />
+                                <Border Style="{StaticResource FieldBoxStyle}">
+                                    <Entry x:Name="CambridgeGradeEntry" Placeholder="e.g. A*" Style="{StaticResource FieldEntryStyle}" />
+                                </Border>
+                            </VerticalStackLayout>
+                        </Grid>
+
+                        <Button Text="Save Cambridge Result" Style="{StaticResource PrimaryButtonStyle}" HorizontalOptions="End" Clicked="OnSaveCambridgeClicked" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Existing results -->
+                <Border Style="{StaticResource CardTightStyle}">
+                    <VerticalStackLayout>
+                        <Grid Padding="20,14">
+                            <Label Text="Recorded Results" Style="{StaticResource SectionTitleStyle}" FontSize="14" />
+                        </Grid>
+                        <Grid Style="{StaticResource TableHeaderRowStyle}" ColumnDefinitions="1.4*,1*,1.4*,0.7*,0.6*,2*,0.5*">
+                            <Label Grid.Column="0" Text="Subject" Style="{StaticResource TableHeaderStyle}" />
+                            <Label Grid.Column="1" Text="Type" Style="{StaticResource TableHeaderStyle}" />
+                            <Label Grid.Column="2" Text="Exam" Style="{StaticResource TableHeaderStyle}" />
+                            <Label Grid.Column="3" Text="Marks" Style="{StaticResource TableHeaderStyle}" HorizontalOptions="Center" />
+                            <Label Grid.Column="4" Text="Grade" Style="{StaticResource TableHeaderStyle}" HorizontalOptions="Center" />
+                            <Label Grid.Column="5" Text="Remarks" Style="{StaticResource TableHeaderStyle}" />
+                            <Label Grid.Column="6" Text="" Style="{StaticResource TableHeaderStyle}" />
+                        </Grid>
+                        <VerticalStackLayout x:Name="RowList">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <VerticalStackLayout>
+                                        <Grid Style="{StaticResource TableRowStyle}" ColumnDefinitions="1.4*,1*,1.4*,0.7*,0.6*,2*,0.5*">
+                                            <Label Grid.Column="0" Text="{Binding SubjectName}" Style="{StaticResource TableCellBoldStyle}" FontSize="12" />
+                                            <controls:StatusBadge Grid.Column="1" Text="{Binding ExamType}" />
+                                            <Label Grid.Column="2" Text="{Binding ExamName}" Style="{StaticResource TableCellStyle}" FontSize="12" />
+                                            <Label Grid.Column="3" Text="{Binding Marks, StringFormat='{0:0}'}" Style="{StaticResource TableCellStyle}" FontSize="12" HorizontalOptions="Center" />
+                                            <Label Grid.Column="4" Text="{Binding Grade}" Style="{StaticResource TableCellBoldStyle}" FontSize="12" HorizontalOptions="Center" TextColor="{StaticResource BrandPrimary}" />
+                                            <Label Grid.Column="5" Text="{Binding Remarks}" Style="{StaticResource TableCellMutedStyle}" LineBreakMode="TailTruncation" />
+                                            <Label Grid.Column="6" Text="&#xE74D;" Style="{StaticResource IconStyle}" FontSize="12" HorizontalOptions="End">
+                                                <Label.GestureRecognizers>
+                                                    <TapGestureRecognizer Tapped="OnDeleteResultTapped" />
+                                                </Label.GestureRecognizers>
+                                            </Label>
+                                        </Grid>
+                                        <BoxView Style="{StaticResource RowDividerStyle}" />
+                                    </VerticalStackLayout>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                        <Label x:Name="EmptyLabel" Text="No results recorded yet." Style="{StaticResource MutedStyle}" Padding="20,12" IsVisible="False" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Button Text="Go Back" Style="{StaticResource SmallPrimaryButtonStyle}" HorizontalOptions="End" Clicked="OnGoBackClicked" />
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- A month calendar showing the current month with events from the database.
+     The day cells are created in MonthCalendarView.xaml.cs. -->
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LumoraAcademy.Controls.MonthCalendarView">
+
+    <Border Style="{StaticResource CardTightStyle}">
+        <VerticalStackLayout>
+
+            <!-- Month header -->
+            <Grid ColumnDefinitions="Auto,Auto,Auto,*,Auto"
+                  ColumnSpacing="10"
+                  Padding="16,14">
+                <Label Grid.Column="0" Text="&#xE76B;" Style="{StaticResource IconStyle}" FontSize="11" />
+                <Label x:Name="MonthLabel" Grid.Column="1" Text="" Style="{StaticResource SectionTitleStyle}" FontSize="15" VerticalOptions="Center" />
+                <Label Grid.Column="2" Text="&#xE76C;" Style="{StaticResource IconStyle}" FontSize="11" />
+                <Button Grid.Column="4"
+                        Text="Today"
+                        Style="{StaticResource SmallOutlineButtonStyle}"
+                        HeightRequest="28"
+                        FontSize="11" />
+            </Grid>
+
+            <BoxView Style="{StaticResource RowDividerStyle}" />
+
+            <!-- Day-of-week names -->
+            <Grid ColumnDefinitions="*,*,*,*,*,*,*"
+                  BackgroundColor="{StaticResource TableHeaderBackground}"
+                  Padding="0,8">
+                <Label Grid.Column="0" Text="Sun" Style="{StaticResource TableHeaderStyle}" HorizontalOptions="Center" />
+                <Label Grid.Column="1" Text="Mon" Style="{StaticResource TableHeaderStyle}" HorizontalOptions="Center" />
+                <Label Grid.Column="2" Text="Tue" Style="{StaticResource TableHeaderStyle}" HorizontalOptions="Center" />
+                <Label Grid.Column="3" Text="Wed" Style="{StaticResource TableHeaderStyle}" HorizontalOptions="Center" />
+                <Label Grid.Column="4" Text="Thu" Style="{StaticResource TableHeaderStyle}" HorizontalOptions="Center" />
+                <Label Grid.Column="5" Text="Fri" Style="{StaticResource TableHeaderStyle}" HorizontalOptions="Center" />
+                <Label Grid.Column="6" Text="Sat" Style="{StaticResource TableHeaderStyle}" HorizontalOptions="Center" />
+            </Grid>
+
+            <!-- Day cells go here (filled from code) -->
+            <Grid x:Name="DaysGrid"
+                  ColumnDefinitions="*,*,*,*,*,*,*"
+                  RowDefinitions="80,80,80,80,80"
+                  ColumnSpacing="0"
+                  RowSpacing="0" />
+
+        </VerticalStackLayout>
+    </Border>
+</ContentView>

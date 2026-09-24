@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:LumoraAcademy.Controls"
+             x:Class="LumoraAcademy.Pages.Admin.TeacherRegistrationPage"
+             Title="Teacher Registration"
+             BackgroundColor="{StaticResource ContentBackground}">
+
+    <Grid ColumnDefinitions="220,*">
+
+        <controls:SidebarView Grid.Column="0"
+                              ActiveItem="Teachers" />
+
+        <ScrollView Grid.Column="1">
+            <VerticalStackLayout Padding="36,28"
+                                 Spacing="18"
+                                 HorizontalOptions="Fill"
+                                 MaximumWidthRequest="1280">
+
+                <!-- Heading, with the actions kept in sight at the top -->
+                <Grid ColumnDefinitions="*,Auto,Auto"
+                      ColumnSpacing="10">
+                    <VerticalStackLayout Grid.Column="0" Spacing="4">
+                        <Label Text="Teacher Registration" Style="{StaticResource PageTitleStyle}" />
+                        <Label Text="Fields marked with * must be filled in. A login is created at the same time."
+                               Style="{StaticResource PageSubtitleStyle}" />
+                    </VerticalStackLayout>
+
+                    <Button Grid.Column="1"
+                            Text="Cancel"
+                            Style="{StaticResource OutlineButtonStyle}"
+                            VerticalOptions="Center"
+                            Clicked="OnCancelClicked" />
+                    <Button Grid.Column="2"
+                            Text="Register Teacher"
+                            Style="{StaticResource PrimaryButtonStyle}"
+                            VerticalOptions="Center"
+                            Clicked="OnRegisterClicked" />
+                </Grid>
+
+                <Border x:Name="ErrorBox" Style="{StaticResource ErrorBoxStyle}">
+                    <HorizontalStackLayout Spacing="8">
+                        <Label Text="&#xE783;" Style="{StaticResource IconStyle}" TextColor="{StaticResource StatusRedText}" />
+                        <Label x:Name="ErrorLabel" Style="{StaticResource ErrorTextStyle}" />
+                    </HorizontalStackLayout>
+                </Border>
+
+                <Grid ColumnDefinitions="*,300"
+                      ColumnSpacing="20">
+
+                    <!-- ===== Left: the form ===== -->
+                    <VerticalStackLayout Grid.Column="0" Spacing="18">
+
+                        <!-- 1. Professional Profile -->
+                        <Border Style="{StaticResource CardStyle}" Padding="20">
+                            <VerticalStackLayout Spacing="16">
+                                <HorizontalStackLayout Spacing="8">
+                                    <Label Text="&#xE77B;" Style="{StaticResource IconStyle}" TextColor="{StaticResource BrandPrimary}" />
+                                    <Label Text="1. Professional Profile" Style="{StaticResource SectionTitleStyle}" FontSize="14" />
+                                </HorizontalStackLayout>
+                                <BoxView Style="{StaticResource RowDividerStyle}" />
+
+                                <Grid ColumnDefinitions="*,*" ColumnSpacing="18" RowDefinitions="Auto,Auto,Auto" RowSpacing="14">
+
+                                    <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="6">
+                                        <HorizontalStackLayout Spacing="3">
+                                            <Label Text="Full Name" Style="{StaticResource FormLabelStyle}" Margin="0" />
+                                            <Label Style="{StaticResource RequiredMarkStyle}" />
+                                        </HorizontalStackLayout>
+                                        <Border Style="{StaticResource FieldBoxStyle}">
+                                            <Entry x:Name="FullNameEntry" Placeholder="For example K. Fernando" Style="{StaticResource FieldEntryStyle}" />
+                                        </Border>
+                                    </VerticalStackLayout>
+
+                                    <VerticalStackLayout Grid.Row="0" Grid.Column="1" Spacing="6">
+                                        <HorizontalStackLayout Spacing="3">
+                                            <Label Text="Designation" Style="{StaticResource FormLabelStyle}" Margin="0" />
+                                            <Label Style="{StaticResource RequiredMarkStyle}" />
+                                        </HorizontalStackLayout>
+                                        <controls:DropDownField x:Name="RolePicker" Title="Select role" />
+                                    </VerticalStackLayout>
+
+                                    <VerticalStackLayout Grid.Row="1" Grid.Column="0" Spacing="6">
+                                        <Label Text="Department" Style="{StaticResource FormLabelStyle}" Margin="0" />
+                                        <Border Style="{StaticResource FieldBoxStyle}">
+                                            <Entry x:Name="DepartmentEntry" Placeholder="For example Science" Style="{StaticResource FieldEntryStyle}" />
+                                        </Border>
+                                    </VerticalStackLayout>
+
+                                    <VerticalStackLayout Grid.Row="1" Grid.Column="1" Spacing="6">
+                                        <Label Text="Subjects Taught" Style="{StaticResource FormLabelStyle}" Margin="0" />
+                                        <Border Style="{StaticResource FieldBoxStyle}">
+                                            <Entry x:Name="SubjectsEntry" Placeholder="For example Physics, Chemistry" Style="{StaticResource FieldEntryStyle}" />
+                                        </Border>
+                                    </VerticalStackLayout>
+
+                                    <VerticalStackLayout Grid.Row="2" Grid.Column="0" Spacing="6">
+                                        <Label Text="Years of Experience" Style="{StaticResource FormLabelStyle}" Margin="0" />
+                                        <Border Style="{StaticResource FieldBoxStyle}">
+                                            <Entry x:Name="ExperienceEntry" Placeholder="0" Keyboard="Numeric" MaxLength="2" Style="{StaticResource FieldEntryStyle}" />
+                                        </Border>
+                                    </VerticalStackLayout>
+
+                                    <VerticalStackLayout Grid.Row="2" Grid.Column="1" Spacing="6">
+                                        <HorizontalStackLayout Spacing="3">
+                                            <Label Text="Date of Joining" Style="{StaticResource FormLabelStyle}" Margin="0" />
+                                            <Label Style="{StaticResource RequiredMarkStyle}" />
+                                        </HorizontalStackLayout>
+                                        <controls:DateField x:Name="JoiningDatePicker" />
+                                    </VerticalStackLayout>
+                                </Grid>
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <!-- 2. Contact Information -->
+                        <Border Style="{StaticResource CardStyle}" Padding="20">
+                            <VerticalStackLayout Spacing="16">
+                                <HorizontalStackLayout Spacing="8">
+                                    <Label Text="&#xE717;" Style="{StaticResource IconStyle}" TextColor="{StaticResource BrandPrimary}" />
+                                    <Label Text="2. Contact Information" Style="{StaticResource SectionTitleStyle}" FontSize="14" />
+                                </HorizontalStackLayout>
+                                <BoxView Style="{StaticResource RowDividerStyle}" />
+
+                                <Grid ColumnDefinitions="*,*" ColumnSpacing="18" RowDefinitions="Auto,Auto" RowSpacing="14">
+
+                                    <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="6">
+                                        <HorizontalStackLayout Spacing="3">
+                                            <Label Text="Email Address" Style="{StaticResource FormLabelStyle}" Margin="0" />
+                                            <Label Style="{StaticResource RequiredMarkStyle}" />
+                                        </HorizontalStackLayout>
+                                        <Border Style="{StaticResource FieldBoxStyle}">
+                                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
+                                                <Label Text="&#xE715;" Style="{StaticResource IconStyle}" FontSize="11" />
+                                                <Entry x:Name="EmailEntry" Grid.Column="1" Placeholder="name@lumora.lk" Keyboard="Email" Style="{StaticResource FieldEntryStyle}" />
+                                            </Grid>
+                                        </Border>
+                                    </VerticalStackLayout>
+
+                                    <VerticalStackLayout Grid.Row="0" Grid.Column="1" Spacing="6">
+                                        <HorizontalStackLayout Spacing="3">
+                                            <Label Text="Primary Phone" Style="{StaticResource FormLabelStyle}" Margin="0" />
+                                            <Label Style="{StaticResource RequiredMarkStyle}" />
+                                        </HorizontalStackLayout>
+                                        <Border Style="{StaticResource FieldBoxStyle}">
+                                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
+                                                <Label Text="&#xE717;" Style="{StaticResource IconStyle}" FontSize="11" />
+                                                <Entry x:Name="PhoneEntry" Grid.Column="1" Placeholder="0771234567" Keyboard="Telephone" MaxLength="15" Style="{StaticResource FieldEntryStyle}" />
+                                            </Grid>
+                                        </Border>
+                                    </VerticalStackLayout>
+
+                                    <VerticalStackLayout Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Spacing="6">
+                                        <HorizontalStackLayout Spacing="3">
+                                            <Label Text="Residential Address" Style="{StaticResource FormLabelStyle}" Margin="0" />
+                                            <Label Style="{StaticResource RequiredMarkStyle}" />
+                                        </HorizontalStackLayout>
+                                        <Border Style="{StaticResource TextAreaBoxStyle}" HeightRequest="80">
+                                            <Editor x:Name="AddressEditor" Placeholder="45 Galle Road, Colombo 03" Style="{StaticResource FieldEditorStyle}" />
+                                        </Border>
+                                    </VerticalStackLayout>
+                                </Grid>
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <!-- 3. System login -->
+                        <Border Style="{StaticResource CardStyle}" Padding="20">
+                            <VerticalStackLayout Spacing="16">
+                                <HorizontalStackLayout Spacing="8">
+                                    <Label Text="&#xE72E;" Style="{StaticResource IconStyle}" TextColor="{StaticResource BrandPrimary}" />
+                                    <Label Text="3. System Login" Style="{StaticResource SectionTitleStyle}" FontSize="14" />
+                                </HorizontalStackLayout>
+                                <BoxView Style="{StaticResource RowDividerStyle}" />
+
+                                <Grid ColumnDefinitions="*,*" ColumnSpacing="18">
+
+                                    <VerticalStackLayout Grid.Column="0" Spacing="6">
+                                        <HorizontalStackLayout Spacing="3">
+                                            <Label Text="Username" Style="{StaticResource FormLabelStyle}" Margin="0" />
+                                            <Label Style="{StaticResource RequiredMarkStyle}" />
+                                        </HorizontalStackLayout>
+                                        <Border Style="{StaticResource FieldBoxStyle}">
+                                            <Entry x:Name="UsernameEntry" Placeholder="For example k.fernando" Style="{StaticResource FieldEntryStyle}" />
+                                        </Border>
+                                        <Label Text="4 to 20 characters. Letters, numbers, dots and underscores."
+                                               Style="{StaticResource SmallMutedStyle}" />
+                                    </VerticalStackLayout>
+
+                                    <VerticalStackLayout Grid.Column="1" Spacing="6">
+                                        <HorizontalStackLayout Spacing="3">
+                                            <Label Text="Password" Style="{StaticResource FormLabelStyle}" Margin="0" />
+                                            <Label Style="{StaticResource RequiredMarkStyle}" />
+                                        </HorizontalStackLayout>
+                                        <Border Style="{StaticResource FieldBoxStyle}">
+                                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6">
+                                                <Entry x:Name="PasswordEntry" IsPassword="True" Placeholder="At least 6 characters" Style="{StaticResource FieldEntryStyle}" />
+                                                <Label x:Name="ShowPasswordIcon"
+                                                       Grid.Column="1"
+                                                       Text="&#xE7B3;"
+                                                       Style="{StaticResource IconStyle}"
+                                                       FontSize="13">
+                                                    <Label.GestureRecognizers>
+                                                        <TapGestureRecognizer Tapped="OnTogglePasswordTapped" />
+                                                    </Label.GestureRecognizers>
+                                                </Label>
+                                            </Grid>
+                                        </Border>
+                                        <Label Text="Must contain at least one letter and one number."
+                                               Style="{StaticResource SmallMutedStyle}" />
+                                    </VerticalStackLayout>
+                                </Grid>
+                            </VerticalStackLayout>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- ===== Right: photo and notes ===== -->
+                    <VerticalStackLayout Grid.Column="1" Spacing="18">
+
+                        <Border Style="{StaticResource CardStyle}" Padding="20">
+                            <VerticalStackLayout Spacing="12">
+                                <Label Text="Profile Photo" Style="{StaticResource SectionTitleStyle}" FontSize="14" />
+
+                                <Border Stroke="{StaticResource FieldBorder}"
+                                        StrokeThickness="1"
+                                        StrokeDashArray="4,3"
+                                        Background="{StaticResource TableHeaderBackground}"
+                                        Padding="16"
+                                        HeightRequest="180">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="10" />
+                                    </Border.StrokeShape>
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnPhotoTapped" />
+                                    </Border.GestureRecognizers>
+                                    <VerticalStackLayout Spacing="8" VerticalOptions="Center">
+                                        <controls:AvatarView x:Name="PhotoPreview" Initials="" Size="84" HorizontalOptions="Center" IsVisible="False" />
+                                        <Label x:Name="PhotoIcon" Text="&#xE722;" Style="{StaticResource IconStyle}" FontSize="30" TextColor="{StaticResource BrandPrimary}" HorizontalOptions="Center" />
+                                        <Label x:Name="PhotoLabel" Text="Click to upload a photo" Style="{StaticResource BodyBoldStyle}" FontSize="12" HorizontalOptions="Center" />
+                                        <Label Text="JPG or PNG, up to 2 MB" Style="{StaticResource SmallMutedStyle}" HorizontalOptions="Center" />
+                                    </VerticalStackLayout>
+                                </Border>
+
+                                <Button x:Name="RemovePhotoButton"
+                                        Text="Remove photo"
+                                        Style="{StaticResource SmallOutlineButtonStyle}"
+                                        IsVisible="False"
+                                        Clicked="OnRemovePhotoClicked" />
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <Border Style="{StaticResource HintCardStyle}">
+                            <VerticalStackLayout Spacing="10">
+                                <HorizontalStackLayout Spacing="8">
+                                    <Label Text="&#xE946;" Style="{StaticResource IconStyle}" TextColor="{StaticResource BrandBrownDeep}" />
+                                    <Label Text="Before you save" Style="{StaticResource BodyBoldStyle}" />
+                                </HorizontalStackLayout>
+
+                                <Label Text="The teacher ID is created for you, for example TCH-2051." Style="{StaticResource MutedStyle}" />
+                                <Label Text="The username must not already be in use." Style="{StaticResource MutedStyle}" />
+                                <Label Text="Give the teacher their username and password after saving. They can sign in straight away." Style="{StaticResource MutedStyle}" />
+                            </VerticalStackLayout>
+                        </Border>
+                    </VerticalStackLayout>
+                </Grid>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

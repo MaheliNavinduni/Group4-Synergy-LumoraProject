@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:LumoraAcademy.Controls"
+             x:Class="LumoraAcademy.Pages.Teacher.TeacherEventsPage"
+             Title="Upcoming Events"
+             BackgroundColor="{StaticResource PageBackground}">
+
+    <Grid ColumnDefinitions="220,*">
+
+        <controls:SidebarView Grid.Column="0"
+                              ActiveItem="Upcoming Events" />
+
+        <ScrollView Grid.Column="1">
+            <VerticalStackLayout Padding="36,32"
+                                 Spacing="22">
+
+                <VerticalStackLayout Spacing="4">
+                    <Label Text="Institutional Calendar"
+                           Style="{StaticResource PageTitleStyle}" />
+                    <Label Text="View-only access to academic schedules and school-wide events."
+                           Style="{StaticResource PageSubtitleStyle}" />
+                </VerticalStackLayout>
+
+                <Grid ColumnDefinitions="*,220"
+                      ColumnSpacing="20">
+
+                    <!-- Calendar -->
+                    <controls:MonthCalendarView Grid.Column="0"
+                                                VerticalOptions="Start" />
+
+                    <!-- Right column -->
+                    <VerticalStackLayout Grid.Column="1"
+                                         Spacing="16">
+
+                        <Border Style="{StaticResource CardStyle}"
+                                Padding="16">
+                            <VerticalStackLayout Spacing="14">
+                                <Label Text="Upcoming This Week"
+                                       Style="{StaticResource SectionTitleStyle}"
+                                       FontSize="14" />
+
+                                <VerticalStackLayout x:Name="UpcomingList"
+                                                     Spacing="14">
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid ColumnDefinitions="3,*"
+                                                  ColumnSpacing="10">
+                                                <BoxView Grid.Column="0"
+                                                         Color="{StaticResource BrandPrimary}"
+                                                         CornerRadius="2" />
+                                                <VerticalStackLayout Grid.Column="1"
+                                                                     Spacing="3">
+                                                    <HorizontalStackLayout Spacing="5">
+                                                        <Label Text="&#xE787;"
+                                                               Style="{StaticResource IconStyle}"
+                                                               FontSize="10" />
+                                                        <Label Text="{Binding DateText}"
+                                                               Style="{StaticResource SmallMutedStyle}"
+                                                               TextColor="{StaticResource TextHeading}"
+                                                               VerticalOptions="Center" />
+                                                    </HorizontalStackLayout>
+                                                    <Label Text="{Binding Title}"
+                                                           Style="{StaticResource BodyBoldStyle}"
+                                                           FontSize="12" />
+                                                    <Label Text="{Binding Description}"
+                                                           Style="{StaticResource SmallMutedStyle}"
+                                                           LineBreakMode="TailTruncation"
+                                                           MaxLines="2" />
+                                                </VerticalStackLayout>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+                                </VerticalStackLayout>
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <!-- PDF download card -->
+                        <Border Style="{StaticResource CardStyle}"
+                                Padding="16">
+                            <Grid ColumnDefinitions="Auto,*"
+                                  ColumnSpacing="12">
+                                <Border Grid.Column="0"
+                                        WidthRequest="36"
+                                        HeightRequest="36"
+                                        Padding="0"
+                                        StrokeThickness="0"
+                                        Background="{StaticResource StatusBlueBg}">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="6" />
+                                    </Border.StrokeShape>
+                                    <Label Text="&#xE8A5;"
+                                           Style="{StaticResource IconStyle}"
+                                           TextColor="{StaticResource StatusBlueText}"
+                                           HorizontalOptions="Center" />
+                                </Border>
+                                <VerticalStackLayout Grid.Column="1"
+                                                     Spacing="2"
+                                                     VerticalOptions="Center">
+                                    <Label Text="Academic Calendar PDF"
+                                           Style="{StaticResource BodyBoldStyle}"
+                                           FontSize="12" />
+                                    <Label Text="Download"
+                                           Style="{StaticResource SmallMutedStyle}" />
+                                </VerticalStackLayout>
+                            </Grid>
+                        </Border>
+
+                    </VerticalStackLayout>
+                </Grid>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

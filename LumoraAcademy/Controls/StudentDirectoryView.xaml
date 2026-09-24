@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- The Student Directory: filters on the left, student table on the right.
+     Used by both the Teacher and Admin "Students" pages. -->
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:LumoraAcademy.Controls"
+             x:Class="LumoraAcademy.Controls.StudentDirectoryView">
+
+    <VerticalStackLayout Spacing="22">
+
+        <!-- Heading row -->
+        <Grid ColumnDefinitions="*,Auto">
+            <VerticalStackLayout Grid.Column="0"
+                                 Spacing="4">
+                <Label Text="Student Directory"
+                       Style="{StaticResource PageTitleStyle}" />
+                <Label Text="Search, filter and open the record of any student at the institute."
+                       Style="{StaticResource PageSubtitleStyle}" />
+            </VerticalStackLayout>
+
+            <Button x:Name="RegisterButton"
+                    Grid.Column="1"
+                    Text="Register New Student"
+                    Style="{StaticResource SmallPrimaryButtonStyle}"
+                    IsVisible="False"
+                    VerticalOptions="Start"
+                    Clicked="OnRegisterClicked" />
+        </Grid>
+
+        <Grid ColumnDefinitions="220,*"
+              ColumnSpacing="20">
+
+            <!-- ===== Left column: filters ===== -->
+            <VerticalStackLayout Grid.Column="0"
+                                 Spacing="16">
+
+                <Border Style="{StaticResource CardStyle}"
+                        Padding="16">
+                    <VerticalStackLayout Spacing="14">
+
+                        <Grid ColumnDefinitions="Auto,*,Auto"
+                              ColumnSpacing="6">
+                            <Label Grid.Column="0"
+                                   Text="&#xE71C;"
+                                   Style="{StaticResource IconStyle}"
+                                   FontSize="12" />
+                            <Label Grid.Column="1"
+                                   Text="Filters"
+                                   Style="{StaticResource SectionTitleStyle}"
+                                   FontSize="14" />
+                            <Button Grid.Column="2"
+                                    Text="Clear"
+                                    Style="{StaticResource GhostButtonStyle}"
+                                    FontSize="11"
+                                    HeightRequest="24"
+                                    Padding="6,0"
+                                    Clicked="OnClearFiltersClicked" />
+                        </Grid>
+
+                        <!-- Search: the list updates as the user types -->
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="Search Student"
+                                   Style="{StaticResource FormLabelStyle}"
+                                   FontSize="11"
+                                   Margin="0" />
+                            <Border Style="{StaticResource FieldBoxStyle}"
+                                    HeightRequest="40"
+                                    Padding="8,0">
+                                <Grid ColumnDefinitions="Auto,*,Auto"
+                                      ColumnSpacing="6">
+                                    <Label Grid.Column="0"
+                                           Text="&#xE721;"
+                                           Style="{StaticResource IconStyle}"
+                                           FontSize="11" />
+                                    <Entry x:Name="SearchEntry"
+                                           Grid.Column="1"
+                                           Placeholder="ID or name..."
+                                           Style="{StaticResource FieldEntryStyle}"
+                                           FontSize="11"
+                                           TextChanged="OnSearchTextChanged" />
+                                    <Label x:Name="ClearSearchIcon"
+                                           Grid.Column="2"
+                                           Text="&#xE711;"
+                                           Style="{StaticResource IconStyle}"
+                                           FontSize="10"
+                                           IsVisible="False">
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="OnClearSearchTapped" />
+                                        </Label.GestureRecognizers>
+                                    </Label>
+                                </Grid>
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="Grade Level"
+                                   Style="{StaticResource FormLabelStyle}"
+                                   FontSize="11"
+                                   Margin="0" />
+                            <controls:DropDownField x:Name="GradePicker"
+                                                    Title="All Grades"
+                                                    BoxHeight="40"
+                                                    FontSize="11"
+                                                    SelectedIndexChanged="OnFilterChanged" />
+                        </VerticalStackLayout>
+
+                        <!-- Only one status can be chosen at a time -->
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="Enrollment Status"
+                                   Style="{StaticResource FormLabelStyle}"
+                                   FontSize="11"
+                                   Margin="0,0,0,2" />
+
+                            <RadioButton x:Name="AllStatusRadio"
+                                         Content="All students"
+                                         GroupName="EnrollmentStatus"
+                                         IsChecked="True"
+                                         FontSize="12"
+                                         TextColor="{StaticResource TextHeading}"
+                                         CheckedChanged="OnStatusChanged" />
+                            <RadioButton x:Name="ActiveRadio"
+                                         Content="Active"
+                                         GroupName="EnrollmentStatus"
+                                         FontSize="12"
+                                         TextColor="{StaticResource TextHeading}"
+                                         CheckedChanged="OnStatusChanged" />
+                            <RadioButton x:Name="PendingRadio"
+                                         Content="Pending"
+                                         GroupName="EnrollmentStatus"
+                                         FontSize="12"
+                                         TextColor="{StaticResource TextHeading}"
+                                         CheckedChanged="OnStatusChanged" />
+                            <RadioButton x:Name="InactiveRadio"
+                                         Content="Inactive / Dropout"
+                                         GroupName="EnrollmentStatus"
+                                         FontSize="12"
+                                         TextColor="{StaticResource TextHeading}"
+                                         CheckedChanged="OnStatusChanged" />
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Total enrollment (brown card) -->
+                <Border Padding="16"
+                        StrokeThickness="0"
+                        Background="{StaticResource BrandPrimary}">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10" />
+                    </Border.StrokeShape>
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="Total Enrollment"
+                               FontSize="11"
+                               TextColor="{StaticResource BrandCream}" />
+                        <Label x:Name="TotalLabel"
+                               Text="0"
+                               FontSize="28"
+                               FontAttributes="Bold"
+                               TextColor="White" />
+                        <Label x:Name="ActiveCountLabel"
+                               Text=""
+                               FontSize="10"
+                               TextColor="{StaticResource BrandCream}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Button Text="At-Risk Students"
+                        Style="{StaticResource PrimaryButtonStyle}"
+                        HeightRequest="40"
+                        Clicked="OnAtRiskClicked" />
+            </VerticalStackLayout>
+
+            <!-- ===== Right column: student table ===== -->
+            <Border Grid.Column="1"
+                    Style="{StaticResource CardTightStyle}"
+                    VerticalOptions="Start">
+                <VerticalStackLayout>
+
+                    <Grid ColumnDefinitions="*,Auto,Auto"
+                          ColumnSpacing="10"
+                          Padding="20,14">
+                        <VerticalStackLayout Grid.Column="0" Spacing="2">
+                            <Label Text="Student Records"
+                                   Style="{StaticResource SectionTitleStyle}"
+                                   FontSize="14" />
+                            <Label x:Name="FilterSummaryLabel"
+                                   Text=""
+                                   Style="{StaticResource SmallMutedStyle}" />
+                        </VerticalStackLayout>
+
+                        <Button Grid.Column="1"
+                                Text="Export CSV"
+                                Style="{StaticResource SmallOutlineButtonStyle}"
+                                Clicked="OnExportClicked" />
+                        <Button Grid.Column="2"
+                                Text="Refresh"
+                                Style="{StaticResource SmallOutlineButtonStyle}"
+                                Clicked="OnRefreshClicked" />
+                    </Grid>
+
+                    <!-- Header -->
+                    <Grid Style="{StaticResource TableHeaderRowStyle}"
+                          ColumnDefinitions="2*,1*,1*,1.3*,0.9*">
+                        <Label Grid.Column="0" Text="STUDENT" Style="{StaticResource TableHeaderStyle}" />
+                        <Label Grid.Column="1" Text="ID" Style="{StaticResource TableHeaderStyle}" />
+                        <Label Grid.Column="2" Text="GRADE" Style="{StaticResource TableHeaderStyle}" />
+                        <Label Grid.Column="3" Text="ASSIGNED TEACHER" Style="{StaticResource TableHeaderStyle}" />
+                        <Label Grid.Column="4" Text="STATUS" Style="{StaticResource TableHeaderStyle}" />
+                    </Grid>
+
+                    <!-- Rows -->
+                    <VerticalStackLayout x:Name="RowList">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <VerticalStackLayout>
+                                    <Grid Style="{StaticResource TableRowStyle}"
+                                          ColumnDefinitions="2*,1*,1*,1.3*,0.9*"
+                                          BackgroundColor="Transparent">
+                                        <Grid.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="OnStudentRowTapped" />
+                                            <PointerGestureRecognizer PointerEntered="OnRowPointerEntered"
+                                                                      PointerExited="OnRowPointerExited" />
+                                        </Grid.GestureRecognizers>
+
+                                        <HorizontalStackLayout Grid.Column="0" Spacing="10">
+                                            <controls:AvatarView Initials="{Binding Initials}" ImagePath="{Binding PhotoPath}" Size="30" />
+                                            <VerticalStackLayout Spacing="2" VerticalOptions="Center">
+                                                <Label Text="{Binding FullName}" Style="{StaticResource TableCellBoldStyle}" FontSize="12" />
+                                                <Label Text="{Binding Email}" Style="{StaticResource SmallMutedStyle}" FontSize="10" />
+                                            </VerticalStackLayout>
+                                        </HorizontalStackLayout>
+
+                                        <Label Grid.Column="1" Text="{Binding StudentId}" Style="{StaticResource TableCellMutedStyle}" />
+                                        <Label Grid.Column="2" Text="{Binding Grade}" Style="{StaticResource TableCellStyle}" FontSize="12" />
+
+                                        <HorizontalStackLayout Grid.Column="3" Spacing="6">
+                                            <Border WidthRequest="22" HeightRequest="22" Padding="0" StrokeThickness="0" Background="{StaticResource StatusBlueBg}">
+                                                <Border.StrokeShape>
+                                                    <RoundRectangle CornerRadius="11" />
+                                                </Border.StrokeShape>
+                                                <Label Text="{Binding AssignedTeacherInitials}" FontSize="8" FontAttributes="Bold" TextColor="{StaticResource StatusBlueText}" HorizontalOptions="Center" VerticalOptions="Center" />
+                                            </Border>
+                                            <Label Text="{Binding AssignedTeacherName}" Style="{StaticResource TableCellStyle}" FontSize="12" />
+                                        </HorizontalStackLayout>
+
+                                        <controls:StatusBadge Grid.Column="4" Text="{Binding Status}" />
+                                    </Grid>
+                                    <BoxView Style="{StaticResource RowDividerStyle}" />
+                                </VerticalStackLayout>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+
+                    <!-- Shown when the filters match nobody -->
+                    <VerticalStackLayout x:Name="EmptyPanel"
+                                         Spacing="6"
+                                         Padding="20,32"
+                                         IsVisible="False">
+                        <Label Text="&#xE721;"
+                               Style="{StaticResource IconStyle}"
+                               FontSize="26"
+                               HorizontalOptions="Center" />
+                        <Label Text="No students match these filters."
+                               Style="{StaticResource BodyBoldStyle}"
+                               HorizontalOptions="Center" />
+                        <Label Text="Try a different name, grade or status."
+                               Style="{StaticResource SmallMutedStyle}"
+                               HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+
+                    <!-- Footer -->
+                    <Grid ColumnDefinitions="*,Auto"
+                          Padding="20,12">
+                        <Label x:Name="CountLabel"
+                               Grid.Column="0"
+                               Text=""
+                               Style="{StaticResource SmallMutedStyle}"
+                               VerticalOptions="Center" />
+                        <controls:PagerView x:Name="Pager" Grid.Column="1" PageChanged="OnPageChanged" />
+                    </Grid>
+
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
+    </VerticalStackLayout>
+</ContentView>
