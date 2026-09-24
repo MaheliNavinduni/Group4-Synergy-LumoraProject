@@ -31,7 +31,7 @@
                         </HorizontalStackLayout>
                         <VerticalStackLayout Spacing="6">
                             <Label Text="Full Name" Style="{StaticResource SmallMutedStyle}" />
-                            <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="36" Background="{StaticResource TableHeaderBackground}">
+                            <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="40" Background="{StaticResource TableHeaderBackground}">
                                 <Entry x:Name="FullNameEntry" Style="{StaticResource FieldEntryStyle}" />
                             </Border>
                         </VerticalStackLayout>
@@ -48,21 +48,21 @@
                             </HorizontalStackLayout>
                             <VerticalStackLayout Spacing="6">
                                 <Label Text="Teacher ID" Style="{StaticResource SmallMutedStyle}" />
-                                <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="36" Background="{StaticResource TableHeaderBackground}">
+                                <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="40" Background="{StaticResource TableHeaderBackground}">
                                     <Entry x:Name="TeacherIdEntry" IsReadOnly="True" Style="{StaticResource FieldEntryStyle}" TextColor="{StaticResource TextMuted}" />
                                 </Border>
                             </VerticalStackLayout>
                             <VerticalStackLayout Spacing="6">
                                 <Label Text="Total Experience (Years)" Style="{StaticResource SmallMutedStyle}" />
-                                <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="36" Background="{StaticResource TableHeaderBackground}">
+                                <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="40" Background="{StaticResource TableHeaderBackground}">
                                     <Entry x:Name="ExperienceEntry" Keyboard="Numeric" Style="{StaticResource FieldEntryStyle}" />
                                 </Border>
                             </VerticalStackLayout>
                             <VerticalStackLayout Spacing="6">
                                 <Label Text="Joining Date" Style="{StaticResource SmallMutedStyle}" />
-                                <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="36" Background="{StaticResource TableHeaderBackground}">
-                                    <DatePicker x:Name="JoiningDatePicker" Date="2018-08-15" FontSize="12" TextColor="{StaticResource TextHeading}" BackgroundColor="Transparent" VerticalOptions="Center" />
-                                </Border>
+                                <controls:DateField x:Name="JoiningDatePicker"
+                                                    BoxHeight="40"
+                                                    FontSize="12" />
                             </VerticalStackLayout>
                         </VerticalStackLayout>
                     </Border>
@@ -77,13 +77,13 @@
                             <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
                                 <VerticalStackLayout Grid.Column="0" Spacing="6">
                                     <Label Text="Email Address" Style="{StaticResource SmallMutedStyle}" />
-                                    <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="36" Background="{StaticResource TableHeaderBackground}">
+                                    <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="40" Background="{StaticResource TableHeaderBackground}">
                                         <Entry x:Name="EmailEntry" Keyboard="Email" Style="{StaticResource FieldEntryStyle}" />
                                     </Border>
                                 </VerticalStackLayout>
                                 <VerticalStackLayout Grid.Column="1" Spacing="6">
                                     <Label Text="Phone Number" Style="{StaticResource SmallMutedStyle}" />
-                                    <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="36" Background="{StaticResource TableHeaderBackground}">
+                                    <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="40" Background="{StaticResource TableHeaderBackground}">
                                         <Entry x:Name="PhoneEntry" Keyboard="Telephone" Style="{StaticResource FieldEntryStyle}" />
                                     </Border>
                                 </VerticalStackLayout>

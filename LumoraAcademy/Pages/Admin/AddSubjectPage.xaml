@@ -59,9 +59,7 @@
 
                     <VerticalStackLayout Spacing="6">
                         <Label Text="Curriculum" Style="{StaticResource FormLabelStyle}" FontSize="11" Margin="0" />
-                        <Border Style="{StaticResource FieldBoxStyle}" Background="{StaticResource TableHeaderBackground}" Stroke="{StaticResource TableHeaderBackground}">
-                            <Picker x:Name="CurriculumPicker" Style="{StaticResource FieldPickerStyle}" />
-                        </Border>
+                        <controls:DropDownField x:Name="CurriculumPicker" />
                     </VerticalStackLayout>
                 </VerticalStackLayout>
 

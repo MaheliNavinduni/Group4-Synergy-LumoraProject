@@ -33,14 +33,10 @@
 
                     <VerticalStackLayout Grid.Column="2" Spacing="6" WidthRequest="180">
                         <Label Text="Date" Style="{StaticResource FormLabelStyle}" Margin="0" />
-                        <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="38">
-                            <DatePicker x:Name="DayPicker"
-                                        FontSize="13"
-                                        BackgroundColor="Transparent"
-                                        TextColor="{StaticResource TextHeading}"
-                                        VerticalOptions="Center"
-                                        DateSelected="OnDateSelected" />
-                        </Border>
+                        <controls:DateField x:Name="DayPicker"
+                                DateSelected="OnDateSelected"
+                                            BoxHeight="40"
+                                            FontSize="13" />
                     </VerticalStackLayout>
                 </Grid>
 
@@ -158,7 +154,7 @@
                                                     <Button Text="Clear" Style="{StaticResource SmallOutlineButtonStyle}" HeightRequest="26" FontSize="10" Padding="7,0" TextColor="{StaticResource TextLight}" Clicked="OnStatusClicked" CommandParameter="Clear" />
                                                 </HorizontalStackLayout>
 
-                                                <Border Grid.Column="3" Style="{StaticResource FieldBoxStyle}" HeightRequest="30" Padding="8,0">
+                                                <Border Grid.Column="3" Style="{StaticResource FieldBoxStyle}" HeightRequest="40" Padding="8,0">
                                                     <Entry Text="{Binding Remarks}" Placeholder="Optional" Style="{StaticResource FieldEntryStyle}" FontSize="11" />
                                                 </Border>
                                             </Grid>

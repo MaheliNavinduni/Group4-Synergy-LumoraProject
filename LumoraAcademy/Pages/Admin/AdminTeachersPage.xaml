@@ -57,10 +57,10 @@
                               ColumnSpacing="8"
                               Padding="20,14">
                             <Label Grid.Column="0" Text="Directory" Style="{StaticResource SectionTitleStyle}" FontSize="14" VerticalOptions="Center" />
-                            <Border Grid.Column="1" Style="{StaticResource FieldBoxStyle}" HeightRequest="28" WidthRequest="28" Padding="0">
+                            <Border Grid.Column="1" Style="{StaticResource FieldBoxStyle}" HeightRequest="40" WidthRequest="28" Padding="0">
                                 <Label Text="&#xE8FD;" Style="{StaticResource IconStyle}" FontSize="11" HorizontalOptions="Center" />
                             </Border>
-                            <Border Grid.Column="2" Style="{StaticResource FieldBoxStyle}" HeightRequest="28" WidthRequest="28" Padding="0" Background="{StaticResource StatusBlueBg}" Stroke="{StaticResource StatusBlueBg}">
+                            <Border Grid.Column="2" Style="{StaticResource FieldBoxStyle}" HeightRequest="40" WidthRequest="28" Padding="0" Background="{StaticResource StatusBlueBg}" Stroke="{StaticResource StatusBlueBg}">
                                 <Label Text="&#xE80A;" Style="{StaticResource IconStyle}" FontSize="11" TextColor="{StaticResource StatusBlueText}" HorizontalOptions="Center" />
                             </Border>
                         </Grid>

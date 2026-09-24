@@ -29,21 +29,15 @@
                         <Grid ColumnDefinitions="*,*,*,*,*" ColumnSpacing="12">
                             <VerticalStackLayout Grid.Column="0" Spacing="6">
                                 <Label Text="Subject" Style="{StaticResource FormLabelStyle}" Margin="0" />
-                                <Border Style="{StaticResource FieldBoxStyle}">
-                                    <Picker x:Name="SubjectPicker" Style="{StaticResource FieldPickerStyle}" />
-                                </Border>
+                                <controls:DropDownField x:Name="SubjectPicker" />
                             </VerticalStackLayout>
                             <VerticalStackLayout Grid.Column="1" Spacing="6">
                                 <Label Text="Grade" Style="{StaticResource FormLabelStyle}" Margin="0" />
-                                <Border Style="{StaticResource FieldBoxStyle}">
-                                    <Picker x:Name="GradePicker" Style="{StaticResource FieldPickerStyle}" />
-                                </Border>
+                                <controls:DropDownField x:Name="GradePicker" />
                             </VerticalStackLayout>
                             <VerticalStackLayout Grid.Column="2" Spacing="6">
                                 <Label Text="Teacher" Style="{StaticResource FormLabelStyle}" Margin="0" />
-                                <Border Style="{StaticResource FieldBoxStyle}">
-                                    <Picker x:Name="TeacherPicker" Style="{StaticResource FieldPickerStyle}" />
-                                </Border>
+                                <controls:DropDownField x:Name="TeacherPicker" />
                             </VerticalStackLayout>
                             <VerticalStackLayout Grid.Column="3" Spacing="6">
                                 <Label Text="Room" Style="{StaticResource FormLabelStyle}" Margin="0" />
@@ -130,19 +124,19 @@
                                 <Grid ColumnDefinitions="*,*,*" ColumnSpacing="8">
                                     <VerticalStackLayout Grid.Column="0" Spacing="4">
                                         <Label Text="Day" Style="{StaticResource SmallMutedStyle}" />
-                                        <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="34">
-                                            <Picker x:Name="DayPicker" Style="{StaticResource FieldPickerStyle}" FontSize="12" />
-                                        </Border>
+                                        <controls:DropDownField x:Name="DayPicker"
+                                                                BoxHeight="40"
+                                                                FontSize="12" />
                                     </VerticalStackLayout>
                                     <VerticalStackLayout Grid.Column="1" Spacing="4">
                                         <Label Text="Start" Style="{StaticResource SmallMutedStyle}" />
-                                        <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="34">
+                                        <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="40">
                                             <TimePicker x:Name="StartPicker" Time="08:00" FontSize="12" BackgroundColor="Transparent" TextColor="{StaticResource TextHeading}" VerticalOptions="Center" />
                                         </Border>
                                     </VerticalStackLayout>
                                     <VerticalStackLayout Grid.Column="2" Spacing="4">
                                         <Label Text="End" Style="{StaticResource SmallMutedStyle}" />
-                                        <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="34">
+                                        <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="40">
                                             <TimePicker x:Name="EndPicker" Time="09:30" FontSize="12" BackgroundColor="Transparent" TextColor="{StaticResource TextHeading}" VerticalOptions="Center" />
                                         </Border>
                                     </VerticalStackLayout>
@@ -179,9 +173,10 @@
                                 <BoxView Style="{StaticResource RowDividerStyle}" />
 
                                 <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
-                                    <Border Grid.Column="0" Style="{StaticResource FieldBoxStyle}" HeightRequest="34">
-                                        <Picker x:Name="StudentPicker" Style="{StaticResource FieldPickerStyle}" FontSize="12" />
-                                    </Border>
+                                    <controls:DropDownField x:Name="StudentPicker"
+                                                            Grid.Column="0"
+                                                            BoxHeight="40"
+                                                            FontSize="12" />
                                     <Button Grid.Column="1" Text="Enrol" Style="{StaticResource SmallPrimaryButtonStyle}" Clicked="OnEnrolClicked" />
                                 </Grid>
 

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- A date box the user can either type into (25/09/2010) or pick from a calendar.
+     Typing is much faster for things like a date of birth. -->
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LumoraAcademy.Controls.DateField">
+
+    <Border x:Name="Box"
+            Style="{StaticResource FieldBoxStyle}"
+            Padding="12,0">
+        <Border.GestureRecognizers>
+            <PointerGestureRecognizer PointerEntered="OnPointerEntered"
+                                      PointerExited="OnPointerExited" />
+        </Border.GestureRecognizers>
+
+        <Grid ColumnDefinitions="*,Auto"
+              ColumnSpacing="6">
+
+            <Entry x:Name="TextBox"
+                   Grid.Column="0"
+                   Placeholder="dd/mm/yyyy"
+                   Style="{StaticResource FieldEntryStyle}"
+                   TextChanged="OnTextChanged"
+                   Unfocused="OnTextUnfocused" />
+
+            <!-- The calendar button. The real date picker sits on top of the icon,
+                 invisible, so clicking the icon opens the Windows calendar. -->
+            <Border Grid.Column="1"
+                    x:Name="CalendarButton"
+                    WidthRequest="26"
+                    HeightRequest="26"
+                    Padding="0"
+                    StrokeThickness="0"
+                    BackgroundColor="Transparent"
+                    VerticalOptions="Center">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="6" />
+                </Border.StrokeShape>
+                <Grid>
+                    <Label x:Name="CalendarIcon"
+                           Text="&#xE787;"
+                           FontFamily="Segoe MDL2 Assets"
+                           FontSize="14"
+                           TextColor="{StaticResource TextMuted}"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center" />
+
+                    <DatePicker x:Name="Picker"
+                                Opacity="0.01"
+                                WidthRequest="26"
+                                MinimumWidthRequest="26"
+                                HeightRequest="26"
+                                BackgroundColor="Transparent"
+                                DateSelected="OnDatePicked" />
+                </Grid>
+            </Border>
+        </Grid>
+    </Border>
+</ContentView>

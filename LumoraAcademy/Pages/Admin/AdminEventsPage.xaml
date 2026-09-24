@@ -29,7 +29,7 @@
                         <!-- Calendar / List switch -->
                         <Border Grid.Column="1"
                                 Style="{StaticResource FieldBoxStyle}"
-                                HeightRequest="30"
+                                HeightRequest="40"
                                 Padding="3"
                                 VerticalOptions="Start">
                             <HorizontalStackLayout Spacing="2">
@@ -125,33 +125,32 @@
 
                             <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="6">
                                 <Label Text="Event Title" Style="{StaticResource FormLabelStyle}" FontSize="11" Margin="0" />
-                                <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="36">
+                                <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="40">
                                     <Entry x:Name="NewTitleEntry" Placeholder="Spring Science Fair" Style="{StaticResource FieldEntryStyle}" />
                                 </Border>
                             </VerticalStackLayout>
                             <VerticalStackLayout Grid.Row="0" Grid.Column="1" Spacing="6">
                                 <Label Text="Category" Style="{StaticResource FormLabelStyle}" FontSize="11" Margin="0" />
-                                <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="36">
-                                    <Picker x:Name="NewCategoryPicker" Style="{StaticResource FieldPickerStyle}" />
-                                </Border>
+                                <controls:DropDownField x:Name="NewCategoryPicker"
+                                                        BoxHeight="40" />
                             </VerticalStackLayout>
 
                             <VerticalStackLayout Grid.Row="1" Grid.Column="0" Spacing="6">
                                 <Label Text="Date" Style="{StaticResource FormLabelStyle}" FontSize="11" Margin="0" />
-                                <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="36">
-                                    <DatePicker x:Name="NewDatePicker" FontSize="12" TextColor="{StaticResource TextHeading}" BackgroundColor="Transparent" VerticalOptions="Center" />
-                                </Border>
+                                <controls:DateField x:Name="NewDatePicker"
+                                                    BoxHeight="40"
+                                                    FontSize="12" />
                             </VerticalStackLayout>
                             <VerticalStackLayout Grid.Row="1" Grid.Column="1" Spacing="6">
                                 <Label Text="Time" Style="{StaticResource FormLabelStyle}" FontSize="11" Margin="0" />
-                                <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="36">
+                                <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="40">
                                     <TimePicker x:Name="NewTimePicker" FontSize="12" TextColor="{StaticResource TextHeading}" BackgroundColor="Transparent" VerticalOptions="Center" />
                                 </Border>
                             </VerticalStackLayout>
 
                             <VerticalStackLayout Grid.Row="2" Grid.Column="0" Spacing="6">
                                 <Label Text="Location" Style="{StaticResource FormLabelStyle}" FontSize="11" Margin="0" />
-                                <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="36">
+                                <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="40">
                                     <Entry x:Name="NewLocationEntry" Placeholder="Virtual/Zoom" Style="{StaticResource FieldEntryStyle}" />
                                 </Border>
                             </VerticalStackLayout>
@@ -186,7 +185,7 @@
 
                         <VerticalStackLayout Spacing="4">
                             <Label Text="Event Title" Style="{StaticResource SmallMutedStyle}" />
-                            <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="32">
+                            <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="40">
                                 <Entry x:Name="EditTitleEntry" Style="{StaticResource FieldEntryStyle}" FontSize="11" />
                             </Border>
                         </VerticalStackLayout>
@@ -194,13 +193,13 @@
                         <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
                             <VerticalStackLayout Grid.Column="0" Spacing="4">
                                 <Label Text="Date" Style="{StaticResource SmallMutedStyle}" />
-                                <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="32" Padding="6,0">
+                                <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="40" Padding="6,0">
                                     <Entry x:Name="EditDateEntry" Style="{StaticResource FieldEntryStyle}" FontSize="11" />
                                 </Border>
                             </VerticalStackLayout>
                             <VerticalStackLayout Grid.Column="1" Spacing="4">
                                 <Label Text="Time" Style="{StaticResource SmallMutedStyle}" />
-                                <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="32" Padding="6,0">
+                                <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="40" Padding="6,0">
                                     <Entry x:Name="EditTimeEntry" Style="{StaticResource FieldEntryStyle}" FontSize="11" />
                                 </Border>
                             </VerticalStackLayout>
@@ -209,13 +208,13 @@
                         <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
                             <VerticalStackLayout Grid.Column="0" Spacing="4">
                                 <Label Text="Category" Style="{StaticResource SmallMutedStyle}" />
-                                <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="32" Padding="6,0">
+                                <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="40" Padding="6,0">
                                     <Entry x:Name="EditCategoryEntry" Style="{StaticResource FieldEntryStyle}" FontSize="11" />
                                 </Border>
                             </VerticalStackLayout>
                             <VerticalStackLayout Grid.Column="1" Spacing="4">
                                 <Label Text="Location" Style="{StaticResource SmallMutedStyle}" />
-                                <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="32" Padding="6,0">
+                                <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="40" Padding="6,0">
                                     <Entry x:Name="EditLocationEntry" Style="{StaticResource FieldEntryStyle}" FontSize="11" />
                                 </Border>
                             </VerticalStackLayout>

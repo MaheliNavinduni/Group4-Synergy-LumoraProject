@@ -22,7 +22,7 @@
 
                 <Border Grid.Column="1"
                         Style="{StaticResource FieldBoxStyle}"
-                        HeightRequest="30"
+                        HeightRequest="40"
                         Padding="10,0">
                     <HorizontalStackLayout Spacing="6">
                         <Label Text="&#xE787;"
@@ -37,7 +37,7 @@
 
                 <Border Grid.Column="2"
                         Style="{StaticResource FieldBoxStyle}"
-                        HeightRequest="30"
+                        HeightRequest="40"
                         Padding="10,0">
                     <HorizontalStackLayout Spacing="6">
                         <Label x:Name="ClassLabel" Text="All Classes"
@@ -52,7 +52,7 @@
 
                 <Border Grid.Column="3"
                         Style="{StaticResource FieldBoxStyle}"
-                        HeightRequest="30"
+                        HeightRequest="40"
                         Padding="10,0">
                     <HorizontalStackLayout Spacing="6">
                         <Label x:Name="SubjectLabel" Text="All Subjects"
@@ -67,7 +67,7 @@
 
                 <Border Grid.Column="4"
                         Style="{StaticResource FieldBoxStyle}"
-                        HeightRequest="30"
+                        HeightRequest="40"
                         WidthRequest="30"
                         Padding="0">
                     <Label Text="&#xE71C;"

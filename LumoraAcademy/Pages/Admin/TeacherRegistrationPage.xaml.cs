@@ -1,4 +1,5 @@
 using LumoraAcademy.Core.Entities;
+using LumoraAcademy.Core.Services;
 using LumoraAcademy.Services;
 
 namespace LumoraAcademy.Pages.Admin;
@@ -16,8 +17,12 @@ public partial class TeacherRegistrationPage : ContentPage
         InitializeComponent();
 
         RolePicker.ItemsSource = new List<string> { "Teacher", "Senior Teacher", "Head of Department", "Visiting Lecturer" };
+        RolePicker.SelectedIndex = 0;
+
         JoiningDatePicker.Date = DateTime.Today;
     }
+
+    // ---------- Photo ----------
 
     private async void OnPhotoTapped(object sender, EventArgs e)
     {
@@ -28,8 +33,27 @@ public partial class TeacherRegistrationPage : ContentPage
         PhotoPreview.ImagePath = path;
         PhotoPreview.IsVisible = true;
         PhotoIcon.IsVisible = false;
-        PhotoLabel.Text = "Change Photo";
+        PhotoLabel.Text = "Click to change the photo";
+        RemovePhotoButton.IsVisible = true;
     }
+
+    private void OnRemovePhotoClicked(object sender, EventArgs e)
+    {
+        _photoPath = "";
+        PhotoPreview.IsVisible = false;
+        PhotoIcon.IsVisible = true;
+        PhotoLabel.Text = "Click to upload a photo";
+        RemovePhotoButton.IsVisible = false;
+    }
+
+    // Lets the admin check the password they typed before saving it.
+    private void OnTogglePasswordTapped(object sender, EventArgs e)
+    {
+        PasswordEntry.IsPassword = !PasswordEntry.IsPassword;
+        ShowPasswordIcon.Text = PasswordEntry.IsPassword ? "" : "";
+    }
+
+    // ---------- Saving ----------
 
     private async void OnCancelClicked(object sender, EventArgs e)
     {
@@ -38,32 +62,31 @@ public partial class TeacherRegistrationPage : ContentPage
 
     private async void OnRegisterClicked(object sender, EventArgs e)
     {
-        if (string.IsNullOrWhiteSpace(FullNameEntry.Text))
-        {
-            await DisplayAlert("Teacher Registration", "Please enter the teacher's full name.", "OK");
-            return;
-        }
-        if (string.IsNullOrWhiteSpace(EmailEntry.Text) || string.IsNullOrWhiteSpace(PhoneEntry.Text))
-        {
-            await DisplayAlert("Teacher Registration", "Please enter the email address and phone number.", "OK");
-            return;
-        }
-        if (string.IsNullOrWhiteSpace(UsernameEntry.Text) || string.IsNullOrWhiteSpace(PasswordEntry.Text))
-        {
-            await DisplayAlert("Teacher Registration", "Please enter a username and password for the teacher's login.", "OK");
-            return;
-        }
+        string problem = Validation.FirstProblem(
+            Validation.Name(FullNameEntry.Text, "Full name"),
+            RolePicker.SelectedIndex < 0 ? "Please select the designation." : "",
+            Validation.WholeNumber(ExperienceEntry.Text, "Years of experience", 0, 60, required: false),
+            Validation.NotInFuture(JoiningDatePicker.Date, "Date of joining"),
+            Validation.Email(EmailEntry.Text),
+            Validation.Phone(PhoneEntry.Text),
+            Validation.Address(AddressEditor.Text),
+            Validation.Username(UsernameEntry.Text),
+            Validation.Password(PasswordEntry.Text));
+
+        if (ShowProblem(problem)) return;
 
         int.TryParse(ExperienceEntry.Text, out int years);
 
         var teacher = new Teacher
         {
             FullName = FullNameEntry.Text.Trim(),
-            Designation = RolePicker.SelectedItem as string ?? "Teacher",
+            Designation = RolePicker.SelectedItem ?? "Teacher",
+            Department = (DepartmentEntry.Text ?? "").Trim(),
+            Subjects = (SubjectsEntry.Text ?? "").Trim(),
             YearsOfExperience = years,
             JoiningDate = JoiningDatePicker.Date,
             Email = EmailEntry.Text.Trim(),
-            Phone = PhoneEntry.Text.Trim(),
+            Phone = Validation.CleanPhone(PhoneEntry.Text),
             Address = (AddressEditor.Text ?? "").Trim(),
             Status = "Active",
             PhotoPath = _photoPath,
@@ -71,13 +94,28 @@ public partial class TeacherRegistrationPage : ContentPage
 
         try
         {
-            var saved = AppData.Teachers.Register(teacher, UsernameEntry.Text.Trim(), PasswordEntry.Text);
-            await DisplayAlert("Teacher Registration", $"{saved.FullName} registered with ID {saved.TeacherId}. They can now log in as '{UsernameEntry.Text.Trim().ToLower()}'.", "OK");
+            string username = UsernameEntry.Text.Trim();
+            var saved = AppData.Teachers.Register(teacher, username, PasswordEntry.Text);
+
+            await DisplayAlert("Teacher Registration",
+                $"{saved.FullName} registered with ID {saved.TeacherId}. They can now log in as '{username.ToLower()}'.", "OK");
             await AppNavigation.GoBackAsync();
         }
         catch (Exception ex)
         {
-            await DisplayAlert("Teacher Registration", ex.Message, "OK");
+            ShowProblem(ex.Message);
         }
+    }
+
+    // Shows the message in the red bar at the top of the form.
+    // Returns true when there was a problem, so the caller can stop.
+    private bool ShowProblem(string message)
+    {
+        bool hasProblem = !string.IsNullOrEmpty(message);
+
+        ErrorLabel.Text = message;
+        ErrorBox.IsVisible = hasProblem;
+
+        return hasProblem;
     }
 }

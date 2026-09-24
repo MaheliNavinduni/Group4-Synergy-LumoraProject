@@ -183,7 +183,7 @@
         <Setter Property="Stroke" Value="{StaticResource FieldBorder}" />
         <Setter Property="StrokeThickness" Value="1" />
         <Setter Property="Padding" Value="12,0" />
-        <Setter Property="HeightRequest" Value="42" />
+        <Setter Property="HeightRequest" Value="44" />
         <Setter Property="StrokeShape">
             <Setter.Value>
                 <RoundRectangle CornerRadius="8" />
@@ -198,6 +198,11 @@
 
     <Style x:Key="FieldEntryStyle" TargetType="Entry">
         <Setter Property="FontSize" Value="13" />
+        <!-- Without these the text box is squeezed by the box around it
+             and what the user types becomes impossible to read. -->
+        <Setter Property="HeightRequest" Value="34" />
+        <Setter Property="MinimumHeightRequest" Value="0" />
+        <Setter Property="Margin" Value="0" />
         <Setter Property="BackgroundColor" Value="Transparent" />
         <Setter Property="TextColor" Value="{StaticResource TextHeading}" />
         <Setter Property="PlaceholderColor" Value="{StaticResource TextLight}" />
@@ -206,6 +211,8 @@
 
     <Style x:Key="FieldEditorStyle" TargetType="Editor">
         <Setter Property="FontSize" Value="13" />
+        <Setter Property="MinimumHeightRequest" Value="0" />
+        <Setter Property="Margin" Value="0" />
         <Setter Property="BackgroundColor" Value="Transparent" />
         <Setter Property="TextColor" Value="{StaticResource TextHeading}" />
         <Setter Property="PlaceholderColor" Value="{StaticResource TextLight}" />
@@ -220,6 +227,8 @@
     </Style>
 
     <!-- ===== Buttons ===== -->
+    <!-- PointerOver runs when the mouse is over the button, so the user can
+         see straight away that it can be clicked. -->
     <Style x:Key="PrimaryButtonStyle" TargetType="Button">
         <Setter Property="BackgroundColor" Value="{StaticResource BrandPrimary}" />
         <Setter Property="TextColor" Value="{StaticResource TextOnDark}" />
@@ -229,6 +238,36 @@
         <Setter Property="MinimumHeightRequest" Value="36" />
         <Setter Property="CornerRadius" Value="8" />
         <Setter Property="Padding" Value="20,0" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{StaticResource BrandPrimary}" />
+                            <Setter Property="Scale" Value="1" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="PointerOver">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{StaticResource BrandPrimaryDark}" />
+                            <Setter Property="Scale" Value="1.02" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Pressed">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{StaticResource BrandBrownDeep}" />
+                            <Setter Property="Scale" Value="0.98" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{StaticResource FieldBorder}" />
+                            <Setter Property="TextColor" Value="{StaticResource TextLight}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
     </Style>
 
     <Style x:Key="SmallPrimaryButtonStyle" TargetType="Button" BasedOn="{StaticResource PrimaryButtonStyle}">
@@ -247,6 +286,37 @@
         <Setter Property="MinimumHeightRequest" Value="32" />
         <Setter Property="CornerRadius" Value="8" />
         <Setter Property="Padding" Value="18,0" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{StaticResource CardBackground}" />
+                            <Setter Property="BorderColor" Value="{StaticResource FieldBorder}" />
+                            <Setter Property="TextColor" Value="{StaticResource TextHeading}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="PointerOver">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{StaticResource RowHover}" />
+                            <Setter Property="BorderColor" Value="{StaticResource BrandPrimary}" />
+                            <Setter Property="TextColor" Value="{StaticResource BrandPrimary}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Pressed">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{StaticResource BrandCream}" />
+                            <Setter Property="BorderColor" Value="{StaticResource BrandPrimary}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="TextColor" Value="{StaticResource TextLight}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
     </Style>
 
     <Style x:Key="SmallOutlineButtonStyle" TargetType="Button" BasedOn="{StaticResource OutlineButtonStyle}">
@@ -262,6 +332,24 @@
         <Setter Property="HeightRequest" Value="40" />
         <Setter Property="MinimumHeightRequest" Value="32" />
         <Setter Property="Padding" Value="14,0" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="Transparent" />
+                            <Setter Property="TextColor" Value="{StaticResource TextMuted}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="PointerOver">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{StaticResource RowHover}" />
+                            <Setter Property="TextColor" Value="{StaticResource BrandPrimary}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
     </Style>
 
     <!-- ===== Pagination ===== -->
@@ -282,6 +370,49 @@
     <Style x:Key="PageNumberActiveStyle" TargetType="Border" BasedOn="{StaticResource PageNumberStyle}">
         <Setter Property="Background" Value="{StaticResource BrandPrimary}" />
         <Setter Property="Stroke" Value="{StaticResource BrandPrimary}" />
+    </Style>
+    <!-- ===== Form helpers ===== -->
+
+    <!-- The red star beside a field the user must fill in. -->
+    <Style x:Key="RequiredMarkStyle" TargetType="Label">
+        <Setter Property="Text" Value="*" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="TextColor" Value="{StaticResource StatusRedText}" />
+        <Setter Property="VerticalOptions" Value="Center" />
+    </Style>
+
+    <!-- The message shown on a form when something the user typed is wrong. -->
+    <Style x:Key="ErrorBoxStyle" TargetType="Border">
+        <Setter Property="Background" Value="{StaticResource StatusRedBg}" />
+        <Setter Property="Stroke" Value="{StaticResource StatusRedBg}" />
+        <Setter Property="StrokeThickness" Value="1" />
+        <Setter Property="Padding" Value="14,10" />
+        <Setter Property="IsVisible" Value="False" />
+        <Setter Property="StrokeShape">
+            <Setter.Value>
+                <RoundRectangle CornerRadius="8" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ErrorTextStyle" TargetType="Label">
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="TextColor" Value="{StaticResource StatusRedText}" />
+        <Setter Property="VerticalOptions" Value="Center" />
+    </Style>
+
+    <!-- A soft note card, used to fill side space with something useful. -->
+    <Style x:Key="HintCardStyle" TargetType="Border">
+        <Setter Property="Background" Value="{StaticResource BrandCream}" />
+        <Setter Property="Stroke" Value="{StaticResource CardBorder}" />
+        <Setter Property="StrokeThickness" Value="1" />
+        <Setter Property="Padding" Value="16" />
+        <Setter Property="StrokeShape">
+            <Setter.Value>
+                <RoundRectangle CornerRadius="12" />
+            </Setter.Value>
+        </Setter>
     </Style>
 
 </ResourceDictionary>

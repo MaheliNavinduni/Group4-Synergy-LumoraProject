@@ -43,7 +43,7 @@ public partial class MarkAttendancePage : ContentPage
         await AppNavigation.GoToAsync(new AdminAttendancePage());
     }
 
-    private void OnDateSelected(object sender, DateChangedEventArgs e)
+    private void OnDateSelected(object sender, EventArgs e)
     {
         ShowClassList();
         LoadClasses();

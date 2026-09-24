@@ -44,7 +44,7 @@
                                     <Label Text="Student Performance Overview" Style="{StaticResource SectionTitleStyle}" FontSize="14" />
                                     <Label Text="Average grades across departments for Fall Semester." Style="{StaticResource SmallMutedStyle}" />
                                 </VerticalStackLayout>
-                                <Border Grid.Column="1" Style="{StaticResource FieldBoxStyle}" HeightRequest="28" Padding="10,0">
+                                <Border Grid.Column="1" Style="{StaticResource FieldBoxStyle}" HeightRequest="40" Padding="10,0">
                                     <HorizontalStackLayout Spacing="6">
                                         <Label Text="This Term" Style="{StaticResource MutedStyle}" FontSize="11" VerticalOptions="Center" />
                                         <Label Text="&#xE70D;" Style="{StaticResource IconStyle}" FontSize="9" />
