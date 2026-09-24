@@ -1,43 +1,70 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!-- A small statistic card: a title, a big number and a note underneath.
-     Used on the dashboards, attendance, payments and teacher pages. -->
+     Used on the dashboards, attendance, payments and teacher pages.
+
+     Set Accent="1" to "5" to pick one of the five brown shades, so a row of
+     cards reads as a set rather than five identical boxes. -->
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="LumoraAcademy.Controls.StatCard">
 
     <Border x:Name="CardBorder"
             Style="{StaticResource CardStyle}"
-            Padding="18,16">
-        <Grid ColumnDefinitions="*,Auto"
-              RowDefinitions="Auto,Auto,Auto"
-              RowSpacing="6">
+            Padding="0">
+        <Grid RowDefinitions="4,*">
 
-            <Label x:Name="TitleLabel"
-                   Grid.Row="0"
-                   Grid.Column="0"
-                   FontSize="11"
-                   FontAttributes="Bold"
-                   CharacterSpacing="0.5"
-                   TextColor="{StaticResource TextMuted}" />
+            <!-- The coloured strip along the top says which shade this card uses -->
+            <BoxView x:Name="AccentStrip"
+                     Grid.Row="0"
+                     Color="{StaticResource BrandPrimary}" />
 
-            <Label x:Name="IconLabel"
-                   Grid.Row="0"
-                   Grid.Column="1"
-                   Style="{StaticResource IconStyle}"
-                   TextColor="{StaticResource BrandPrimary}" />
+            <Grid Grid.Row="1"
+                  ColumnDefinitions="*,Auto"
+                  RowDefinitions="Auto,Auto,Auto"
+                  RowSpacing="6"
+                  Padding="18,14,18,16">
 
-            <Label x:Name="ValueLabel"
-                   Grid.Row="1"
-                   Grid.ColumnSpan="2"
-                   FontSize="24"
-                   FontAttributes="Bold"
-                   TextColor="{StaticResource TextHeading}" />
+                <Label x:Name="TitleLabel"
+                       Grid.Row="0"
+                       Grid.Column="0"
+                       FontSize="11"
+                       FontAttributes="Bold"
+                       CharacterSpacing="0.5"
+                       TextColor="{StaticResource TextMuted}"
+                       VerticalOptions="Center" />
 
-            <Label x:Name="SubtitleLabel"
-                   Grid.Row="2"
-                   Grid.ColumnSpan="2"
-                   FontSize="11"
-                   TextColor="{StaticResource TextMuted}" />
+                <!-- Round chip behind the icon, in a light version of the shade -->
+                <Border x:Name="IconChip"
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        WidthRequest="30"
+                        HeightRequest="30"
+                        Padding="0"
+                        StrokeThickness="0"
+                        Background="{StaticResource BrandCream}">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="15" />
+                    </Border.StrokeShape>
+                    <Label x:Name="IconLabel"
+                           Style="{StaticResource IconStyle}"
+                           TextColor="{StaticResource BrandPrimary}"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center" />
+                </Border>
+
+                <Label x:Name="ValueLabel"
+                       Grid.Row="1"
+                       Grid.ColumnSpan="2"
+                       FontSize="24"
+                       FontAttributes="Bold"
+                       TextColor="{StaticResource TextHeading}" />
+
+                <Label x:Name="SubtitleLabel"
+                       Grid.Row="2"
+                       Grid.ColumnSpan="2"
+                       FontSize="11"
+                       TextColor="{StaticResource TextMuted}" />
+            </Grid>
         </Grid>
     </Border>
 </ContentView>

@@ -4,7 +4,7 @@
              xmlns:controls="clr-namespace:LumoraAcademy.Controls"
              x:Class="LumoraAcademy.Pages.Admin.TeacherDetailsPage"
              Title="Teacher Details"
-             BackgroundColor="{StaticResource PageBackground}">
+             BackgroundColor="{StaticResource ContentBackground}">
 
     <Grid ColumnDefinitions="220,*">
 
@@ -112,10 +112,14 @@
                     <VerticalStackLayout Grid.Column="1" Spacing="16">
 
                         <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="12">
-                            <controls:StatCard x:Name="SubjectsCard" Grid.Column="0" Title="Subjects" Value="-" Icon="&#xE8F1;" />
-                            <controls:StatCard x:Name="StudentsCard" Grid.Column="1" Title="Assigned Students" Value="-" Icon="&#xE716;" />
-                            <controls:StatCard x:Name="PassCard" Grid.Column="2" Title="Avg Pass Rate" Value="-" Icon="&#xE9D2;" />
-                            <controls:StatCard x:Name="ExperienceCard" Grid.Column="3" Title="Experience" Value="-" Icon="&#xE734;" />
+                            <controls:StatCard x:Name="SubjectsCard" Grid.Column="0" Title="Subjects" Value="-" Icon="&#xE8F1;"
+                                       Accent="1" />
+                            <controls:StatCard x:Name="StudentsCard" Grid.Column="1" Title="Assigned Students" Value="-" Icon="&#xE716;"
+                                       Accent="2" />
+                            <controls:StatCard x:Name="PassCard" Grid.Column="2" Title="Avg Pass Rate" Value="-" Icon="&#xE9D2;"
+                                       Accent="3" />
+                            <controls:StatCard x:Name="ExperienceCard" Grid.Column="3" Title="Experience" Value="-" Icon="&#xE734;"
+                                       Accent="4" />
                         </Grid>
 
                         <!-- Today's schedule table -->

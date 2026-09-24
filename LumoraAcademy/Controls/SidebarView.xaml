@@ -4,49 +4,108 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="LumoraAcademy.Controls.SidebarView"
-             WidthRequest="220"
-             BackgroundColor="{StaticResource CardBackground}">
+             WidthRequest="220">
 
-    <Grid RowDefinitions="Auto,*,Auto"
-          ColumnDefinitions="*,1">
+    <!-- The brown panel. It runs from a slightly deeper brown at the bottom,
+         which gives the menu some depth without looking busy. -->
+    <Border Padding="0"
+            StrokeThickness="0">
+        <Border.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Color="{StaticResource SidebarBackground}" Offset="0.0" />
+                <GradientStop Color="{StaticResource SidebarBackgroundDeep}" Offset="1.0" />
+            </LinearGradientBrush>
+        </Border.Background>
 
-        <!-- Thin line on the right edge of the sidebar -->
-        <BoxView Grid.Column="1"
-                 Grid.RowSpan="3"
-                 Color="{StaticResource DividerLine}" />
+        <Grid RowDefinitions="Auto,Auto,*,Auto">
 
-        <!-- User name and role -->
-        <VerticalStackLayout Grid.Row="0"
-                             Padding="20,24,20,18"
-                             Spacing="2">
-            <Label x:Name="UserNameLabel"
-                   FontSize="18"
-                   FontAttributes="Bold"
-                   TextColor="{StaticResource TextHeading}" />
-            <Label x:Name="RoleLabel"
-                   FontSize="11"
-                   TextColor="{StaticResource TextMuted}" />
-        </VerticalStackLayout>
+            <!-- ===== Institute logo ===== -->
+            <VerticalStackLayout Grid.Row="0"
+                                 Padding="20,22,20,16"
+                                 Spacing="10">
 
-        <BoxView Grid.Row="0"
-                 VerticalOptions="End"
-                 Style="{StaticResource RowDividerStyle}" />
+                <Image Source="lumora_mark.png"
+                       WidthRequest="64"
+                       HeightRequest="64"
+                       HorizontalOptions="Center" />
 
-        <!-- Menu items are added here from code -->
-        <VerticalStackLayout x:Name="MenuList"
-                             Grid.Row="1"
-                             Padding="10,12"
-                             Spacing="2" />
+                <Label Text="LUMORA"
+                       FontSize="17"
+                       FontAttributes="Bold"
+                       CharacterSpacing="3"
+                       TextColor="{StaticResource BrandCream}"
+                       HorizontalOptions="Center" />
 
-        <!-- Log out -->
-        <Label Grid.Row="2"
-               Text="Log out"
-               FontSize="13"
-               TextColor="{StaticResource TextHeading}"
-               Padding="20,0,20,24">
-            <Label.GestureRecognizers>
-                <TapGestureRecognizer Tapped="OnLogoutTapped" />
-            </Label.GestureRecognizers>
-        </Label>
-    </Grid>
+                <Label Text="Shaping Futures"
+                       FontSize="10"
+                       CharacterSpacing="1"
+                       TextColor="{StaticResource SidebarTextDim}"
+                       HorizontalOptions="Center"
+                       Margin="0,-6,0,0" />
+            </VerticalStackLayout>
+
+            <!-- ===== Who is signed in ===== -->
+            <VerticalStackLayout Grid.Row="1"
+                                 Padding="20,4,20,16"
+                                 Spacing="2">
+
+                <BoxView Color="{StaticResource SidebarDivider}"
+                         HeightRequest="1"
+                         Margin="0,0,0,14" />
+
+                <Label x:Name="UserNameLabel"
+                       FontSize="16"
+                       FontAttributes="Bold"
+                       TextColor="{StaticResource BrandCream}" />
+
+                <Label x:Name="RoleLabel"
+                       FontSize="11"
+                       TextColor="{StaticResource SidebarTextDim}" />
+            </VerticalStackLayout>
+
+            <!-- Menu items are added here from code -->
+            <VerticalStackLayout x:Name="MenuList"
+                                 Grid.Row="2"
+                                 Padding="10,4"
+                                 Spacing="2" />
+
+            <!-- ===== Log out ===== -->
+            <VerticalStackLayout Grid.Row="3"
+                                 Padding="10,10,10,18"
+                                 Spacing="0">
+
+                <BoxView Color="{StaticResource SidebarDivider}"
+                         HeightRequest="1"
+                         Margin="10,0,10,10" />
+
+                <Border x:Name="LogoutBox"
+                        Padding="12,10"
+                        StrokeThickness="0"
+                        BackgroundColor="Transparent">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="6" />
+                    </Border.StrokeShape>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnLogoutTapped" />
+                        <PointerGestureRecognizer PointerEntered="OnLogoutPointerEntered"
+                                                  PointerExited="OnLogoutPointerExited" />
+                    </Border.GestureRecognizers>
+
+                    <HorizontalStackLayout Spacing="12">
+                        <Label x:Name="LogoutIcon"
+                               Text="&#xE7E8;"
+                               FontFamily="Segoe MDL2 Assets"
+                               FontSize="14"
+                               TextColor="{StaticResource SidebarText}"
+                               VerticalOptions="Center" />
+                        <Label x:Name="LogoutLabel"
+                               Text="Log out"
+                               FontSize="13"
+                               TextColor="{StaticResource SidebarText}"
+                               VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+        </Grid>
+    </Border>
 </ContentView>

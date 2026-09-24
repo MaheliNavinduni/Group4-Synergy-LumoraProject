@@ -51,8 +51,8 @@ public static class StudentReportPdf
                 {
                     row.RelativeItem().Column(col =>
                     {
-                        col.Item().Text("Lumora Academy").FontSize(18).Bold().FontColor(DarkBrown);
-                        col.Item().Text("Excellence in Education").FontSize(9).Italic().FontColor(Grey);
+                        col.Item().Text("Lumora Educational Institute").FontSize(18).Bold().FontColor(DarkBrown);
+                        col.Item().Text("Shaping Futures").FontSize(9).Italic().FontColor(Grey);
                     });
                     row.RelativeItem().AlignRight().Column(col =>
                     {

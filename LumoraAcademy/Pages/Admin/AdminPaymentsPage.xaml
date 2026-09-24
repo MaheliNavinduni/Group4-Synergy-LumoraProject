@@ -4,7 +4,7 @@
              xmlns:controls="clr-namespace:LumoraAcademy.Controls"
              x:Class="LumoraAcademy.Pages.Admin.AdminPaymentsPage"
              Title="Payments"
-             BackgroundColor="{StaticResource PageBackground}">
+             BackgroundColor="{StaticResource ContentBackground}">
 
     <Grid ColumnDefinitions="220,*">
 
@@ -33,10 +33,14 @@
 
                 <!-- Totals for the month -->
                 <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="14">
-                    <controls:StatCard x:Name="ExpectedCard" Grid.Column="0" Title="TOTAL EXPECTED" Value="-" Subtitle="This month" Icon="&#xE8C7;" />
-                    <controls:StatCard x:Name="CollectedCard" Grid.Column="1" Title="COLLECTED" Value="-" Subtitle="" Icon="&#xE73E;" />
-                    <controls:StatCard x:Name="OutstandingCard" Grid.Column="2" Title="OUTSTANDING" Value="-" Subtitle="" Icon="&#xE823;" />
-                    <controls:StatCard x:Name="OverdueCard" Grid.Column="3" Title="OVERDUE" Value="-" Subtitle="Action required" Icon="&#xE7BA;" />
+                    <controls:StatCard x:Name="ExpectedCard" Grid.Column="0" Title="TOTAL EXPECTED" Value="-" Subtitle="This month" Icon="&#xE8C7;"
+                                       Accent="1" />
+                    <controls:StatCard x:Name="CollectedCard" Grid.Column="1" Title="COLLECTED" Value="-" Subtitle="" Icon="&#xE73E;"
+                                       Accent="2" />
+                    <controls:StatCard x:Name="OutstandingCard" Grid.Column="2" Title="OUTSTANDING" Value="-" Subtitle="" Icon="&#xE823;"
+                                       Accent="3" />
+                    <controls:StatCard x:Name="OverdueCard" Grid.Column="3" Title="OVERDUE" Value="-" Subtitle="Action required" Icon="&#xE7BA;"
+                                       Accent="4" />
                 </Grid>
 
                 <!-- ===== Step 1: pick a class ===== -->

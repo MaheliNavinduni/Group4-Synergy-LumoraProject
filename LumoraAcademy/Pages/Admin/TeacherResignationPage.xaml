@@ -125,7 +125,7 @@
 
             <Button Text="Go Back"
                     Style="{StaticResource SmallPrimaryButtonStyle}"
-                    BackgroundColor="{StaticResource BrandPrimaryDark}"
+                   
                     HorizontalOptions="End"
                     Clicked="OnCancelClicked" />
 

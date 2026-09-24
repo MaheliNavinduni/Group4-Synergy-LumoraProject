@@ -4,7 +4,7 @@
              xmlns:controls="clr-namespace:LumoraAcademy.Controls"
              x:Class="LumoraAcademy.Pages.Admin.AddSubjectPage"
              Title="Add New Subject"
-             BackgroundColor="{StaticResource PageBackground}">
+             BackgroundColor="{StaticResource ContentBackground}">
 
     <Grid ColumnDefinitions="220,*">
 
@@ -12,63 +12,119 @@
                               ActiveItem="Academics" />
 
         <ScrollView Grid.Column="1">
-            <VerticalStackLayout Padding="36,32"
-                                 Spacing="24"
+            <VerticalStackLayout Padding="36,28"
+                                 Spacing="18"
                                  MaximumWidthRequest="1100"
                                  HorizontalOptions="Fill">
 
-                <VerticalStackLayout Spacing="6">
-                    <Label Text="Academics / Subjects"
-                           Style="{StaticResource SmallMutedStyle}" />
-                    <Label Text="Add New Subject"
-                           Style="{StaticResource PageTitleStyle}" />
-                    <Label Text="Configure curriculum details and academic assignments."
-                           Style="{StaticResource PageSubtitleStyle}" />
-                </VerticalStackLayout>
+                <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="10">
+                    <VerticalStackLayout Grid.Column="0" Spacing="4">
+                        <Label Text="Academics  /  Subjects"
+                               Style="{StaticResource SmallMutedStyle}" />
+                        <Label Text="Add New Subject"
+                               Style="{StaticResource PageTitleStyle}" />
+                        <Label Text="A subject is the thing that is taught. Classes are built from subjects on the Classes page."
+                               Style="{StaticResource PageSubtitleStyle}" />
+                    </VerticalStackLayout>
 
-                <controls:StatCard Title="TOTAL SUBJECTS"
-                                   x:Name="TotalCard"
-                                   Value="0"
-                                   ValueColor="{StaticResource BrandPrimary}"
-                                   WidthRequest="640"
-                                   HorizontalOptions="Start" />
+                    <Button Grid.Column="1"
+                            Text="Cancel"
+                            Style="{StaticResource OutlineButtonStyle}"
+                            VerticalOptions="Center"
+                            Clicked="OnCancelClicked" />
+                    <Button Grid.Column="2"
+                            Text="Save Subject"
+                            Style="{StaticResource PrimaryButtonStyle}"
+                            VerticalOptions="Center"
+                            Clicked="OnSaveClicked" />
+                </Grid>
 
-                <!-- Subject information form -->
-                <VerticalStackLayout Spacing="18"
-                                     Margin="0,20,0,0">
-                    <HorizontalStackLayout Spacing="8">
-                        <Label Text="&#xE8A5;" Style="{StaticResource IconStyle}" />
-                        <Label Text="Subject Information" Style="{StaticResource SectionTitleStyle}" FontSize="14" />
-                    </HorizontalStackLayout>
+                <Grid ColumnDefinitions="*,300" ColumnSpacing="20">
 
-                    <BoxView Style="{StaticResource RowDividerStyle}" />
+                    <!-- ===== The form ===== -->
+                    <Border Grid.Column="0" Style="{StaticResource CardStyle}" Padding="20">
+                        <VerticalStackLayout Spacing="16">
+                            <HorizontalStackLayout Spacing="8">
+                                <Label Text="&#xE8A5;" Style="{StaticResource IconStyle}" TextColor="{StaticResource BrandPrimary}" />
+                                <Label Text="Subject Information" Style="{StaticResource SectionTitleStyle}" FontSize="14" />
+                            </HorizontalStackLayout>
+                            <BoxView Style="{StaticResource RowDividerStyle}" />
 
-                    <VerticalStackLayout Spacing="6">
-                        <Label Text="Subject Name" Style="{StaticResource FormLabelStyle}" FontSize="11" Margin="0" />
-                        <Border Style="{StaticResource FieldBoxStyle}" Background="{StaticResource TableHeaderBackground}" Stroke="{StaticResource TableHeaderBackground}">
-                            <Entry x:Name="SubjectNameEntry" Placeholder="e.g. Advanced Physics" Style="{StaticResource FieldEntryStyle}" />
+                            <Grid ColumnDefinitions="*,*" ColumnSpacing="18" RowDefinitions="Auto,Auto" RowSpacing="14">
+
+                                <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="6">
+                                    <HorizontalStackLayout Spacing="3">
+                                        <Label Text="Subject Name" Style="{StaticResource FormLabelStyle}" Margin="0" />
+                                        <Label Style="{StaticResource RequiredMarkStyle}" />
+                                    </HorizontalStackLayout>
+                                    <Border Style="{StaticResource FieldBoxStyle}">
+                                        <Entry x:Name="SubjectNameEntry" Placeholder="For example Combined Maths" Style="{StaticResource FieldEntryStyle}" />
+                                    </Border>
+                                </VerticalStackLayout>
+
+                                <VerticalStackLayout Grid.Row="0" Grid.Column="1" Spacing="6">
+                                    <HorizontalStackLayout Spacing="3">
+                                        <Label Text="Subject Code" Style="{StaticResource FormLabelStyle}" Margin="0" />
+                                        <Label Style="{StaticResource RequiredMarkStyle}" />
+                                    </HorizontalStackLayout>
+                                    <Border Style="{StaticResource FieldBoxStyle}">
+                                        <Entry x:Name="SubjectCodeEntry" Placeholder="For example MAT-101" Style="{StaticResource FieldEntryStyle}" />
+                                    </Border>
+                                    <Label Text="A short code, used on reports. It must not already be in use."
+                                           Style="{StaticResource SmallMutedStyle}" />
+                                </VerticalStackLayout>
+
+                                <VerticalStackLayout Grid.Row="1" Grid.Column="0" Spacing="6">
+                                    <HorizontalStackLayout Spacing="3">
+                                        <Label Text="Curriculum" Style="{StaticResource FormLabelStyle}" Margin="0" />
+                                        <Label Style="{StaticResource RequiredMarkStyle}" />
+                                    </HorizontalStackLayout>
+                                    <controls:DropDownField x:Name="CurriculumPicker" Title="Select curriculum" />
+                                </VerticalStackLayout>
+                            </Grid>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <!-- ===== Side panel ===== -->
+                    <VerticalStackLayout Grid.Column="1" Spacing="18">
+
+                        <controls:StatCard x:Name="TotalCard"
+                                           Title="TOTAL SUBJECTS"
+                                           Value="0"
+                                           Subtitle="Already set up"
+                                           Icon="&#xE8A5;"
+                                           Accent="1" />
+
+                        <Border Style="{StaticResource CardTightStyle}">
+                            <VerticalStackLayout>
+                                <Grid Padding="18,14">
+                                    <Label Text="Subjects so far" Style="{StaticResource SectionTitleStyle}" FontSize="13" />
+                                </Grid>
+                                <BoxView Style="{StaticResource RowDividerStyle}" />
+
+                                <VerticalStackLayout x:Name="SubjectList">
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate>
+                                            <VerticalStackLayout>
+                                                <Grid ColumnDefinitions="*,Auto" Padding="18,10">
+                                                    <Label Text="{Binding Name}" Style="{StaticResource TableCellStyle}" FontSize="12" />
+                                                    <Label Grid.Column="1" Text="{Binding Code}" Style="{StaticResource TableCellMutedStyle}" />
+                                                </Grid>
+                                                <BoxView Style="{StaticResource RowDividerStyle}" />
+                                            </VerticalStackLayout>
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+                                </VerticalStackLayout>
+
+                                <Label x:Name="NoSubjectsLabel"
+                                       Text="No subjects yet. This one will be the first."
+                                       Style="{StaticResource MutedStyle}"
+                                       Padding="18,14"
+                                       IsVisible="False" />
+                            </VerticalStackLayout>
                         </Border>
                     </VerticalStackLayout>
-
-                    <VerticalStackLayout Spacing="6">
-                        <Label Text="Subject Code" Style="{StaticResource FormLabelStyle}" FontSize="11" Margin="0" />
-                        <Border Style="{StaticResource FieldBoxStyle}" Background="{StaticResource TableHeaderBackground}" Stroke="{StaticResource TableHeaderBackground}">
-                            <Entry x:Name="SubjectCodeEntry" Placeholder="E.G. SCI-PHY-101" Style="{StaticResource FieldEntryStyle}" />
-                        </Border>
-                    </VerticalStackLayout>
-
-                    <VerticalStackLayout Spacing="6">
-                        <Label Text="Curriculum" Style="{StaticResource FormLabelStyle}" FontSize="11" Margin="0" />
-                        <controls:DropDownField x:Name="CurriculumPicker" />
-                    </VerticalStackLayout>
-                </VerticalStackLayout>
-
-                <HorizontalStackLayout Spacing="10"
-                                       HorizontalOptions="End"
-                                       Margin="0,20,0,0">
-                    <Button Text="Cancel" Style="{StaticResource OutlineButtonStyle}" Clicked="OnCancelClicked" />
-                    <Button Text="Save Subject" Style="{StaticResource PrimaryButtonStyle}" Clicked="OnSaveClicked" />
-                </HorizontalStackLayout>
+                </Grid>
 
             </VerticalStackLayout>
         </ScrollView>
