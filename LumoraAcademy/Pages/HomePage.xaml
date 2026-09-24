@@ -33,7 +33,7 @@
                 </VerticalStackLayout>
 
                 <Button Grid.Column="2"
-                        Text="Staff Login"
+                        Text="Login"
                         Style="{StaticResource SmallOutlineButtonStyle}"
                         Clicked="OnLoginButtonClicked" />
             </Grid>
@@ -42,145 +42,62 @@
                      Color="{StaticResource CardBorder}" />
 
             <!-- ===== Hero ===== -->
-            <Grid HeightRequest="420">
+            <Grid HeightRequest="440">
 
-                <!-- Warm brown backdrop, built from the brand colours rather
-                     than a photo, so it always matches the rest of the app. -->
-                <Border StrokeThickness="0" Padding="0">
-                    <Border.Background>
-                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                            <GradientStop Color="{StaticResource Brown800}" Offset="0.0" />
-                            <GradientStop Color="{StaticResource Brown600}" Offset="0.55" />
-                            <GradientStop Color="{StaticResource Brown400}" Offset="1.0" />
-                        </LinearGradientBrush>
-                    </Border.Background>
-                </Border>
+                <!-- The picture: drawn in the institute's own colours, with the
+                     left side kept clear so the wording sits on top of it. -->
+                <Image Source="hero_learning.png"
+                       Aspect="AspectFill" />
 
-                <!-- Soft circles, for a little depth -->
-                <Ellipse Fill="{StaticResource BrandCream}"
-                         Opacity="0.06"
-                         WidthRequest="380"
-                         HeightRequest="380"
-                         HorizontalOptions="Start"
-                         VerticalOptions="Start"
-                         Margin="-120,-140,0,0" />
-                <Ellipse Fill="{StaticResource AccentGold}"
-                         Opacity="0.10"
-                         WidthRequest="260"
-                         HeightRequest="260"
-                         HorizontalOptions="Start"
-                         VerticalOptions="End"
-                         Margin="180,0,0,-150" />
+                <VerticalStackLayout VerticalOptions="Center"
+                                     HorizontalOptions="Start"
+                                     Spacing="14"
+                                     MaximumWidthRequest="560"
+                                     Padding="56,0">
 
-                <Grid ColumnDefinitions="*,Auto"
-                      ColumnSpacing="40"
-                      Padding="56,0">
-
-                    <!-- Words -->
-                    <VerticalStackLayout Grid.Column="0"
-                                         VerticalOptions="Center"
-                                         Spacing="14"
-                                         MaximumWidthRequest="560"
-                                         HorizontalOptions="Start">
-
-                        <Border Background="{StaticResource AccentGold}"
-                                StrokeThickness="0"
-                                Padding="12,5"
-                                HorizontalOptions="Start">
-                            <Border.StrokeShape>
-                                <RoundRectangle CornerRadius="12" />
-                            </Border.StrokeShape>
-                            <Label Text="STUDENT MANAGEMENT SYSTEM"
-                                   FontSize="10"
-                                   FontAttributes="Bold"
-                                   CharacterSpacing="1.5"
-                                   TextColor="{StaticResource Brown900}" />
-                        </Border>
-
-                        <Label Text="Learning beyond the syllabus"
-                               FontSize="42"
+                    <Border Background="{StaticResource AccentGold}"
+                            StrokeThickness="0"
+                            Padding="12,5"
+                            HorizontalOptions="Start">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="12" />
+                        </Border.StrokeShape>
+                        <Label Text="STUDENT MANAGEMENT SYSTEM"
+                               FontSize="10"
                                FontAttributes="Bold"
-                               LineHeight="1.15"
-                               TextColor="{StaticResource TextOnDark}" />
+                               CharacterSpacing="1.5"
+                               TextColor="{StaticResource Brown900}" />
+                    </Border>
 
-                        <Label Text="One place for students, teachers, classes, attendance and fees at Lumora Educational Institute."
-                               FontSize="15"
-                               LineHeight="1.5"
-                               TextColor="{StaticResource Brown100}" />
+                    <Label Text="Learning beyond the syllabus"
+                           FontSize="42"
+                           FontAttributes="Bold"
+                           LineHeight="1.15"
+                           TextColor="{StaticResource TextOnDark}" />
 
-                        <Button Text="Staff Login"
-                                Clicked="OnLoginButtonClicked"
-                                BackgroundColor="{StaticResource BrandCream}"
-                                TextColor="{StaticResource Brown800}"
-                                FontAttributes="Bold"
-                                FontSize="15"
-                                CornerRadius="8"
-                                HeightRequest="48"
-                                WidthRequest="170"
-                                Margin="0,12,0,0"
-                                HorizontalOptions="Start" />
-                    </VerticalStackLayout>
+                    <Label Text="One place for students, teachers, classes, attendance and fees at Lumora Educational Institute."
+                           FontSize="15"
+                           LineHeight="1.5"
+                           TextColor="{StaticResource Brown100}" />
 
-                    <!-- The institute logo, large -->
-                    <Grid Grid.Column="1"
-                          WidthRequest="320"
-                          HeightRequest="320"
-                          VerticalOptions="Center">
-                        <Ellipse Fill="{StaticResource BrandCream}"
-                                 Opacity="0.14"
-                                 WidthRequest="320"
-                                 HeightRequest="320" />
-                        <Image Source="lumora_mark.png"
-                               WidthRequest="256"
-                               HeightRequest="256"
-                               HorizontalOptions="Center"
-                               VerticalOptions="Center" />
-                    </Grid>
-                </Grid>
-            </Grid>
-
-            <!-- ===== What the system covers ===== -->
-            <Grid ColumnDefinitions="*,*,*,*"
-                  ColumnSpacing="16"
-                  Padding="40,32,40,8">
-
-                <Border Grid.Column="0" Style="{StaticResource CardStyle}" Padding="18,16">
-                    <VerticalStackLayout Spacing="8">
-                        <Label Text="&#xE716;" Style="{StaticResource IconStyle}" FontSize="20" TextColor="{StaticResource Chart1}" />
-                        <Label Text="Students" Style="{StaticResource BodyBoldStyle}" FontSize="14" />
-                        <Label Text="Registration, records and progress in one directory." Style="{StaticResource MutedStyle}" />
-                    </VerticalStackLayout>
-                </Border>
-
-                <Border Grid.Column="1" Style="{StaticResource CardStyle}" Padding="18,16">
-                    <VerticalStackLayout Spacing="8">
-                        <Label Text="&#xE77B;" Style="{StaticResource IconStyle}" FontSize="20" TextColor="{StaticResource Chart2}" />
-                        <Label Text="Teachers" Style="{StaticResource BodyBoldStyle}" FontSize="14" />
-                        <Label Text="Staff accounts, subjects and class timetables." Style="{StaticResource MutedStyle}" />
-                    </VerticalStackLayout>
-                </Border>
-
-                <Border Grid.Column="2" Style="{StaticResource CardStyle}" Padding="18,16">
-                    <VerticalStackLayout Spacing="8">
-                        <Label Text="&#xE8FD;" Style="{StaticResource IconStyle}" FontSize="20" TextColor="{StaticResource Chart3}" />
-                        <Label Text="Attendance" Style="{StaticResource BodyBoldStyle}" FontSize="14" />
-                        <Label Text="Marked at the office, class by class, every day." Style="{StaticResource MutedStyle}" />
-                    </VerticalStackLayout>
-                </Border>
-
-                <Border Grid.Column="3" Style="{StaticResource CardStyle}" Padding="18,16">
-                    <VerticalStackLayout Spacing="8">
-                        <Label Text="&#xE8C7;" Style="{StaticResource IconStyle}" FontSize="20" TextColor="{StaticResource Chart4}" />
-                        <Label Text="Fees" Style="{StaticResource BodyBoldStyle}" FontSize="14" />
-                        <Label Text="A cash fee register for each class, month by month." Style="{StaticResource MutedStyle}" />
-                    </VerticalStackLayout>
-                </Border>
+                    <Button Text="Login"
+                            Clicked="OnLoginButtonClicked"
+                            BackgroundColor="{StaticResource BrandCream}"
+                            TextColor="{StaticResource Brown800}"
+                            FontAttributes="Bold"
+                            FontSize="15"
+                            CornerRadius="8"
+                            HeightRequest="48"
+                            WidthRequest="170"
+                            Margin="0,12,0,0"
+                            HorizontalOptions="Start" />
+                </VerticalStackLayout>
             </Grid>
 
             <!-- ===== Mission and Vision ===== -->
             <Grid ColumnDefinitions="*,*"
                   ColumnSpacing="24"
-                  Padding="40,24,40,44">
+                  Padding="40,36,40,44">
 
                 <!-- Mission card -->
                 <Border Grid.Column="0"

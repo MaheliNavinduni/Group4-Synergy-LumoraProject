@@ -53,7 +53,7 @@
                        HorizontalOptions="Center"
                        Margin="0,12,0,0" />
 
-                <Label Text="Staff sign in"
+                <Label Text="Sign in to continue"
                        FontSize="12"
                        TextColor="{StaticResource TextMuted}"
                        HorizontalOptions="Center"

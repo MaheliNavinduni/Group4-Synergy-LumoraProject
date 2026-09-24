@@ -12,7 +12,17 @@ public partial class AddSubjectPage : ContentPage
         CurriculumPicker.ItemsSource = new List<string> { "National Curriculum", "Cambridge Curriculum", "English", "Second Language Tamil", "Other" };
         CurriculumPicker.SelectedIndex = 0;
 
-        TotalCard.Value = AppData.Academics.GetSubjects().Count.ToString();
+        LoadSubjects();
+    }
+
+    // Shows what is already set up, so the same subject is not added twice.
+    private void LoadSubjects()
+    {
+        var subjects = AppData.Academics.GetSubjects();
+
+        TotalCard.Value = subjects.Count.ToString();
+        BindableLayout.SetItemsSource(SubjectList, subjects);
+        NoSubjectsLabel.IsVisible = subjects.Count == 0;
     }
 
     private async void OnCancelClicked(object sender, EventArgs e)
