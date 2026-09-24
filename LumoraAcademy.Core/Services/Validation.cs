@@ -129,22 +129,6 @@ public static class Validation
         return "";
     }
 
-    // Sri Lankan NIC: 9 digits then V or X, or the newer 12 digits.
-    public static string Nic(string? value, bool required = false)
-    {
-        if (string.IsNullOrWhiteSpace(value))
-        {
-            return required ? "NIC number is required." : "";
-        }
-
-        string text = value.Trim().ToUpperInvariant();
-
-        if (Regex.IsMatch(text, @"^\d{9}[VX]$")) return "";
-        if (Regex.IsMatch(text, @"^\d{12}$")) return "";
-
-        return "Enter a valid NIC, for example 200145601234 or 901234567V.";
-    }
-
     // ---------- Dates ----------
 
     // Students are between 3 and 25 years old, so anything outside that is a typing mistake.
