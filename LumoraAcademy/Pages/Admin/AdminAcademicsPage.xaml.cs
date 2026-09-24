@@ -18,6 +18,11 @@ public partial class AdminAcademicsPage : ContentPage
         BindableLayout.SetItemsSource(SubjectList, AppData.Academics.GetSubjects());
     }
 
+    private async void OnClassesClicked(object sender, EventArgs e)
+    {
+        await AppNavigation.GoToAsync(new ClassesPage());
+    }
+
     private async void OnAddSubjectClicked(object sender, EventArgs e)
     {
         await AppNavigation.GoToAsync(new AddSubjectPage());

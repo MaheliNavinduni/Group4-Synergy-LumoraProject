@@ -50,9 +50,8 @@ public partial class TeacherDetailsPage : ContentPage
         var averages = students.Select(s => AppData.Academics.AverageForStudent(s.Id)).Where(a => a > 0).ToList();
         PassCard.Value = averages.Count == 0 ? "-" : $"{100.0 * averages.Count(a => a >= 50) / averages.Count:0}%";
 
-        // Today's lessons from the timetable (falls back to the whole week if nothing today)
-        var today = AppData.Schedule.GetDayForTeacher(teacher.Id);
-        BindableLayout.SetItemsSource(ScheduleList, today.Count > 0 ? today : AppData.Schedule.GetWeekForTeacher(teacher.Id));
+        // The classes this teacher takes, with their weekly days and times
+        BindableLayout.SetItemsSource(ScheduleList, AppData.Classes.GetForTeacher(teacher.Id));
 
         // Assigned classes: group this teacher's students by grade
         var classes = students
@@ -64,7 +63,7 @@ public partial class TeacherDetailsPage : ContentPage
 
     private async void OnTimetableClicked(object sender, EventArgs e)
     {
-        await AppNavigation.GoToAsync(new TimetablePage(_teacherId));
+        await AppNavigation.GoToAsync(new ClassesPage());
     }
 
     private async void OnEditProfileClicked(object sender, EventArgs e)

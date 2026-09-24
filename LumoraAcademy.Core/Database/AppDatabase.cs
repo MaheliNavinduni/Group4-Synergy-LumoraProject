@@ -36,6 +36,8 @@ public class AppDatabase
         Connection.CreateTable<ProgressNote>();
         Connection.CreateTable<SchoolEvent>();
         Connection.CreateTable<ClassSession>();
+        Connection.CreateTable<ClassGroup>();
+        Connection.CreateTable<Enrollment>();
     }
 
     // True when the database has no data yet (used to decide whether to seed).
@@ -57,6 +59,8 @@ public class AppDatabase
         Connection.DeleteAll<ProgressNote>();
         Connection.DeleteAll<SchoolEvent>();
         Connection.DeleteAll<ClassSession>();
+        Connection.DeleteAll<ClassGroup>();
+        Connection.DeleteAll<Enrollment>();
     }
 
     // Makes a simple backup copy of the database file (proposal objective 12).

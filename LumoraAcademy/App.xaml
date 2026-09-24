@@ -14,6 +14,7 @@
 
             <!-- Helpers that can be used in any page's XAML -->
             <converters:NotEmptyConverter x:Key="NotEmptyConverter" />
+            <converters:InverseBoolConverter x:Key="InverseBool" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

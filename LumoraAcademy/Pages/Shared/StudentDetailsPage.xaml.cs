@@ -57,11 +57,18 @@ public partial class StudentDetailsPage : ContentPage
         AttendanceCard.Value = report.DaysTotal == 0 ? "-" : $"{rate:0}%";
         AttendanceCard.Subtitle = report.DaysTotal == 0 ? "No records" : $"{absences} Absences";
 
-        TeacherCard.Value = string.IsNullOrWhiteSpace(_student.AssignedTeacherName) ? "-" : _student.AssignedTeacherName;
-        TeacherCard.Subtitle = _student.ClassDayTime;
+        // Classes the student is enrolled in, and what they still owe
+        var classes = AppData.Classes.GetClassesForStudent(_studentId);
+        decimal owed = AppData.Payments.OutstandingForStudent(_studentId);
 
-        AverageCard.Value = report.TotalPercent == 0 ? "-" : $"{report.TotalPercent:0.0}%";
-        AverageCard.Subtitle = report.Rows.Count == 0 ? "" : "Across all subjects";
+        TeacherCard.Title = "CLASSES";
+        TeacherCard.Value = classes.Count.ToString();
+        TeacherCard.Subtitle = classes.Count == 0 ? "Not enrolled yet" : string.Join(", ", classes.Select(c => c.SubjectName));
+
+        FeesCard.Value = owed == 0 ? "Settled" : owed.ToString("N2");
+        FeesCard.Subtitle = owed == 0 ? "Nothing owing" : "Outstanding fees";
+
+
 
         // Recent exam results (latest 5)
         var results = AppData.Academics.GetResultsForStudent(_studentId).Take(5).ToList();

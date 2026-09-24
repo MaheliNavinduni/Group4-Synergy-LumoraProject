@@ -3,139 +3,202 @@ using LumoraAcademy.Core.Entities;
 
 namespace LumoraAcademy.Core.Services;
 
-// Marks and reports student attendance.
+// Attendance is marked in the office, per class, as students arrive.
+// Nothing is assumed: a student with no row for that day is "not recorded", not absent.
 public class AttendanceService
 {
     private readonly AppDatabase _db;
+    private readonly ClassService _classes;
 
-    public AttendanceService(AppDatabase db)
+    public AttendanceService(AppDatabase db, ClassService classes)
     {
         _db = db;
+        _classes = classes;
     }
 
-    // ---------- Write ----------
+    // ---------- The Mark Attendance screen ----------
 
-    // Saves one student's status for a day. If already marked that day in that class, it is updated.
-    public AttendanceEntry Mark(int studentId, DateTime date, string className, string status, string remarks = "", int? subjectId = null, int? teacherId = null)
+    // One row per enrolled student, with the status already saved for that day (blank if not marked).
+    public List<AttendanceRow> GetSheet(int classGroupId, DateTime date)
     {
-        if (status != "Present" && status != "Absent" && status != "Late")
-            throw new ArgumentException("Status must be Present, Absent or Late.");
-
         var day = date.Date;
-        var existing = _db.Connection.Table<AttendanceEntry>()
-            .FirstOrDefault(a => a.StudentId == studentId && a.Date == day && a.ClassName == className);
+        var students = _classes.GetStudents(classGroupId);
+        var saved = _db.Connection.Table<AttendanceEntry>()
+            .Where(a => a.ClassGroupId == classGroupId && a.Date == day)
+            .ToList()
+            .ToDictionary(a => a.StudentId);
 
-        if (existing != null)
+        return students.Select(s => new AttendanceRow
         {
-            existing.Status = status;
-            existing.Remarks = remarks ?? "";
-            existing.SubjectId = subjectId;
-            existing.MarkedByTeacherId = teacherId;
-            _db.Connection.Update(existing);
-            return existing;
-        }
-
-        var entry = new AttendanceEntry
-        {
-            StudentId = studentId,
-            Date = day,
-            ClassName = className,
-            SubjectId = subjectId,
-            Status = status,
-            Remarks = remarks ?? "",
-            MarkedByTeacherId = teacherId,
-        };
-        _db.Connection.Insert(entry);
-        return entry;
+            StudentId = s.Id,
+            StudentCode = s.StudentId,
+            StudentName = s.FullName,
+            Initials = s.Initials,
+            PhotoPath = s.PhotoPath,
+            Status = saved.TryGetValue(s.Id, out var entry) ? entry.Status : "",
+            Remarks = saved.TryGetValue(s.Id, out var e2) ? e2.Remarks : "",
+        }).ToList();
     }
 
-    // Saves a whole class at once (the Mark Attendance page's Save button).
-    public void MarkClass(DateTime date, string className, IEnumerable<(int StudentId, string Status, string Remarks)> rows, int? subjectId = null, int? teacherId = null)
+    // Saves the sheet. Rows left blank are not saved, and any earlier mark for them is removed.
+    public void SaveSheet(int classGroupId, DateTime date, IEnumerable<AttendanceRow> rows, int? teacherId = null)
     {
+        var day = date.Date;
+
         _db.Connection.RunInTransaction(() =>
         {
             foreach (var row in rows)
             {
-                Mark(row.StudentId, date, className, row.Status, row.Remarks, subjectId, teacherId);
+                var existing = _db.Connection.Table<AttendanceEntry>()
+                    .FirstOrDefault(a => a.ClassGroupId == classGroupId && a.Date == day && a.StudentId == row.StudentId);
+
+                if (string.IsNullOrWhiteSpace(row.Status))
+                {
+                    // Left blank - remove any mark that was there before.
+                    if (existing != null) _db.Connection.Delete(existing);
+                    continue;
+                }
+
+                ValidateStatus(row.Status);
+
+                if (existing == null)
+                {
+                    _db.Connection.Insert(new AttendanceEntry
+                    {
+                        StudentId = row.StudentId,
+                        ClassGroupId = classGroupId,
+                        Date = day,
+                        Status = row.Status,
+                        Remarks = row.Remarks ?? "",
+                        MarkedByTeacherId = teacherId,
+                        MarkedOn = DateTime.Now,
+                    });
+                }
+                else
+                {
+                    existing.Status = row.Status;
+                    existing.Remarks = row.Remarks ?? "";
+                    existing.MarkedByTeacherId = teacherId;
+                    existing.MarkedOn = DateTime.Now;
+                    _db.Connection.Update(existing);
+                }
             }
         });
     }
 
-    // ---------- Read ----------
+    // Marks one student straight away (used when a student checks in at the office).
+    public void Mark(int studentId, int classGroupId, DateTime date, string status, string remarks = "", int? teacherId = null)
+    {
+        ValidateStatus(status);
+
+        var row = new AttendanceRow { StudentId = studentId, Status = status, Remarks = remarks };
+        SaveSheet(classGroupId, date, new[] { row }, teacherId);
+    }
+
+    // True when at least one student has been marked for that class that day.
+    public bool IsMarked(int classGroupId, DateTime date)
+    {
+        var day = date.Date;
+        return _db.Connection.Table<AttendanceEntry>().Any(a => a.ClassGroupId == classGroupId && a.Date == day);
+    }
+
+    // ---------- Reading ----------
 
     public List<AttendanceEntry> GetForStudent(int studentId)
     {
         return _db.Connection.Table<AttendanceEntry>().Where(a => a.StudentId == studentId).OrderByDescending(a => a.Date).ToList();
     }
 
-    public List<AttendanceEntry> GetForClassOnDay(string className, DateTime date)
+    public List<AttendanceEntry> GetForClassOnDay(int classGroupId, DateTime date)
     {
         var day = date.Date;
-        return _db.Connection.Table<AttendanceEntry>().Where(a => a.ClassName == className && a.Date == day).ToList();
+        return _db.Connection.Table<AttendanceEntry>().Where(a => a.ClassGroupId == classGroupId && a.Date == day).ToList();
     }
 
-    // Attendance History table: one row per class per day, optionally filtered.
-    public List<AttendanceSummary> GetDailySummaries(DateTime? from = null, DateTime? to = null, string? className = null, string? subjectName = null)
+    // Attendance History table: one row per class per day.
+    public List<AttendanceSummary> GetDailySummaries(DateTime? from = null, DateTime? to = null, int? classGroupId = null)
     {
         var entries = _db.Connection.Table<AttendanceEntry>().ToList().AsEnumerable();
 
         if (from.HasValue) entries = entries.Where(a => a.Date >= from.Value.Date);
         if (to.HasValue) entries = entries.Where(a => a.Date <= to.Value.Date);
-        if (!string.IsNullOrWhiteSpace(className) && className != "All Classes") entries = entries.Where(a => a.ClassName == className);
+        if (classGroupId.HasValue) entries = entries.Where(a => a.ClassGroupId == classGroupId.Value);
 
-        var subjects = _db.Connection.Table<Subject>().ToList().ToDictionary(s => s.Id, s => s.Name);
+        var classes = _classes.GetAll(activeOnly: false).ToDictionary(c => c.Id);
 
-        var summaries = entries
-            .GroupBy(a => new { a.Date, a.ClassName, a.SubjectId })
-            .Select(g => new AttendanceSummary
+        return entries
+            .GroupBy(a => new { a.Date, a.ClassGroupId })
+            .Select(g =>
             {
-                Date = g.Key.Date,
-                ClassName = g.Key.ClassName,
-                SubjectName = g.Key.SubjectId.HasValue && subjects.TryGetValue(g.Key.SubjectId.Value, out var n) ? n : "",
-                Total = g.Count(),
-                Present = g.Count(a => a.Status == "Present"),
-                Absent = g.Count(a => a.Status == "Absent"),
-                Late = g.Count(a => a.Status == "Late"),
-            });
-
-        if (!string.IsNullOrWhiteSpace(subjectName) && subjectName != "All Subjects")
-            summaries = summaries.Where(s => s.SubjectName == subjectName);
-
-        return summaries.OrderByDescending(s => s.Date).ThenBy(s => s.ClassName).ToList();
+                classes.TryGetValue(g.Key.ClassGroupId, out var cls);
+                return new AttendanceSummary
+                {
+                    Date = g.Key.Date,
+                    ClassGroupId = g.Key.ClassGroupId,
+                    ClassName = cls?.Name ?? "",
+                    SubjectName = cls?.SubjectName ?? "",
+                    Grade = cls?.Grade ?? "",
+                    Enrolled = cls?.StudentCount ?? g.Count(),
+                    Present = g.Count(a => a.Status == AttendanceEntry.Present),
+                    Absent = g.Count(a => a.Status == AttendanceEntry.Absent),
+                    Late = g.Count(a => a.Status == AttendanceEntry.Late),
+                };
+            })
+            .OrderByDescending(s => s.Date)
+            .ThenBy(s => s.ClassName)
+            .ToList();
     }
 
-    // Percentage of days the student was present (Late counts as present).
-    public double AttendanceRateForStudent(int studentId)
+    // Percentage of marked days the student was present (Late counts as present).
+    public double AttendanceRateForStudent(int studentId, int? classGroupId = null)
     {
         var entries = GetForStudent(studentId);
+        if (classGroupId.HasValue) entries = entries.Where(a => a.ClassGroupId == classGroupId.Value).ToList();
+
         if (entries.Count == 0) return 0;
-        return Math.Round(100.0 * entries.Count(a => a.Status != "Absent") / entries.Count, 1);
+        return Math.Round(100.0 * entries.Count(a => a.Status != AttendanceEntry.Absent) / entries.Count, 1);
     }
 
     public int AbsencesForStudent(int studentId)
     {
-        return _db.Connection.Table<AttendanceEntry>().Count(a => a.StudentId == studentId && a.Status == "Absent");
+        return _db.Connection.Table<AttendanceEntry>().Count(a => a.StudentId == studentId && a.Status == AttendanceEntry.Absent);
     }
 
     // The three cards on the Admin Attendance History page.
     public AttendanceStats GetStats()
     {
         var all = _db.Connection.Table<AttendanceEntry>().ToList();
-        var days = all.Select(a => a.Date).Distinct().ToList();
         var summaries = GetDailySummaries();
 
         return new AttendanceStats
         {
-            AverageRate = all.Count == 0 ? 0 : Math.Round(100.0 * all.Count(a => a.Status != "Absent") / all.Count, 1),
-            TotalDaysLogged = days.Count,
+            AverageRate = all.Count == 0 ? 0 : Math.Round(100.0 * all.Count(a => a.Status != AttendanceEntry.Absent) / all.Count, 1),
+            TotalDaysLogged = all.Select(a => a.Date).Distinct().Count(),
             PerfectDays = summaries.Count(s => s.Status == "Perfect"),
         };
     }
 
-    public List<string> GetClassNames()
+    private static void ValidateStatus(string status)
     {
-        return _db.Connection.Table<AttendanceEntry>().ToList().Select(a => a.ClassName).Distinct().OrderBy(c => c).ToList();
+        if (status != AttendanceEntry.Present && status != AttendanceEntry.Absent && status != AttendanceEntry.Late)
+        {
+            throw new ArgumentException("Status must be Present, Absent or Late.");
+        }
     }
+}
+
+// One line on the Mark Attendance sheet.
+public class AttendanceRow
+{
+    public int StudentId { get; set; }
+    public string StudentCode { get; set; } = "";
+    public string StudentName { get; set; } = "";
+    public string Initials { get; set; } = "";
+    public string PhotoPath { get; set; } = "";
+    public string Status { get; set; } = "";          // blank = not marked yet
+    public string Remarks { get; set; } = "";
+
+    public bool IsMarked => !string.IsNullOrWhiteSpace(Status);
 }
 
 public class AttendanceStats

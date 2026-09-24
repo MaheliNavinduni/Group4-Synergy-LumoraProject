@@ -1,79 +1,164 @@
 using LumoraAcademy.Core.Entities;
+using LumoraAcademy.Core.Services;
 
 namespace LumoraAcademy.Tests;
 
+// Attendance is marked per class in the office. Nothing defaults to Present.
 public class AttendanceServiceTests
 {
-    private static int StudentId(TestBackend t, string code) => t.Backend.Students.GetByStudentId(code)!.Id;
+    private static ClassGroup ScienceG10(TestBackend t) =>
+        t.Backend.Classes.GetAll().First(c => c.SubjectName == "Science" && c.Grade == "10th Grade");
 
     [Fact]
-    public void Mark_SavesStatus_AndSecondMarkSameDayUpdatesInsteadOfDuplicating()
+    public void GetSheet_StartsWithEveryStudentUnmarked()
     {
         using var t = new TestBackend();
-        int marcus = StudentId(t, "STU-8492");
-        var day = new DateTime(2026, 9, 21);
+        var science = ScienceG10(t);
 
-        t.Backend.Attendance.Mark(marcus, day, "Grade 11 - A", "Absent", "Sick");
-        t.Backend.Attendance.Mark(marcus, day, "Grade 11 - A", "Late", "Arrived 9:15");
+        var sheet = t.Backend.Attendance.GetSheet(science.Id, DateTime.Today);
 
-        var entries = t.Backend.Attendance.GetForClassOnDay("Grade 11 - A", day);
-        Assert.Single(entries);
-        Assert.Equal("Late", entries[0].Status);
-        Assert.Equal("Arrived 9:15", entries[0].Remarks);
+        Assert.Equal(4, sheet.Count);
+        Assert.All(sheet, r => Assert.Equal("", r.Status));
+        Assert.All(sheet, r => Assert.False(r.IsMarked));
+    }
+
+    [Fact]
+    public void GetSheet_ShowsWhatWasSavedEarlier()
+    {
+        using var t = new TestBackend();
+        var science = ScienceG10(t);
+        var day = DateTime.Today;
+        var sheet = t.Backend.Attendance.GetSheet(science.Id, day);
+
+        sheet[0].Status = AttendanceEntry.Present;
+        sheet[1].Status = AttendanceEntry.Absent;
+        sheet[1].Remarks = "Sick";
+        t.Backend.Attendance.SaveSheet(science.Id, day, sheet);
+
+        var reloaded = t.Backend.Attendance.GetSheet(science.Id, day);
+        Assert.Equal(AttendanceEntry.Present, reloaded[0].Status);
+        Assert.Equal(AttendanceEntry.Absent, reloaded[1].Status);
+        Assert.Equal("Sick", reloaded[1].Remarks);
+        Assert.Equal("", reloaded[2].Status);          // still not marked
+    }
+
+    [Fact]
+    public void SaveSheet_DoesNotSaveRowsLeftBlank()
+    {
+        using var t = new TestBackend();
+        var science = ScienceG10(t);
+        var day = DateTime.Today;
+        var sheet = t.Backend.Attendance.GetSheet(science.Id, day);
+
+        sheet[0].Status = AttendanceEntry.Present;     // only one student marked
+        t.Backend.Attendance.SaveSheet(science.Id, day, sheet);
+
+        Assert.Single(t.Backend.Attendance.GetForClassOnDay(science.Id, day));
+    }
+
+    [Fact]
+    public void SaveSheet_ClearingAStatusRemovesTheEarlierMark()
+    {
+        using var t = new TestBackend();
+        var science = ScienceG10(t);
+        var day = DateTime.Today;
+
+        var sheet = t.Backend.Attendance.GetSheet(science.Id, day);
+        sheet[0].Status = AttendanceEntry.Present;
+        t.Backend.Attendance.SaveSheet(science.Id, day, sheet);
+
+        sheet = t.Backend.Attendance.GetSheet(science.Id, day);
+        sheet[0].Status = "";                          // admin undid it
+        t.Backend.Attendance.SaveSheet(science.Id, day, sheet);
+
+        Assert.Empty(t.Backend.Attendance.GetForClassOnDay(science.Id, day));
+    }
+
+    [Fact]
+    public void SaveSheet_MarkingTwiceUpdatesInsteadOfDuplicating()
+    {
+        using var t = new TestBackend();
+        var science = ScienceG10(t);
+        var day = DateTime.Today;
+
+        var sheet = t.Backend.Attendance.GetSheet(science.Id, day);
+        sheet[0].Status = AttendanceEntry.Absent;
+        t.Backend.Attendance.SaveSheet(science.Id, day, sheet);
+
+        sheet = t.Backend.Attendance.GetSheet(science.Id, day);
+        sheet[0].Status = AttendanceEntry.Late;
+        t.Backend.Attendance.SaveSheet(science.Id, day, sheet);
+
+        var saved = t.Backend.Attendance.GetForClassOnDay(science.Id, day);
+        Assert.Single(saved);
+        Assert.Equal(AttendanceEntry.Late, saved[0].Status);
     }
 
     [Fact]
     public void Mark_InvalidStatus_Throws()
     {
         using var t = new TestBackend();
+        var science = ScienceG10(t);
+        var emma = t.Backend.Students.GetByStudentId("STU-2024-0891")!;
 
-        Assert.Throws<ArgumentException>(() => t.Backend.Attendance.Mark(StudentId(t, "STU-8492"), DateTime.Today, "X", "Sleeping"));
+        Assert.Throws<ArgumentException>(() => t.Backend.Attendance.Mark(emma.Id, science.Id, DateTime.Today, "Sleeping"));
     }
 
     [Fact]
-    public void MarkClass_SavesEveryRowAndSummaryCountsAreRight()
+    public void IsMarked_TellsWhetherTheClassWasDoneThatDay()
     {
         using var t = new TestBackend();
-        var day = new DateTime(2026, 9, 22);
-        var rows = new[]
-        {
-            (StudentId(t, "STU-8492"), "Present", ""),
-            (StudentId(t, "STU-3321"), "Absent", "Medical leave"),
-            (StudentId(t, "STU-9942"), "Late", ""),
-        };
+        var science = ScienceG10(t);
 
-        t.Backend.Attendance.MarkClass(day, "Test Class", rows);
-
-        var summary = t.Backend.Attendance.GetDailySummaries(day, day, "Test Class").Single();
-        Assert.Equal(3, summary.Total);
-        Assert.Equal(1, summary.Present);
-        Assert.Equal(1, summary.Absent);
-        Assert.Equal(1, summary.Late);
-        Assert.Equal("Poor", summary.Status);
+        Assert.False(t.Backend.Attendance.IsMarked(science.Id, DateTime.Today));
+        t.Backend.Attendance.Mark(t.Backend.Classes.GetStudents(science.Id)[0].Id, science.Id, DateTime.Today, AttendanceEntry.Present);
+        Assert.True(t.Backend.Attendance.IsMarked(science.Id, DateTime.Today));
     }
 
     [Fact]
-    public void Summary_Status_IsPerfectWhenEveryoneIsPresent()
+    public void Summary_CountsMarkedStudentsAndShowsHowManyAreNotRecorded()
     {
-        var s = new AttendanceSummary { Total = 30, Present = 30 };
-        Assert.Equal("Perfect", s.Status);
+        using var t = new TestBackend();
+        var science = ScienceG10(t);
+        var day = DateTime.Today;
 
-        var s2 = new AttendanceSummary { Total = 30, Present = 28, Late = 2 };
-        Assert.Equal("Excellent", s2.Status);
+        var sheet = t.Backend.Attendance.GetSheet(science.Id, day);
+        sheet[0].Status = AttendanceEntry.Present;
+        sheet[1].Status = AttendanceEntry.Absent;
+        t.Backend.Attendance.SaveSheet(science.Id, day, sheet);
+
+        var summary = t.Backend.Attendance.GetDailySummaries(day, day, science.Id).Single();
+        Assert.Equal(4, summary.Enrolled);
+        Assert.Equal(2, summary.Marked);
+        Assert.Equal(2, summary.NotRecorded);
+        Assert.Equal(1, summary.Present);
+        Assert.Equal(1, summary.Absent);
+    }
+
+    [Fact]
+    public void Summary_Status_IsPerfectWhenEveryMarkedStudentIsPresent()
+    {
+        Assert.Equal("Perfect", new AttendanceSummary { Enrolled = 30, Present = 30 }.Status);
+        Assert.Equal("Excellent", new AttendanceSummary { Enrolled = 30, Present = 28, Late = 2 }.Status);
+        Assert.Equal("Poor", new AttendanceSummary { Enrolled = 10, Present = 6, Absent = 4 }.Status);
+        Assert.Equal("", new AttendanceSummary { Enrolled = 10 }.Status);   // nothing marked yet
     }
 
     [Fact]
     public void AttendanceRate_CountsLateAsPresent()
     {
         using var t = new TestBackend();
-        int marcus = StudentId(t, "STU-8492");
-        t.Backend.Attendance.Mark(marcus, new DateTime(2026, 9, 1), "C", "Present");
-        t.Backend.Attendance.Mark(marcus, new DateTime(2026, 9, 2), "C", "Late");
-        t.Backend.Attendance.Mark(marcus, new DateTime(2026, 9, 3), "C", "Absent");
-        t.Backend.Attendance.Mark(marcus, new DateTime(2026, 9, 4), "C", "Absent");
+        // Sinhala has no seeded attendance, so this class starts empty.
+        var sinhala = t.Backend.Classes.GetAll().First(c => c.SubjectName == "Sinhala");
+        var emma = t.Backend.Students.GetByStudentId("STU-2024-0891")!;
 
-        Assert.Equal(50, t.Backend.Attendance.AttendanceRateForStudent(marcus));
-        Assert.Equal(2, t.Backend.Attendance.AbsencesForStudent(marcus));
+        t.Backend.Attendance.Mark(emma.Id, sinhala.Id, new DateTime(2026, 9, 1), AttendanceEntry.Present);
+        t.Backend.Attendance.Mark(emma.Id, sinhala.Id, new DateTime(2026, 9, 2), AttendanceEntry.Late);
+        t.Backend.Attendance.Mark(emma.Id, sinhala.Id, new DateTime(2026, 9, 3), AttendanceEntry.Absent);
+        t.Backend.Attendance.Mark(emma.Id, sinhala.Id, new DateTime(2026, 9, 4), AttendanceEntry.Absent);
+
+        // Present + Late = 2 of 4 days
+        Assert.Equal(50, t.Backend.Attendance.AttendanceRateForStudent(emma.Id, sinhala.Id));
     }
 
     [Fact]
@@ -84,7 +169,6 @@ public class AttendanceServiceTests
         var stats = t.Backend.Attendance.GetStats();
 
         Assert.True(stats.TotalDaysLogged >= 2);
-        Assert.True(stats.PerfectDays >= 1);
         Assert.InRange(stats.AverageRate, 0, 100);
     }
 }

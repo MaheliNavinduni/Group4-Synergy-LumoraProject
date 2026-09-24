@@ -15,10 +15,10 @@ public partial class TeacherSubjectsPage : ContentPage
         DesignationLabel.Text = teacher?.Designation ?? "";
         EmailLabel.Text = teacher?.Email ?? "";
 
-        // Subject cards built from this teacher's timetable
+        // One card per class this teacher takes
         var cards = AppData.CurrentTeacherId.HasValue
-            ? AppData.Schedule.GetSubjectSummariesForTeacher(AppData.CurrentTeacherId.Value)
-            : new List<Core.Services.SubjectSummary>();
+            ? AppData.Classes.GetForTeacher(AppData.CurrentTeacherId.Value)
+            : new List<Core.Entities.ClassGroup>();
         BindableLayout.SetItemsSource(SubjectList, cards);
     }
 }

@@ -138,8 +138,8 @@
                               ColumnSpacing="12">
                             <controls:StatCard x:Name="GpaCard" Grid.Column="0" Title="CURRENT GPA" Value="-" Subtitle="" Icon="&#xE9D2;" />
                             <controls:StatCard x:Name="AttendanceCard" Grid.Column="1" Title="ATTENDANCE" Value="-" Subtitle="" Icon="&#xE787;" />
-                            <controls:StatCard x:Name="TeacherCard" Grid.Column="2" Title="ASSIGNED TEACHER" Value="-" Subtitle="" Icon="&#xE77B;" />
-                            <controls:StatCard x:Name="AverageCard" Grid.Column="3" Title="AVERAGE MARK" Value="-" Subtitle="" Icon="&#xE734;" />
+                            <controls:StatCard x:Name="TeacherCard" Grid.Column="2" Title="CLASSES" Value="-" Subtitle="" Icon="&#xE8F1;" />
+                            <controls:StatCard x:Name="FeesCard" Grid.Column="3" Title="FEES" Value="-" Subtitle="" Icon="&#xE8C7;" />
                         </Grid>
 
                         <Border Style="{StaticResource CardStyle}"

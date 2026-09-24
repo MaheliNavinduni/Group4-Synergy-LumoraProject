@@ -33,6 +33,6 @@ public static class AppData
     public static Core.Services.AcademicService Academics => Backend.Academics;
     public static Core.Services.AttendanceService Attendance => Backend.Attendance;
     public static Core.Services.EventService Events => Backend.Events;
-    public static Core.Services.ScheduleService Schedule => Backend.Schedule;
+    public static Core.Services.ClassService Classes => Backend.Classes;
     public static Core.Services.ReportService Reports => Backend.Reports;
 }

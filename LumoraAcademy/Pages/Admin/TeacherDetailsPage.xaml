@@ -26,7 +26,7 @@
                         <Label x:Name="TitleLabel" Text="" Style="{StaticResource PageTitleStyle}" />
                     </VerticalStackLayout>
                     <HorizontalStackLayout Grid.Column="1" Spacing="8" VerticalOptions="End">
-                        <Button Text="Manage Timetable"
+                        <Button Text="Manage Classes"
                                 Style="{StaticResource SmallOutlineButtonStyle}"
                                 HeightRequest="34"
                                 Clicked="OnTimetableClicked" />
@@ -136,10 +136,10 @@
                                         <DataTemplate>
                                             <VerticalStackLayout>
                                                 <Grid Style="{StaticResource TableRowStyle}" Padding="16,10" ColumnDefinitions="1.4*,1.4*,1*,1*">
-                                                    <Label Grid.Column="0" Text="{Binding TimeRange}" Style="{StaticResource TableCellStyle}" FontSize="11" />
-                                                    <Label Grid.Column="1" Text="{Binding SubjectName}" Style="{StaticResource TableCellBoldStyle}" FontSize="11" />
-                                                    <Label Grid.Column="2" Text="{Binding ClassName}" Style="{StaticResource TableCellStyle}" FontSize="11" />
-                                                    <Label Grid.Column="3" Text="{Binding Room}" Style="{StaticResource TableCellMutedStyle}" FontSize="11" />
+                                                    <Label Grid.Column="0" Text="{Binding Days}" Style="{StaticResource TableCellStyle}" FontSize="11" />
+                                                    <Label Grid.Column="1" Text="{Binding Name}" Style="{StaticResource TableCellBoldStyle}" FontSize="11" />
+                                                    <Label Grid.Column="2" Text="{Binding TimeRange}" Style="{StaticResource TableCellStyle}" FontSize="11" />
+                                                    <Label Grid.Column="3" Text="{Binding StudentCountText}" Style="{StaticResource TableCellMutedStyle}" FontSize="11" />
                                                 </Grid>
                                                 <BoxView Style="{StaticResource RowDividerStyle}" />
                                             </VerticalStackLayout>
