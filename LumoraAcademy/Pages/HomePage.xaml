@@ -44,10 +44,42 @@
             <!-- ===== Hero ===== -->
             <Grid HeightRequest="440">
 
-                <!-- The picture: drawn in the institute's own colours, with the
-                     left side kept clear so the wording sits on top of it. -->
-                <Image Source="hero_learning.png"
-                       Aspect="AspectFill" />
+                <!-- The brown backdrop is drawn here rather than being part of a
+                     picture, so it stretches to any window width without cropping. -->
+                <Border StrokeThickness="0" Padding="0">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="{StaticResource Brown900}" Offset="0.0" />
+                            <GradientStop Color="{StaticResource Brown700}" Offset="0.5" />
+                            <GradientStop Color="{StaticResource Brown400}" Offset="1.0" />
+                        </LinearGradientBrush>
+                    </Border.Background>
+                </Border>
+
+                <!-- Soft light, for a little depth -->
+                <Ellipse Fill="{StaticResource BrandCream}"
+                         Opacity="0.05"
+                         WidthRequest="420"
+                         HeightRequest="420"
+                         HorizontalOptions="Start"
+                         VerticalOptions="Start"
+                         Margin="-140,-160,0,0" />
+                <Ellipse Fill="{StaticResource AccentGold}"
+                         Opacity="0.08"
+                         WidthRequest="300"
+                         HeightRequest="300"
+                         HorizontalOptions="End"
+                         VerticalOptions="End"
+                         Margin="0,0,-80,-140" />
+
+                <!-- The artwork sits on top, sized to fit, so it is never cut off
+                     however wide the window is made. -->
+                <Image Source="hero_art.png"
+                       Aspect="AspectFit"
+                       HeightRequest="400"
+                       HorizontalOptions="End"
+                       VerticalOptions="Center"
+                       Margin="0,0,40,0" />
 
                 <VerticalStackLayout VerticalOptions="Center"
                                      HorizontalOptions="Start"
