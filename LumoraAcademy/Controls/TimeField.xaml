@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- A time box the user can either type into (4:00 PM) or pick from the clock.
+     Used instead of the plain TimePicker, which Windows draws as three bare
+     spinner columns that do not match the rest of the forms. -->
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LumoraAcademy.Controls.TimeField">
+
+    <Border x:Name="Box"
+            Style="{StaticResource FieldBoxStyle}"
+            Padding="12,0">
+        <Border.GestureRecognizers>
+            <PointerGestureRecognizer PointerEntered="OnPointerEntered"
+                                      PointerExited="OnPointerExited" />
+        </Border.GestureRecognizers>
+
+        <Grid ColumnDefinitions="*,Auto"
+              ColumnSpacing="6">
+
+            <Entry x:Name="TextBox"
+                   Grid.Column="0"
+                   Placeholder="4:00 PM"
+                   Style="{StaticResource FieldEntryStyle}"
+                   TextChanged="OnTextChanged"
+                   Unfocused="OnTextUnfocused" />
+
+            <!-- The clock button. The real picker sits on top of the icon,
+                 invisible, so clicking the icon opens the Windows clock. -->
+            <Border Grid.Column="1"
+                    WidthRequest="26"
+                    HeightRequest="26"
+                    Padding="0"
+                    StrokeThickness="0"
+                    BackgroundColor="Transparent"
+                    VerticalOptions="Center">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="6" />
+                </Border.StrokeShape>
+                <Grid>
+                    <Label x:Name="ClockIcon"
+                           Text="&#xE823;"
+                           FontFamily="Segoe MDL2 Assets"
+                           FontSize="14"
+                           TextColor="{StaticResource TextMuted}"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center" />
+
+                    <TimePicker x:Name="Picker"
+                                Opacity="0.01"
+                                WidthRequest="26"
+                                MinimumWidthRequest="26"
+                                HeightRequest="26"
+                                BackgroundColor="Transparent"
+                                PropertyChanged="OnPickerPropertyChanged" />
+                </Grid>
+            </Border>
+        </Grid>
+    </Border>
+</ContentView>

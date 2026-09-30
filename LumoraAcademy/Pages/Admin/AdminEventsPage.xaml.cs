@@ -38,7 +38,7 @@ public partial class AdminEventsPage : ContentPage
             _editing = ev;
             EditTitleEntry.Text = ev.Title;
             EditDatePicker.Date = ev.Date;
-            EditTimeEntry.Text = ev.Time;
+            EditTimePicker.SetFromText(ev.Time);
             EditCategoryPicker.ItemsSource = new List<string> { "Academic", "Admin", "Holiday", "Sports" };
             EditCategoryPicker.SelectedItem = ev.Category;
             EditLocationEntry.Text = ev.Location;
@@ -84,7 +84,7 @@ public partial class AdminEventsPage : ContentPage
 
         _editing.Title = (EditTitleEntry.Text ?? "").Trim();
         _editing.Date = EditDatePicker.Date;
-        _editing.Time = (EditTimeEntry.Text ?? "").Trim();
+        _editing.Time = EditTimePicker.Text;
         _editing.Category = EditCategoryPicker.SelectedItem ?? "Academic";
         _editing.Location = (EditLocationEntry.Text ?? "").Trim();
         _editing.Description = (EditDescriptionEditor.Text ?? "").Trim();
@@ -122,7 +122,7 @@ public partial class AdminEventsPage : ContentPage
             Title = NewTitleEntry.Text.Trim(),
             Category = NewCategoryPicker.SelectedItem as string ?? "Academic",
             Date = NewDatePicker.Date,
-            Time = DateTime.Today.Add(NewTimePicker.Time).ToString("hh:mm tt"),
+            Time = NewTimePicker.Text,
             Location = (NewLocationEntry.Text ?? "").Trim(),
             Description = (NewDescriptionEditor.Text ?? "").Trim(),
         };
