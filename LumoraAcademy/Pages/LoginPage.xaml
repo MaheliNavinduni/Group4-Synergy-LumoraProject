@@ -72,9 +72,6 @@
                 <!-- ===== Username ===== -->
                 <Label Text="USERNAME"
                        Style="{StaticResource FieldLabelStyle}" />
-                <Label Text="The username the office gave you, for example admin or k.fernando"
-                       Style="{StaticResource SmallMutedStyle}"
-                       Margin="0,3,0,0" />
 
                 <Border Style="{StaticResource FieldBoxStyle}"
                         Margin="0,6,0,0">
@@ -106,7 +103,7 @@
 
                         <Entry x:Name="UsernameEntry"
                                Grid.Column="1"
-                               Placeholder="admin  or  k.fernando"
+                               Placeholder="Username"
                                FontSize="14"
                                BackgroundColor="Transparent"
                                TextColor="{StaticResource TextHeading}"
