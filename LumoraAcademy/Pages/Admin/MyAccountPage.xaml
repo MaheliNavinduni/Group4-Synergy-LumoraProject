@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:LumoraAcademy.Controls"
+             x:Class="LumoraAcademy.Pages.Admin.MyAccountPage"
+             Title="My Account"
+             BackgroundColor="{StaticResource ContentBackground}">
+
+    <Grid ColumnDefinitions="220,*">
+
+        <controls:SidebarView Grid.Column="0"
+                              ActiveItem="My Account" />
+
+        <ScrollView Grid.Column="1">
+            <VerticalStackLayout Padding="36,28"
+                                 Spacing="18"
+                                 HorizontalOptions="Fill"
+                                 MaximumWidthRequest="1100">
+
+                <VerticalStackLayout Spacing="4">
+                    <Label Text="My Account" Style="{StaticResource PageTitleStyle}" />
+                    <Label Text="Change the username and password you use to sign in."
+                           Style="{StaticResource PageSubtitleStyle}" />
+                </VerticalStackLayout>
+
+                <Border x:Name="ErrorBox" Style="{StaticResource ErrorBoxStyle}">
+                    <HorizontalStackLayout Spacing="8">
+                        <Label Text="&#xE783;" Style="{StaticResource IconStyle}" TextColor="{StaticResource StatusRedText}" />
+                        <Label x:Name="ErrorLabel" Style="{StaticResource ErrorTextStyle}" />
+                    </HorizontalStackLayout>
+                </Border>
+
+                <Grid ColumnDefinitions="*,320" ColumnSpacing="20">
+
+                    <VerticalStackLayout Grid.Column="0" Spacing="18">
+
+                        <!-- ===== Username ===== -->
+                        <Border Style="{StaticResource CardStyle}" Padding="20">
+                            <VerticalStackLayout Spacing="14">
+                                <HorizontalStackLayout Spacing="8">
+                                    <Label Text="&#xE77B;" Style="{StaticResource IconStyle}" TextColor="{StaticResource BrandPrimary}" />
+                                    <Label Text="Username" Style="{StaticResource SectionTitleStyle}" FontSize="14" />
+                                </HorizontalStackLayout>
+                                <BoxView Style="{StaticResource RowDividerStyle}" />
+
+                                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                                    <VerticalStackLayout Grid.Column="0" Spacing="6">
+                                        <Label Text="You sign in with this name" Style="{StaticResource SmallMutedStyle}" />
+                                        <Border Style="{StaticResource FieldBoxStyle}">
+                                            <Entry x:Name="UsernameEntry" Style="{StaticResource FieldEntryStyle}" />
+                                        </Border>
+                                        <Label Text="4 to 20 characters. Letters, numbers, dots and underscores."
+                                               Style="{StaticResource SmallMutedStyle}" />
+                                    </VerticalStackLayout>
+
+                                    <Button Grid.Column="1"
+                                            Text="Save Username"
+                                            Style="{StaticResource PrimaryButtonStyle}"
+                                            VerticalOptions="Center"
+                                            Clicked="OnSaveUsernameClicked" />
+                                </Grid>
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <!-- ===== Password ===== -->
+                        <Border Style="{StaticResource CardStyle}" Padding="20">
+                            <VerticalStackLayout Spacing="14">
+                                <HorizontalStackLayout Spacing="8">
+                                    <Label Text="&#xE72E;" Style="{StaticResource IconStyle}" TextColor="{StaticResource BrandPrimary}" />
+                                    <Label Text="Password" Style="{StaticResource SectionTitleStyle}" FontSize="14" />
+                                </HorizontalStackLayout>
+                                <BoxView Style="{StaticResource RowDividerStyle}" />
+
+                                <VerticalStackLayout Spacing="6">
+                                    <Label Text="Current password" Style="{StaticResource SmallMutedStyle}" />
+                                    <Border Style="{StaticResource FieldBoxStyle}">
+                                        <Entry x:Name="CurrentPasswordEntry" IsPassword="True"
+                                               Placeholder="The password you use now"
+                                               Style="{StaticResource FieldEntryStyle}" />
+                                    </Border>
+                                </VerticalStackLayout>
+
+                                <Grid ColumnDefinitions="*,*" ColumnSpacing="18">
+                                    <VerticalStackLayout Grid.Column="0" Spacing="6">
+                                        <Label Text="New password" Style="{StaticResource SmallMutedStyle}" />
+                                        <Border Style="{StaticResource FieldBoxStyle}">
+                                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6">
+                                                <Entry x:Name="NewPasswordEntry" IsPassword="True"
+                                                       Style="{StaticResource FieldEntryStyle}" />
+                                                <Label x:Name="ShowPasswordIcon"
+                                                       Grid.Column="1"
+                                                       Text="&#xE7B3;"
+                                                       Style="{StaticResource IconStyle}"
+                                                       FontSize="13">
+                                                    <Label.GestureRecognizers>
+                                                        <TapGestureRecognizer Tapped="OnTogglePasswordTapped" />
+                                                    </Label.GestureRecognizers>
+                                                </Label>
+                                            </Grid>
+                                        </Border>
+                                    </VerticalStackLayout>
+
+                                    <VerticalStackLayout Grid.Column="1" Spacing="6">
+                                        <Label Text="Repeat the new password" Style="{StaticResource SmallMutedStyle}" />
+                                        <Border Style="{StaticResource FieldBoxStyle}">
+                                            <Entry x:Name="ConfirmPasswordEntry" IsPassword="True"
+                                                   Style="{StaticResource FieldEntryStyle}" />
+                                        </Border>
+                                    </VerticalStackLayout>
+                                </Grid>
+
+                                <Label Text="At least 6 characters, with one letter and one number."
+                                       Style="{StaticResource SmallMutedStyle}" />
+
+                                <Button Text="Change Password"
+                                        Style="{StaticResource PrimaryButtonStyle}"
+                                        HorizontalOptions="End"
+                                        Clicked="OnChangePasswordClicked" />
+                            </VerticalStackLayout>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- ===== Side panel ===== -->
+                    <VerticalStackLayout Grid.Column="1" Spacing="18">
+                        <Border Style="{StaticResource CardStyle}" Padding="20">
+                            <VerticalStackLayout Spacing="10">
+                                <Image Source="lumora_mark.png" WidthRequest="64" HeightRequest="64" HorizontalOptions="Center" />
+                                <Label x:Name="DisplayNameLabel" Text="" Style="{StaticResource SectionTitleStyle}"
+                                       FontSize="15" HorizontalOptions="Center" />
+                                <Label x:Name="RoleLabel" Text="" Style="{StaticResource MutedStyle}" HorizontalOptions="Center" />
+                                <BoxView Style="{StaticResource RowDividerStyle}" Margin="0,6" />
+                                <Label x:Name="SignedInAsLabel" Text="" Style="{StaticResource SmallMutedStyle}" HorizontalOptions="Center" />
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <Border Style="{StaticResource HintCardStyle}">
+                            <VerticalStackLayout Spacing="10">
+                                <HorizontalStackLayout Spacing="8">
+                                    <Label Text="&#xE946;" Style="{StaticResource IconStyle}" TextColor="{StaticResource BrandBrownDeep}" />
+                                    <Label Text="Keep in mind" Style="{StaticResource BodyBoldStyle}" />
+                                </HorizontalStackLayout>
+                                <Label Text="You will need the new username and password the next time you sign in." Style="{StaticResource MutedStyle}" />
+                                <Label Text="There is no way to recover a forgotten password, so write it down somewhere safe." Style="{StaticResource MutedStyle}" />
+                                <Label Text="To change a teacher's login, open Teachers, click the teacher, then Edit Profile." Style="{StaticResource MutedStyle}" />
+                            </VerticalStackLayout>
+                        </Border>
+                    </VerticalStackLayout>
+                </Grid>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

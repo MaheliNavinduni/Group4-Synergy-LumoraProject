@@ -46,6 +46,7 @@ public partial class SidebarView : ContentView
             AddMenuItem(SampleData.Icons.Academics, "Academics");
             AddMenuItem(SampleData.Icons.Attendance, "Attendance");
             AddMenuItem(SampleData.Icons.Events, "Upcoming Events");
+            AddMenuItem(SampleData.Icons.Person, "My Account");
         }
         else
         {

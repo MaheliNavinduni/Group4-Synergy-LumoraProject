@@ -70,6 +70,7 @@ public partial class LoginPage : ContentPage
             AppNavigation.CurrentRole = user.Role;
             AppNavigation.CurrentUserName = user.DisplayName;
             AppData.CurrentTeacherId = user.TeacherId;
+            AppData.CurrentUserId = user.Id;
 
             PasswordEntry.Text = "";
             ErrorBox.IsVisible = false;
