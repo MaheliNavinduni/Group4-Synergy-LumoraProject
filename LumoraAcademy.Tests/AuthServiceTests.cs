@@ -111,4 +111,125 @@ public class AuthServiceTests
         Assert.Null(t.Backend.Auth.Login("admin", "admin123"));
         Assert.NotNull(t.Backend.Auth.Login("admin", "newpass99"));
     }
+
+    // ================= Editing a login (client request) =================
+    // The admin can change a teacher's username and password, and their own.
+
+    [Fact]
+    public void ChangeUsername_LetsThePersonSignInWithTheNewName()
+    {
+        using var t = new TestBackend();
+        var user = t.Backend.Auth.Login("teacher", "teacher123")!;
+
+        t.Backend.Auth.ChangeUsername(user.Id, "k.fernando");
+
+        Assert.Null(t.Backend.Auth.Login("teacher", "teacher123"));
+        Assert.NotNull(t.Backend.Auth.Login("k.fernando", "teacher123"));
+    }
+
+    [Fact]
+    public void ChangeUsername_IsStoredInLowerCase()
+    {
+        using var t = new TestBackend();
+        var user = t.Backend.Auth.Login("teacher", "teacher123")!;
+
+        t.Backend.Auth.ChangeUsername(user.Id, "K.Fernando");
+
+        Assert.Equal("k.fernando", t.Backend.Auth.GetById(user.Id)!.Username);
+        Assert.NotNull(t.Backend.Auth.Login("k.fernando", "teacher123"));
+    }
+
+    [Fact]
+    public void ChangeUsername_ToANameAlreadyTaken_Throws()
+    {
+        using var t = new TestBackend();
+        var teacher = t.Backend.Auth.Login("teacher", "teacher123")!;
+
+        Assert.Throws<InvalidOperationException>(() => t.Backend.Auth.ChangeUsername(teacher.Id, "admin"));
+
+        // the old name still works, so nothing was half changed
+        Assert.NotNull(t.Backend.Auth.Login("teacher", "teacher123"));
+    }
+
+    [Fact]
+    public void ChangeUsername_ToTheSameName_IsAllowedAndChangesNothing()
+    {
+        using var t = new TestBackend();
+        var user = t.Backend.Auth.Login("admin", "admin123")!;
+
+        t.Backend.Auth.ChangeUsername(user.Id, "admin");
+
+        Assert.NotNull(t.Backend.Auth.Login("admin", "admin123"));
+    }
+
+    [Theory]
+    [InlineData("abc")]            // too short
+    [InlineData("has space")]      // not allowed
+    [InlineData("")]               // empty
+    public void ChangeUsername_BadName_Throws(string name)
+    {
+        using var t = new TestBackend();
+        var user = t.Backend.Auth.Login("admin", "admin123")!;
+
+        Assert.ThrowsAny<ArgumentException>(() => t.Backend.Auth.ChangeUsername(user.Id, name));
+    }
+
+    [Fact]
+    public void ChangePassword_WeakPassword_Throws()
+    {
+        using var t = new TestBackend();
+        var user = t.Backend.Auth.Login("admin", "admin123")!;
+
+        // no number in it
+        Assert.Throws<ArgumentException>(() => t.Backend.Auth.ChangePassword(user.Id, "password"));
+
+        // the old one still works
+        Assert.NotNull(t.Backend.Auth.Login("admin", "admin123"));
+    }
+
+    [Fact]
+    public void ChangeOwnPassword_WithTheCorrectCurrentPassword_Works()
+    {
+        using var t = new TestBackend();
+        var user = t.Backend.Auth.Login("admin", "admin123")!;
+
+        t.Backend.Auth.ChangeOwnPassword(user.Id, "admin123", "lumora99");
+
+        Assert.Null(t.Backend.Auth.Login("admin", "admin123"));
+        Assert.NotNull(t.Backend.Auth.Login("admin", "lumora99"));
+    }
+
+    [Fact]
+    public void ChangeOwnPassword_WithTheWrongCurrentPassword_Throws()
+    {
+        using var t = new TestBackend();
+        var user = t.Backend.Auth.Login("admin", "admin123")!;
+
+        Assert.Throws<InvalidOperationException>(
+            () => t.Backend.Auth.ChangeOwnPassword(user.Id, "wrongpass", "lumora99"));
+
+        Assert.NotNull(t.Backend.Auth.Login("admin", "admin123"));
+    }
+
+    [Fact]
+    public void ChangeOwnPassword_ReusingTheSamePassword_Throws()
+    {
+        using var t = new TestBackend();
+        var user = t.Backend.Auth.Login("admin", "admin123")!;
+
+        Assert.Throws<ArgumentException>(
+            () => t.Backend.Auth.ChangeOwnPassword(user.Id, "admin123", "admin123"));
+    }
+
+    [Fact]
+    public void GetByTeacherId_FindsTheLoginToEdit()
+    {
+        using var t = new TestBackend();
+        var teacherUser = t.Backend.Auth.Login("teacher", "teacher123")!;
+
+        var found = t.Backend.Auth.GetByTeacherId(teacherUser.TeacherId!.Value);
+
+        Assert.NotNull(found);
+        Assert.Equal(teacherUser.Id, found!.Id);
+    }
 }

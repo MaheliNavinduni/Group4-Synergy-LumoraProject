@@ -64,14 +64,58 @@ public class AuthService
         return _db.Connection.Table<User>().Any(u => u.Username == key);
     }
 
+    public User? GetById(int userId) => _db.Connection.Find<User>(userId);
+
+    // ---------- Changing a login ----------
+
+    // Used by the admin to reset somebody's password without knowing the old one.
     public void ChangePassword(int userId, string newPassword)
     {
-        if (newPassword.Length < 6) throw new ArgumentException("Password must be at least 6 characters.");
+        string problem = Validation.Password(newPassword);
+        if (problem != "") throw new ArgumentException(problem);
 
         var user = _db.Connection.Get<User>(userId);
         var (hash, salt) = PasswordHasher.Hash(newPassword);
         user.PasswordHash = hash;
         user.PasswordSalt = salt;
+        _db.Connection.Update(user);
+    }
+
+    // Used when somebody changes their OWN password. The current password has to be
+    // given, so an unattended machine cannot be used to take over the account.
+    public void ChangeOwnPassword(int userId, string currentPassword, string newPassword)
+    {
+        var user = _db.Connection.Get<User>(userId);
+
+        if (!PasswordHasher.Verify(currentPassword ?? "", user.PasswordHash, user.PasswordSalt))
+        {
+            throw new InvalidOperationException("The current password is not correct.");
+        }
+
+        if (currentPassword == newPassword)
+        {
+            throw new ArgumentException("The new password must be different from the current one.");
+        }
+
+        ChangePassword(userId, newPassword);
+    }
+
+    // Changes the name somebody signs in with. Usernames stay unique and lower case.
+    public void ChangeUsername(int userId, string newUsername)
+    {
+        string problem = Validation.Username(newUsername);
+        if (problem != "") throw new ArgumentException(problem);
+
+        string key = newUsername.Trim().ToLower();
+        var user = _db.Connection.Get<User>(userId);
+
+        if (user.Username == key) return;      // nothing to change
+
+        // Any OTHER account already using that name blocks the change.
+        bool taken = _db.Connection.Table<User>().Any(u => u.Username == key && u.Id != userId);
+        if (taken) throw new InvalidOperationException($"Username '{key}' is already taken.");
+
+        user.Username = key;
         _db.Connection.Update(user);
     }
 

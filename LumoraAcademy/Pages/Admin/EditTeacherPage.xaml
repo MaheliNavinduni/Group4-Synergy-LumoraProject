@@ -98,6 +98,70 @@
                     </Border>
                 </Grid>
 
+                <!-- Login details: the name and password this teacher signs in with -->
+                <Border Style="{StaticResource CardStyle}" Padding="20">
+                    <VerticalStackLayout Spacing="14">
+                        <HorizontalStackLayout Spacing="8">
+                            <Label Text="&#xE72E;" Style="{StaticResource IconStyle}" TextColor="{StaticResource BrandPrimary}" />
+                            <Label Text="Login Details" Style="{StaticResource SectionTitleStyle}" FontSize="13" />
+                        </HorizontalStackLayout>
+                        <BoxView Style="{StaticResource RowDividerStyle}" />
+
+                        <!-- Shown when the teacher has a login account -->
+                        <VerticalStackLayout x:Name="LoginSection" Spacing="14">
+                            <Grid ColumnDefinitions="*,*" ColumnSpacing="18">
+                                <VerticalStackLayout Grid.Column="0" Spacing="6">
+                                    <Label Text="Username" Style="{StaticResource SmallMutedStyle}" />
+                                    <Border Style="{StaticResource FieldBoxStyle}">
+                                        <Entry x:Name="UsernameEntry" Placeholder="For example k.fernando" Style="{StaticResource FieldEntryStyle}" />
+                                    </Border>
+                                    <Label Text="4 to 20 characters. Letters, numbers, dots and underscores."
+                                           Style="{StaticResource SmallMutedStyle}" />
+                                </VerticalStackLayout>
+
+                                <VerticalStackLayout Grid.Column="1" Spacing="6">
+                                    <Label Text="New Password" Style="{StaticResource SmallMutedStyle}" />
+                                    <Border Style="{StaticResource FieldBoxStyle}">
+                                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6">
+                                            <Entry x:Name="NewPasswordEntry"
+                                                   IsPassword="True"
+                                                   Placeholder="Leave blank to keep the current one"
+                                                   Style="{StaticResource FieldEntryStyle}" />
+                                            <Label x:Name="ShowPasswordIcon"
+                                                   Grid.Column="1"
+                                                   Text="&#xE7B3;"
+                                                   Style="{StaticResource IconStyle}"
+                                                   FontSize="13">
+                                                <Label.GestureRecognizers>
+                                                    <TapGestureRecognizer Tapped="OnTogglePasswordTapped" />
+                                                </Label.GestureRecognizers>
+                                            </Label>
+                                        </Grid>
+                                    </Border>
+                                    <Label Text="At least 6 characters, with one letter and one number."
+                                           Style="{StaticResource SmallMutedStyle}" />
+                                </VerticalStackLayout>
+                            </Grid>
+
+                            <Border Style="{StaticResource HintCardStyle}" Padding="12">
+                                <Label x:Name="LoginNoteLabel"
+                                       Text="The teacher uses these to sign in. Tell them if you change anything here."
+                                       Style="{StaticResource MutedStyle}" />
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <!-- Shown when the teacher has no login account yet -->
+                        <VerticalStackLayout x:Name="NoLoginSection" Spacing="10" IsVisible="False">
+                            <Label Text="This teacher does not have a login account yet, so they cannot sign in."
+                                   Style="{StaticResource MutedStyle}" />
+                            <Button Text="Create a login for this teacher"
+                                    Style="{StaticResource SmallOutlineButtonStyle}"
+                                    HorizontalOptions="Start"
+                                    Clicked="OnCreateLoginClicked" />
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+
                 <HorizontalStackLayout Spacing="10" HorizontalOptions="End">
                     <Button Text="Change Photo" Style="{StaticResource OutlineButtonStyle}" Clicked="OnPhotoClicked" />
                     <Button Text="Cancel" Style="{StaticResource OutlineButtonStyle}" Clicked="OnCancelClicked" />
