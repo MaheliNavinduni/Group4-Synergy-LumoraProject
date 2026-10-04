@@ -40,10 +40,10 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#B87F52" />
+		<MauiIcon Include="Resources\AppIcon\lumora_icon.png" Color="#FBEFE3" />
 
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#B87F52" BaseSize="128,128" />
+		<MauiSplashScreen Include="Resources\Splash\lumora_splash.png" Color="#4F3726" BaseSize="180,180" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />

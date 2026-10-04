@@ -1,4 +1,5 @@
 using LumoraAcademy.Core.Entities;
+using LumoraAcademy.Core.Services;
 using LumoraAcademy.Services;
 
 namespace LumoraAcademy.Pages.Admin;
@@ -72,6 +73,24 @@ public partial class EditStudentPage : ContentPage
 
     private async void OnSaveClicked(object sender, EventArgs e)
     {
+        // The same rules as the registration form, so a record cannot be
+        // edited into a state that would not have been accepted in the first place.
+        string problem = Validation.FirstProblem(
+            Validation.Name(FullNameEntry.Text, "Full name"),
+            Validation.Required(StudentIdEntry.Text, "Student ID"),
+            Validation.DateOfBirth(DobPicker.Date),
+            GradePicker.SelectedIndex < 0 ? "Please select the grade." : "",
+            Validation.Name(GuardianEntry.Text, "Parent / guardian name"),
+            Validation.Phone(PhoneEntry.Text),
+            Validation.Email(EmailEntry.Text, required: false),
+            Validation.Address(AddressEntry.Text));
+
+        if (problem != "")
+        {
+            await DisplayAlert("Edit Student", problem, "OK");
+            return;
+        }
+
         _student.FullName = (FullNameEntry.Text ?? "").Trim();
         _student.StudentId = (StudentIdEntry.Text ?? "").Trim().ToUpper();
         _student.DateOfBirth = DobPicker.Date;
@@ -83,7 +102,7 @@ public partial class EditStudentPage : ContentPage
         _student.ClassDayTime = (ClassTimeEntry.Text ?? "").Trim();
         _student.AssignedTeacherId = TeacherPicker.SelectedIndex <= 0 ? null : _teachers[TeacherPicker.SelectedIndex - 1].Id;
         _student.GuardianName = (GuardianEntry.Text ?? "").Trim();
-        _student.GuardianPhone = (PhoneEntry.Text ?? "").Trim();
+        _student.GuardianPhone = Validation.CleanPhone(PhoneEntry.Text);
         _student.GuardianEmail = (EmailEntry.Text ?? "").Trim();
         _student.Address = (AddressEntry.Text ?? "").Trim();
 

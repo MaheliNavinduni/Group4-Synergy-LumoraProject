@@ -14,7 +14,7 @@
 
             <Grid ColumnDefinitions="*,Auto">
                 <Label Text="Process Student Departure" FontSize="15" FontAttributes="Bold" TextColor="{StaticResource BrandPrimary}" VerticalOptions="Center" />
-                <Button Grid.Column="1" Text="Go Back" Style="{StaticResource SmallPrimaryButtonStyle}" BackgroundColor="{StaticResource BrandPrimaryDark}" HeightRequest="28" Clicked="OnCancelClicked" />
+                <Button Grid.Column="1" Text="Go Back" Style="{StaticResource SmallPrimaryButtonStyle}" HeightRequest="28" Clicked="OnCancelClicked" />
             </Grid>
 
             <!-- Find student -->
@@ -22,7 +22,7 @@
                 <VerticalStackLayout Spacing="10">
                     <Label Text="Find Student" Style="{StaticResource BodyBoldStyle}" FontSize="14" />
                     <Label Text="Search by Student ID or Name to begin the departure process." Style="{StaticResource SmallMutedStyle}" />
-                    <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="40" Background="{StaticResource TableHeaderBackground}" Stroke="{StaticResource TableHeaderBackground}">
+                    <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="40">
                         <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
                             <Label Text="&#xE721;" Style="{StaticResource IconStyle}" FontSize="11" />
                             <Entry x:Name="SearchEntry" Grid.Column="1" Placeholder="Enter ID or Name, then press Enter..." Style="{StaticResource FieldEntryStyle}" Completed="OnSearchCompleted" />

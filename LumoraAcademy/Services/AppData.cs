@@ -25,6 +25,10 @@ public static class AppData
     // The teacher record of the logged-in teacher (null for Admin).
     public static int? CurrentTeacherId { get; set; }
 
+    // The login account of whoever is signed in, so they can edit their own
+    // username and password from the My Account page.
+    public static int CurrentUserId { get; set; }
+
     // Shortcuts so pages can write AppData.Students instead of AppData.Backend.Students.
     public static Core.Services.AuthService Auth => Backend.Auth;
     public static Core.Services.StudentService Students => Backend.Students;

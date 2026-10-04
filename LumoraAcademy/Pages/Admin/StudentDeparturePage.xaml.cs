@@ -1,4 +1,5 @@
 using LumoraAcademy.Core.Entities;
+using LumoraAcademy.Core.Services;
 using LumoraAcademy.Services;
 
 namespace LumoraAcademy.Pages.Admin;
@@ -69,9 +70,17 @@ public partial class StudentDeparturePage : ContentPage
             await DisplayAlert("Student Departure", "Please search for and select a student first.", "OK");
             return;
         }
-        if (ReasonPicker.SelectedIndex < 0)
+        // A departure can be dated up to three months ahead (for example "end of term"),
+        // but not years away, which would be a typing mistake.
+        string problem = Validation.FirstProblem(
+            ReasonPicker.SelectedIndex < 0 ? "Please select a reason." : "",
+            DepartureDatePicker.Date > DateTime.Today.AddMonths(3)
+                ? "The departure date is too far in the future. Please check it."
+                : "");
+
+        if (problem != "")
         {
-            await DisplayAlert("Student Departure", "Please select a reason.", "OK");
+            await DisplayAlert("Student Departure", problem, "OK");
             return;
         }
 

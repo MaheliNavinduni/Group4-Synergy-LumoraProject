@@ -4,7 +4,7 @@
              xmlns:controls="clr-namespace:LumoraAcademy.Controls"
              x:Class="LumoraAcademy.Pages.Admin.MarkAttendancePage"
              Title="Mark Attendance"
-             BackgroundColor="{StaticResource PageBackground}">
+             BackgroundColor="{StaticResource ContentBackground}">
 
     <Grid ColumnDefinitions="220,*">
 
@@ -63,7 +63,8 @@
                                 <DataTemplate>
                                     <VerticalStackLayout>
                                         <Grid Style="{StaticResource TableRowStyle}"
-                                              ColumnDefinitions="1.4*,1.5*,1.4*,0.9*,0.9*,0.9*">
+                                              ColumnDefinitions="1.4*,1.5*,1.4*,0.9*,0.9*,0.9*"
+                                              controls:RowHover.Enabled="True">
                                             <Grid.GestureRecognizers>
                                                 <TapGestureRecognizer Tapped="OnClassTapped" />
                                             </Grid.GestureRecognizers>
@@ -108,10 +109,14 @@
 
                     <!-- Counts -->
                     <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="14">
-                        <controls:StatCard x:Name="EnrolledCard" Grid.Column="0" Title="STUDENTS" Value="0" />
-                        <controls:StatCard x:Name="PresentCard" Grid.Column="1" Title="PRESENT" Value="0" ValueColor="{StaticResource StatusGreenText}" />
-                        <controls:StatCard x:Name="AbsentCard" Grid.Column="2" Title="ABSENT" Value="0" ValueColor="{StaticResource StatusRedText}" />
-                        <controls:StatCard x:Name="NotMarkedCard" Grid.Column="3" Title="NOT MARKED" Value="0" />
+                        <controls:StatCard x:Name="EnrolledCard" Grid.Column="0" Title="STUDENTS" Value="0"
+                                       Accent="1" />
+                        <controls:StatCard x:Name="PresentCard" Grid.Column="1" Title="PRESENT" Value="0" ValueColor="{StaticResource StatusGreenText}"
+                                       Accent="2" />
+                        <controls:StatCard x:Name="AbsentCard" Grid.Column="2" Title="ABSENT" Value="0" ValueColor="{StaticResource StatusRedText}"
+                                       Accent="3" />
+                        <controls:StatCard x:Name="NotMarkedCard" Grid.Column="3" Title="NOT MARKED" Value="0"
+                                       Accent="4" />
                     </Grid>
 
                     <Border Style="{StaticResource CardTightStyle}">

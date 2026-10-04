@@ -158,6 +158,17 @@ public class PaymentService
         return list.OrderByDescending(p => p.Month).ThenBy(p => p.StudentName).ToList();
     }
 
+    // The cash payments most recently taken at the office, newest first.
+    // The dashboard uses this to show what has actually just happened.
+    public List<Payment> GetRecentlyPaid(int count = 5)
+    {
+        return GetAll()
+            .Where(p => p.PaymentDate.HasValue && p.AmountPaid > 0)
+            .OrderByDescending(p => p.PaymentDate)
+            .Take(count)
+            .ToList();
+    }
+
     // Every fee for one student, newest month first (shown on Student Details).
     public List<Payment> GetForStudent(int studentId)
     {

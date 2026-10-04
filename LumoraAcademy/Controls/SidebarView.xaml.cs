@@ -35,9 +35,9 @@ public partial class SidebarView : ContentView
 
         if (isAdmin)
         {
-            UserNameLabel.Text = "Admin";
-            UserNameLabel.TextColor = GetColor("BrandPrimary");
-            RoleLabel.IsVisible = false;
+            UserNameLabel.Text = string.IsNullOrEmpty(AppNavigation.CurrentUserName) ? "Admin" : AppNavigation.CurrentUserName;
+            RoleLabel.Text = "Administrator";
+            RoleLabel.IsVisible = true;
 
             AddMenuItem(SampleData.Icons.Dashboard, "Dashboard");
             AddMenuItem(SampleData.Icons.Students, "Students");
@@ -46,6 +46,7 @@ public partial class SidebarView : ContentView
             AddMenuItem(SampleData.Icons.Academics, "Academics");
             AddMenuItem(SampleData.Icons.Attendance, "Attendance");
             AddMenuItem(SampleData.Icons.Events, "Upcoming Events");
+            AddMenuItem(SampleData.Icons.Person, "My Account");
         }
         else
         {
@@ -66,16 +67,19 @@ public partial class SidebarView : ContentView
     {
         bool isActive = title == ActiveItem;
 
-        var brandPrimary = GetColor("BrandPrimary");
-        var textHeading = GetColor("TextHeading");
+        // The menu sits on the dark brown panel, so the wording is cream and
+        // the item you are on is a cream pill with dark brown wording.
         var cream = GetColor("BrandCream");
+        var menuText = GetColor("SidebarText");
+        var activeText = GetColor("Brown800");
+        var gold = GetColor("AccentGold");
 
         var icon = new Label
         {
             Text = iconGlyph,
             FontFamily = "Segoe MDL2 Assets",
             FontSize = 14,
-            TextColor = isActive ? brandPrimary : textHeading,
+            TextColor = isActive ? activeText : menuText,
             VerticalOptions = LayoutOptions.Center,
         };
 
@@ -84,7 +88,7 @@ public partial class SidebarView : ContentView
             Text = title,
             FontSize = 13,
             FontAttributes = isActive ? FontAttributes.Bold : FontAttributes.None,
-            TextColor = isActive ? brandPrimary : textHeading,
+            TextColor = isActive ? activeText : menuText,
             VerticalOptions = LayoutOptions.Center,
         };
 
@@ -92,9 +96,9 @@ public partial class SidebarView : ContentView
         row.Children.Add(icon);
         row.Children.Add(text);
 
-        // The active item gets a cream background and a brown bar on the left.
-        var container = new Grid { ColumnDefinitions = { new ColumnDefinition(3), new ColumnDefinition(GridLength.Star) } };
-        container.Add(new BoxView { Color = isActive ? brandPrimary : Colors.Transparent }, 0, 0);
+        // The active item gets a cream pill with a gold bar down its left edge.
+        var container = new Grid { ColumnDefinitions = { new ColumnDefinition(4), new ColumnDefinition(GridLength.Star) } };
+        container.Add(new BoxView { Color = isActive ? gold : Colors.Transparent }, 0, 0);
         container.Add(row, 1, 0);
 
         var border = new Border
@@ -102,7 +106,7 @@ public partial class SidebarView : ContentView
             Background = isActive ? cream : Colors.Transparent,
             StrokeThickness = 0,
             Padding = 0,
-            StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = 6 },
+            StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = 8 },
             Content = container,
         };
 
@@ -115,6 +119,29 @@ public partial class SidebarView : ContentView
             }
         };
         border.GestureRecognizers.Add(tap);
+
+        // Hover effect: the item the mouse is over lights up, so the menu
+        // feels like something you can click rather than a list of words.
+        if (!isActive)
+        {
+            var hover = new PointerGestureRecognizer();
+
+            hover.PointerEntered += (s, e) =>
+            {
+                border.Background = GetColor("SidebarHover");
+                icon.TextColor = gold;
+                text.TextColor = cream;
+            };
+
+            hover.PointerExited += (s, e) =>
+            {
+                border.Background = Colors.Transparent;
+                icon.TextColor = menuText;
+                text.TextColor = menuText;
+            };
+
+            border.GestureRecognizers.Add(hover);
+        }
 
         MenuList.Children.Add(border);
     }
@@ -132,5 +159,19 @@ public partial class SidebarView : ContentView
     private async void OnLogoutTapped(object sender, EventArgs e)
     {
         await AppNavigation.LogoutAsync();
+    }
+
+    private void OnLogoutPointerEntered(object sender, PointerEventArgs e)
+    {
+        LogoutBox.BackgroundColor = GetColor("SidebarHover");
+        LogoutIcon.TextColor = GetColor("AccentGold");
+        LogoutLabel.TextColor = GetColor("BrandCream");
+    }
+
+    private void OnLogoutPointerExited(object sender, PointerEventArgs e)
+    {
+        LogoutBox.BackgroundColor = Colors.Transparent;
+        LogoutIcon.TextColor = GetColor("SidebarText");
+        LogoutLabel.TextColor = GetColor("SidebarText");
     }
 }

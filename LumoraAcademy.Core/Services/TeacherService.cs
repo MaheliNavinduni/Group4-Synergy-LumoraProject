@@ -44,7 +44,11 @@ public class TeacherService
         if (key == "") return GetAll();
 
         return _db.Connection.Table<Teacher>().ToList()
-            .Where(t => t.FullName.ToLower().Contains(key) || t.TeacherId.ToLower().Contains(key) || t.Email.ToLower().Contains(key))
+            .Where(t => t.FullName.ToLower().Contains(key)
+                     || t.TeacherId.ToLower().Contains(key)
+                     || t.Email.ToLower().Contains(key)
+                     || t.Department.ToLower().Contains(key)
+                     || t.Subjects.ToLower().Contains(key))
             .OrderBy(t => t.FullName)
             .ToList();
     }

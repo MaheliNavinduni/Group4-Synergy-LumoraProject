@@ -30,9 +30,41 @@ public partial class StatCard : ContentView
     public bool IsDark { get => (bool)GetValue(IsDarkProperty); set => SetValue(IsDarkProperty, value); }
     public Color? ValueColor { get => (Color?)GetValue(ValueColorProperty); set => SetValue(ValueColorProperty, value); }
 
+    // Which of the five brown shades this card uses: 1 is the darkest, 5 the lightest.
+    public static readonly BindableProperty AccentProperty =
+        BindableProperty.Create(nameof(Accent), typeof(int), typeof(StatCard), 3, propertyChanged: (b, o, n) => ((StatCard)b).ApplyAccent((int)n));
+
+    public int Accent { get => (int)GetValue(AccentProperty); set => SetValue(AccentProperty, value); }
+
     public StatCard()
     {
         InitializeComponent();
+        ApplyAccent(Accent);
+    }
+
+    // Paints the strip along the top and the icon chip in one of the five
+    // brown shades from Brand.xaml, so a row of cards looks like a set.
+    private void ApplyAccent(int accent)
+    {
+        int shade = Math.Clamp(accent, 1, 5);
+
+        Color strong = SidebarView.GetColor("Chart" + shade);
+
+        // The chip behind the icon is a light tint of the same shade.
+        Color chip = shade switch
+        {
+            1 => SidebarView.GetColor("Brown100"),
+            2 => SidebarView.GetColor("Brown100"),
+            3 => SidebarView.GetColor("Brown50"),
+            4 => SidebarView.GetColor("Brown50"),
+            _ => SidebarView.GetColor("AccentGoldSoft"),
+        };
+
+        AccentStrip.Color = strong;
+        IconChip.Background = chip;
+
+        // Shade 5 is pale, so the icon on it uses a darker brown to stay readable.
+        IconLabel.TextColor = shade >= 4 ? SidebarView.GetColor("Brown700") : strong;
     }
 
     // A dark brown version of the card (used for "Perfect Attendance Days").
@@ -40,12 +72,14 @@ public partial class StatCard : ContentView
     {
         if (!isDark) return;
 
-        var brown = SidebarView.GetColor("BrandBrownDeep");
+        var brown = SidebarView.GetColor("Brown800");
         CardBorder.Background = brown;
         CardBorder.Stroke = brown;
+        AccentStrip.Color = SidebarView.GetColor("AccentGold");
         TitleLabel.TextColor = Colors.White.WithAlpha(0.8f);
         ValueLabel.TextColor = Colors.White;
         SubtitleLabel.TextColor = Colors.White.WithAlpha(0.8f);
-        IconLabel.TextColor = Colors.White;
+        IconChip.Background = Colors.White.WithAlpha(0.14f);
+        IconLabel.TextColor = SidebarView.GetColor("AccentGold");
     }
 }

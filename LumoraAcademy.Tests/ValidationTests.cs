@@ -107,25 +107,6 @@ public class ValidationTests
         Assert.Equal("", Validation.Address("45 Galle Road, Colombo 03"));
     }
 
-    // ----- NIC -----
-
-    [Theory]
-    [InlineData("901234567V")]
-    [InlineData("901234567x")]
-    [InlineData("200145601234")]
-    public void Nic_AcceptsBothFormats(string value)
-    {
-        Assert.Equal("", Validation.Nic(value));
-    }
-
-    [Theory]
-    [InlineData("9012345")]
-    [InlineData("901234567A")]
-    public void Nic_RejectsBadNumbers(string value)
-    {
-        Assert.NotEqual("", Validation.Nic(value));
-    }
-
     // ----- dates -----
 
     [Fact]

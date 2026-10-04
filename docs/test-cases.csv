@@ -1,0 +1,253 @@
+﻿Test Case ID,Module,Test Case,Preconditions,Test Steps,Test Data,Expected Result,Type,Automated Test,Actual Result,Status (Pass/Fail)
+TC-AUTH-01,Login and Accounts,Admin logs in with correct details,The system is installed and open on the Login page.,admin / admin123,"1. Enter the admin username.
+2. Enter the admin password.
+3. Click Login.",The Admin Dashboard opens and the side menu shows Admin.,Automated + Manual,Login_WithCorrectAdminCredentials_ReturnsAdminUser,,
+TC-AUTH-02,Login and Accounts,Teacher logs in with correct details,A teacher account exists.,teacher / teacher123,"1. Enter the teacher username.
+2. Enter the password.
+3. Click Login.",The Teacher Dashboard opens and the login is linked to that teacher's record.,Automated + Manual,Login_WithCorrectTeacherCredentials_ReturnsTeacherLinkedToTeacherRecord,,
+TC-AUTH-03,Login and Accounts,Wrong password is refused,The admin account exists.,admin / wrongpass,"1. Enter a valid username.
+2. Enter the wrong password.
+3. Click Login.",Login fails. A red message reads 'Incorrect username or password.' The password box is cleared.,Automated + Manual,Login_WithWrongPassword_ReturnsNull,,
+TC-AUTH-04,Login and Accounts,Unknown username is refused,The system is on the Login page.,nosuchuser / abc123,"1. Enter a username that does not exist.
+2. Enter any password.
+3. Click Login.",Login fails with the same message. No hint is given about which field was wrong.,Automated,Login_WithUnknownUser_ReturnsNull,,
+TC-AUTH-05,Login and Accounts,Empty fields are refused,The system is on the Login page.,(blank),"1. Leave the username empty.
+2. Click Login.
+3. Enter a username, leave the password empty.
+4. Click Login.",Step 2 shows 'Please enter your username.' Step 4 shows 'Please enter your password.' The cursor moves to the empty box.,Automated + Manual,Login_WithEmptyFields_ReturnsNull,,
+TC-AUTH-06,Login and Accounts,Username is not case sensitive,The admin account exists.,ADMIN / admin123,"1. Enter the username in capitals.
+2. Enter the correct password.
+3. Click Login.",Login succeeds.,Automated,Login_IsCaseInsensitiveForUsername,,
+TC-AUTH-07,Login and Accounts,A resigned teacher can no longer log in,A teacher has been put through Teacher Resignation.,The resigned teacher's username and password,"1. Process the teacher's resignation.
+2. Try to log in as that teacher.",Login is refused. The teacher record is kept and shows Resigned.,Automated,ProcessResignation_MarksResignedAndBlocksLogin,,
+TC-AUTH-08,Login and Accounts,A deactivated account cannot log in,A user account has been deactivated.,Any deactivated account,"1. Deactivate the account.
+2. Try to log in with it.",Login is refused.,Automated,Login_DeactivatedAccount_ReturnsNull,,
+TC-AUTH-09,Login and Accounts,Passwords are not stored as plain text,At least one account exists.,admin123,"1. Open the Users table in the database file.
+2. Look at the stored password.",The stored value is a PBKDF2 hash with its own salt. The typed password does not appear anywhere.,Automated,PasswordIsStoredAsHash_NotPlainText,,
+TC-AUTH-10,Login and Accounts,Enter key submits the login form,The system is on the Login page.,admin / admin123,"1. Type the username and press Enter.
+2. Type the password and press Enter.",Enter in the username box moves to the password box. Enter in the password box logs in without using the mouse.,Manual,,,
+TC-AUTH-11,Login and Accounts,Log out returns to the Home page,A user is logged in.,-,1. Click Log out in the side menu.,The Home page opens. Going back does not return to a signed-in page.,Manual,,,
+TC-STU-01,Student Management,Register a student with valid details,"Logged in as Admin, on Students > Register New Student.","Name: Nimali Perera, DOB 25/09/2010, Guardian: Sunil Perera, Phone 0771234567, Address: 45 Galle Road Colombo 03, Grade 10","1. Fill in every required field.
+2. Click Save Registration.",The student is saved and a unique ID such as STU-2026-0041 is created and shown.,Automated + Manual,Register_SavesStudentAndGeneratesUniqueId,,
+TC-STU-02,Student Management,Two students get different IDs,Logged in as Admin.,Two different names,"1. Register one student.
+2. Register a second student.",The two students have different generated IDs.,Automated,Register_TwoStudents_GetDifferentGeneratedIds,,
+TC-STU-03,Student Management,A duplicate student ID is refused,A student with a given ID already exists.,An ID already in use,1. Try to save another student with the same ID.,The save is refused with a clear message. Nothing is written to the database.,Automated,Register_DuplicateStudentId_Throws,,
+TC-STU-04,Student Management,Empty required fields are refused,On the Student Registration page.,(blank),"1. Leave the form empty.
+2. Click Save Registration.",A red bar appears at the top of the form naming the first missing field. Nothing is saved.,Automated + Manual,Register_MissingMandatoryFields_Throws,,
+TC-STU-05,Student Management,A name containing digits is refused,On the Student Registration page.,Student 123,"1. Type a name with numbers in it.
+2. Click Save Registration.","The form is refused: names may only contain letters, spaces, dots and apostrophes.",Automated,Name_RejectsBadNames,,
+TC-STU-06,Student Management,An invalid email is refused,On the Student Registration page.,nimali@example,"1. Fill the form correctly but type a bad email.
+2. Click Save Registration.","The form is refused with 'Enter a valid email address, for example name@example.com.'",Automated,Email_RejectsInvalidAddresses,,
+TC-STU-07,Student Management,A phone number that is not 10 digits is refused,On the Student Registration page.,12345,"1. Type a short phone number.
+2. Click Save Registration.",The form is refused: the number must be 10 digits starting with 0.,Automated,Phone_RejectsBadNumbers,,
+TC-STU-08,Student Management,A phone number typed with spaces or dashes is accepted,On the Student Registration page.,077 123 4567,"1. Type the number with spaces.
+2. Save.
+3. Open the saved record.",The student is saved and the number is stored tidily as 0771234567.,Automated,CleanPhone_StoresOneTidyForm,,
+TC-STU-09,Student Management,A future date of birth is refused,On the Student Registration page.,Tomorrow's date,"1. Set the date of birth to tomorrow.
+2. Save.",The form is refused: 'Date of birth cannot be in the future.',Automated,DateOfBirth_RejectsFutureDates,,
+TC-STU-10,Student Management,An unlikely age is refused,On the Student Registration page.,03/05/1950,"1. Enter a date of birth giving an age outside 3 to 25.
+2. Save.",The form is refused and asks the user to check the date.,Automated,DateOfBirth_RejectsAnUnlikelyAge,,
+TC-STU-11,Student Management,An address without enough detail is refused,On the Student Registration page.,Colombo,"1. Type a very short address.
+2. Save.",The form is refused and gives an example of a full address.,Automated,Address_NeedsEnoughDetail,,
+TC-STU-12,Student Management,Search by student ID,Students exist. On the Student Directory.,STU-2026-0041,1. Type a full student ID into Search Student.,"Only that student is listed. The list updates while typing, with no button press.",Automated + Manual,Search_ByStudentId_FindsStudent,,
+TC-STU-13,Student Management,"Search by part of a name, ignoring capitals",Students exist.,per,1. Type part of a name in lower case.,Every student whose name contains those letters is listed.,Automated,Search_ByPartialName_IsCaseInsensitive,,
+TC-STU-14,Student Management,Search by the parent's contact number,A student has a guardian phone number recorded.,0771234567,1. Type the phone number into the search box.,The matching student is listed.,Automated,Search_ByParentContactNumber_FindsStudent,,
+TC-STU-15,Student Management,A search with no matches shows an empty state,On the Student Directory.,zzzzz,1. Type something that matches nobody.,No rows are shown and the panel reads 'No students match these filters.',Automated + Manual,Search_NoMatch_ReturnsEmptyList,,
+TC-STU-16,Student Management,Filter by grade and by status,Students exist in several grades and statuses.,"10th Grade, Active","1. Pick a grade from the dropdown.
+2. Pick one enrollment status.",Only students in that grade with that status are listed. Only one status can be chosen at a time.,Automated + Manual,Search_FiltersByGradeAndStatus,,
+TC-STU-17,Student Management,Edit a student and save,A student exists.,New grade or phone number,"1. Open the student.
+2. Click Edit.
+3. Change a field.
+4. Save.",The change is saved and shown on the directory when you return.,Automated + Manual,Update_ChangesAreSaved,,
+TC-STU-18,Student Management,Process a student departure,A student exists and is Active.,Reason: Relocation,"1. Open Student Departure.
+2. Search and select the student.
+3. Choose a reason and confirm.","The student's status becomes Inactive (or Dropout) and the record is kept, not deleted.",Automated + Manual,ProcessDeparture_MarksInactiveAndKeepsRecord,,
+TC-STU-19,Student Management,Export the filtered student list,On the Student Directory with filters applied.,Grade 10 only,"1. Apply a filter.
+2. Click Export CSV.","A CSV file is saved and opened, containing every student the filter matches, not only the current page.",Manual,,,
+TC-STU-20,Student Management,Normal name formats are accepted,On the Student Registration page.,A.B. Fernando ; O'Brien,"1. Enter a name with initials or an apostrophe.
+2. Save.","Both are accepted. Initials, dots and apostrophes are allowed in a name.",Automated,Name_AcceptsRealNames,,
+TC-STU-21,Student Management,An email is optional but must be valid if given,On the Student Registration page.,(blank) ; first.last+tag@mail.co.uk,"1. Leave the student email blank and save.
+2. Register another student with a valid email.",The blank email is accepted because it is optional. The valid email is also accepted.,Automated,Email_CanBeOptional,,
+TC-STU-22,Student Management,A valid email is accepted,On the Student Registration page.,nimali@example.com,"1. Enter a correct email address.
+2. Save.",The student is saved.,Automated,Email_AcceptsValidAddresses,,
+TC-STU-23,Student Management,An international phone format is accepted,On the Student Registration page.,+94771234567,"1. Enter the number in +94 form.
+2. Save.",The number is accepted and stored as 0771234567.,Automated,Phone_AcceptsSriLankanNumbers,,
+TC-STU-24,Student Management,A school age date of birth is accepted,On the Student Registration page.,03/05/2010,"1. Enter a date of birth giving an age between 3 and 25.
+2. Save.",The student is saved without complaint.,Automated,DateOfBirth_AcceptsASchoolAgeStudent,,
+TC-STU-25,Student Management,Age is worked out correctly around the birthday,A student's date of birth is recorded.,"Born 24/09/2010, today 24/09/2026","1. Check the age on the day of the birthday.
+2. Check it the day before.",The age is 16 on the birthday and 15 the day before.,Automated,AgeOn_CountsTheBirthdayCorrectly,,
+TC-STU-26,Student Management,Required fields are enforced consistently,Any form.,(blank) then Nimali,"1. Leave a required box blank.
+2. Then fill it in.","The blank value is refused and the filled value is accepted, using the same rule everywhere.",Automated,"Required_RejectsEmptyValues, Required_AcceptsAValue",,
+TC-STU-27,Student Management,Only one problem is reported at a time,On the Student Registration page.,Bad email and bad phone together,"1. Enter several wrong values at once.
+2. Save.","One clear message is shown, so the user is not faced with a wall of errors.",Automated,FirstProblem_ReportsOneMessageAtATime,,
+TC-STU-28,Student Management,A correctly filled form reports no problem,On the Student Registration page.,"Name, email and phone all valid","1. Fill every field correctly.
+2. Save.",No message is shown and the record is saved.,Automated,FirstProblem_IsEmptyWhenEverythingIsValid,,
+TC-STU-29,Student Management,Changing a student ID to one already used is refused,Two students exist.,An ID belonging to another student,"1. Edit one student.
+2. Change their ID to the other student's ID.
+3. Save.",The save is refused. IDs stay unique.,Automated,Update_ToAnotherStudentsId_Throws,,
+TC-STU-30,Student Management,The directory shows each student's assigned teacher,Students have an assigned teacher.,-,1. Open the Student Directory.,"The Assigned Teacher column shows the teacher's name and initials, not just an ID.",Automated + Manual,GetAll_FillsAssignedTeacherName,,
+TC-TCH-01,Teacher Management,Register a teacher and create their login,Logged in as Admin.,"Name: K. Fernando, Email k.fernando@lumora.lk, Phone 0712345678, Username k.fernando, Password lumora1","1. Fill in the Teacher Registration form.
+2. Click Register Teacher.
+3. Log out and log in as the new teacher.","A teacher ID such as TCH-2051 is created, and the teacher can sign in straight away.",Automated + Manual,Register_CreatesTeacherAndLoginAccount,,
+TC-TCH-02,Teacher Management,A username that is already taken is refused,A teacher already uses that username.,An existing username,1. Register another teacher with the same username.,The registration is refused and no half-made teacher record is left behind.,Automated,Register_DuplicateUsername_ThrowsAndDoesNotSaveTeacher,,
+TC-TCH-03,Teacher Management,A teacher without an email is refused,On the Teacher Registration page.,(blank email),"1. Leave the email empty.
+2. Save.",The form is refused: 'Email address is required.',Automated,Register_MissingEmail_Throws,,
+TC-TCH-04,Teacher Management,A username that is too short is refused,On the Teacher Registration page.,abc,"1. Type a three letter username.
+2. Save.",The form is refused: the username must be 4 to 20 characters.,Automated,Username_NeedsFourToTwentyPlainCharacters,,
+TC-TCH-05,Teacher Management,A password without a number is refused,On the Teacher Registration page.,lumora,"1. Type a password of letters only.
+2. Save.",The form is refused: the password needs at least one letter and one number.,Automated,Password_NeedsALetterAndANumber,,
+TC-TCH-06,Teacher Management,A password shorter than the minimum is refused,Creating any account.,ab1,1. Enter a very short password.,The account is not created.,Automated,CreateUser_ShortPassword_Throws,,
+TC-TCH-07,Teacher Management,Years of experience outside the allowed range is refused,On the Teacher Registration page.,99,"1. Type an impossible number of years.
+2. Save.",The form is refused: experience must be between 0 and 60.,Automated,WholeNumber_ChecksTheRange,,
+TC-TCH-08,Teacher Management,A joining date in the future is refused,On the Teacher Registration page.,Next month,"1. Set the joining date to next month.
+2. Save.",The form is refused: the date of joining cannot be in the future.,Automated,NotInFuture_And_NotInPast,,
+TC-TCH-09,Teacher Management,"Search teachers by name, ID, department or subject",Teachers exist with departments and subjects recorded.,science,1. Type a subject name into the search box on the Teachers page.,Teachers who teach that subject are listed. The list updates while typing.,Automated + Manual,Search_FindsByNameOrId,,
+TC-TCH-10,Teacher Management,Editing a teacher also updates their login name,A teacher with a login exists.,A new full name,"1. Edit the teacher's full name.
+2. Save.
+3. Log in as that teacher.",The new name is shown in the side menu after they sign in.,Automated,Update_SavesChangesAndSyncsLoginDisplayName,,
+TC-TCH-11,Teacher Management,Resignation requires the handover checklist,A teacher is selected on the Teacher Resignation page.,"Reason: Relocation, one item unticked","1. Choose a reason but leave a checklist item unticked.
+2. Click Process.",The system refuses and asks for every handover item to be completed first.,Manual,,,
+TC-TCH-12,Teacher Management,Teacher counts and department percentages are correct,Several teachers exist across departments.,-,"1. Open the Teachers page.
+2. Compare the cards with the records.","Total Teachers, On Leave and the two largest departments match the data.",Automated,Counts_And_DepartmentPercentages_AreComputed,,
+TC-TCH-13,Teacher Management,Two accounts cannot share a username,An account already uses that username.,An existing username,1. Try to create a second account with the same username.,The account is not created.,Automated,CreateUser_DuplicateUsername_Throws,,
+TC-SUB-01,Subjects and Classes,Add a subject,"Logged in as Admin, on Academics > Add New Subject.",Combined Maths / MAT-101 / National Curriculum,"1. Enter a name, a code and a curriculum.
+2. Click Save Subject.",The subject is saved and appears in the list beside the form.,Automated + Manual,AddSubject_SavesAndRejectsDuplicateCode,,
+TC-SUB-02,Subjects and Classes,A duplicate subject code is refused,A subject with that code already exists.,MAT-101,1. Add another subject using the same code.,The save is refused with a clear message.,Automated,AddSubject_SavesAndRejectsDuplicateCode,,
+TC-SUB-03,Subjects and Classes,A subject with no name or code is refused,On the Add New Subject page.,(blank),"1. Leave the fields empty.
+2. Save.",The save is refused and names the missing field.,Manual,,,
+TC-CLS-01,Subjects and Classes,Create a class,At least one subject and one teacher exist.,Science / 10th Grade / Ms. Aries / Room 3 / 2500,"1. Open Academics > Manage Classes.
+2. Choose subject, grade and teacher.
+3. Enter a room and a monthly fee.
+4. Click Add Class.",The class is created and listed with its fee and student count.,Automated + Manual,SeededClasses_HaveSubjectTeacherFeeAndStudentCount,,
+TC-CLS-02,Subjects and Classes,A class fee that is not a number is refused,On the Classes page.,free,"1. Type letters into the monthly fee box.
+2. Click Add Class.",The class is not created: the fee must be a number.,Automated,Money_ChecksTheAmount,,
+TC-CLS-03,Subjects and Classes,The same class cannot be created twice,"A class already exists for that subject, grade and teacher.","Same subject, grade and teacher",1. Try to create the identical class again.,The system refuses to create a duplicate class.,Automated,Create_DuplicateClassForSameTeacherSubjectGrade_Throws,,
+TC-CLS-04,Subjects and Classes,Add a weekly time slot to a class,A class exists and is open for managing.,Monday 16:00 to 18:00,"1. Choose a day, a start time and an end time.
+2. Click Add.",The session is listed and the class now appears on that weekday in Mark Attendance.,Automated + Manual,GetSessionsForDay_ReturnsTodaysClassesEarliestFirst,,
+TC-CLS-05,Subjects and Classes,A finish time before the start time is refused,Adding a weekly time slot.,"Start 18:00, End 16:00","1. Set the end time earlier than the start time.
+2. Click Add.",The session is refused with a clear message.,Automated + Manual,AddSession_EndBeforeStart_Throws,,
+TC-CLS-06,Subjects and Classes,One teacher cannot be in two classes at once,The teacher already has a class at that time.,Monday 17:00 to 19:00 for a teacher already busy 16:00 to 18:00,1. Add an overlapping session for the same teacher.,The session is refused because the teacher is already teaching then.,Automated,AddSession_ClashingWithSameTeacher_Throws,,
+TC-CLS-07,Subjects and Classes,Enrol a student in a class,A class and a student exist.,Any student not yet in the class,"1. Open the class.
+2. Pick the student.
+3. Click Enrol.",The student is added and the class student count goes up by one.,Automated + Manual,Enroll_AddsStudentAndRaisesTheCount,,
+TC-CLS-08,Subjects and Classes,The same student cannot be enrolled twice,The student is already in the class.,A student already enrolled,1. Try to enrol them again.,The system refuses.,Automated,Enroll_SameStudentTwice_Throws,,
+TC-CLS-09,Subjects and Classes,Removing a student keeps the history,A student is enrolled in a class.,Any enrolled student,"1. Remove the student from the class.
+2. Check the attendance and fee history.","The student no longer appears in the class, but their earlier attendance and payments are still there.",Automated,Unenroll_RemovesFromClassButKeepsHistory,,
+TC-CLS-10,Subjects and Classes,Closing a class keeps its records,A class with students exists.,Any class,1. Click Close Class and confirm.,"The class is closed and its students are taken out, but the attendance and payment history is kept.",Automated + Manual,Deactivate_ClosesTheClassAndItsEnrolments,,
+TC-CLS-11,Subjects and Classes,A class lists only its own students,Two classes with different students exist.,-,1. Open one class.,"Only the students enrolled in that class are listed, not every student in the grade.",Automated + Manual,GetStudents_ReturnsOnlyTheStudentsEnrolledInThatClass,,
+TC-CLS-12,Subjects and Classes,A student's record lists every class they attend,A student attends more than one class.,-,1. Open the student's record.,All of their classes are listed.,Automated + Manual,GetClassesForStudent_ListsEveryClassTheyAttend,,
+TC-CLS-13,Subjects and Classes,A student who returns is put back in the same record,A student left a class and is enrolled again.,-,"1. Remove the student from a class.
+2. Enrol them again.","The original enrolment record is reused, so the class does not build up duplicate rows.",Automated,Enroll_AfterLeaving_ReusesTheSameRow,,
+TC-ATT-01,Attendance,Today's classes are listed,Classes with weekly time slots exist. Logged in as Admin.,Today's date,1. Click Attendance in the side menu.,"Mark Attendance opens showing each class for today with its time, class name, teacher, room, student count and whether it has been marked.",Automated + Manual,GetSessionsForDay_ReturnsTodaysClassesEarliestFirst,,
+TC-ATT-02,Attendance,Nothing is marked by default,A class is scheduled today and has not been marked.,Any class,1. Click the class to open the student sheet.,Every student appears with no status chosen. No student defaults to Present.,Automated + Manual,GetSheet_StartsWithEveryStudentUnmarked,,
+TC-ATT-03,Attendance,"Mark a student present, absent or late",The student sheet is open.,Three different students,"1. Click Present on one row.
+2. Click Absent on another.
+3. Click Late on a third.",Each button turns its own colour and the counts at the top update immediately.,Manual,,,
+TC-ATT-04,Attendance,Clear a mark,A student has been marked.,Any marked student,1. Click Clear on that row.,The row goes back to unmarked and the Not Marked count goes up.,Automated,SaveSheet_ClearingAStatusRemovesTheEarlierMark,,
+TC-ATT-05,Attendance,Mark all present,The student sheet is open.,-,1. Click Mark all present.,Every row is set to Present and the Present count equals the number of students.,Manual,,,
+TC-ATT-06,Attendance,Mark the rest absent,"Some students are marked present, others are blank.",-,1. Click Mark rest absent.,Only the blank rows become Absent. Rows already marked are not changed.,Manual,,,
+TC-ATT-07,Attendance,Blank rows are not saved as absent,Some students are left unmarked.,2 of 5 students marked,"1. Mark only a few students.
+2. Click Save Attendance.
+3. Open the history.","Only the marked students are stored. The unmarked ones are counted as Not Recorded, which is not the same as Absent.",Automated + Manual,SaveSheet_DoesNotSaveRowsLeftBlank,,
+TC-ATT-08,Attendance,Saving reports how many were marked,The student sheet has some marks.,-,1. Click Save Attendance.,"A message says how many of the class were marked, and the class now shows Marked in the list.",Automated + Manual,IsMarked_TellsWhetherTheClassWasDoneThatDay,,
+TC-ATT-09,Attendance,Reopening a marked class shows the earlier marks,A class was marked and saved today.,-,1. Open the same class again.,"The marks that were saved are shown, not a blank sheet.",Automated,GetSheet_ShowsWhatWasSavedEarlier,,
+TC-ATT-10,Attendance,Marking the same day twice does not duplicate rows,A class was marked earlier today.,-,"1. Change a mark and save again.
+2. Check the history.","The earlier mark is updated. There is one row per student per day, not two.",Automated,SaveSheet_MarkingTwiceUpdatesInsteadOfDuplicating,,
+TC-ATT-11,Attendance,An invalid status is rejected,Calling the attendance service directly.,Holiday,"1. Try to save a status that is not Present, Absent or Late.",The system refuses the value.,Automated,Mark_InvalidStatus_Throws,,
+TC-ATT-12,Attendance,The history summary counts correctly,Attendance has been marked for a class.,-,1. Open Attendance > View History.,"Each row shows Enrolled, Present, Absent, Late and Not recorded, and the numbers add up.",Automated + Manual,Summary_CountsMarkedStudentsAndShowsHowManyAreNotRecorded,,
+TC-ATT-13,Attendance,Perfect status when everyone marked is present,Every marked student in a class was present.,-,1. Look at that day's row in the history.,The status badge reads Perfect.,Automated,Summary_Status_IsPerfectWhenEveryMarkedStudentIsPresent,,
+TC-ATT-14,Attendance,History can be filtered by class and by month,Attendance exists for more than one class and month.,"Science - G10, September 2026","1. Choose a class from the dropdown.
+2. Choose a month.
+3. Click Clear.",Only matching rows are shown. Clear puts every row back.,Manual,,,
+TC-ATT-15,Attendance,A late student counts towards the attendance rate,"A class has present, late and absent students.",-,1. Check the attendance rate.,"Late is counted as attending, not as absent.",Automated,AttendanceRate_CountsLateAsPresent,,
+TC-ATT-16,Attendance,Overall attendance statistics are produced,Attendance has been marked over several days.,-,1. Open the attendance summary cards.,"The average rate, the number of days logged and the perfect days are shown and match the records.",Automated + Manual,GetStats_ReturnsSeededNumbers,,
+TC-PAY-01,Payments and Fees,The fee register lists one row per enrolled student,A class has enrolled students and a monthly fee.,"Science - G10, this month","1. Open Payments.
+2. Choose a month.
+3. Click the class.","Every enrolled student has a row, with the amount due set to the class fee.",Automated + Manual,GetRegister_HasOneRowPerEnrolledStudentWithTheClassFee,,
+TC-PAY-02,Payments and Fees,Register rows are created once only,The register for a class and month has already been opened.,-,1. Open the same class and month again.,The same rows are shown. No duplicates are created.,Automated,GetRegister_CreatesMissingRowsOnceOnly,,
+TC-PAY-03,Payments and Fees,Mark a student as paid,A student has an unpaid row.,-,1. Click Mark Paid on that row.,"The full fee is recorded, today's date is set, a receipt number starting RCP- is created and the status becomes Paid.",Automated + Manual,MarkPaid_SetsTheFullFeeTodayAndGivesAReceiptNumber,,
+TC-PAY-04,Payments and Fees,Undo a payment marked by mistake,A student is marked Paid.,-,1. Click Undo on that row.,The row goes back to unpaid and the collected total drops accordingly.,Automated + Manual,MarkUnpaid_UndoesIt,,
+TC-PAY-05,Payments and Fees,Record a part payment,A student has an unpaid row.,"Fee 2500, paid 1000","1. Click the ... button.
+2. Enter an amount smaller than the fee.
+3. Save.",The status becomes Partial and the balance still owed is shown.,Automated + Manual,RecordPayment_PartAmountLeavesABalance,,
+TC-PAY-06,Payments and Fees,A payment needs an amount and a date,Recording a payment.,(blank),1. Leave the amount or date empty.,The payment is refused.,Automated,RecordPayment_AmountAndDateAreMandatory,,
+TC-PAY-07,Payments and Fees,Status is Pending before the due date,An unpaid fee whose due date has not passed.,"Due on the 10th, today is earlier",1. Look at the status.,The status reads Pending.,Automated,Status_Pending_BeforeTheDueDate,,
+TC-PAY-08,Payments and Fees,Status is Overdue after the due date,An unpaid fee whose due date has passed.,"Due on the 10th, today is later",1. Look at the status.,The status reads Overdue.,Automated,Status_Overdue_AfterTheDueDate,,
+TC-PAY-09,Payments and Fees,The due date is the 10th of the month,Any month's register.,2026-09,1. Check the due date used for the status.,The due date is 10 September 2026.,Automated,DueDateFor_IsTheTenthOfTheMonth,,
+TC-PAY-10,Payments and Fees,Grant an extension of one to three months,A student cannot pay on time.,2 months,"1. Click the ... button.
+2. Grant an extension of 2 months.",The deadline moves and the status reads Extension Granted.,Automated + Manual,GrantExtension_MovesTheDeadlineBy1To3Months,,
+TC-PAY-11,Payments and Fees,An extension longer than three months is refused,Granting an extension.,4 months,1. Try to grant four months.,The extension is refused.,Automated,GrantExtension_MovesTheDeadlineBy1To3Months,,
+TC-PAY-12,Payments and Fees,Outstanding fees add up across every class,A student attends more than one class and owes on both.,-,1. Open the student's record.,The amount outstanding is the total across all their classes.,Automated,OutstandingForStudent_AddsUpEveryClassTheyTake,,
+TC-PAY-13,Payments and Fees,The month totals are correct,A month's register has paid and unpaid students.,-,1. Look at the four cards at the top of Payments.,"Total Expected, Collected, Outstanding and Overdue match the register underneath.",Automated + Manual,Summary_AddsUpThisMonthsRegister,,
+TC-PAY-14,Payments and Fees,The outstanding list shows only students who still owe,Some students have paid in full.,-,1. Open the outstanding list.,Students who have paid in full are not listed.,Automated,GetOutstanding_ListsOnlyStudentsWhoStillOweMoney,,
+TC-PAY-15,Payments and Fees,Only the relevant button is shown on each row,A register with paid and unpaid students.,-,1. Compare a paid row with an unpaid row.,Unpaid rows show Mark Paid. Paid rows show Undo. Both never appear together.,Manual,,,
+TC-PAY-16,Payments and Fees,Recent payments appear on the dashboard,A payment has just been taken.,-,"1. Mark a student paid.
+2. Open the Admin Dashboard.","The payment is listed under Recent Activity, newest first.",Automated + Manual,GetRecentlyPaid_ReturnsOnlyPaidRowsNewestFirst,,
+TC-PAY-17,Payments and Fees,Status is Paid once the full fee is in,A student has paid the whole fee.,"Fee 2500, paid 2500",1. Look at the status.,The status reads Paid and nothing is outstanding.,Automated,Status_Paid_WhenTheFullFeeIsIn,,
+TC-PAY-18,Payments and Fees,Status is Partial when only some money is in,A student has paid part of the fee.,"Fee 2500, paid 1000",1. Look at the status.,The status reads Partial.,Automated,Status_Partial_WhenSomeMoneyIsIn,,
+TC-PAY-19,Payments and Fees,Status stays Extension Granted while the extension lasts,A student has been given an extension.,Extension of 2 months,1. Look at the status before the new deadline.,The status reads Extension Granted rather than Overdue.,Automated,Status_ExtensionGranted_WhileTheExtensionLasts,,
+TC-PAY-20,Payments and Fees,The register shows both paid and unpaid students,A class has a mix of paid and unpaid students.,-,1. Open the register for that class.,"Paid students show Paid and the others show an unpaid status, in the same list.",Automated + Manual,GetRegister_ShowsTheSeededPaidAndUnpaidStudents,,
+TC-PAY-21,Payments and Fees,The recent payments list is limited in length,Many payments have been taken.,count = 2,1. Ask for the two most recent payments.,"No more than two are returned, so the dashboard stays short.",Automated,GetRecentlyPaid_RespectsTheCount,,
+TC-ACA-01,Academic Performance,"Record a monthly, term or year end mark",A student and a subject exist.,"Science, Term, 78","1. Open the student.
+2. Click Enter Marks.
+3. Choose subject and exam type, enter a mark.
+4. Save.",The mark is saved with the matching letter grade and shown in the student's record.,Automated + Manual,RecordMark_MonthlyTermAndYearEnd_AreSavedWithGrades,,
+TC-ACA-02,Academic Performance,A mark above 100 or below 0 is refused,On the Enter Marks page.,101,"1. Type 101 as the mark.
+2. Save.",The mark is refused: it must be between 0 and 100.,Automated + Manual,Marks_AreOutOfOneHundred,,
+TC-ACA-03,Academic Performance,An invalid exam type is refused,Recording a mark.,Pop quiz,1. Use an exam type the system does not know.,The mark is refused.,Automated,RecordMark_OutOfRangeOrWrongType_Throws,,
+TC-ACA-04,Academic Performance,Record a Cambridge result,A student and a subject exist.,"IGCSE Maths, A","1. Enter a Cambridge exam name and grade.
+2. Save.",The result is saved and listed in the student's record.,Automated + Manual,RecordCambridgeResult_SavesGradeAndAppearsInStudentRecord,,
+TC-ACA-05,Academic Performance,Cambridge results do not change the internal average,A student has both internal marks and a Cambridge result.,-,1. Compare the average before and after adding the Cambridge result.,The internal average is unchanged.,Automated,CambridgeResults_DoNotAffectInternalAverage,,
+TC-ACA-06,Academic Performance,Marks map to the right letter grade,Marks have been recorded.,"92, 78, 55, 30",1. Check the grade shown beside several marks.,Each mark shows the correct letter grade.,Automated,GradeFor_MapsMarksToLetters,,
+TC-ACA-07,Academic Performance,At-risk students below 60 percent are found,Students with low marks exist.,-,"1. Open At-Risk Students.
+2. Leave the threshold at Below 60%.",Only students averaging under 60 percent are listed.,Automated + Manual,GetAtRiskStudents_FindsStudentsBelow60Percent,,
+TC-ACA-08,Academic Performance,A higher threshold includes more students,On the At-Risk Students page.,Below 80%,1. Change the threshold to Below 80%.,More students are listed than at Below 60%.,Automated + Manual,GetAtRiskStudents_HigherThreshold_IncludesMoreStudents,,
+TC-ACA-09,Academic Performance,At-risk filtering by subject,At-risk students exist in several subjects.,Science,1. Choose one subject from the dropdown.,"Only students weak in that subject are listed, and the list updates as soon as the subject is chosen.",Automated + Manual,GetAtRiskStudents_FilterBySubject,,
+TC-ACA-10,Academic Performance,A progress note is saved against the student,A student is open.,Any note text,"1. Write a progress note recommending extra classes.
+2. Save.",The note is stored and shown on the student's record.,Automated,ProgressNote_WithExtraClassRecommendation_IsSaved,,
+TC-ACA-11,Academic Performance,At-risk students show their weak subjects and their year group,At-risk students exist.,-,1. Open At-Risk Students.,Each row names the subjects the student is weak in and the grade they are in.,Automated + Manual,GetAtRiskStudents_ListsWeakSubjectsAndCohort,,
+TC-EVT-01,Events,Create an event,"Logged in as Admin, on Upcoming Events.","Parents' Meeting, Academic, next Friday, Hall","1. Enter a title, category, date and location.
+2. Click Create.",The event is saved and listed.,Automated + Manual,Create_Update_Delete_Event,,
+TC-EVT-02,Events,An event without a title is refused,On the Upcoming Events page.,(blank),"1. Leave the title empty.
+2. Click Create.",The event is refused: 'Event title is required.',Automated + Manual,Create_WithoutTitle_Throws,,
+TC-EVT-03,Events,An event dated in the past is refused,On the Upcoming Events page.,Yesterday,"1. Set the date to yesterday.
+2. Click Create.",The event is refused: the event date cannot be in the past.,Manual,,,
+TC-EVT-04,Events,Edit and delete an event,An event exists.,-,"1. Click the pencil, change a field, save.
+2. Click the bin and confirm.","The change is shown in the list, and the event disappears after confirming the delete.",Automated + Manual,Create_Update_Delete_Event,,
+TC-EVT-05,Events,Only future events are shown as upcoming,Past and future events exist.,-,1. Open the upcoming list.,"Only future events are listed, soonest first.",Automated,GetUpcoming_ReturnsOnlyFutureEventsSoonestFirst,,
+TC-RPT-01,Reports,Open a student progress report,A student with marks and attendance exists.,-,"1. Open the student.
+2. Click Print Report.","The report shows the student's details, one row per subject, the total, the GPA and the attendance.",Automated + Manual,StudentReport_MatchesTheDesignedReportCard,,
+TC-RPT-02,Reports,"A report for a student with no marks is empty, not an error",A newly registered student with no marks.,-,1. Open their report.,The report opens with empty rows. The system does not crash.,Automated,StudentReport_ForStudentWithNoMarks_IsEmptyNotError,,
+TC-RPT-03,Reports,Generate the report as a PDF,A student report is open.,-,1. Click Print.,"A PDF file is created and opened in the default viewer, ready to print.",Automated + Manual,Save_WritesAValidPdfFile,,
+TC-RPT-04,Reports,A PDF can be made for a student with no marks,A student with no marks.,-,1. Generate their PDF.,A valid PDF is produced without error.,Automated,ToBytes_WorksForStudentWithNoMarks,,
+TC-RPT-05,Reports,The payment report can be filtered by status,Payments exist in several statuses.,Overdue,"1. Build the payment report.
+2. Filter by Overdue.",Only overdue rows are listed.,Automated,PaymentReport_ListsEveryStudentWithFees_AndCanFilterByStatus,,
+TC-RPT-06,Reports,The academic report can be filtered by grade,Students exist in several grades.,10th Grade,1. Build the academic report for one grade.,Only students in that grade are listed.,Automated,AcademicReport_CanFilterByGrade,,
+TC-RPT-07,Reports,Subject averages match the marks entered,Marks exist for several subjects.,-,1. Compare the dashboard bar chart with the recorded marks.,"There is one bar per subject that has marks, and each height matches the average.",Automated + Manual,AverageBySubject_HasOneEntryPerSubjectWithMarks,,
+TC-RPT-08,Reports,The GPA is worked out correctly,A student has marks.,"92, 78, 55",1. Check the GPA on their report.,The GPA matches the four point scale.,Automated,GpaFor_MapsPercentToFourPointScale,,
+TC-UI-01,User Interface,Every dropdown can be recognised,Any page with a dropdown.,-,"1. Look at a dropdown.
+2. Hover over it.",An arrow is shown on the right. On hover the border and arrow change to the brand colour.,Manual,,,
+TC-UI-02,User Interface,A date can be typed as well as picked,"On any form with a date, for example Date of Birth.",25/09/2010,"1. Type the date straight into the box.
+2. Then click the calendar icon.","The typed date is accepted, and the calendar also works. An impossible date turns the text red.",Manual,,,
+TC-UI-03,User Interface,Typed text stays readable,On the Student Registration form.,Any text,1. Type into every field.,What is typed is fully visible and is not cut off by the box.,Manual,,,
+TC-UI-04,User Interface,Buttons react to the mouse,Any page with buttons.,-,"1. Hover over a button.
+2. Press and hold it.",The colour changes on hover and again while pressed.,Manual,,,
+TC-UI-05,User Interface,Table rows show they can be clicked,On the Student Directory.,-,1. Move the mouse down the rows.,The row under the mouse is highlighted.,Manual,,,
+TC-UI-06,User Interface,The side menu shows where you are,Logged in.,-,1. Open each menu item in turn.,The current page is a cream pill with a gold bar. Hovering another item lights it up.,Manual,,,
+TC-UI-07,User Interface,Attendance opens the marking screen directly,Logged in as Admin.,-,1. Click Attendance in the side menu.,Mark Attendance opens. View History is one click away at the top right.,Manual,,,
+TC-UI-08,User Interface,Long lists are split into pages,More students exist than fit on one page.,-,"1. Look at the bottom of the Student Directory.
+2. Click page 2.",The page numbers work and the count line matches what is shown.,Manual,,,
+TC-UI-09,User Interface,A photo can be uploaded and removed,On the Student or Teacher Registration form.,A JPG under 2 MB,"1. Click the photo box and choose a JPG.
+2. Click Remove photo.","The photo is shown, and removing it puts the upload box back. A file over 2 MB is refused.",Manual,,,
+TC-UI-10,User Interface,The system uses one colour scheme throughout,Any page.,-,1. Move through every screen.,"The same brown palette, borders and card style are used everywhere, with the institute logo on the side menu, Home, Login and the report.",Manual,,,
+TC-NFR-01,Non-functional,Data survives closing the app,Records have been added.,-,"1. Add a student.
+2. Close the app completely.
+3. Open it again.",The student is still there.,Automated + Manual,DataSurvivesReopen,,
+TC-NFR-02,Non-functional,The sample data is only created once,A database file already exists.,-,1. Close and reopen the app twice.,The demo data is not added again and no duplicates appear.,Automated,FreshDatabase_IsSeededOnce_AndNotAgainOnReopen,,
+TC-NFR-03,Non-functional,The system works with no internet,The computer is offline.,-,"1. Turn off the network.
+2. Use the system normally.","Everything works, because the data is held in a local SQLite file on the office computer.",Manual,,,
+TC-NFR-04,Non-functional,The database can be backed up,The system has data.,-,1. Run the backup.,A copy of the database file is created.,Automated,Backup_CreatesACopyOfTheDatabaseFile,,
+TC-NFR-05,Non-functional,A teacher cannot reach admin-only screens,Logged in as a teacher.,-,1. Look at the side menu.,"Payments, Teachers and Academics are not offered to a teacher.",Manual,,,
+TC-NFR-06,Non-functional,Changing a password stops the old one working,An account exists.,-,"1. Change the password.
+2. Try the old password.",The old password is refused and the new one works.,Automated,ChangePassword_OldPasswordStopsWorking,,
+TC-NFR-07,Non-functional,All data can be cleared,The system has data.,-,1. Run the clear-all operation.,"Every table is emptied, which is used when handing a clean copy to another member.",Automated,ClearAll_EmptiesEveryTable,,

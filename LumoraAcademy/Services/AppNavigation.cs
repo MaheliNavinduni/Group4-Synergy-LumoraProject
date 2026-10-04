@@ -49,6 +49,7 @@ public static class AppNavigation
                 "Academics" => new Pages.Admin.AdminAcademicsPage(),
                 "Attendance" => new Pages.Admin.MarkAttendancePage(),
                 "Upcoming Events" => new Pages.Admin.AdminEventsPage(),
+                "My Account" => new Pages.Admin.MyAccountPage(),
                 _ => null
             };
         }

@@ -192,16 +192,6 @@ public partial class StudentDirectoryView : ContentView
         }
     }
 
-    // Highlights the row the mouse is over, so it is obvious the row can be clicked.
-    private void OnRowPointerEntered(object sender, PointerEventArgs e)
-    {
-        if (sender is Grid row) row.BackgroundColor = SidebarView.GetColor("RowHover");
-    }
-
-    private void OnRowPointerExited(object sender, PointerEventArgs e)
-    {
-        if (sender is Grid row) row.BackgroundColor = Colors.Transparent;
-    }
 
     private async void OnAtRiskClicked(object sender, EventArgs e)
     {

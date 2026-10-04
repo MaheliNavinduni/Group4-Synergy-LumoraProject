@@ -4,7 +4,7 @@
              xmlns:controls="clr-namespace:LumoraAcademy.Controls"
              x:Class="LumoraAcademy.Pages.Admin.AdminEventsPage"
              Title="Event Management"
-             BackgroundColor="{StaticResource PageBackground}">
+             BackgroundColor="{StaticResource ContentBackground}">
 
     <Grid ColumnDefinitions="220,*">
 
@@ -143,9 +143,7 @@
                             </VerticalStackLayout>
                             <VerticalStackLayout Grid.Row="1" Grid.Column="1" Spacing="6">
                                 <Label Text="Time" Style="{StaticResource FormLabelStyle}" FontSize="11" Margin="0" />
-                                <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="40">
-                                    <TimePicker x:Name="NewTimePicker" FontSize="12" TextColor="{StaticResource TextHeading}" BackgroundColor="Transparent" VerticalOptions="Center" />
-                                </Border>
+                                <controls:TimeField x:Name="NewTimePicker" BoxHeight="40" FontSize="12" />
                             </VerticalStackLayout>
 
                             <VerticalStackLayout Grid.Row="2" Grid.Column="0" Spacing="6">
@@ -193,24 +191,18 @@
                         <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
                             <VerticalStackLayout Grid.Column="0" Spacing="4">
                                 <Label Text="Date" Style="{StaticResource SmallMutedStyle}" />
-                                <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="40" Padding="6,0">
-                                    <Entry x:Name="EditDateEntry" Style="{StaticResource FieldEntryStyle}" FontSize="11" />
-                                </Border>
+                                <controls:DateField x:Name="EditDatePicker" BoxHeight="40" FontSize="11" />
                             </VerticalStackLayout>
                             <VerticalStackLayout Grid.Column="1" Spacing="4">
                                 <Label Text="Time" Style="{StaticResource SmallMutedStyle}" />
-                                <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="40" Padding="6,0">
-                                    <Entry x:Name="EditTimeEntry" Style="{StaticResource FieldEntryStyle}" FontSize="11" />
-                                </Border>
+                                <controls:TimeField x:Name="EditTimePicker" BoxHeight="40" FontSize="11" />
                             </VerticalStackLayout>
                         </Grid>
 
                         <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
                             <VerticalStackLayout Grid.Column="0" Spacing="4">
                                 <Label Text="Category" Style="{StaticResource SmallMutedStyle}" />
-                                <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="40" Padding="6,0">
-                                    <Entry x:Name="EditCategoryEntry" Style="{StaticResource FieldEntryStyle}" FontSize="11" />
-                                </Border>
+                                <controls:DropDownField x:Name="EditCategoryPicker" Title="Select category" BoxHeight="40" FontSize="11" />
                             </VerticalStackLayout>
                             <VerticalStackLayout Grid.Column="1" Spacing="4">
                                 <Label Text="Location" Style="{StaticResource SmallMutedStyle}" />

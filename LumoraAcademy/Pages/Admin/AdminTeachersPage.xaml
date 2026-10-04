@@ -4,7 +4,7 @@
              xmlns:controls="clr-namespace:LumoraAcademy.Controls"
              x:Class="LumoraAcademy.Pages.Admin.AdminTeachersPage"
              Title="Teachers"
-             BackgroundColor="{StaticResource PageBackground}">
+             BackgroundColor="{StaticResource ContentBackground}">
 
     <Grid ColumnDefinitions="220,*">
 
@@ -30,8 +30,10 @@
                 <!-- Statistics -->
                 <Grid ColumnDefinitions="*,*,*"
                       ColumnSpacing="14">
-                    <controls:StatCard x:Name="TotalCard" Grid.Column="0" Title="Total Teachers" Value="0" Subtitle="Active staff" Icon="&#xE716;" />
-                    <controls:StatCard x:Name="LeaveCard" Grid.Column="1" Title="On Leave" Value="0" Subtitle="Currently away" Icon="&#xE787;" />
+                    <controls:StatCard x:Name="TotalCard" Grid.Column="0" Title="Total Teachers" Value="0" Subtitle="Active staff" Icon="&#xE716;"
+                                       Accent="1" />
+                    <controls:StatCard x:Name="LeaveCard" Grid.Column="1" Title="On Leave" Value="0" Subtitle="Currently away" Icon="&#xE787;"
+                                       Accent="2" />
 
                     <Border Grid.Column="2" Style="{StaticResource CardStyle}" Padding="18,16">
                         <VerticalStackLayout Spacing="8">
@@ -53,16 +55,34 @@
                 <Border Style="{StaticResource CardTightStyle}">
                     <VerticalStackLayout>
 
-                        <Grid ColumnDefinitions="*,Auto,Auto"
-                              ColumnSpacing="8"
+                        <Grid ColumnDefinitions="Auto,*,180,Auto"
+                              ColumnSpacing="10"
                               Padding="20,14">
                             <Label Grid.Column="0" Text="Directory" Style="{StaticResource SectionTitleStyle}" FontSize="14" VerticalOptions="Center" />
-                            <Border Grid.Column="1" Style="{StaticResource FieldBoxStyle}" HeightRequest="40" WidthRequest="28" Padding="0">
-                                <Label Text="&#xE8FD;" Style="{StaticResource IconStyle}" FontSize="11" HorizontalOptions="Center" />
+
+                            <Border Grid.Column="1" Style="{StaticResource FieldBoxStyle}" HeightRequest="40" Padding="10,0">
+                                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="6">
+                                    <Label Text="&#xE721;" Style="{StaticResource IconStyle}" FontSize="11" />
+                                    <Entry x:Name="SearchEntry"
+                                           Grid.Column="1"
+                                           Placeholder="Search by name, ID, subject or email..."
+                                           Style="{StaticResource FieldEntryStyle}"
+                                           FontSize="12"
+                                           TextChanged="OnSearchTextChanged" />
+                                </Grid>
                             </Border>
-                            <Border Grid.Column="2" Style="{StaticResource FieldBoxStyle}" HeightRequest="40" WidthRequest="28" Padding="0" Background="{StaticResource StatusBlueBg}" Stroke="{StaticResource StatusBlueBg}">
-                                <Label Text="&#xE80A;" Style="{StaticResource IconStyle}" FontSize="11" TextColor="{StaticResource StatusBlueText}" HorizontalOptions="Center" />
-                            </Border>
+
+                            <controls:DropDownField x:Name="StatusPicker"
+                                                    Grid.Column="2"
+                                                    Title="All statuses"
+                                                    BoxHeight="40"
+                                                    FontSize="12"
+                                                    SelectedIndexChanged="OnFilterChanged" />
+
+                            <Button Grid.Column="3"
+                                    Text="Export CSV"
+                                    Style="{StaticResource SmallOutlineButtonStyle}"
+                                    Clicked="OnExportClicked" />
                         </Grid>
 
                         <Grid Style="{StaticResource TableHeaderRowStyle}"
@@ -79,7 +99,9 @@
                                 <DataTemplate>
                                     <VerticalStackLayout>
                                         <Grid Style="{StaticResource TableRowStyle}"
-                                              ColumnDefinitions="1.7*,1*,1.6*,1.8*,0.9*">
+                                              ColumnDefinitions="1.7*,1*,1.6*,1.8*,0.9*"
+                                              BackgroundColor="Transparent"
+                                              controls:RowHover.Enabled="True">
                                             <Grid.GestureRecognizers>
                                                 <TapGestureRecognizer Tapped="OnTeacherRowTapped" />
                                             </Grid.GestureRecognizers>
@@ -111,6 +133,13 @@
                                 </DataTemplate>
                             </BindableLayout.ItemTemplate>
                         </VerticalStackLayout>
+
+                        <Label x:Name="EmptyLabel"
+                               Text="No teachers match this search."
+                               Style="{StaticResource MutedStyle}"
+                               Padding="20,28"
+                               HorizontalOptions="Center"
+                               IsVisible="False" />
 
                         <Grid ColumnDefinitions="*,Auto"
                               Padding="20,12">

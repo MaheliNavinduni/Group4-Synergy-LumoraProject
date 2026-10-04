@@ -70,6 +70,44 @@ public class PaymentServiceTests
         Assert.Equal(0, paid.Outstanding);
     }
 
+    // ----- what the dashboard shows as recent activity -----
+
+    [Fact]
+    public void GetRecentlyPaid_ReturnsOnlyPaidRowsNewestFirst()
+    {
+        using var t = new TestBackend();
+        var science = ScienceG10(t);
+        var unpaid = t.Backend.Payments.GetRegister(science.Id, ThisMonth).Where(p => p.Status != "Paid").ToList();
+
+        var older = t.Backend.Payments.RecordPayment(unpaid[0].Id, unpaid[0].AmountDue, DateTime.Today.AddDays(-5));
+        var newer = t.Backend.Payments.RecordPayment(unpaid[1].Id, unpaid[1].AmountDue, DateTime.Today);
+
+        var recent = t.Backend.Payments.GetRecentlyPaid(10);
+
+        Assert.All(recent, p => Assert.True(p.PaymentDate.HasValue));
+        Assert.All(recent, p => Assert.True(p.AmountPaid > 0));
+
+        int newerIndex = recent.FindIndex(p => p.Id == newer.Id);
+        int olderIndex = recent.FindIndex(p => p.Id == older.Id);
+
+        Assert.True(newerIndex >= 0 && olderIndex >= 0);
+        Assert.True(newerIndex < olderIndex, "the newest payment should come first");
+    }
+
+    [Fact]
+    public void GetRecentlyPaid_RespectsTheCount()
+    {
+        using var t = new TestBackend();
+        var science = ScienceG10(t);
+
+        foreach (var row in t.Backend.Payments.GetRegister(science.Id, ThisMonth).Where(p => p.Status != "Paid"))
+        {
+            t.Backend.Payments.MarkPaid(row.Id);
+        }
+
+        Assert.True(t.Backend.Payments.GetRecentlyPaid(2).Count <= 2);
+    }
+
     [Fact]
     public void MarkUnpaid_UndoesIt()
     {
