@@ -99,7 +99,7 @@ public class AttendanceServiceTests
     {
         using var t = new TestBackend();
         var science = ScienceG10(t);
-        var emma = t.Backend.Students.GetByStudentId("STU-2024-0891")!;
+        var emma = t.Backend.Students.GetByStudentId("STU-0006")!;
 
         Assert.Throws<ArgumentException>(() => t.Backend.Attendance.Mark(emma.Id, science.Id, DateTime.Today, "Sleeping"));
     }
@@ -150,7 +150,7 @@ public class AttendanceServiceTests
         using var t = new TestBackend();
         // Sinhala has no seeded attendance, so this class starts empty.
         var sinhala = t.Backend.Classes.GetAll().First(c => c.SubjectName == "Sinhala");
-        var emma = t.Backend.Students.GetByStudentId("STU-2024-0891")!;
+        var emma = t.Backend.Students.GetByStudentId("STU-0006")!;
 
         t.Backend.Attendance.Mark(emma.Id, sinhala.Id, new DateTime(2026, 9, 1), AttendanceEntry.Present);
         t.Backend.Attendance.Mark(emma.Id, sinhala.Id, new DateTime(2026, 9, 2), AttendanceEntry.Late);

@@ -9,7 +9,7 @@ public class Student
     [PrimaryKey, AutoIncrement]
     public int Id { get; set; }
 
-    // Human-readable ID shown on screen, e.g. "STU-2024-0001". Must be unique.
+    // Human-readable ID shown on screen, e.g. "STU-0001". Must be unique.
     [Indexed(Unique = true)]
     public string StudentId { get; set; } = "";
 

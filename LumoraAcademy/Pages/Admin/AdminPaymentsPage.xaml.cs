@@ -8,25 +8,55 @@ namespace LumoraAcademy.Pages.Admin;
 // Pick a class and a month, then tick off the students who have paid.
 public partial class AdminPaymentsPage : ContentPage
 {
-    private readonly List<string> _months = new();
     private ClassGroup? _class;
+
+    // True while the boxes are being filled in, so the list only reloads once.
+    private bool _settingUp;
 
     public AdminPaymentsPage()
     {
         InitializeComponent();
 
-        // The last 12 months, newest first.
-        for (int i = 0; i < 12; i++)
-        {
-            _months.Add(PaymentService.MonthKey(DateTime.Today.AddMonths(-i)));
-        }
-        MonthPicker.ItemsSource = _months.Select(m => DateTime.Parse(m + "-01").ToString("MMMM yyyy")).ToList();
-        MonthPicker.SelectedIndex = 0;
+        _settingUp = true;
+
+        // Just the twelve month names, with the year typed beside them. A single
+        // list of every month and year together was too long to read.
+        MonthPicker.ItemsSource = Enumerable.Range(1, 12)
+            .Select(m => new DateTime(2000, m, 1).ToString("MMMM"))
+            .ToList();
+        MonthPicker.SelectedIndex = DateTime.Today.Month - 1;
+        YearEntry.Text = DateTime.Today.Year.ToString();
+
+        _settingUp = false;
 
         LoadClasses();
     }
 
-    private string SelectedMonth => _months[Math.Max(0, MonthPicker.SelectedIndex)];
+    // The month the register is showing, as "2026-09".
+    private string SelectedMonth
+    {
+        get
+        {
+            int month = Math.Max(0, MonthPicker.SelectedIndex) + 1;
+            if (!int.TryParse((YearEntry.Text ?? "").Trim(), out int year) || year < 2000 || year > 2100)
+            {
+                year = DateTime.Today.Year;
+            }
+            return $"{year:0000}-{month:00}";
+        }
+    }
+
+    // Reloads when the year is typed, once it is a sensible four digit year.
+    private void OnYearChanged(object sender, TextChangedEventArgs e)
+    {
+        if (_settingUp) return;
+
+        string text = (e.NewTextValue ?? "").Trim();
+        if (text.Length == 4 && int.TryParse(text, out int year) && year >= 2000 && year <= 2100)
+        {
+            LoadClasses();
+        }
+    }
 
     // ---------- Step 1: the classes ----------
 
@@ -58,12 +88,12 @@ public partial class AdminPaymentsPage : ContentPage
     private void LoadTotals()
     {
         var summary = AppData.Payments.GetSummary(SelectedMonth);
-        ExpectedCard.Value = summary.TotalExpected.ToString("N2");
-        CollectedCard.Value = summary.Collected.ToString("N2");
+        ExpectedCard.Value = "LKR " + summary.TotalExpected.ToString("N2");
+        CollectedCard.Value = "LKR " + summary.Collected.ToString("N2");
         CollectedCard.Subtitle = $"{summary.CollectedPercent}% of expected";
-        OutstandingCard.Value = summary.Pending.ToString("N2");
+        OutstandingCard.Value = "LKR " + summary.Pending.ToString("N2");
         OutstandingCard.Subtitle = $"{summary.UnpaidCount} students";
-        OverdueCard.Value = summary.Overdue.ToString("N2");
+        OverdueCard.Value = "LKR " + summary.Overdue.ToString("N2");
     }
 
     private void OnMonthChanged(object sender, EventArgs e)

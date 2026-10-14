@@ -38,7 +38,7 @@ public class ClassServiceTests
     public void GetClassesForStudent_ListsEveryClassTheyAttend()
     {
         using var t = new TestBackend();
-        var emma = t.Backend.Students.GetByStudentId("STU-2024-0891")!;
+        var emma = t.Backend.Students.GetByStudentId("STU-0006")!;
 
         var classes = t.Backend.Classes.GetClassesForStudent(emma.Id).Select(c => c.Name).ToList();
 
@@ -52,7 +52,7 @@ public class ClassServiceTests
     {
         using var t = new TestBackend();
         var science = ScienceG10(t);
-        var eleanor = t.Backend.Students.GetByStudentId("STU-2023-8941")!;
+        var eleanor = t.Backend.Students.GetByStudentId("STU-0001")!;
         int before = science.StudentCount;
 
         t.Backend.Classes.Enroll(eleanor.Id, science.Id);
@@ -66,7 +66,7 @@ public class ClassServiceTests
     {
         using var t = new TestBackend();
         var science = ScienceG10(t);
-        var emma = t.Backend.Students.GetByStudentId("STU-2024-0891")!;
+        var emma = t.Backend.Students.GetByStudentId("STU-0006")!;
 
         Assert.Throws<InvalidOperationException>(() => t.Backend.Classes.Enroll(emma.Id, science.Id));
     }
@@ -76,7 +76,7 @@ public class ClassServiceTests
     {
         using var t = new TestBackend();
         var science = ScienceG10(t);
-        var emma = t.Backend.Students.GetByStudentId("STU-2024-0891")!;
+        var emma = t.Backend.Students.GetByStudentId("STU-0006")!;
         int attendanceBefore = t.Backend.Attendance.GetForStudent(emma.Id).Count;
 
         t.Backend.Classes.Unenroll(emma.Id, science.Id);
@@ -90,7 +90,7 @@ public class ClassServiceTests
     {
         using var t = new TestBackend();
         var science = ScienceG10(t);
-        var emma = t.Backend.Students.GetByStudentId("STU-2024-0891")!;
+        var emma = t.Backend.Students.GetByStudentId("STU-0006")!;
 
         t.Backend.Classes.Unenroll(emma.Id, science.Id);
         t.Backend.Classes.Enroll(emma.Id, science.Id);

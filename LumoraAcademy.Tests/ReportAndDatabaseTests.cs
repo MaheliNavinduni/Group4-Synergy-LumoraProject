@@ -29,7 +29,7 @@ public class ReportServiceTests
     public void StudentReport_ForStudentWithNoMarks_IsEmptyNotError()
     {
         using var t = new TestBackend();
-        var tyrell = t.Backend.Students.GetByStudentId("STU-1198")!;
+        var tyrell = t.Backend.Students.GetByStudentId("STU-0004")!;
 
         var report = t.Backend.Reports.BuildStudentReport(tyrell.Id);
 
@@ -183,7 +183,7 @@ public class StudentReportPdfTests
     public void ToBytes_WorksForStudentWithNoMarks()
     {
         using var t = new TestBackend();
-        var tyrell = t.Backend.Students.GetByStudentId("STU-1198")!;
+        var tyrell = t.Backend.Students.GetByStudentId("STU-0004")!;
 
         var bytes = LumoraAcademy.Core.Reports.StudentReportPdf.ToBytes(t.Backend.Reports.BuildStudentReport(tyrell.Id));
 
