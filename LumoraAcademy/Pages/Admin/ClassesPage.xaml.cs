@@ -100,6 +100,13 @@ public partial class ClassesPage : ContentPage
 
     // ---------- Managing one class ----------
 
+    // Sensible starting times when the popup opens.
+    private void ResetTimeBoxes()
+    {
+        StartPicker.Time = new TimeSpan(8, 0, 0);
+        EndPicker.Time = new TimeSpan(9, 30, 0);
+    }
+
     private void OnManageClicked(object sender, EventArgs e)
     {
         if (sender is Button b && b.BindingContext is ClassGroup group)
@@ -107,6 +114,7 @@ public partial class ClassesPage : ContentPage
             _managing = group;
             ManageTitle.Text = group.Name;
             ManageSubtitle.Text = $"{group.TeacherName} • {group.RoomText} • Fee {group.MonthlyFee:N2} a month";
+            ResetTimeBoxes();
             ManageSection.IsVisible = true;
 
             LoadSessions();

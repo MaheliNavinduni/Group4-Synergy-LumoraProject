@@ -13,28 +13,36 @@
 
         <ScrollView Grid.Column="1">
             <VerticalStackLayout Padding="36,32"
-                                 Spacing="20">
+                                 Spacing="22">
 
-                <Grid ColumnDefinitions="*,Auto,Auto,Auto"
+                <Grid ColumnDefinitions="*,Auto,Auto"
                       ColumnSpacing="10">
-                    <Label Grid.Column="0"
-                           Text="Subject Management"
-                           Style="{StaticResource PageTitleStyle}"
-                           VerticalOptions="Center" />
+                    <VerticalStackLayout Grid.Column="0" Spacing="4">
+                        <Label Text="Subject Management" Style="{StaticResource PageTitleStyle}" />
+                        <Label Text="The subjects the institute teaches. Classes are built from these."
+                               Style="{StaticResource PageSubtitleStyle}" />
+                    </VerticalStackLayout>
                     <Button Grid.Column="1"
                             Text="Manage Classes"
-                            Style="{StaticResource SmallOutlineButtonStyle}"
+                            Style="{StaticResource OutlineButtonStyle}"
+                            VerticalOptions="Center"
                             Clicked="OnClassesClicked" />
                     <Button Grid.Column="2"
                             Text="+ Add New Subject"
-                            Style="{StaticResource SmallPrimaryButtonStyle}"
+                            Style="{StaticResource PrimaryButtonStyle}"
+                            VerticalOptions="Center"
                             Clicked="OnAddSubjectClicked" />
-                    <Button Grid.Column="3"
-                            Text="Go Back"
-                            Style="{StaticResource SmallPrimaryButtonStyle}"
-                           
-                            Clicked="OnGoBackClicked" />
                 </Grid>
+
+                <!-- Totals across the whole section -->
+                <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="16">
+                    <controls:StatCard x:Name="SubjectsCard" Grid.Column="0" Title="SUBJECTS" Value="0" Subtitle="Taught at the institute" Icon="&#xE8A5;" Accent="1" />
+                    <controls:StatCard x:Name="ClassesCard" Grid.Column="1" Title="CLASSES" Value="0" Subtitle="Running now" Icon="&#xE716;" Accent="2" />
+                    <controls:StatCard x:Name="EnrolmentsCard" Grid.Column="2" Title="ENROLMENTS" Value="0" Subtitle="Across every class" Icon="&#xE77B;" Accent="3" />
+                    <controls:StatCard x:Name="CurriculaCard" Grid.Column="3" Title="CURRICULA" Value="0" Subtitle="Different syllabuses" Icon="&#xE82D;" Accent="4" />
+                </Grid>
+
+                <Label Text="All Subjects" Style="{StaticResource SectionTitleStyle}" FontSize="16" />
 
                 <!-- One card per subject -->
                 <FlexLayout x:Name="SubjectList"
@@ -45,28 +53,81 @@
                     <BindableLayout.ItemTemplate>
                         <DataTemplate>
                             <Border Style="{StaticResource CardStyle}"
-                                    Padding="16,12"
-                                    WidthRequest="300"
-                                    Margin="0,0,12,12">
-                                <Grid ColumnDefinitions="Auto,*"
-                                      ColumnSpacing="12">
-                                    <Label Grid.Column="0"
-                                           Text="&#xE82D;"
-                                           Style="{StaticResource IconStyle}"
-                                           TextColor="{StaticResource BrandPrimary}"
-                                           VerticalOptions="Start" />
-                                    <VerticalStackLayout Grid.Column="1"
-                                                         Spacing="2">
-                                        <Label Text="{Binding DisplayName}"
-                                               Style="{StaticResource BodyBoldStyle}" />
-                                        <Label Text="{Binding Curriculum}"
-                                               Style="{StaticResource SmallMutedStyle}" />
-                                    </VerticalStackLayout>
+                                    Padding="0"
+                                    WidthRequest="420"
+                                    Margin="0,0,18,18">
+                                <Grid RowDefinitions="6,*">
+
+                                    <BoxView Grid.Row="0" Color="{StaticResource BrandPrimary}" />
+
+                                    <Grid Grid.Row="1"
+                                          ColumnDefinitions="Auto,*"
+                                          ColumnSpacing="16"
+                                          Padding="22,20">
+
+                                        <Border Grid.Column="0"
+                                                WidthRequest="56"
+                                                HeightRequest="56"
+                                                Padding="0"
+                                                StrokeThickness="0"
+                                                Background="{StaticResource BrandCream}"
+                                                VerticalOptions="Start">
+                                            <Border.StrokeShape>
+                                                <RoundRectangle CornerRadius="12" />
+                                            </Border.StrokeShape>
+                                            <Label Text="&#xE82D;"
+                                                   Style="{StaticResource IconStyle}"
+                                                   FontSize="24"
+                                                   TextColor="{StaticResource BrandPrimary}"
+                                                   HorizontalOptions="Center"
+                                                   VerticalOptions="Center" />
+                                        </Border>
+
+                                        <VerticalStackLayout Grid.Column="1" Spacing="8">
+                                            <Label Text="{Binding Name}"
+                                                   Style="{StaticResource SectionTitleStyle}"
+                                                   FontSize="19" />
+
+                                            <HorizontalStackLayout Spacing="8">
+                                                <Border Background="{StaticResource Brown100}"
+                                                        StrokeThickness="0"
+                                                        Padding="10,4">
+                                                    <Border.StrokeShape>
+                                                        <RoundRectangle CornerRadius="6" />
+                                                    </Border.StrokeShape>
+                                                    <Label Text="{Binding Code}"
+                                                           FontSize="12"
+                                                           FontAttributes="Bold"
+                                                           TextColor="{StaticResource Brown700}" />
+                                                </Border>
+
+                                                <Border Background="{StaticResource BrandCream}"
+                                                        StrokeThickness="0"
+                                                        Padding="10,4">
+                                                    <Border.StrokeShape>
+                                                        <RoundRectangle CornerRadius="6" />
+                                                    </Border.StrokeShape>
+                                                    <Label Text="{Binding ClassCountText}"
+                                                           FontSize="12"
+                                                           TextColor="{StaticResource Brown600}" />
+                                                </Border>
+                                            </HorizontalStackLayout>
+
+                                            <Label Text="{Binding Curriculum}"
+                                                   Style="{StaticResource MutedStyle}"
+                                                   FontSize="13" />
+                                        </VerticalStackLayout>
+                                    </Grid>
                                 </Grid>
                             </Border>
                         </DataTemplate>
                     </BindableLayout.ItemTemplate>
                 </FlexLayout>
+
+                <Label x:Name="NoSubjectsLabel"
+                       Text="No subjects yet. Click Add New Subject to create the first one."
+                       Style="{StaticResource MutedStyle}"
+                       IsVisible="False" />
 
             </VerticalStackLayout>
         </ScrollView>
