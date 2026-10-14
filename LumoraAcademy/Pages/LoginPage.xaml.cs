@@ -61,7 +61,7 @@ public partial class LoginPage : ContentPage
 
             if (user == null)
             {
-                ShowError("Incorrect username or password.");
+                ShowError("Incorrect username or password. Please try again.");
                 PasswordEntry.Text = "";
                 PasswordEntry.Focus();
                 return;
@@ -74,6 +74,9 @@ public partial class LoginPage : ContentPage
 
             PasswordEntry.Text = "";
             ErrorBox.IsVisible = false;
+
+            string who = string.IsNullOrWhiteSpace(user.DisplayName) ? user.Username : user.DisplayName;
+            await DisplayAlert("Login Successful", $"Welcome back, {who}.", "Continue");
 
             if (user.Role == "Admin")
             {

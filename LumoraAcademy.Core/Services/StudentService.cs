@@ -164,16 +164,28 @@ public class StudentService
         return _db.Connection.Table<Student>().Any(s => s.StudentId == key);
     }
 
-    // Makes the next ID like "STU-2026-0001".
+    // Makes the next ID like "STU-0001", carrying on from the highest one used.
     public string NextStudentId()
     {
-        string prefix = $"STU-{DateTime.Today.Year}-";
-        int count = _db.Connection.Table<Student>().Count(s => s.StudentId.StartsWith(prefix));
+        const string prefix = "STU-";
+
+        // Look at the number on the end of every existing ID, so the new one
+        // carries on from the highest rather than clashing with it.
+        int highest = 0;
+        foreach (var s in _db.Connection.Table<Student>().ToList())
+        {
+            var digits = new string(s.StudentId.Where(char.IsDigit).ToArray());
+            if (digits.Length > 0 && int.TryParse(digits[^Math.Min(4, digits.Length)..], out int n))
+            {
+                highest = Math.Max(highest, n);
+            }
+        }
+
         string candidate;
         do
         {
-            count++;
-            candidate = prefix + count.ToString("0000");
+            highest++;
+            candidate = prefix + highest.ToString("0000");
         } while (StudentIdExists(candidate));
         return candidate;
     }

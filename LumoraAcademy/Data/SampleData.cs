@@ -84,10 +84,10 @@ public static class SampleData
 
     public static List<Student> Students = new()
     {
-        new Student { Name = "Alvarez, Marcus", Email = "marcus.a@student.edu", Id = "#STU-8492", Grade = "11th Grade", AssignedTeacher = "Dr. Richards", TeacherInitials = "DR", Status = "Active", Initials = "MA" },
-        new Student { Name = "Chen, Emily", Email = "emily.c@student.edu", Id = "#STU-3321", Grade = "9th Grade", AssignedTeacher = "Ms. Smith", TeacherInitials = "MS", Status = "Active", Initials = "EC" },
-        new Student { Name = "Johnson, Tyrell", Email = "tyrell.j@student.edu", Id = "#STU-1198", Grade = "12th Grade", AssignedTeacher = "Mr. Davis", TeacherInitials = "JD", Status = "Inactive", Initials = "TJ" },
-        new Student { Name = "Patel, Aarav", Email = "aarav.p@student.edu", Id = "#STU-9942", Grade = "10th Grade", AssignedTeacher = "Ms. Smith", TeacherInitials = "MS", Status = "Pending", Initials = "AP" },
+        new Student { Name = "Alvarez, Marcus", Email = "marcus.a@student.edu", Id = "#STU-0002", Grade = "11th Grade", AssignedTeacher = "Dr. Richards", TeacherInitials = "DR", Status = "Active", Initials = "MA" },
+        new Student { Name = "Chen, Emily", Email = "emily.c@student.edu", Id = "#STU-0003", Grade = "9th Grade", AssignedTeacher = "Ms. Smith", TeacherInitials = "MS", Status = "Active", Initials = "EC" },
+        new Student { Name = "Johnson, Tyrell", Email = "tyrell.j@student.edu", Id = "#STU-0004", Grade = "12th Grade", AssignedTeacher = "Mr. Davis", TeacherInitials = "JD", Status = "Inactive", Initials = "TJ" },
+        new Student { Name = "Patel, Aarav", Email = "aarav.p@student.edu", Id = "#STU-0005", Grade = "10th Grade", AssignedTeacher = "Ms. Smith", TeacherInitials = "MS", Status = "Pending", Initials = "AP" },
     };
 
     public static List<Teacher> Teachers = new()
@@ -107,10 +107,10 @@ public static class SampleData
 
     public static List<PaymentAccount> PaymentAccounts = new()
     {
-        new PaymentAccount { Name = "Emma Thompson", Id = "STU-2023-9942", MonthlyFee = "$450.00", Outstanding = "$0.00", LastPaid = "Oct 12, 2023", Status = "Paid", Action = "View" },
-        new PaymentAccount { Name = "Liam Chen", Id = "STU-2023-3881", MonthlyFee = "$450.00", Outstanding = "$450.00", LastPaid = "Sep 15, 2023", Status = "Pending", Action = "Record" },
-        new PaymentAccount { Name = "Sophia Martinez", Id = "STU-2023-1145", MonthlyFee = "$550.00", Outstanding = "$1,650.00", LastPaid = "Aug 05, 2023", Status = "Extension Granted", Action = "Record" },
-        new PaymentAccount { Name = "Noah Jackson", Id = "STU-2023-7102", MonthlyFee = "$450.00", Outstanding = "$1,350.00", LastPaid = "Jan 15, 2023", Status = "Dropout", Action = "Review" },
+        new PaymentAccount { Name = "Emma Thompson", Id = "STU-0009", MonthlyFee = "$450.00", Outstanding = "$0.00", LastPaid = "Oct 12, 2023", Status = "Paid", Action = "View" },
+        new PaymentAccount { Name = "Liam Chen", Id = "STU-0010", MonthlyFee = "$450.00", Outstanding = "$450.00", LastPaid = "Sep 15, 2023", Status = "Pending", Action = "Record" },
+        new PaymentAccount { Name = "Sophia Martinez", Id = "STU-0011", MonthlyFee = "$550.00", Outstanding = "$1,650.00", LastPaid = "Aug 05, 2023", Status = "Extension Granted", Action = "Record" },
+        new PaymentAccount { Name = "Noah Jackson", Id = "STU-0012", MonthlyFee = "$450.00", Outstanding = "$1,350.00", LastPaid = "Jan 15, 2023", Status = "Dropout", Action = "Review" },
     };
 
     public static List<Subject> Subjects = new()
