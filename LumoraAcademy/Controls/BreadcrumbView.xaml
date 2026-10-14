@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- The trail at the top of a page showing how you got here, for example
+     Teachers  >  Dr. Richards. Every part except the last one can be clicked
+     to go back to it. The parts are created in BreadcrumbView.xaml.cs. -->
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LumoraAcademy.Controls.BreadcrumbView">
+
+    <HorizontalStackLayout x:Name="Trail"
+                           Spacing="8"
+                           Margin="0,0,0,2" />
+</ContentView>

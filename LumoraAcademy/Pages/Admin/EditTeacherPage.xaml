@@ -18,6 +18,7 @@
                                  HorizontalOptions="Fill">
 
                 <VerticalStackLayout Spacing="4">
+                    <controls:BreadcrumbView Section="Teachers" Current="Edit Teacher Profile" />
                     <Label Text="Edit Teacher Profile" Style="{StaticResource PageTitleStyle}" />
                     <Label x:Name="SubtitleLabel" Text="" Style="{StaticResource PageSubtitleStyle}" />
                 </VerticalStackLayout>

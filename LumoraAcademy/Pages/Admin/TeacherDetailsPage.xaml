@@ -18,11 +18,7 @@
                 <!-- Breadcrumb + name + Edit button -->
                 <Grid ColumnDefinitions="*,Auto">
                     <VerticalStackLayout Grid.Column="0" Spacing="4">
-                        <HorizontalStackLayout Spacing="6">
-                            <Label Text="Teachers" Style="{StaticResource SmallMutedStyle}" />
-                            <Label Text="&#xE76C;" Style="{StaticResource IconStyle}" FontSize="8" />
-                            <Label x:Name="CrumbLabel" Text="" Style="{StaticResource SmallMutedStyle}" TextColor="{StaticResource TextHeading}" />
-                        </HorizontalStackLayout>
+                        <controls:BreadcrumbView x:Name="Crumb" Section="Teachers" />
                         <Label x:Name="TitleLabel" Text="" Style="{StaticResource PageTitleStyle}" />
                     </VerticalStackLayout>
                     <HorizontalStackLayout Grid.Column="1" Spacing="8" VerticalOptions="End">

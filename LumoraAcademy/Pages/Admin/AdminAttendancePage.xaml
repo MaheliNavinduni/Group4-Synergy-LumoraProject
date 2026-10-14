@@ -16,6 +16,7 @@
                                  Spacing="22">
 
                 <VerticalStackLayout Spacing="4">
+                    <controls:BreadcrumbView Section="Attendance" Current="Attendance History" />
                     <Label Text="Attendance History"
                            Style="{StaticResource PageTitleStyle}" />
                     <Label Text="Comprehensive overview of historical attendance records."

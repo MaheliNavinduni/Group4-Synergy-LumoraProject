@@ -24,7 +24,7 @@ public partial class TeacherDetailsPage : ContentPage
         Teacher? teacher = AppData.Teachers.GetById(_teacherId);
         if (teacher == null) return;
 
-        CrumbLabel.Text = teacher.FullName;
+        Crumb.Current = teacher.FullName;
         TitleLabel.Text = teacher.FullName;
         Avatar.Initials = teacher.Initials;
         Avatar.ImagePath = teacher.PhotoPath;

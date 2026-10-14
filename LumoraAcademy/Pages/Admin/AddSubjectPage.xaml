@@ -21,6 +21,7 @@
                     <VerticalStackLayout Grid.Column="0" Spacing="4">
                         <Label Text="Academics  /  Subjects"
                                Style="{StaticResource SmallMutedStyle}" />
+                        <controls:BreadcrumbView Section="Academics" Current="Add New Subject" />
                         <Label Text="Add New Subject"
                                Style="{StaticResource PageTitleStyle}" />
                         <Label Text="A subject is the thing that is taught. Classes are built from subjects on the Classes page."

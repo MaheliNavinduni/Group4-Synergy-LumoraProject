@@ -15,6 +15,8 @@
             <VerticalStackLayout Padding="36,28"
                                  Spacing="18">
 
+                <controls:BreadcrumbView x:Name="Crumb" Section="Students" />
+
                 <!-- Name, ID and status -->
                 <Grid ColumnDefinitions="*,Auto">
                     <VerticalStackLayout Grid.Column="0"

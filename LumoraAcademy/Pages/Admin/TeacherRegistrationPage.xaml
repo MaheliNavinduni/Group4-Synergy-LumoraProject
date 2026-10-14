@@ -21,6 +21,7 @@
                 <Grid ColumnDefinitions="*,Auto,Auto"
                       ColumnSpacing="10">
                     <VerticalStackLayout Grid.Column="0" Spacing="4">
+                        <controls:BreadcrumbView Section="Teachers" Current="Register New Teacher" />
                         <Label Text="Teacher Registration" Style="{StaticResource PageTitleStyle}" />
                         <Label Text="Fields marked with * must be filled in. A login is created at the same time."
                                Style="{StaticResource PageSubtitleStyle}" />
