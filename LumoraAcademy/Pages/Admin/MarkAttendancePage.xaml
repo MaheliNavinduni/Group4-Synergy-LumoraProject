@@ -131,11 +131,10 @@
                             </Grid>
 
                             <Grid Style="{StaticResource TableHeaderRowStyle}"
-                                  ColumnDefinitions="2*,1.2*,2*,1.6*">
+                                  ColumnDefinitions="2*,1.2*,2*">
                                 <Label Grid.Column="0" Text="STUDENT" Style="{StaticResource TableHeaderStyle}" />
                                 <Label Grid.Column="1" Text="ID" Style="{StaticResource TableHeaderStyle}" />
                                 <Label Grid.Column="2" Text="ATTENDANCE" Style="{StaticResource TableHeaderStyle}" HorizontalOptions="Center" />
-                                <Label Grid.Column="3" Text="REMARKS" Style="{StaticResource TableHeaderStyle}" />
                             </Grid>
 
                             <VerticalStackLayout x:Name="RowList">
@@ -143,7 +142,7 @@
                                     <DataTemplate>
                                         <VerticalStackLayout>
                                             <Grid Style="{StaticResource TableRowStyle}"
-                                                  ColumnDefinitions="2*,1.2*,2*,1.6*">
+                                                  ColumnDefinitions="2*,1.2*,2*">
 
                                                 <HorizontalStackLayout Grid.Column="0" Spacing="10">
                                                     <controls:AvatarView Initials="{Binding Initials}" ImagePath="{Binding PhotoPath}" Size="28" />
@@ -159,9 +158,6 @@
                                                     <Button Text="Clear" Style="{StaticResource SmallOutlineButtonStyle}" HeightRequest="26" FontSize="10" Padding="7,0" TextColor="{StaticResource TextLight}" Clicked="OnStatusClicked" CommandParameter="Clear" />
                                                 </HorizontalStackLayout>
 
-                                                <Border Grid.Column="3" Style="{StaticResource FieldBoxStyle}" HeightRequest="40" Padding="8,0">
-                                                    <Entry Text="{Binding Remarks}" Placeholder="Optional" Style="{StaticResource FieldEntryStyle}" FontSize="11" />
-                                                </Border>
                                             </Grid>
                                             <BoxView Style="{StaticResource RowDividerStyle}" />
                                         </VerticalStackLayout>
