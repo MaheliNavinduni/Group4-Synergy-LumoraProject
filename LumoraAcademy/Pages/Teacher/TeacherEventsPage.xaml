@@ -75,37 +75,6 @@
                             </VerticalStackLayout>
                         </Border>
 
-                        <!-- PDF download card -->
-                        <Border Style="{StaticResource CardStyle}"
-                                Padding="16">
-                            <Grid ColumnDefinitions="Auto,*"
-                                  ColumnSpacing="12">
-                                <Border Grid.Column="0"
-                                        WidthRequest="36"
-                                        HeightRequest="36"
-                                        Padding="0"
-                                        StrokeThickness="0"
-                                        Background="{StaticResource StatusBlueBg}">
-                                    <Border.StrokeShape>
-                                        <RoundRectangle CornerRadius="6" />
-                                    </Border.StrokeShape>
-                                    <Label Text="&#xE8A5;"
-                                           Style="{StaticResource IconStyle}"
-                                           TextColor="{StaticResource StatusBlueText}"
-                                           HorizontalOptions="Center" />
-                                </Border>
-                                <VerticalStackLayout Grid.Column="1"
-                                                     Spacing="2"
-                                                     VerticalOptions="Center">
-                                    <Label Text="Academic Calendar PDF"
-                                           Style="{StaticResource BodyBoldStyle}"
-                                           FontSize="12" />
-                                    <Label Text="Download"
-                                           Style="{StaticResource SmallMutedStyle}" />
-                                </VerticalStackLayout>
-                            </Grid>
-                        </Border>
-
                     </VerticalStackLayout>
                 </Grid>
 

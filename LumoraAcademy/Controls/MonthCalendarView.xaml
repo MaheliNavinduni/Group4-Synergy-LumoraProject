@@ -12,14 +12,32 @@
             <Grid ColumnDefinitions="Auto,Auto,Auto,*,Auto"
                   ColumnSpacing="10"
                   Padding="16,14">
-                <Label Grid.Column="0" Text="&#xE76B;" Style="{StaticResource IconStyle}" FontSize="11" />
+                <Label x:Name="PrevIcon" Grid.Column="0" Text="&#xE76B;" Style="{StaticResource IconStyle}" FontSize="13">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnPreviousMonth" />
+                        <PointerGestureRecognizer PointerEntered="OnArrowEntered" PointerExited="OnArrowExited" />
+                    </Label.GestureRecognizers>
+                </Label>
                 <Label x:Name="MonthLabel" Grid.Column="1" Text="" Style="{StaticResource SectionTitleStyle}" FontSize="15" VerticalOptions="Center" />
-                <Label Grid.Column="2" Text="&#xE76C;" Style="{StaticResource IconStyle}" FontSize="11" />
-                <Button Grid.Column="4"
-                        Text="Today"
-                        Style="{StaticResource SmallOutlineButtonStyle}"
-                        HeightRequest="28"
-                        FontSize="11" />
+                <Label x:Name="NextIcon" Grid.Column="2" Text="&#xE76C;" Style="{StaticResource IconStyle}" FontSize="13">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnNextMonth" />
+                        <PointerGestureRecognizer PointerEntered="OnArrowEntered" PointerExited="OnArrowExited" />
+                    </Label.GestureRecognizers>
+                </Label>
+
+                <!-- Plain text, not a button -->
+                <Label x:Name="TodayLink"
+                       Grid.Column="4"
+                       Text="Today"
+                       FontSize="12"
+                       TextColor="{StaticResource TextMuted}"
+                       VerticalOptions="Center">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnTodayTapped" />
+                        <PointerGestureRecognizer PointerEntered="OnTodayEntered" PointerExited="OnTodayExited" />
+                    </Label.GestureRecognizers>
+                </Label>
             </Grid>
 
             <BoxView Style="{StaticResource RowDividerStyle}" />

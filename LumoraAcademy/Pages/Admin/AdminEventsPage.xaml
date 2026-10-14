@@ -11,69 +11,111 @@
         <controls:SidebarView Grid.Column="0"
                               ActiveItem="Upcoming Events" />
 
-        <ScrollView Grid.Column="1">
-            <Grid ColumnDefinitions="*,Auto"
-                  ColumnSpacing="20"
-                  Padding="36,32">
+        <!-- The page, with the event form sitting on top of it -->
+        <Grid Grid.Column="1">
 
-                <!-- ===== Main column ===== -->
-                <VerticalStackLayout Grid.Column="0"
-                                     Spacing="20">
+            <ScrollView>
+                <VerticalStackLayout Padding="36,32" Spacing="20">
 
-                    <Grid ColumnDefinitions="*,Auto">
+                    <!-- Heading, view switch and the create button -->
+                    <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="12">
                         <VerticalStackLayout Grid.Column="0" Spacing="4">
                             <Label Text="Event Management" Style="{StaticResource PageTitleStyle}" />
-                            <Label Text="Manage and schedule school calendar activities." Style="{StaticResource PageSubtitleStyle}" />
+                            <Label Text="Manage and schedule the institute calendar."
+                                   Style="{StaticResource PageSubtitleStyle}" />
                         </VerticalStackLayout>
 
-                        <!-- Calendar / List switch -->
+                        <!-- Calendar / List switch. Both sides always work. -->
                         <Border Grid.Column="1"
                                 Style="{StaticResource FieldBoxStyle}"
-                                HeightRequest="40"
-                                Padding="3"
-                                VerticalOptions="Start">
-                            <HorizontalStackLayout Spacing="2">
-                                <Border Padding="10,0" StrokeThickness="0" Background="Transparent">
+                                HeightRequest="42"
+                                Padding="4"
+                                VerticalOptions="Center">
+                            <HorizontalStackLayout Spacing="3">
+                                <Border x:Name="CalendarTab" Padding="14,0" StrokeThickness="0">
                                     <Border.StrokeShape>
-                                        <RoundRectangle CornerRadius="5" />
+                                        <RoundRectangle CornerRadius="6" />
                                     </Border.StrokeShape>
                                     <Border.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="OnCalendarViewTapped" />
+                                        <TapGestureRecognizer Tapped="OnShowCalendar" />
                                     </Border.GestureRecognizers>
-                                    <HorizontalStackLayout Spacing="5">
-                                        <Label Text="&#xE787;" Style="{StaticResource IconStyle}" FontSize="10" />
-                                        <Label Text="Calendar" Style="{StaticResource MutedStyle}" FontSize="11" VerticalOptions="Center" />
+                                    <HorizontalStackLayout Spacing="6">
+                                        <Label x:Name="CalendarTabIcon" Text="&#xE787;" Style="{StaticResource IconStyle}" FontSize="11" />
+                                        <Label x:Name="CalendarTabText" Text="Calendar" FontSize="12" VerticalOptions="Center" />
                                     </HorizontalStackLayout>
                                 </Border>
-                                <Border Padding="10,0" StrokeThickness="0" Background="{StaticResource StatusBlueBg}">
+                                <Border x:Name="ListTab" Padding="14,0" StrokeThickness="0">
                                     <Border.StrokeShape>
-                                        <RoundRectangle CornerRadius="5" />
+                                        <RoundRectangle CornerRadius="6" />
                                     </Border.StrokeShape>
-                                    <HorizontalStackLayout Spacing="5">
-                                        <Label Text="&#xE8FD;" Style="{StaticResource IconStyle}" FontSize="10" TextColor="{StaticResource StatusBlueText}" />
-                                        <Label Text="List" FontSize="11" FontAttributes="Bold" TextColor="{StaticResource StatusBlueText}" VerticalOptions="Center" />
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnShowList" />
+                                    </Border.GestureRecognizers>
+                                    <HorizontalStackLayout Spacing="6">
+                                        <Label x:Name="ListTabIcon" Text="&#xE8FD;" Style="{StaticResource IconStyle}" FontSize="11" />
+                                        <Label x:Name="ListTabText" Text="List" FontSize="12" VerticalOptions="Center" />
                                     </HorizontalStackLayout>
                                 </Border>
                             </HorizontalStackLayout>
                         </Border>
+
+                        <Button Grid.Column="2"
+                                Text="+ Create New Event"
+                                Style="{StaticResource PrimaryButtonStyle}"
+                                VerticalOptions="Center"
+                                Clicked="OnOpenCreateClicked" />
                     </Grid>
 
-                    <!-- Upcoming schedule table -->
-                    <VerticalStackLayout Spacing="10">
-                        <HorizontalStackLayout Spacing="6">
-                            <Label Text="&#xE787;" Style="{StaticResource IconStyle}" FontSize="12" />
-                            <Label Text="Upcoming Schedule" Style="{StaticResource SectionTitleStyle}" FontSize="13" />
-                        </HorizontalStackLayout>
+                    <!-- ===== Calendar view (shown first) ===== -->
+                    <Grid x:Name="CalendarView" ColumnDefinitions="*,280" ColumnSpacing="20">
 
+                        <controls:MonthCalendarView x:Name="Calendar"
+                                                    Grid.Column="0"
+                                                    VerticalOptions="Start" />
+
+                        <Border Grid.Column="1" Style="{StaticResource CardStyle}" Padding="18" VerticalOptions="Start">
+                            <VerticalStackLayout Spacing="14">
+                                <Label Text="Coming Up" Style="{StaticResource SectionTitleStyle}" FontSize="15" />
+                                <BoxView Style="{StaticResource RowDividerStyle}" />
+
+                                <VerticalStackLayout x:Name="UpcomingList" Spacing="14">
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid ColumnDefinitions="3,*" ColumnSpacing="10">
+                                                <BoxView Grid.Column="0" Color="{StaticResource BrandPrimary}" CornerRadius="2" />
+                                                <VerticalStackLayout Grid.Column="1" Spacing="3">
+                                                    <Label Text="{Binding DateText}" Style="{StaticResource SmallMutedStyle}" TextColor="{StaticResource TextHeading}" />
+                                                    <Label Text="{Binding Title}" Style="{StaticResource BodyBoldStyle}" FontSize="13" />
+                                                    <Label Text="{Binding Time}" Style="{StaticResource SmallMutedStyle}" />
+                                                </VerticalStackLayout>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+                                </VerticalStackLayout>
+
+                                <Label x:Name="NoUpcomingLabel"
+                                       Text="Nothing coming up yet."
+                                       Style="{StaticResource SmallMutedStyle}"
+                                       IsVisible="False" />
+                            </VerticalStackLayout>
+                        </Border>
+                    </Grid>
+
+                    <!-- ===== List view ===== -->
+                    <VerticalStackLayout x:Name="ListView" Spacing="10" IsVisible="False">
                         <Border Style="{StaticResource CardTightStyle}">
                             <VerticalStackLayout>
+                                <Grid Padding="20,14">
+                                    <Label Text="All Events" Style="{StaticResource SectionTitleStyle}" FontSize="14" />
+                                </Grid>
+
                                 <Grid Style="{StaticResource TableHeaderRowStyle}"
                                       ColumnDefinitions="1.6*,1.5*,1.2*,0.9*,0.7*">
-                                    <Label Grid.Column="0" Text="Event Name" Style="{StaticResource TableHeaderStyle}" />
-                                    <Label Grid.Column="1" Text="Date &amp; Time" Style="{StaticResource TableHeaderStyle}" />
-                                    <Label Grid.Column="2" Text="Location" Style="{StaticResource TableHeaderStyle}" />
-                                    <Label Grid.Column="3" Text="Category" Style="{StaticResource TableHeaderStyle}" />
-                                    <Label Grid.Column="4" Text="Actions" Style="{StaticResource TableHeaderStyle}" HorizontalOptions="End" />
+                                    <Label Grid.Column="0" Text="EVENT NAME" Style="{StaticResource TableHeaderStyle}" />
+                                    <Label Grid.Column="1" Text="DATE &amp; TIME" Style="{StaticResource TableHeaderStyle}" />
+                                    <Label Grid.Column="2" Text="LOCATION" Style="{StaticResource TableHeaderStyle}" />
+                                    <Label Grid.Column="3" Text="CATEGORY" Style="{StaticResource TableHeaderStyle}" />
+                                    <Label Grid.Column="4" Text="ACTIONS" Style="{StaticResource TableHeaderStyle}" HorizontalOptions="End" />
                                 </Grid>
 
                                 <VerticalStackLayout x:Name="RowList">
@@ -90,12 +132,12 @@
                                                     <Label Grid.Column="2" Text="{Binding Location}" Style="{StaticResource TableCellStyle}" FontSize="12" />
                                                     <controls:StatusBadge Grid.Column="3" Text="{Binding Category}" />
                                                     <HorizontalStackLayout Grid.Column="4" Spacing="12" HorizontalOptions="End">
-                                                        <Label Text="&#xE70F;" Style="{StaticResource IconStyle}" FontSize="12">
+                                                        <Label Text="&#xE70F;" Style="{StaticResource IconStyle}" FontSize="13">
                                                             <Label.GestureRecognizers>
                                                                 <TapGestureRecognizer Tapped="OnEditEventTapped" />
                                                             </Label.GestureRecognizers>
                                                         </Label>
-                                                        <Label Text="&#xE74D;" Style="{StaticResource IconStyle}" FontSize="12">
+                                                        <Label Text="&#xE74D;" Style="{StaticResource IconStyle}" FontSize="13">
                                                             <Label.GestureRecognizers>
                                                                 <TapGestureRecognizer Tapped="OnDeleteEventTapped" />
                                                             </Label.GestureRecognizers>
@@ -107,140 +149,140 @@
                                         </DataTemplate>
                                     </BindableLayout.ItemTemplate>
                                 </VerticalStackLayout>
+
+                                <Label x:Name="NoEventsLabel"
+                                       Text="No events yet. Click Create New Event to add one."
+                                       Style="{StaticResource MutedStyle}"
+                                       Padding="20,16"
+                                       IsVisible="False" />
                             </VerticalStackLayout>
                         </Border>
                     </VerticalStackLayout>
 
-                    <!-- Create new event form -->
-                    <VerticalStackLayout Spacing="14">
-                        <Button Text="+ Create New Event"
-                                Style="{StaticResource SmallPrimaryButtonStyle}"
-                                HorizontalOptions="Start"
-                                Clicked="OnCreateEventClicked" />
-
-                        <Grid ColumnDefinitions="*,*"
-                              ColumnSpacing="16"
-                              RowDefinitions="Auto,Auto,Auto,Auto"
-                              RowSpacing="12">
-
-                            <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="6">
-                                <Label Text="Event Title" Style="{StaticResource FormLabelStyle}" FontSize="11" Margin="0" />
-                                <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="40">
-                                    <Entry x:Name="NewTitleEntry" Placeholder="Spring Science Fair" Style="{StaticResource FieldEntryStyle}" />
-                                </Border>
-                            </VerticalStackLayout>
-                            <VerticalStackLayout Grid.Row="0" Grid.Column="1" Spacing="6">
-                                <Label Text="Category" Style="{StaticResource FormLabelStyle}" FontSize="11" Margin="0" />
-                                <controls:DropDownField x:Name="NewCategoryPicker"
-                                                        BoxHeight="40" />
-                            </VerticalStackLayout>
-
-                            <VerticalStackLayout Grid.Row="1" Grid.Column="0" Spacing="6">
-                                <Label Text="Date" Style="{StaticResource FormLabelStyle}" FontSize="11" Margin="0" />
-                                <controls:DateField x:Name="NewDatePicker"
-                                                    BoxHeight="40"
-                                                    FontSize="12" />
-                            </VerticalStackLayout>
-                            <VerticalStackLayout Grid.Row="1" Grid.Column="1" Spacing="6">
-                                <Label Text="Time" Style="{StaticResource FormLabelStyle}" FontSize="11" Margin="0" />
-                                <controls:TimeField x:Name="NewTimePicker" BoxHeight="40" FontSize="12" />
-                            </VerticalStackLayout>
-
-                            <VerticalStackLayout Grid.Row="2" Grid.Column="0" Spacing="6">
-                                <Label Text="Location" Style="{StaticResource FormLabelStyle}" FontSize="11" Margin="0" />
-                                <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="40">
-                                    <Entry x:Name="NewLocationEntry" Placeholder="Virtual/Zoom" Style="{StaticResource FieldEntryStyle}" />
-                                </Border>
-                            </VerticalStackLayout>
-
-                            <VerticalStackLayout Grid.Row="3" Grid.ColumnSpan="2" Spacing="6">
-                                <Label Text="Description" Style="{StaticResource FormLabelStyle}" FontSize="11" Margin="0" />
-                                <Border Style="{StaticResource TextAreaBoxStyle}">
-                                    <Editor x:Name="NewDescriptionEditor" Placeholder="Annual showcase of student science projects across all grade levels." Style="{StaticResource FieldEditorStyle}" />
-                                </Border>
-                            </VerticalStackLayout>
-                        </Grid>
-                    </VerticalStackLayout>
                 </VerticalStackLayout>
+            </ScrollView>
 
-                <!-- ===== Edit Event side panel (hidden until an edit icon is clicked) ===== -->
-                <Border x:Name="EditPanel"
-                        Grid.Column="1"
-                        Style="{StaticResource CardStyle}"
-                        Padding="18"
-                        WidthRequest="240"
-                        VerticalOptions="Start"
-                        IsVisible="False">
-                    <VerticalStackLayout Spacing="12">
-                        <Grid ColumnDefinitions="*,Auto">
-                            <Label Text="Edit Event" Style="{StaticResource SectionTitleStyle}" FontSize="13" />
-                            <Label Grid.Column="1" Text="&#xE711;" Style="{StaticResource IconStyle}" FontSize="10">
+            <!-- ===== The event form, used for both creating and editing ===== -->
+            <Grid x:Name="EventPopup"
+                  BackgroundColor="#99281C12"
+                  IsVisible="False">
+
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnClosePopup" />
+                </Grid.GestureRecognizers>
+
+                <Border Style="{StaticResource CardStyle}"
+                        Padding="0"
+                        WidthRequest="680"
+                        MaximumHeightRequest="700"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center">
+
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer />
+                    </Border.GestureRecognizers>
+
+                    <Grid RowDefinitions="Auto,Auto,*,Auto">
+
+                        <Grid Grid.Row="0" ColumnDefinitions="*,Auto" Padding="24,20,24,16">
+                            <Label x:Name="PopupTitle" Text="Create New Event" Style="{StaticResource SectionTitleStyle}" FontSize="18" />
+                            <Label Grid.Column="1" Text="&#xE711;" Style="{StaticResource IconStyle}" FontSize="15">
                                 <Label.GestureRecognizers>
-                                    <TapGestureRecognizer Tapped="OnCloseEditTapped" />
+                                    <TapGestureRecognizer Tapped="OnClosePopup" />
                                 </Label.GestureRecognizers>
                             </Label>
                         </Grid>
 
-                        <VerticalStackLayout Spacing="4">
-                            <Label Text="Event Title" Style="{StaticResource SmallMutedStyle}" />
-                            <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="40">
-                                <Entry x:Name="EditTitleEntry" Style="{StaticResource FieldEntryStyle}" FontSize="11" />
-                            </Border>
-                        </VerticalStackLayout>
+                        <BoxView Grid.Row="1" Style="{StaticResource RowDividerStyle}" />
 
-                        <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
-                            <VerticalStackLayout Grid.Column="0" Spacing="4">
-                                <Label Text="Date" Style="{StaticResource SmallMutedStyle}" />
-                                <controls:DateField x:Name="EditDatePicker" BoxHeight="40" FontSize="11" />
-                            </VerticalStackLayout>
-                            <VerticalStackLayout Grid.Column="1" Spacing="4">
-                                <Label Text="Time" Style="{StaticResource SmallMutedStyle}" />
-                                <controls:TimeField x:Name="EditTimePicker" BoxHeight="40" FontSize="11" />
-                            </VerticalStackLayout>
-                        </Grid>
+                        <ScrollView Grid.Row="2">
+                            <VerticalStackLayout Spacing="16" Padding="24,20">
 
-                        <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
-                            <VerticalStackLayout Grid.Column="0" Spacing="4">
-                                <Label Text="Category" Style="{StaticResource SmallMutedStyle}" />
-                                <controls:DropDownField x:Name="EditCategoryPicker" Title="Select category" BoxHeight="40" FontSize="11" />
-                            </VerticalStackLayout>
-                            <VerticalStackLayout Grid.Column="1" Spacing="4">
-                                <Label Text="Location" Style="{StaticResource SmallMutedStyle}" />
-                                <Border Style="{StaticResource FieldBoxStyle}" HeightRequest="40" Padding="6,0">
-                                    <Entry x:Name="EditLocationEntry" Style="{StaticResource FieldEntryStyle}" FontSize="11" />
+                                <Border x:Name="PopupErrorBox" Style="{StaticResource ErrorBoxStyle}">
+                                    <HorizontalStackLayout Spacing="8">
+                                        <Label Text="&#xE783;" Style="{StaticResource IconStyle}" TextColor="{StaticResource StatusRedText}" />
+                                        <Label x:Name="PopupErrorLabel" Style="{StaticResource ErrorTextStyle}" />
+                                    </HorizontalStackLayout>
                                 </Border>
+
+                                <Grid ColumnDefinitions="*,*" ColumnSpacing="18" RowDefinitions="Auto,Auto,Auto" RowSpacing="16">
+
+                                    <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="6">
+                                        <HorizontalStackLayout Spacing="3">
+                                            <Label Text="Event Title" Style="{StaticResource FormLabelStyle}" Margin="0" />
+                                            <Label Style="{StaticResource RequiredMarkStyle}" />
+                                        </HorizontalStackLayout>
+                                        <Border Style="{StaticResource FieldBoxStyle}">
+                                            <Entry x:Name="TitleEntry" Placeholder="Spring Science Fair" Style="{StaticResource FieldEntryStyle}" />
+                                        </Border>
+                                    </VerticalStackLayout>
+
+                                    <VerticalStackLayout Grid.Row="0" Grid.Column="1" Spacing="6">
+                                        <HorizontalStackLayout Spacing="3">
+                                            <Label Text="Category" Style="{StaticResource FormLabelStyle}" Margin="0" />
+                                            <Label Style="{StaticResource RequiredMarkStyle}" />
+                                        </HorizontalStackLayout>
+                                        <controls:DropDownField x:Name="CategoryPicker" Title="Select category" />
+                                    </VerticalStackLayout>
+
+                                    <VerticalStackLayout Grid.Row="1" Grid.Column="0" Spacing="6">
+                                        <HorizontalStackLayout Spacing="3">
+                                            <Label Text="Date" Style="{StaticResource FormLabelStyle}" Margin="0" />
+                                            <Label Style="{StaticResource RequiredMarkStyle}" />
+                                        </HorizontalStackLayout>
+                                        <controls:DateField x:Name="DatePicker" />
+                                    </VerticalStackLayout>
+
+                                    <!-- The time is a duration, for example 8:00 PM - 10:00 PM -->
+                                    <VerticalStackLayout Grid.Row="1" Grid.Column="1" Spacing="6">
+                                        <Label Text="Time" Style="{StaticResource FormLabelStyle}" Margin="0" />
+                                        <Grid ColumnDefinitions="*,Auto,*" ColumnSpacing="8">
+                                            <controls:TimeField x:Name="FromTimePicker" Grid.Column="0" />
+                                            <Label Grid.Column="1" Text="to" Style="{StaticResource MutedStyle}" VerticalOptions="Center" />
+                                            <controls:TimeField x:Name="ToTimePicker" Grid.Column="2" />
+                                        </Grid>
+                                    </VerticalStackLayout>
+
+                                    <VerticalStackLayout Grid.Row="2" Grid.Column="0" Spacing="6">
+                                        <HorizontalStackLayout Spacing="3">
+                                            <Label Text="Location" Style="{StaticResource FormLabelStyle}" Margin="0" />
+                                            <Label Style="{StaticResource RequiredMarkStyle}" />
+                                        </HorizontalStackLayout>
+                                        <Border Style="{StaticResource FieldBoxStyle}">
+                                            <Entry x:Name="LocationEntry" Placeholder="Main Hall" Style="{StaticResource FieldEntryStyle}" />
+                                        </Border>
+                                    </VerticalStackLayout>
+
+                                    <VerticalStackLayout Grid.Row="2" Grid.Column="1" Spacing="6">
+                                        <Label Text="Visible to" Style="{StaticResource FormLabelStyle}" Margin="0" />
+                                        <HorizontalStackLayout Spacing="18" VerticalOptions="Center">
+                                            <RadioButton x:Name="StaffRadio" Content="All staff" GroupName="Visibility" IsChecked="True"
+                                                         FontSize="13" TextColor="{StaticResource TextHeading}" />
+                                            <RadioButton Content="Admin only" GroupName="Visibility"
+                                                         FontSize="13" TextColor="{StaticResource TextHeading}" />
+                                        </HorizontalStackLayout>
+                                    </VerticalStackLayout>
+                                </Grid>
+
+                                <VerticalStackLayout Spacing="6">
+                                    <Label Text="Description" Style="{StaticResource FormLabelStyle}" Margin="0" />
+                                    <Border Style="{StaticResource TextAreaBoxStyle}" HeightRequest="90">
+                                        <Editor x:Name="DescriptionEditor" Placeholder="What is this event about?" Style="{StaticResource FieldEditorStyle}" />
+                                    </Border>
+                                </VerticalStackLayout>
+
                             </VerticalStackLayout>
-                        </Grid>
+                        </ScrollView>
 
-                        <VerticalStackLayout Spacing="4">
-                            <Label Text="Description" Style="{StaticResource SmallMutedStyle}" />
-                            <Border Style="{StaticResource TextAreaBoxStyle}" HeightRequest="70">
-                                <Editor x:Name="EditDescriptionEditor" Style="{StaticResource FieldEditorStyle}" FontSize="11" />
-                            </Border>
-                        </VerticalStackLayout>
-
-                        <VerticalStackLayout Spacing="4">
-                            <Label Text="Visibility" Style="{StaticResource SmallMutedStyle}" />
-                            <HorizontalStackLayout Spacing="14">
-                                <HorizontalStackLayout Spacing="4">
-                                    <RadioButton x:Name="StaffRadio" GroupName="Visibility" IsChecked="True" Scale="0.8" />
-                                    <Label Text="Staff" Style="{StaticResource MutedStyle}" FontSize="11" VerticalOptions="Center" />
-                                </HorizontalStackLayout>
-                                <HorizontalStackLayout Spacing="4">
-                                    <RadioButton GroupName="Visibility" Scale="0.8" />
-                                    <Label Text="Admin Only" Style="{StaticResource MutedStyle}" FontSize="11" VerticalOptions="Center" />
-                                </HorizontalStackLayout>
+                        <Grid Grid.Row="3" Padding="24,16,24,20">
+                            <HorizontalStackLayout Spacing="10" HorizontalOptions="End">
+                                <Button Text="Cancel" Style="{StaticResource OutlineButtonStyle}" Clicked="OnClosePopup" />
+                                <Button x:Name="SaveButton" Text="Save Event" Style="{StaticResource PrimaryButtonStyle}" Clicked="OnSaveEventClicked" />
                             </HorizontalStackLayout>
-                        </VerticalStackLayout>
-
-                        <HorizontalStackLayout Spacing="8" HorizontalOptions="End">
-                            <Button Text="Cancel" Style="{StaticResource SmallOutlineButtonStyle}" Clicked="OnCloseEditTapped" />
-                            <Button Text="Save Changes" Style="{StaticResource SmallPrimaryButtonStyle}" HeightRequest="32" Clicked="OnSaveEditClicked" />
-                        </HorizontalStackLayout>
-                    </VerticalStackLayout>
+                        </Grid>
+                    </Grid>
                 </Border>
-
             </Grid>
-        </ScrollView>
+        </Grid>
     </Grid>
 </ContentPage>

@@ -15,6 +15,9 @@ public partial class MonthCalendarView : ContentView
         Loaded += (s, e) => BuildDays();
     }
 
+    // Redraws the calendar, for example after an event has been added.
+    public void Refresh() => BuildDays();
+
     // Draws one cell per day of the month, with that day's events from the database.
     private void BuildDays()
     {
@@ -87,6 +90,48 @@ public partial class MonthCalendarView : ContentView
 
             DaysGrid.Add(cell, column, row);
         }
+    }
+
+    // ---------- Moving between months ----------
+
+    private void OnPreviousMonth(object sender, EventArgs e)
+    {
+        _month = _month.AddMonths(-1);
+        BuildDays();
+    }
+
+    private void OnNextMonth(object sender, EventArgs e)
+    {
+        _month = _month.AddMonths(1);
+        BuildDays();
+    }
+
+    private void OnTodayTapped(object sender, EventArgs e)
+    {
+        _month = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
+        BuildDays();
+    }
+
+    private void OnArrowEntered(object sender, PointerEventArgs e)
+    {
+        if (sender is Label l) l.TextColor = SidebarView.GetColor("BrandPrimary");
+    }
+
+    private void OnArrowExited(object sender, PointerEventArgs e)
+    {
+        if (sender is Label l) l.TextColor = SidebarView.GetColor("TextMuted");
+    }
+
+    private void OnTodayEntered(object sender, PointerEventArgs e)
+    {
+        TodayLink.TextColor = SidebarView.GetColor("BrandPrimary");
+        TodayLink.TextDecorations = TextDecorations.Underline;
+    }
+
+    private void OnTodayExited(object sender, PointerEventArgs e)
+    {
+        TodayLink.TextColor = SidebarView.GetColor("TextMuted");
+        TodayLink.TextDecorations = TextDecorations.None;
     }
 
     private static string ColourFor(string category) => category switch
