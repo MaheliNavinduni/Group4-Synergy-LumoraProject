@@ -29,7 +29,7 @@ public class AcademicServiceTests
     public void RecordMark_MonthlyTermAndYearEnd_AreSavedWithGrades()
     {
         using var t = new TestBackend();
-        int student = StudentId(t, "STU-8492");
+        int student = StudentId(t, "STU-0002");
         int maths = SubjectId(t, "M2103");
 
         t.Backend.Academics.RecordMark(student, maths, AcademicService.ExamMonthly, "Sept 2026", 72);
@@ -48,7 +48,7 @@ public class AcademicServiceTests
     public void RecordMark_OutOfRangeOrWrongType_Throws()
     {
         using var t = new TestBackend();
-        int student = StudentId(t, "STU-8492");
+        int student = StudentId(t, "STU-0002");
         int maths = SubjectId(t, "M2103");
 
         Assert.Throws<ArgumentException>(() => t.Backend.Academics.RecordMark(student, maths, AcademicService.ExamMonthly, "x", 101));
@@ -61,7 +61,7 @@ public class AcademicServiceTests
     public void RecordCambridgeResult_SavesGradeAndAppearsInStudentRecord()
     {
         using var t = new TestBackend();
-        int student = StudentId(t, "STU-8492");
+        int student = StudentId(t, "STU-0002");
         int mathsCam = SubjectId(t, "M1203");
 
         t.Backend.Academics.RecordCambridgeResult(student, mathsCam, "IGCSE May 2026", "a*");
@@ -76,7 +76,7 @@ public class AcademicServiceTests
     public void CambridgeResults_DoNotAffectInternalAverage()
     {
         using var t = new TestBackend();
-        int student = StudentId(t, "STU-8492");
+        int student = StudentId(t, "STU-0002");
         t.Backend.Academics.RecordMark(student, SubjectId(t, "M2103"), AcademicService.ExamTerm, "T", 80);
         t.Backend.Academics.RecordCambridgeResult(student, SubjectId(t, "M1203"), "IGCSE", "C", 40);
 
@@ -135,7 +135,7 @@ public class AcademicServiceTests
     public void ProgressNote_WithExtraClassRecommendation_IsSaved()
     {
         using var t = new TestBackend();
-        int emma = StudentId(t, "STU-2024-0891");
+        int emma = StudentId(t, "STU-0006");
 
         t.Backend.Academics.AddProgressNote(emma, "Attend Saturday revision class.", true);
 

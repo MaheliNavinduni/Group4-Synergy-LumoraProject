@@ -12,6 +12,8 @@
                              MaximumWidthRequest="820"
                              HorizontalOptions="Center">
 
+            <controls:BreadcrumbView Section="Teachers" Current="Teacher Resignation" />
+
             <!-- Header bar -->
             <Border Style="{StaticResource CardStyle}" Padding="24,18">
                 <VerticalStackLayout Spacing="4">

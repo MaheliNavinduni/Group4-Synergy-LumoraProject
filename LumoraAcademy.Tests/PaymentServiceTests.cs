@@ -203,7 +203,7 @@ public class PaymentServiceTests
     public void OutstandingForStudent_AddsUpEveryClassTheyTake()
     {
         using var t = new TestBackend();
-        var eleanor = t.Backend.Students.GetByStudentId("STU-2023-8941")!;
+        var eleanor = t.Backend.Students.GetByStudentId("STU-0001")!;
 
         // Eleanor takes ICT (paid this month) and Maths (not paid)
         decimal owed = t.Backend.Payments.OutstandingForStudent(eleanor.Id);

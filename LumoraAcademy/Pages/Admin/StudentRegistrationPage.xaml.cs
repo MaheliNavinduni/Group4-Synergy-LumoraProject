@@ -80,7 +80,6 @@ public partial class StudentRegistrationPage : ContentPage
             Email = (StudentEmailEntry.Text ?? "").Trim(),
             School = (SchoolEntry.Text ?? "").Trim(),
             Grade = GradePicker.SelectedItem!,
-            Section = (SectionEntry.Text ?? "").Trim().ToUpperInvariant(),
             GuardianName = GuardianEntry.Text.Trim(),
             GuardianPhone = Validation.CleanPhone(PhoneEntry.Text),
             GuardianEmail = (EmailEntry.Text ?? "").Trim(),

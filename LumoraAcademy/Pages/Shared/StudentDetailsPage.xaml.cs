@@ -30,6 +30,7 @@ public partial class StudentDetailsPage : ContentPage
         _student = AppData.Students.GetById(_studentId);
         if (_student == null) return;
 
+        Crumb.Current = _student.FullName;
         TitleName.Text = _student.FullName;
         IdLabel.Text = "ID: " + _student.StudentId;
         StatusBadge.Text = _student.Status == "Active" ? "Enrolled" : _student.Status;

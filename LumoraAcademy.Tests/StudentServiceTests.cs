@@ -37,7 +37,7 @@ public class StudentServiceTests
     {
         using var t = new TestBackend();
 
-        Assert.Throws<InvalidOperationException>(() => t.Backend.Students.Register(NewStudent("Copy", "STU-2023-8941")));
+        Assert.Throws<InvalidOperationException>(() => t.Backend.Students.Register(NewStudent("Copy", "STU-0001")));
     }
 
     [Fact]
@@ -71,7 +71,7 @@ public class StudentServiceTests
     public void Update_ChangesAreSaved()
     {
         using var t = new TestBackend();
-        var s = t.Backend.Students.GetByStudentId("STU-2023-8941")!;
+        var s = t.Backend.Students.GetByStudentId("STU-0001")!;
 
         s.Grade = "12th Grade";
         s.GuardianPhone = "0770000000";
@@ -86,8 +86,8 @@ public class StudentServiceTests
     public void Update_ToAnotherStudentsId_Throws()
     {
         using var t = new TestBackend();
-        var s = t.Backend.Students.GetByStudentId("STU-2023-8941")!;
-        s.StudentId = "STU-8492";   // belongs to Marcus
+        var s = t.Backend.Students.GetByStudentId("STU-0001")!;
+        s.StudentId = "STU-0002";   // belongs to Marcus
 
         Assert.Throws<InvalidOperationException>(() => t.Backend.Students.Update(s));
     }
@@ -99,7 +99,7 @@ public class StudentServiceTests
     {
         using var t = new TestBackend();
 
-        var results = t.Backend.Students.Search("STU-2023-8941");
+        var results = t.Backend.Students.Search("STU-0001");
 
         Assert.Single(results);
         Assert.Equal("Eleanor Vance", results[0].FullName);
@@ -153,7 +153,7 @@ public class StudentServiceTests
     {
         using var t = new TestBackend();
 
-        var eleanor = t.Backend.Students.GetByStudentId("STU-2023-8941")!;
+        var eleanor = t.Backend.Students.GetByStudentId("STU-0001")!;
 
         Assert.Equal("Mr. Davis", eleanor.AssignedTeacherName);
         Assert.Equal("EV", eleanor.Initials);
@@ -165,7 +165,7 @@ public class StudentServiceTests
     public void ProcessDeparture_MarksInactiveAndKeepsRecord()
     {
         using var t = new TestBackend();
-        var s = t.Backend.Students.GetByStudentId("STU-8492")!;
+        var s = t.Backend.Students.GetByStudentId("STU-0002")!;
 
         t.Backend.Students.ProcessDeparture(s.Id, new DateTime(2026, 12, 31), "Relocation", "Moving abroad");
 

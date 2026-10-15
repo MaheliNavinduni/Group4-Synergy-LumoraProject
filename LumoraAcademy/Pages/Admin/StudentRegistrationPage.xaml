@@ -21,6 +21,7 @@
                 <Grid ColumnDefinitions="*,Auto,Auto"
                       ColumnSpacing="10">
                     <VerticalStackLayout Grid.Column="0" Spacing="4">
+                        <controls:BreadcrumbView Section="Students" Current="Register New Student" />
                         <Label Text="Student Registration" Style="{StaticResource PageTitleStyle}" />
                         <Label Text="Fields marked with * must be filled in. The student ID is created automatically."
                                Style="{StaticResource PageSubtitleStyle}" />
@@ -198,13 +199,6 @@
                                     </VerticalStackLayout>
 
                                     <VerticalStackLayout Grid.Row="1" Grid.Column="0" Spacing="6">
-                                        <Label Text="Section" Style="{StaticResource FormLabelStyle}" Margin="0" />
-                                        <Border Style="{StaticResource FieldBoxStyle}">
-                                            <Entry x:Name="SectionEntry" Placeholder="For example A" MaxLength="4" Style="{StaticResource FieldEntryStyle}" />
-                                        </Border>
-                                    </VerticalStackLayout>
-
-                                    <VerticalStackLayout Grid.Row="1" Grid.Column="1" Spacing="6">
                                         <Label Text="Previous School Attended" Style="{StaticResource FormLabelStyle}" Margin="0" />
                                         <Border Style="{StaticResource FieldBoxStyle}">
                                             <Entry x:Name="PreviousSchoolEntry" Placeholder="Name of previous institution" Style="{StaticResource FieldEntryStyle}" />
@@ -257,7 +251,7 @@
                                     <Label Text="Before you save" Style="{StaticResource BodyBoldStyle}" />
                                 </HorizontalStackLayout>
 
-                                <Label Text="The student ID is created for you, for example STU-2026-0042." Style="{StaticResource MutedStyle}" />
+                                <Label Text="The student ID is created for you, for example STU-0013." Style="{StaticResource MutedStyle}" />
                                 <Label Text="A phone number must be 10 digits and start with 0." Style="{StaticResource MutedStyle}" />
                                 <Label Text="The student is saved as Active. Classes and fees are added afterwards from the Academics page." Style="{StaticResource MutedStyle}" />
                             </VerticalStackLayout>

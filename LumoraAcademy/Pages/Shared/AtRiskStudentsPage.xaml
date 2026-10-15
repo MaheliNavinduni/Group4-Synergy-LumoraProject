@@ -16,6 +16,7 @@
                                  Spacing="26">
 
                 <VerticalStackLayout Spacing="6">
+                    <controls:BreadcrumbView Section="Students" Current="At-Risk Students" />
                     <Label Text="At-Risk Students"
                            Style="{StaticResource PageTitleStyle}" />
                     <Label Text="Identify and support students falling below academic thresholds. Review performance across subjects and add intervention notes."

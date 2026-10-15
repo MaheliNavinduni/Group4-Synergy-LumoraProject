@@ -12,6 +12,8 @@
                              MaximumWidthRequest="760"
                              HorizontalOptions="Center">
 
+            <controls:BreadcrumbView Section="Students" Current="Progress Report" />
+
             <!-- The printable report sheet -->
             <Border Style="{StaticResource CardStyle}"
                     Padding="36,30">
