@@ -130,9 +130,25 @@ public partial class StudentDirectoryView : ContentView
         LoadStudents();
     }
 
-    private void OnRefreshClicked(object sender, EventArgs e)
+    private async void OnRefreshClicked(object sender, EventArgs e)
     {
+        // Start again from the first page, so a refresh cannot leave you looking
+        // at a page that no longer exists once rows have been added or removed.
+        Pager.Reset();
         LoadStudents();
+
+        // The table usually looks exactly the same afterwards, so without this
+        // the button looks like it does nothing at all.
+        if (sender is Button button)
+        {
+            button.IsEnabled = false;
+            button.Text = "Refreshed";
+
+            await Task.Delay(1200);
+
+            button.Text = "Refresh";
+            button.IsEnabled = true;
+        }
     }
 
     private void OnPageChanged(object sender, EventArgs e)
