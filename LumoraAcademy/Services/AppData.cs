@@ -16,7 +16,15 @@ public static class AppData
             if (_backend == null)
             {
                 string path = Path.Combine(FileSystem.AppDataDirectory, "lumora.db");
+
+                // A production build starts with an empty database and asks for an
+                // administrator account on first run. A demonstration build is seeded.
+                // The switch is SeedDemoData in LumoraAcademy.csproj.
+#if DEMO_DATA
                 _backend = new Backend(path, seedDemoData: true);
+#else
+                _backend = new Backend(path, seedDemoData: false);
+#endif
             }
             return _backend;
         }

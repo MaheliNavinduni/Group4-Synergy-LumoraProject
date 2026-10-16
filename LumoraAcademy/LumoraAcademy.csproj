@@ -20,6 +20,18 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 
+		<!-- Names the folder the app keeps its database in. -->
+		<ApplicationPublisher>Lumora Educational Institute</ApplicationPublisher>
+
+		<!--
+		  Demonstration data.
+		    dotnet publish -c Release                      -> empty database; first run asks for an administrator
+		    dotnet publish -c Release -p:SeedDemoData=true -> seeded with demonstration records
+		  Debug builds are seeded, so development and the tests stay convenient.
+		-->
+		<SeedDemoData Condition="'$(SeedDemoData)' == '' And '$(Configuration)' == 'Debug'">true</SeedDemoData>
+		<SeedDemoData Condition="'$(SeedDemoData)' == ''">false</SeedDemoData>
+
 		<!-- Display name -->
 		<ApplicationTitle>Lumora Academy</ApplicationTitle>
 
@@ -37,6 +49,12 @@
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
 	</PropertyGroup>
+
+	<!-- Turns the SeedDemoData switch above into a compile-time constant. -->
+	<PropertyGroup Condition="'$(SeedDemoData)' == 'true'">
+		<DefineConstants>$(DefineConstants);DEMO_DATA</DefineConstants>
+	</PropertyGroup>
+
 
 	<ItemGroup>
 		<!-- App Icon -->
