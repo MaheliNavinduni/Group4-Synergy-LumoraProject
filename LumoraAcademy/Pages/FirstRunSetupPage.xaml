@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LumoraAcademy.Pages.FirstRunSetupPage"
+             Title="Set up"
+             BackgroundColor="{StaticResource ContentBackground}">
+
+    <ScrollView>
+        <Grid Padding="24" RowDefinitions="*,Auto,*">
+
+            <Border Grid.Row="1"
+                    Style="{StaticResource CardStyle}"
+                    WidthRequest="520"
+                    Padding="36,34"
+                    HorizontalOptions="Center">
+                <VerticalStackLayout Spacing="6">
+
+                    <Label Text="Welcome to Lumora"
+                           Style="{StaticResource PageTitleStyle}"
+                           HorizontalOptions="Center" />
+
+                    <Label Text="This is the first time the system has been opened on this computer. Create the administrator account that will be used to run it."
+                           Style="{StaticResource PageSubtitleStyle}"
+                           HorizontalTextAlignment="Center"
+                           Margin="0,0,0,18" />
+
+                    <Border x:Name="ErrorBox"
+                            IsVisible="False"
+                            Background="#FDECEA"
+                            Stroke="#E6B4AE"
+                            StrokeThickness="1"
+                            Padding="14,10"
+                            Margin="0,0,0,12">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="8" />
+                        </Border.StrokeShape>
+                        <Label x:Name="ErrorLabel"
+                               TextColor="#9B2C1E"
+                               FontSize="13" />
+                    </Border>
+
+                    <Label Text="YOUR NAME" Style="{StaticResource FieldLabelStyle}" />
+                    <Entry x:Name="NameEntry"
+                           Placeholder="For example, Office Administrator"
+                           Style="{StaticResource FieldEntryStyle}"
+                           TextChanged="OnTypingChanged" />
+
+                    <Label Text="USERNAME" Style="{StaticResource FieldLabelStyle}" Margin="0,12,0,0" />
+                    <Entry x:Name="UsernameEntry"
+                           Placeholder="Username"
+                           Style="{StaticResource FieldEntryStyle}"
+                           TextChanged="OnTypingChanged" />
+
+                    <Label Text="PASSWORD" Style="{StaticResource FieldLabelStyle}" Margin="0,12,0,0" />
+                    <Entry x:Name="PasswordEntry"
+                           Placeholder="At least 6 characters"
+                           IsPassword="True"
+                           Style="{StaticResource FieldEntryStyle}"
+                           TextChanged="OnTypingChanged" />
+
+                    <Label Text="CONFIRM PASSWORD" Style="{StaticResource FieldLabelStyle}" Margin="0,12,0,0" />
+                    <Entry x:Name="ConfirmEntry"
+                           Placeholder="Type the password again"
+                           IsPassword="True"
+                           Style="{StaticResource FieldEntryStyle}"
+                           TextChanged="OnTypingChanged"
+                           Completed="OnCreateClicked" />
+
+                    <Button x:Name="CreateButton"
+                            Text="Create administrator account"
+                            Style="{StaticResource PrimaryButtonStyle}"
+                            Margin="0,22,0,0"
+                            Clicked="OnCreateClicked" />
+
+                    <Label Text="Keep these details safe. There is no automatic password reset."
+                           Style="{StaticResource SmallMutedStyle}"
+                           HorizontalTextAlignment="Center"
+                           Margin="0,14,0,0" />
+
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
+    </ScrollView>
+</ContentPage>
